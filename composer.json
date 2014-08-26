@@ -18,8 +18,9 @@
         "doctrine/doctrine-bundle": "*"
     },
     "autoload": {
-        "psr-4": {
+        "psr-0": {
             "JMose\\CommandSchedulerBundle\\": ""
         }
-    }
+    },
+    "target-dir": "JMose/CommandSchedulerBundle",
 }
