@@ -113,7 +113,7 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>commandeScheduler.flash.execute</source>
-                <target>Command will be execute the next "scheduler:execute".</target>
+                <target>Command will be execute during the next "scheduler:execute".</target>
             </trans-unit>
         </body>
     </file>

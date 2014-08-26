@@ -158,14 +158,16 @@ class ScheduledCommand
             return $this->arguments;
         }
 
-        $argsArray     = array();
-        $flatArgsArray = explode(' ', preg_replace('/\s+/', ' ',$this->arguments));
-        foreach ($flatArgsArray as $argument) {
-            $tmpArray = explode('=', $argument);
-            if (count($tmpArray) == 1) {
-                $argsArray[$tmpArray[0]] = true;
-            } else {
-                $argsArray[$tmpArray[0]] = $tmpArray[1];
+        $argsArray = array();
+        if (null !== $this->arguments || '' != $this->arguments) {
+            $flatArgsArray = explode(' ', preg_replace('/\s+/', ' ', $this->arguments));
+            foreach ($flatArgsArray as $argument) {
+                $tmpArray = explode('=', $argument);
+                if (count($tmpArray) == 1) {
+                    $argsArray[$tmpArray[0]] = true;
+                } else {
+                    $argsArray[$tmpArray[0]] = $tmpArray[1];
+                }
             }
         }
 
