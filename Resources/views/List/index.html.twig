@@ -34,11 +34,6 @@
                     </a>
                 </td>
                 <td>
-                    {% if command.locked == true %}
-                        <a href="#" data-href="{{ path('jmose_command_scheduler_action_unlock', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "commandeScheduler.action.unlock"|trans }}" data-title="{{ "commandeScheduler.confirm.unlock"|trans }}" >
-                            <span class="text-muted glyphicon glyphicon-lock"></span> <span class="sr-only">{{ "commandeScheduler.action.unlock"|trans }}</span>
-                        </a>
-                    {% endif %}
                     {{ command.name }}
                 </td>
                 <td>
@@ -60,6 +55,11 @@
                     {{ command.priority }}
                 </td>
                 <td>
+                    {% if command.locked == true %}
+                        <a href="#" data-href="{{ path('jmose_command_scheduler_action_unlock', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "commandeScheduler.action.unlock"|trans }}" data-title="{{ "commandeScheduler.confirm.unlock"|trans }}" >
+                            <span class="text-muted glyphicon glyphicon-lock"></span> <span class="sr-only">{{ "commandeScheduler.action.unlock"|trans }}</span>
+                        </a>
+                    {% endif %}
                     <a href="{{ path('jmose_command_scheduler_detail_edit', {'scheduledCommandId': command.id}) }}" >
                         <span class="text-info glyphicon glyphicon-pencil"></span> <span class="sr-only">{{ "commandeScheduler.action.edit"|trans }}</span>
                     </a>
