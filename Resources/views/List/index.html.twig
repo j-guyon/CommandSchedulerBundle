@@ -54,7 +54,7 @@
                 <td>
                     {{ command.priority }}
                 </td>
-                <td>
+                <td style="min-width: 90px;">
                     {% if command.locked == true %}
                         <a href="#" data-href="{{ path('jmose_command_scheduler_action_unlock', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "commandeScheduler.action.unlock"|trans }}" data-title="{{ "commandeScheduler.confirm.unlock"|trans }}" >
                             <span class="text-muted glyphicon glyphicon-lock"></span> <span class="sr-only">{{ "commandeScheduler.action.unlock"|trans }}</span>
