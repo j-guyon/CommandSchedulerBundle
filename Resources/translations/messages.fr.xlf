@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <!-- Bundle -->
+            <trans-unit id="1">
+                <source>commandeScheduler.name</source>
+                <target>Symfony's scheduler</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>commandeScheduler.dateFormat</source>
+                <target>d/m/Y H:m</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>commandeScheduler.list.title</source>
+                <target>Taches planifiées</target>
+            </trans-unit>
+
+            <!-- Actions -->
+            <trans-unit id="100">
+                <source>commandeScheduler.action.delete</source>
+                <target>Supprimer</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>commandeScheduler.action.execute</source>
+                <target>Executer</target>
+            </trans-unit>
+
+            <trans-unit id="102">
+                <source>commandeScheduler.action.edit</source>
+                <target>Modifier</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>commandeScheduler.action.new</source>
+                <target>Nouvelle planification</target>
+            </trans-unit>
+
+            <trans-unit id="104">
+                <source>commandeScheduler.confirm.delete</source>
+                <target>Supprimer définitivement cette planification ?</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>commandeScheduler.confirm.execute</source>
+                <target>Forcer une exécution de cette commande ?</target>
+            </trans-unit>
+
+            <!-- Detail  -->
+            <trans-unit id="201">
+                <source>commandeScheduler.detail.title</source>
+                <target>Tache planifiée</target>
+            </trans-unit>
+
+            <trans-unit id="202">
+                <source>commandeScheduler.detail.name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>commandeScheduler.detail.command</source>
+                <target>Commande</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>commandeScheduler.detail.arguments</source>
+                <target>Arguments</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>commandeScheduler.detail.cronExpression</source>
+                <target>Expression cron</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>commandeScheduler.detail.logFile</source>
+                <target>Nom du fichier de log</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>commandeScheduler.detail.priority</source>
+                <target>Priorité</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>commandeScheduler.detail.executeImmediately</source>
+                <target>Executer maintenant</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>commandeScheduler.detail.disabled</source>
+                <target>Désactiver</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>commandeScheduler.detail.save</source>
+                <target>Enregistrer</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>commandeScheduler.detail.lastExecution</source>
+                <target>Dernière exécution</target>
+            </trans-unit>
+            <trans-unit id="212">
+                <source>commandeScheduler.detail.lastReturnCode</source>
+                <target>Dernier code retour</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>commandeScheduler.detail.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- Flashs messages -->
+            <trans-unit id="300">
+                <source>commandeScheduler.flash.success</source>
+                <target>Planification sauvegardée avec succées.</target>
+            </trans-unit>
+            <trans-unit id="301">
+                <source>commandeScheduler.flash.deleted</source>
+                <target>Planification supprimée avec succées.</target>
+            </trans-unit>
+            <trans-unit id="302">
+                <source>commandeScheduler.flash.execute</source>
+                <target>Le traitement sera exécutée lors de la prochaine vérification (scheduler:execute).</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

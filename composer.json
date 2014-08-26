@@ -1,0 +1,30 @@
+{
+    "name": "jmose/command-scheduler-bundle",
+    "description": "This bundle will allow you to schedule all your commands just like UNIX crontab",
+    "keywords": ["Symfony", "scheduler", "cron", "command"],
+    "homepage": "https://github.com/J-Mose/CommandSchedulerBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Julien Guyon",
+            "email": "julienguyon@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/symfony": ">=2.3.0",
+        "twig/twig": "*",
+        "doctrine/doctrine-bundle": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "JMose\\CommandSchedulerBundle\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.1-dev"
+        }
+    }
+}

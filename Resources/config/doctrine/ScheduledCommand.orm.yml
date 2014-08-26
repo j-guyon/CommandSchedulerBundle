@@ -1,0 +1,82 @@
+JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
+    type: entity
+    table: SCHEDULED_COMMAND
+    repositoryClass: JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository
+    fields:
+        id:
+            type: integer
+            length: null
+            unique: false
+            nullable: false
+            id: true
+            column: ID_SCHEDULED_COMMAND
+            generator:
+                strategy: IDENTITY
+        name:
+            type: string
+            length: 100
+            unique: false
+            nullable: false
+            column: NAME
+        command:
+            type: string
+            length: 100
+            unique: false
+            nullable: false
+            column: COMMAND
+        arguments:
+            type: string
+            length: 250
+            unique: false
+            nullable: true
+            column: ARGUMENTS
+        cronExpression:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+            column: CRON_EXPRESSION
+        lastExecution:
+            type: datetime
+            length: null
+            unique: false
+            nullable: false
+            column: DH_LAST_EXECUTION
+        lastReturnCode:
+            type: integer
+            length: null
+            unique: false
+            nullable: true
+            column: LAST_RETURN_CODE
+        logFile:
+            type: string
+            length: 100
+            unique: false
+            nullable: true
+            column: LOG_FILE
+        priority:
+            type: integer
+            length: null
+            unique: false
+            nullable: false
+            column: PRIORITY
+        executeImmediately:
+            type: boolean
+            length: null
+            unique: false
+            nullable: false
+            column: B_EXECUTE_IMMEDIATELY
+        disabled:
+            type: boolean
+            length: null
+            unique: false
+            nullable: false
+            column: B_DISABLED
+        locked:
+            type: boolean
+            length: null
+            unique: false
+            nullable: false
+            column: B_LOCKED

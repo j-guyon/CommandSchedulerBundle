@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Command Scheduler</title>
+
+    <!-- Bootstrap -->
+    {% stylesheets
+        'bundles/jmosecommandscheduler/css/bootstrap.min.css'
+        'bundles/jmosecommandscheduler/css/bootstrap-theme.min.css'
+    filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet">
+    {% endstylesheets %}
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">{{ 'commandeScheduler.name'|trans }}</a>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{% block title %}{% endblock title %}</h2>
+
+                {# Succes flash messages #}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+
+                {# Errors flash messages #}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+        <hr>
+        <!--
+        <footer>
+            <p>&copy; Company</p>
+        </footer>
+        -->
+    </div>
+</div><!-- /container -->
+
+{% javascripts '@JMoseCommandSchedulerBundle/Resources/public/js/jquery-1.11.1.min.js' %}
+    <script type="text/javascript" src="{{ asset_url }}" ></script>
+{% endjavascripts %}
+
+{% javascripts
+    '@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap.min.js'
+    '@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap-tooltip.js'
+    '@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap-confirmation.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}" ></script>
+{% endjavascripts %}
+
+    <script type="text/javascript" >
+        // Enable bootstrap-confirmation
+        $(document).ready(function () {
+            //$('[data-toggle="confirmation"]').confirmation();
+            $('[data-toggle="confirmation"]').confirmation({
+                singleton:true,
+                popout: true,
+                placement: 'left'
+            });
+        });
+    </script>
+</body>
+</html>
+
+

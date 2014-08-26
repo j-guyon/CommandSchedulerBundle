@@ -1,0 +1,15 @@
+namespaces:
+    CommandSchedulerConstraints: JMose\CommandSchedulerBundle\Validator\Constraints\
+
+JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
+    properties:
+        cronExpression:
+            - NotBlank: ~
+            - CommandSchedulerConstraints:CronExpression: { message: "commandeScheduler.validation.cron" }
+        name:
+            - NotBlank: ~
+        command:
+            - NotBlank: ~
+        priority:
+            - Type: { type: 'integer'}
+

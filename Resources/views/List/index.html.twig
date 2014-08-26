@@ -1,0 +1,79 @@
+{% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ 'commandeScheduler.list.title'|trans }}
+{% endblock title %}
+
+{% block content %}
+    <div class="table-responsive table-stripped">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>{{ "commandeScheduler.detail.name"|trans }}</th>
+                <th>{{ "commandeScheduler.detail.command"|trans }}</th>
+                <th>{{ "commandeScheduler.detail.cronExpression"|trans }}</th>
+                <th>{{ "commandeScheduler.detail.logFile"|trans }}</th>
+                <th>{{ "commandeScheduler.detail.lastExecution"|trans }}</th>
+                <th>{{ "commandeScheduler.detail.lastReturnCode"|trans }}</th>
+                <th>{{ "commandeScheduler.detail.priority"|trans }}</th>
+                <th>{{ "commandeScheduler.detail.actions"|trans }}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for command in scheduledCommands %}
+            <tr {% if command.disabled == true %}class="text-muted" {% endif %}>
+                <td>
+                    <a href="{{ path('jmose_command_scheduler_action_toggle', {'id': command.id}) }}" >
+                    {% if command.disabled == true %}
+                        <span class="text-danger glyphicon glyphicon-off"></span> <span class="sr-only">&nbsp</span>
+                    {% else %}
+                        <span class="text-success glyphicon glyphicon-off"></span> <span class="sr-only">&nbsp</span>
+                    {% endif %}
+                    </a>
+                </td>
+                <td>
+                    {% if command.locked == true %}
+                        <span class="text-muted glyphicon glyphicon-lock"></span> <span class="sr-only">&nbsp</span>
+                    {% endif %}
+                    {{ command.name }}
+                </td>
+                <td>
+                    {{ command.command }} {{ command.arguments }}
+                </td>
+                <td>
+                    {{ command.cronExpression }}
+                </td>
+                <td>
+                    {{ command.logFile }}
+                </td>
+                <td>
+                    {{ command.lastExecution|date( "commandeScheduler.dateFormat"|trans ) }}
+                </td>
+                <td>
+                    {{ command.lastReturnCode }}
+                </td>
+                <td>
+                    {{ command.priority }}
+                </td>
+                <td>
+                    <a href="{{ path('jmose_command_scheduler_detail_edit', {'scheduledCommandId': command.id}) }}" >
+                        <span class="text-info glyphicon glyphicon-pencil"></span> <span class="sr-only">{{ "commandeScheduler.action.edit"|trans }}</span>
+                    </a>
+                    <a href="#" data-href="{{ path('jmose_command_scheduler_action_remove', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "commandeScheduler.action.delete"|trans }}" data-title="{{ "commandeScheduler.confirm.delete"|trans }}" >
+                        <span class="text-danger glyphicon glyphicon-trash"></span> <span class="sr-only">{{ "commandeScheduler.action.delete"|trans }}</span>
+                    </a>
+                    <a href="#" data-href="{{ path('jmose_command_scheduler_action_execute', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "commandeScheduler.action.execute"|trans }}" data-title="{{ "commandeScheduler.confirm.execute"|trans }}">
+                        <span class="text-{% if command.executeImmediately == true %}muted{% else %}success{% endif %} glyphicon glyphicon-play"></span> <span class="sr-only">{{ "commandeScheduler.action.execute"|trans }}</span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <a href="{{ path('jmose_command_scheduler_detail_new') }}" class="btn btn-primary btn-lg pull-right" role="button">{{ "commandeScheduler.action.new"|trans }} »</a>
+{% endblock content %}
+

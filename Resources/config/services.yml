@@ -1,0 +1,18 @@
+parameters:
+    jmose_command_scheduler.log_path: C:\Workspace\PHPStorm\assureclair\GestionMetier\trunk\app\logs\command\
+    jmose_command_scheduler.command_choice_list.class: JMose\CommandSchedulerBundle\Form\CommandChoiceList
+    jmose_command_scheduler.command_choice_list.excluded_namespaces:
+        - _global
+        - scheduler
+        - server
+        - container
+        - config
+        - generate
+        - init
+        - router
+
+services:
+
+    jmose_command_scheduler.command_choice_list:
+        class: %jmose_command_scheduler.command_choice_list.class%
+        arguments: [@kernel, %jmose_command_scheduler.command_choice_list.excluded_namespaces%]

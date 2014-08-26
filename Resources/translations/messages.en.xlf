@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <!-- Bundle -->
+            <trans-unit id="1">
+                <source>commandeScheduler.name</source>
+                <target>Symfony's scheduler</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>commandeScheduler.dateFormat</source>
+                <target>Y-m-d H:m</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>commandeScheduler.list.title</source>
+                <target>Scheduled commands</target>
+            </trans-unit>
+
+            <!-- Actions -->
+            <trans-unit id="100">
+                <source>commandeScheduler.action.delete</source>
+                <target>Remove</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>commandeScheduler.action.execute</source>
+                <target>Execute</target>
+            </trans-unit>
+
+            <trans-unit id="102">
+                <source>commandeScheduler.action.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>commandeScheduler.action.new</source>
+                <target>New scheduling</target>
+            </trans-unit>
+
+            <trans-unit id="104">
+                <source>commandeScheduler.confirm.delete</source>
+                <target>Permanently delete this task ?</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>commandeScheduler.confirm.execute</source>
+                <target>Force an execution for this task ?</target>
+            </trans-unit>
+
+            <!-- Detail  -->
+            <trans-unit id="201">
+                <source>commandeScheduler.detail.title</source>
+                <target>Scheduled command</target>
+            </trans-unit>
+
+            <trans-unit id="202">
+                <source>commandeScheduler.detail.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>commandeScheduler.detail.command</source>
+                <target>Command</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>commandeScheduler.detail.arguments</source>
+                <target>Arguments</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>commandeScheduler.detail.cronExpression</source>
+                <target>Cron expression</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>commandeScheduler.detail.logFile</source>
+                <target>Output file</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>commandeScheduler.detail.priority</source>
+                <target>Priority</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>commandeScheduler.detail.executeImmediately</source>
+                <target>Execute now</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>commandeScheduler.detail.disabled</source>
+                <target>Disable ?</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>commandeScheduler.detail.save</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>commandeScheduler.detail.lastExecution</source>
+                <target>Last run</target>
+            </trans-unit>
+            <trans-unit id="212">
+                <source>commandeScheduler.detail.lastReturnCode</source>
+                <target>Last return code</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>commandeScheduler.detail.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- Flashs messages -->
+            <trans-unit id="300">
+                <source>commandeScheduler.flash.success</source>
+                <target>Scheduling successfully saved.</target>
+            </trans-unit>
+            <trans-unit id="301">
+                <source>commandeScheduler.flash.deleted</source>
+                <target>Scheduling successfully deleted.</target>
+            </trans-unit>
+            <trans-unit id="302">
+                <source>commandeScheduler.flash.execute</source>
+                <target>Command will be execute the next "scheduler:execute".</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
