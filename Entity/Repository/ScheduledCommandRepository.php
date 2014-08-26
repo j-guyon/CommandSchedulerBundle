@@ -29,4 +29,14 @@ class ScheduledCommandRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * findAll override to implement the default orderBy clause
+     *
+     * @return array<ScheduledCommand>
+     */
+    public function findAll()
+    {
+        return $this->findBy(array(), array('priority' => 'DESC'));
+    }
+
 }
