@@ -26,5 +26,5 @@ This Symfony commands scheduler will allow you to easily manage scheduling for S
 
 ## Documentation
 
-See the documation [here](https://github.com/J-Mose/CommandSchedulerBundle/blob/master/Resources/doc/index.rst).
+See the documation [here](https://github.com/J-Mose/CommandSchedulerBundle/blob/master/Resources/doc/index.md).
 
