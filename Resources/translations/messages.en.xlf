@@ -89,7 +89,7 @@
             </trans-unit>
             <trans-unit id="209">
                 <source>commandeScheduler.detail.disabled</source>
-                <target>Disable ?</target>
+                <target>Disable</target>
             </trans-unit>
             <trans-unit id="210">
                 <source>commandeScheduler.detail.save</source>
