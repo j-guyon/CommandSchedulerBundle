@@ -14,6 +14,10 @@ jmose_command_scheduler_action_execute:
     pattern:  /command-scheduler/action/execute/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:execute }
 
+jmose_command_scheduler_action_unlock:
+    pattern:  /command-scheduler/action/unlock/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:List:unlock }
+
 jmose_command_scheduler_detail_index:
     pattern:  /command-scheduler/detail/view/
     defaults: { _controller: JMoseCommandSchedulerBundle:Detail:index }

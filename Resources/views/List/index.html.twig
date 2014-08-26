@@ -27,15 +27,17 @@
                 <td>
                     <a href="{{ path('jmose_command_scheduler_action_toggle', {'id': command.id}) }}" >
                     {% if command.disabled == true %}
-                        <span class="text-danger glyphicon glyphicon-off"></span> <span class="sr-only">&nbsp</span>
+                        <span class="text-danger glyphicon glyphicon-off"></span> <span class="sr-only">&nbsp;</span>
                     {% else %}
-                        <span class="text-success glyphicon glyphicon-off"></span> <span class="sr-only">&nbsp</span>
+                        <span class="text-success glyphicon glyphicon-off"></span> <span class="sr-only">&nbsp;</span>
                     {% endif %}
                     </a>
                 </td>
                 <td>
                     {% if command.locked == true %}
-                        <span class="text-muted glyphicon glyphicon-lock"></span> <span class="sr-only">&nbsp</span>
+                        <a href="#" data-href="{{ path('jmose_command_scheduler_action_unlock', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "commandeScheduler.action.unlock"|trans }}" data-title="{{ "commandeScheduler.confirm.unlock"|trans }}" >
+                            <span class="text-muted glyphicon glyphicon-lock"></span> <span class="sr-only">{{ "commandeScheduler.action.unlock"|trans }}</span>
+                        </a>
                     {% endif %}
                     {{ command.name }}
                 </td>

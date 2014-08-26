@@ -28,7 +28,6 @@
                 <source>commandeScheduler.action.execute</source>
                 <target>Execute</target>
             </trans-unit>
-
             <trans-unit id="102">
                 <source>commandeScheduler.action.edit</source>
                 <target>Edit</target>
@@ -37,7 +36,6 @@
                 <source>commandeScheduler.action.new</source>
                 <target>New scheduling</target>
             </trans-unit>
-
             <trans-unit id="104">
                 <source>commandeScheduler.confirm.delete</source>
                 <target>Permanently delete this task ?</target>
@@ -45,6 +43,14 @@
             <trans-unit id="105">
                 <source>commandeScheduler.confirm.execute</source>
                 <target>Force an execution for this task ?</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>commandeScheduler.action.unlock</source>
+                <target>Unlock task</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>commandeScheduler.confirm.unlock</source>
+                <target>The task may be running. Are you sure you want to unlock it ?</target>
             </trans-unit>
 
             <!-- Detail  -->
@@ -115,6 +121,11 @@
                 <source>commandeScheduler.flash.execute</source>
                 <target>Command will be execute during the next "scheduler:execute".</target>
             </trans-unit>
+            <trans-unit id="303">
+                <source>commandeScheduler.flash.unlocked</source>
+                <target>Scheduling successfully unlocked.</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

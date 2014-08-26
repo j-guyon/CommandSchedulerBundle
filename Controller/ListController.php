@@ -76,4 +76,20 @@ class ListController extends Controller
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function unlockAction($id)
+    {
+        $scheduledCommand = $this->getDoctrine()->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
+        $scheduledCommand->setLocked(false);
+        $this->getDoctrine()->getManager()->flush();
+
+        // Add a flash message and do a redirect to the list
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('commandeScheduler.flash.unlocked'));
+
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
+    }
 }

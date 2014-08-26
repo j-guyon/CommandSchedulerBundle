@@ -8,12 +8,10 @@
                 <source>commandeScheduler.name</source>
                 <target>Symfony's scheduler</target>
             </trans-unit>
-
             <trans-unit id="2">
                 <source>commandeScheduler.dateFormat</source>
                 <target>d/m/Y H:m</target>
             </trans-unit>
-
             <trans-unit id="3">
                 <source>commandeScheduler.list.title</source>
                 <target>Taches planifiées</target>
@@ -28,7 +26,6 @@
                 <source>commandeScheduler.action.execute</source>
                 <target>Executer</target>
             </trans-unit>
-
             <trans-unit id="102">
                 <source>commandeScheduler.action.edit</source>
                 <target>Modifier</target>
@@ -37,7 +34,6 @@
                 <source>commandeScheduler.action.new</source>
                 <target>Nouvelle planification</target>
             </trans-unit>
-
             <trans-unit id="104">
                 <source>commandeScheduler.confirm.delete</source>
                 <target>Supprimer définitivement cette planification ?</target>
@@ -46,13 +42,20 @@
                 <source>commandeScheduler.confirm.execute</source>
                 <target>Forcer une exécution de cette commande ?</target>
             </trans-unit>
+            <trans-unit id="106">
+                <source>commandeScheduler.action.unlock</source>
+                <target>Dévérouiller la planification</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>commandeScheduler.confirm.unlock</source>
+                <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le dévérouiller ?</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
                 <source>commandeScheduler.detail.title</source>
                 <target>Tache planifiée</target>
             </trans-unit>
-
             <trans-unit id="202">
                 <source>commandeScheduler.detail.name</source>
                 <target>Nom</target>
@@ -105,16 +108,21 @@
             <!-- Flashs messages -->
             <trans-unit id="300">
                 <source>commandeScheduler.flash.success</source>
-                <target>Planification sauvegardée avec succées.</target>
+                <target>Planification sauvegardée avec succés.</target>
             </trans-unit>
             <trans-unit id="301">
                 <source>commandeScheduler.flash.deleted</source>
-                <target>Planification supprimée avec succées.</target>
+                <target>Planification supprimée avec succés.</target>
             </trans-unit>
             <trans-unit id="302">
                 <source>commandeScheduler.flash.execute</source>
                 <target>Le traitement sera exécutée lors de la prochaine vérification (scheduler:execute).</target>
             </trans-unit>
+            <trans-unit id="303">
+                <source>commandeScheduler.flash.unlocked</source>
+                <target>Traitement dévérouillée avec succès.</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
