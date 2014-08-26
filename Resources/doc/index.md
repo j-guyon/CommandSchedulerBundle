@@ -115,7 +115,7 @@ From this screen, you can do following actions :
   - Edit an existing scheduling
   - Enable or disable on scheduling (by clicking the Power Off/On swith)
   - Manualy execute a command (It will be launched during the next `scheduler:execute`, regardless of the cron expression)
- - Unlock a task (if the lock is due to an uncoverable error for example)
+  - Unlock a task (if the lock is due to an uncoverable error for example)
 
 After that, you have to set (every few minutes, it depends of your needs) the following command in your system : 
 ``` bash
@@ -132,4 +132,4 @@ The `scheduler:execute` command will do following actions :
 This system avoid to have simultaneous process for the same command. 
 In addition, if an non-catchable error occurs, the command won't be execute again unless the problem is solved and the task unlock manualy. So the error won't prevent  others commands from working.
 
-If you have some anwsers or comment, feel free to contact me at julienguyon@hotmail.com
+If you have some anwsers or comment, feel free to contact me at julienguyon at hotmail dot com
