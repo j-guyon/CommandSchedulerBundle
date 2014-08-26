@@ -102,5 +102,34 @@ Feel free to override it (especially `log_path`) in your app's parameters file.
 
 
 
+ 
+Usage note
+============
 
+After a succesfull installation, you can access to this URL: 
 
+`http://{you-app-root}/**command-scheduler/list**`. 
+
+From this screen, you can do following actions : 
+  - Create a new scheduling
+  - Edit an existing scheduling
+  - Enable or disable on scheduling (by clicking the Power Off/On swith)
+  - Manualy execute a command (It will be launched during the next `scheduler:execute`, regardless of the cron expression)
+ - Unlock a task (if the lock is due to an uncoverable error for example)
+
+After that, you have to set (every few minutes, it depends of your needs) the following command in your system : 
+``` bash
+$ php app/console scheduler:execute --env=env -vvv
+```
+
+The `--env=` and `-v` (or `--verbosity`) arguments are passed to all scheduled command from `scheduler:execute`, so you don't have to put these on each scheduling !
+
+The `scheduler:execute` command will do following actions : 
+  - Get all scheduled commands in database (unlocked and enabled only)
+  - Sort them by priority (desc)
+  - Check if the command should be executed since the last execution based to his cron expression.
+  - Note that each command is locked just before his execution (and unlock after). 
+This system avoid to have simultaneous process for the same command. 
+In addition, if an non-catchable error occurs, the command won't be execute again unless the problem is solved and the task unlock manualy. So the error won't prevent  others commands from working.
+
+If you have some anwsers or comment, feel free to contact me at julienguyon@hotmail.com
