@@ -101,9 +101,8 @@ You will find the default configuration file  [here](https://github.com/J-Mose/C
 Feel free to override it (especially `log_path`) in your app's parameters file.
 
 
-
  
-Usage note
+Usage
 ============
 
 After a succesfull installation, you can access to this URL: 
