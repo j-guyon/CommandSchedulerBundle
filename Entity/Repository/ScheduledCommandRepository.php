@@ -23,7 +23,7 @@ class ScheduledCommandRepository extends EntityRepository
         $qb = $this->createQueryBuilder('command')
             ->where('command.disabled = :disabled')
             ->andwhere('command.locked = :disabled')
-            ->orderBy('command.priority', 'ASC')
+            ->orderBy('command.priority', 'DESC')
             ->setParameter('disabled', false);
 
         return $qb->getQuery()->getResult();
