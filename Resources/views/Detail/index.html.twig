@@ -18,8 +18,8 @@
             {{ form_row( scheduledCommandForm.cronExpression, {'attr': styleConfiguration|merge({'placeholder': '*/10 * * * *'}) } ) }}
             {{ form_row( scheduledCommandForm.logFile, {'attr': styleConfiguration|merge({'placeholder': 'myFile.log'}) } ) }}
             {{ form_row( scheduledCommandForm.priority, {'attr': styleConfiguration } ) }}
-            {{ form_widget( scheduledCommandForm.executeImmediately ) }}
-            {{ form_widget( scheduledCommandForm.disabled ) }}
+            {{ form_row( scheduledCommandForm.executeImmediately, {'attr': styleConfiguration } ) }}
+            {{ form_row( scheduledCommandForm.disabled, {'attr': styleConfiguration } ) }}
 
             {# Form's actions #}
             <a href="{{ path('jmose_command_scheduler_list') }}" class="btn btn-default btn-lg" role="button">Cancel</a>
