@@ -155,6 +155,6 @@ The `scheduler:execute` command will do following actions :
   
 **Note** : Each command is locked just before his execution (and unlock after). 
 This system avoid to have simultaneous process for the same command. 
-In addition, if an non-catchable error occurs, the command won't be execute again unless the problem is solved and the task unlock manualy. So the error won't prevent  others commands from working.
+Thus, if an non-catchable error occurs, the command won't be execute again unless the problem is solved and the task unlock manualy.
 
 If you have some anwsers or comment, feel free to contact me at julienguyon at hotmail dot com
