@@ -12,6 +12,7 @@ This Symfony commands scheduler will allow you to easily manage scheduling for S
 - An admin interface to add, edit, enable/disable or delete scheduled commands.
 - For each command, you define : 
  - a name
+ - a symfony console command (choice base on native `list` command)
  - a cron expression
  - an output file 
  - a priority (which will define the order of execution)
