@@ -128,7 +128,7 @@ Usage
 
 After a succesfull installation, you can access to this URL: 
 
-`http://{you-app-root}/**command-scheduler/list**`. 
+`http://{you-app-root}/command-scheduler/list`. 
 
 From this screen, you can do following actions : 
   - Create a new scheduling
