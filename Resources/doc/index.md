@@ -150,7 +150,7 @@ The `scheduler:execute` command will do following actions :
   - Get all scheduled commands in database (unlocked and enabled only)
   - Sort them by priority (desc)
   - Check if the command should be executed since the last execution based to his cron expression.
-  - Execute commands
+  - Execute eligible commands (without `exec` php fonction)
  
   
 **Note** : Each command is locked just before his execution (and unlock after). 
