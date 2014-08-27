@@ -10,7 +10,7 @@
             </trans-unit>
             <trans-unit id="2">
                 <source>commandeScheduler.dateFormat</source>
-                <target>d/m/Y H:m</target>
+                <target>d/m/Y H:i</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>commandeScheduler.list.title</source>

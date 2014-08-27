@@ -11,7 +11,7 @@
 
             <trans-unit id="2">
                 <source>commandeScheduler.dateFormat</source>
-                <target>Y-m-d H:m</target>
+                <target>Y-m-d H:i</target>
             </trans-unit>
 
             <trans-unit id="3">
