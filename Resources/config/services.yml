@@ -2,7 +2,7 @@ parameters:
 
     # Default directory where scheduler will write output files
     #  This default value assume that php app/console is launched from project's root and that the directory is writable
-    jmose_command_scheduler.log_path: app\logs\scheduler\
+    jmose_command_scheduler.log_path: app\logs\
 
     # Namespaces listed here won't be listed in the list
     jmose_command_scheduler.command_choice_list.excluded_namespaces:

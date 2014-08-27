@@ -48,6 +48,13 @@ class ExecuteCommand extends ContainerAwareCommand
     {
         $output->writeln('<info>Start : ' . ($input->getOption('dump') ? 'Dump' : 'Execute') . ' all scheduled command</info>');
 
+        // Before continue, we check that the output file est valid and writable
+        if( false === is_writable($this->getContainer()->getParameter('jmose_command_scheduler.log_path')) )
+        {
+            $output->writeln( '<error>' . $this->getContainer()->getParameter('jmose_command_scheduler.log_path') .
+                ' not found or not writable. You should override `jmose_command_scheduler.log_path` in you app/parameters.yml' .'</error>');
+        }
+
         $this->em         = $this->getContainer()->get('doctrine')->getManager();
         $scheduledCommand = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
 
@@ -91,8 +98,8 @@ class ExecuteCommand extends ContainerAwareCommand
 
     /**
      * @param ScheduledCommand $scheduledCommand
-     * @param OutputInterface  $output
-     * @param InputInterface   $input
+     * @param OutputInterface $output
+     * @param InputInterface $input
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
