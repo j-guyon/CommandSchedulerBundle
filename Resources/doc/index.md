@@ -90,7 +90,7 @@ Now, you can use the bundle and manage your scheduling here : **http://yourapp/c
 $ php app/console scheduler:execute --dump
 ```
 
-See the Usage section to have more informations
+See the [Usage](https://github.com/J-Mose/CommandSchedulerBundle/blob/master/Resources/doc/index.md#usage) section to have more informations
 
 
 ### 4 - Available configuration
