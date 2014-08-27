@@ -16,7 +16,9 @@ This Symfony commands scheduler will allow you to easily manage scheduling for S
  - a cron expression
  - an output file 
  - a priority (which will define the order of execution)
-- A new console command "scheduler:execute (--dump)" which will be the single entry point to all commands and will launch them one after another, with a lock system to avoid multiple execution.
+- A new console command "scheduler:execute (--dump)" which will be the single entry point to all commands
+- Management of queuing and prioritization between tasks 
+- Management of lock
 - Translations in french and english
 
 ## Screenshots
