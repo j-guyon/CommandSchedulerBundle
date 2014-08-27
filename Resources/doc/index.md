@@ -44,23 +44,43 @@ public function registerBundles()
 
 ### 3 - Update configuration
 
-Update your main `app/config/routing.yml` with these lines : 
+First, you have to register routes provides by the bundle :  
 ```yaml
+# app/config/routing.yml
+
 jmose_command_scheduler:
     resource: "@JMoseCommandSchedulerBundle/Resources/config/routing.yml"
     prefix:   /
 ```
 
-If you use assetic, you have to register the bundle un your `app/config.yml` : 
+If you wish to use default texts provided in this bundle, you have to make
+sure you have translator enabled in your config.
+
+``` yaml
+# app/config/config.yml
+
+framework:
+    translator: ~
+```
+
+For more information about translations, check [Symfony documentation](http://symfony.com/doc/current/book/translation.html).
+
+If you use assetic, you have to register the bundle in your assetic configuration : 
 ```yaml
+# app/config/config.yml
+
 assetic:
     bundles: [ ... , JMoseCommandSchedulerBundle ]
 ```
 
-Then, run these commands : 
+And run these commands : 
 ``` bash
 $ php app/console assets:install --env=dev
 $ php app/console assetic:dump --env=dev
+```
+
+Now, you can update your database 
+``` bash
 $ php app/console doctrine:schema:update --env=dev --force
 ```
 
@@ -70,8 +90,8 @@ Now, you can use the bundle and manage your scheduling here : **http://yourapp/c
 $ php app/console scheduler:execute --dump
 ```
 
-If the `--dump` option is set, the scheduler won't execute any command, but just list commands that should be executed.
-Without the option, commands will be execute regarding of their priority and last execution (highest priority will run first).
+See the Usage section to have more informations
+
 
 ### 4 - Available configuration
 
@@ -118,8 +138,11 @@ From this screen, you can do following actions :
 
 After that, you have to set (every few minutes, it depends of your needs) the following command in your system : 
 ``` bash
-$ php app/console scheduler:execute --env=env -vvv
+$ php app/console scheduler:execute --env=env -vvv (--dump)
 ```
+
+If the `--dump` option is set, the scheduler won't execute any command, but just list commands that should be executed.
+Without the option, commands will be execute regarding of their priority and last execution (highest priority will run first).
 
 The `--env=` and `-v` (or `--verbosity`) arguments are passed to all scheduled command from `scheduler:execute`, so you don't have to put these on each scheduling !
 
@@ -127,7 +150,10 @@ The `scheduler:execute` command will do following actions :
   - Get all scheduled commands in database (unlocked and enabled only)
   - Sort them by priority (desc)
   - Check if the command should be executed since the last execution based to his cron expression.
-  - Note that each command is locked just before his execution (and unlock after). 
+  - Execute commands
+ 
+  
+**Note** : Each command is locked just before his execution (and unlock after). 
 This system avoid to have simultaneous process for the same command. 
 In addition, if an non-catchable error occurs, the command won't be execute again unless the problem is solved and the task unlock manualy. So the error won't prevent  others commands from working.
 
