@@ -6,7 +6,7 @@ Installation
 ### 1 - Download the bundle
 We will using the standard Symfony2 method here (composer).
 
-Add `"jmose/command-scheduler-bundle": "dev-master"` in your composer.json:
+Add the bundle and dependencies in  your `composer.json`:
 
 ```js
 {
@@ -19,6 +19,7 @@ Add `"jmose/command-scheduler-bundle": "dev-master"` in your composer.json:
 
 Now download the bundle by running : 
 ``` bash
+$ php composer.phar update mtdowling/cron-expression
 $ php composer.phar update jmose/command-scheduler-bundle
 ```
 
