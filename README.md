@@ -1,10 +1,12 @@
-CommandSchedulerBundle
+CommandSchedulerBundle[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5/big.png)](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5)
 ======================
 
 This Symfony commands scheduler will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 
 **Version**: 1.0-dev  
 **Compatibility**: Symfony >= 2.3.0, Doctrine
+
+
 
 
 ## Features
