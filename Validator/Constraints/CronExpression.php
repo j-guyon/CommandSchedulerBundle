@@ -6,7 +6,6 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class CronExpression
- * @Annotation
  *
  * @package Assureclair\OGM\SinistreBundle\Validator\Constraints
  */
