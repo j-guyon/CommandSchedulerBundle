@@ -1,5 +1,7 @@
-CommandSchedulerBundle[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5/big.png)](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5)
+CommandSchedulerBundle
 ======================
+
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5/big.png)](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5)
 
 This Symfony commands scheduler will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 
@@ -8,17 +10,16 @@ This Symfony commands scheduler will allow you to easily manage scheduling for S
 
 
 
-
 ## Features
 
 - An admin interface to add, edit, enable/disable or delete scheduled commands.
 - For each command, you define : 
- - a name
- - a symfony console command (choice based on native `list` command)
- - a cron expression
- - an output file 
- - a priority (which will define the order of execution)
-- A new console command "scheduler:execute (--dump)" which will be the single entry point to all commands
+ - name
+ - symfony console command (choice based on native `list` command)
+ - cron expression
+ - output file 
+ - priority (which will define the order of execution)
+- A new console command `scheduler:execute [--dump]` which will be the single entry point to all commands
 - Management of queuing and prioritization between tasks 
 - Management of lock
 - Translations in french and english
