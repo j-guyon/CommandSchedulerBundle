@@ -76,13 +76,13 @@ assetic:
 
 And run these commands : 
 ``` bash
-$ php app/console assets:install --env=dev
-$ php app/console assetic:dump --env=dev
+$ php app/console assets:install
+$ php app/console assetic:dump
 ```
 
-Now, you can update your database 
+Update your database 
 ``` bash
-$ php app/console doctrine:schema:update --env=dev --force
+$ php app/console doctrine:schema:update --force
 ```
 
 
@@ -133,7 +133,7 @@ After a succesfull installation, you can access to this URL:
 From this screen, you can do following actions : 
   - Create a new scheduling
   - Edit an existing scheduling
-  - Enable or disable on scheduling (by clicking the Power Off/On swith)
+  - Enable or disable on scheduling (by clicking the Power Off/On switch)
   - Manualy execute a command (It will be launched during the next `scheduler:execute`, regardless of the cron expression)
   - Unlock a task (if the lock is due to an uncoverable error for example)
 
@@ -158,4 +158,6 @@ The `scheduler:execute` command will do following actions :
 This system avoid to have simultaneous process for the same command. 
 Thus, if an non-catchable error occurs, the command won't be execute again unless the problem is solved and the task unlock manualy.
 
-If you have some anwsers or comment, feel free to contact me at julienguyon at hotmail dot com
+If you have some anwsers or comment, feel free to contact me at julienguyon at hotmail dot com.
+
+Issues and feature requests are tracked in the [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
