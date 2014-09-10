@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "symfony/symfony": ">=2.3.0",
+        "symfony/framework-bundle": "2.*",
         "twig/twig": "*",
         "doctrine/doctrine-bundle": "*",
         "mtdowling/cron-expression": "1.*"
