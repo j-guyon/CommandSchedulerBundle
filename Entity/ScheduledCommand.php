@@ -369,7 +369,7 @@ class ScheduledCommand
     }
 
     /**
-     * Permet de savoir si le script est en cours d'execution
+     * Locked Getter
      *
      * @return boolean
      */
@@ -379,7 +379,7 @@ class ScheduledCommand
     }
 
     /**
-     * Permet de savoir si le script est en cours d'execution
+     * locked Getter
      *
      * @return boolean
      */
@@ -389,7 +389,7 @@ class ScheduledCommand
     }
 
     /**
-     * Permet de savoir si le script est en cours d'execution
+     * locked Setter
      *
      * @param boolean $locked
      */
