@@ -41,3 +41,4 @@ See the documation [here](https://github.com/J-Mose/CommandSchedulerBundle/blob/
 This bundle is under the MIT license. See the complete license in the bundle:
 
 Resources/meta/LICENSE
+
