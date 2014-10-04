@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Class CronExpression
  *
- * @package Assureclair\OGM\SinistreBundle\Validator\Constraints
+ * @package JMose\CommandSchedulerBundle\Validator\Constraints
  */
 class CronExpression extends Constraint
 {
