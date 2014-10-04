@@ -46,16 +46,20 @@ class ExecuteCommand extends ContainerAwareCommand
     {
         $output->writeln('<info>Start : ' . ($input->getOption('dump') ? 'Dump' : 'Execute') . ' all scheduled command</info>');
 
-        // Before continue, we check that the output file est valid and writable
-        if( false === is_writable($this->getContainer()->getParameter('jmose_command_scheduler.log_path')) )
-        {
-            $output->writeln( '<error>' . $this->getContainer()->getParameter('jmose_command_scheduler.log_path') .
-                ' not found or not writable. You should override `jmose_command_scheduler.log_path` in you app/parameters.yml' .'</error>');
+        // Before continue, we check that the output file is valid and writable (except for gaufrette)
+        if (strpos($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), 'gaufrette:') !== 0 &&
+            false === is_writable($this->getContainer()->getParameter('jmose_command_scheduler.log_path'))
+        ) {
+            $output->writeln('<error>' . $this->getContainer()->getParameter('jmose_command_scheduler.log_path') .
+                ' not found or not writable. You should override `jmose_command_scheduler.log_path` in you app/parameters.yml' . '</error>');
+
+            return;
         }
 
         $this->em         = $this->getContainer()->get('doctrine')->getManager();
         $scheduledCommand = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
 
+        $noneExecution = true;
         foreach ($scheduledCommand as $command) {
 
             /** @var ScheduledCommand $command */
@@ -64,6 +68,7 @@ class ExecuteCommand extends ContainerAwareCommand
             $now         = new \DateTime();
 
             if ($command->isExecuteImmediately()) {
+                $noneExecution = false;
                 $output->writeln(
                     'Immediately execution asked for : <comment>' . $command->getCommand() . '</comment>'
                 );
@@ -73,6 +78,7 @@ class ExecuteCommand extends ContainerAwareCommand
                     $command->setExecuteImmediately(false);
                 }
             } elseif ($nextRunDate < $now) {
+                $noneExecution = false;
                 $output->writeln(
                     'Command <comment>' . $command->getCommand() . '</comment> should be executed - last execution : <comment>' .
                     $command->getLastExecution()->format('d/m/Y H:i:s') . '.</comment>'
@@ -92,6 +98,8 @@ class ExecuteCommand extends ContainerAwareCommand
              */
             $this->em->clear();
         }
+
+        if (true === $noneExecution) $output->writeln('Nothing to do.');
     }
 
     /**
@@ -130,7 +138,7 @@ class ExecuteCommand extends ContainerAwareCommand
 
         // Execute command and get return code
         try {
-            $output->write('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand() . $scheduledCommand->getArguments() . '</comment>');
+            $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand() . $scheduledCommand->getArguments() . '</comment>');
             $result = $command->run($input, $logOutput);
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());

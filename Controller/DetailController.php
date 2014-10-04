@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use JMose\CommandSchedulerBundle\Form\ScheduledCommandType;
+use JMose\CommandSchedulerBundle\Form\Type\ScheduledCommandType;
 
 /**
  * Class DetailController
@@ -80,12 +80,18 @@ class DetailController extends Controller
      */
     public function saveAction(Request $request)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+
         // Init and populate form object
-        $scheduledCommand     = new ScheduledCommand();
+        if ($request->request->get('command_scheduler_detail')['id'] != '') {
+            $scheduledCommand = $entityManager->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+                ->find($request->request->get('command_scheduler_detail')['id']);
+        } else {
+            $scheduledCommand = new ScheduledCommand();
+        }
+
         $scheduledCommandForm = $this->createForm(new ScheduledCommandType($this->get('jmose_command_scheduler.command_choice_list')), $scheduledCommand);
         $scheduledCommandForm->handleRequest($request);
-
-        $entityManager = $this->getDoctrine()->getManager();
 
         if ($scheduledCommandForm->isValid()) {
 
@@ -94,8 +100,6 @@ class DetailController extends Controller
                 $scheduledCommand->setLastExecution( new \DateTime());
                 $scheduledCommand->setLocked(false);
                 $entityManager->persist($scheduledCommand);
-            } else {
-                $entityManager->merge($scheduledCommand);
             }
             $entityManager->flush();
 

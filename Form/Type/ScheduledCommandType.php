@@ -1,16 +1,17 @@
 <?php
 
-namespace JMose\CommandSchedulerBundle\Form;
+namespace JMose\CommandSchedulerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JMose\CommandSchedulerBundle\Form\CommandChoiceList;
 
 /**
  * Class ScheduledCommandType
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Form
+ * @package JMose\CommandSchedulerBundle\Form\Type
  */
 class ScheduledCommandType extends AbstractType
 {
@@ -35,8 +36,6 @@ class ScheduledCommandType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden');
-        $builder->add('lastReturnCode', 'hidden');
-        $builder->add('locked', 'hidden');
 
         $builder->add(
             'name', 'text', array(
