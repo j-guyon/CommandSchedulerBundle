@@ -158,6 +158,4 @@ The `scheduler:execute` command will do following actions :
 This system avoid to have simultaneous process for the same command. 
 Thus, if an non-catchable error occurs, the command won't be execute again unless the problem is solved and the task unlock manualy.
 
-If you have some anwsers or comment, feel free to contact me at julienguyon at hotmail dot com.
-
-Issues and feature requests are tracked in the [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
+For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
