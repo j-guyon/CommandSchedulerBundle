@@ -1,30 +1,17 @@
- 
 Installation
 ============
 
+### 1 - Install the bundle
+We will be using the standard Symfony method here (composer).
 
-### 1 - Download the bundle
-We will using the standard Symfony2 method here (composer).
-
-Add the bundle and dependencies in  your `composer.json`:
-
-```js
-{
-    "require": {
-        "mtdowling/cron-expression": "1.*",
-        "jmose/command-scheduler-bundle": "dev-master"
-    }
-}
-```
-
-Now download the bundle by running : 
+Add the bundle and dependencies in  your `composer.json` : 
 ``` bash
-$ php composer.phar update mtdowling/cron-expression
-$ php composer.phar update jmose/command-scheduler-bundle
+$ php composer.phar require jmose/command-scheduler-bundle
 ```
+
+If you don't have composer yet, please refer to [the official Composer website](http://getcomposer.org/).
 
 Composer will install the bundle to your project's `vendor` directory.
-
 
 ### 2 - Enable the bundle
 
@@ -43,9 +30,9 @@ public function registerBundles()
 }
 ```
 
-### 3 - Update configuration
+### 3 - Set up configuration
 
-First, you have to register routes provides by the bundle :  
+First, you have to register the routes provided by the bundle :  
 ```yaml
 # app/config/routing.yml
 
@@ -54,8 +41,7 @@ jmose_command_scheduler:
     prefix:   /
 ```
 
-If you wish to use default texts provided in this bundle, you have to make
-sure you have translator enabled in your config.
+If you wish to use default texts provided in this bundle, you have to make sure you have translator enabled in your config.
 
 ``` yaml
 # app/config/config.yml
@@ -85,13 +71,12 @@ Update your database
 $ php app/console doctrine:schema:update --force
 ```
 
-
-Now, you can use the bundle and manage your scheduling here : **http://yourapp/command-scheduler/list** and execute them with this new command
+Now, you can use the bundle and manage your scheduling here : **http://{you-app-root}/command-scheduler/list** and execute them with this new command
 ``` bash
 $ php app/console scheduler:execute --dump
 ```
 
-See the [Usage](https://github.com/J-Mose/CommandSchedulerBundle/blob/master/Resources/doc/index.md#usage) section to have more informations
+See the [Usage](#usage) section to have more informations
 
 
 ### 4 - Available configuration
@@ -117,10 +102,9 @@ parameters:
         - router
 ```
 
-You will find the default configuration file  [here](https://github.com/J-Mose/CommandSchedulerBundle/blob/master/Resources/config/services.yml). 
+You will find the default configuration file  [here](../config/services.yml). 
 
 Feel free to override it (especially `log_path`) in your app's parameters file.
-
 
  
 Usage
@@ -133,29 +117,29 @@ After a succesfull installation, you can access to this URL:
 From this screen, you can do following actions : 
   - Create a new scheduling
   - Edit an existing scheduling
-  - Enable or disable on scheduling (by clicking the Power Off/On switch)
+  - Enable or disable scheduling (by clicking the "Power Off/On" switch)
   - Manualy execute a command (It will be launched during the next `scheduler:execute`, regardless of the cron expression)
   - Unlock a task (if the lock is due to an uncoverable error for example)
 
 After that, you have to set (every few minutes, it depends of your needs) the following command in your system : 
 ``` bash
-$ php app/console scheduler:execute --env=env -vvv (--dump)
+$ php app/console scheduler:execute --env=env -vvv [--dump]
 ```
 
 If the `--dump` option is set, the scheduler won't execute any command, but just list commands that should be executed.
-Without the option, commands will be execute regarding of their priority and last execution (highest priority will run first).
+Without the option, commands will be executed depending their priority and last execution time (highest priority will run first).
 
 The `--env=` and `-v` (or `--verbosity`) arguments are passed to all scheduled command from `scheduler:execute`, so you don't have to put these on each scheduling !
 
 The `scheduler:execute` command will do following actions : 
   - Get all scheduled commands in database (unlocked and enabled only)
   - Sort them by priority (desc)
-  - Check if the command should be executed since the last execution based to his cron expression.
+  - Check if the command has to be executed at current time, based on its cron expression and on its last execution time
   - Execute eligible commands (without `exec` php fonction)
  
   
-**Note** : Each command is locked just before his execution (and unlock after). 
+**Note** : Each command is locked just before his execution (and unlocked after). 
 This system avoid to have simultaneous process for the same command. 
-Thus, if an non-catchable error occurs, the command won't be execute again unless the problem is solved and the task unlock manualy.
+Thus, if an non-catchable error occurs, the command won't be executed again unless the problem is solved and the task is unlocked manualy.
 
 For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
