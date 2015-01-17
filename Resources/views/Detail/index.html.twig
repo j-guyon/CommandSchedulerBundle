@@ -26,7 +26,7 @@
         </div>
         <div>
             {{ form_widget( scheduledCommandForm.disabled ) }}
-            {% if not scheduledCommandForm.executeImmediately.rendered %}
+            {% if not scheduledCommandForm.scheduledCommandForm.rendered %}
                 {{ form_label( scheduledCommandForm.disabled ) }}
             {% endif %}
         </div>
