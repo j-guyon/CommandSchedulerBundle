@@ -109,7 +109,6 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
-        $scheduledCommand = $this->em->merge($scheduledCommand);
         $scheduledCommand->setLocked(true);
         $this->em->flush();
 
