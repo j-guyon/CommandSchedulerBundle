@@ -28,7 +28,7 @@ class DetailController extends Controller
     public function indexAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
     {
         if (null === $scheduledCommandForm) {
-            $scheduledCommandForm = $this->createForm(new ScheduledCommandType($this->get('jmose_command_scheduler.command_choice_list')), $scheduledCommand);
+            $scheduledCommandForm = $this->createForm(new ScheduledCommandType($this->get('jmose_command_scheduler.command_choice_list'), $this->get('service_container')->getParameter('jmose_command_scheduler.server.list')), $scheduledCommand);
         }
 
         return $this->render(
@@ -90,7 +90,7 @@ class DetailController extends Controller
             $scheduledCommand = new ScheduledCommand();
         }
 
-        $scheduledCommandForm = $this->createForm(new ScheduledCommandType($this->get('jmose_command_scheduler.command_choice_list')), $scheduledCommand);
+        $scheduledCommandForm = $this->createForm(new ScheduledCommandType($this->get('jmose_command_scheduler.command_choice_list'), $this->get('service_container')->getParameter('jmose_command_scheduler.server.list')), $scheduledCommand);
         $scheduledCommandForm->handleRequest($request);
 
         if ($scheduledCommandForm->isValid()) {

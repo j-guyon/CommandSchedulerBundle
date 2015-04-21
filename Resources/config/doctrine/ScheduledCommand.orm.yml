@@ -30,6 +30,12 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             unique: false
             nullable: true
             column: ARGUMENTS
+        server:
+            type: string
+            length: 30
+            unique: false
+            nullable: false
+            column: SERVER
         cronExpression:
             type: string
             scale: 0
