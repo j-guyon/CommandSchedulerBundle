@@ -104,6 +104,10 @@
                 <source>commandeScheduler.detail.actions</source>
                 <target>Actions</target>
             </trans-unit>
+            <trans-unit id="214">
+                <source>commandeScheduler.detail.server</source>
+                <target>Server</target>
+            </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">

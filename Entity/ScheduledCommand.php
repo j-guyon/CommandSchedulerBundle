@@ -32,6 +32,11 @@ class ScheduledCommand
     private $arguments;
 
     /**
+     * @var string
+     */
+    private $server;
+
+    /**
      * @see http://www.abunchofutils.com/utils/developer/cron-expression-helper/
      * @var string
      */
@@ -158,7 +163,7 @@ class ScheduledCommand
             return $this->arguments;
         }
 
-        $argsArray = array();
+        $argsArray = [];
         if (null !== $this->arguments || '' != $this->arguments) {
             $flatArgsArray = explode(' ', preg_replace('/\s+/', ' ', $this->arguments));
             foreach ($flatArgsArray as $argument) {
@@ -185,6 +190,22 @@ class ScheduledCommand
         $this->arguments = $arguments;
 
         return $this;
+    }
+
+    /**
+      * @return string
+     */
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    /**
+     * @param string $server
+     */
+    public function setServer($server)
+    {
+        $this->server = $server;
     }
 
     /**

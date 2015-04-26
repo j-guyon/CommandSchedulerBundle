@@ -22,11 +22,18 @@ class ScheduledCommandType extends AbstractType
     private $choiceListService;
 
     /**
-     * @param CommandChoiceList $choiceListService
+     * @var array
      */
-    public function __construct(CommandChoiceList $choiceListService)
+    private $serverList;
+
+    /**
+     * @param CommandChoiceList $choiceListService
+     * @param array $serverList
+     */
+    public function __construct(CommandChoiceList $choiceListService, array $serverList)
     {
-        $this->choiceListService = $choiceListService;
+        $this->choiceListService    = $choiceListService;
+        $this->serverList           = $serverList;
     }
 
     /**
@@ -38,67 +45,75 @@ class ScheduledCommandType extends AbstractType
         $builder->add('id', 'hidden');
 
         $builder->add(
-            'name', 'text', array(
+            'name', 'text', [
                 'label'    => 'commandeScheduler.detail.name',
                 'required' => true
-            )
+            ]
         );
 
         $builder->add(
-            'command', 'choice', array(
+            'command', 'choice', [
                 'choice_list' => $this->choiceListService,
                 'label'       => 'commandeScheduler.detail.command',
                 'required'    => true
-            )
+            ]
         );
 
         $builder->add(
-            'arguments', 'text', array(
+            'arguments', 'text', [
                 'label'    => 'commandeScheduler.detail.arguments',
                 'required' => false
-            )
+            ]
         );
 
         $builder->add(
-            'cronExpression', 'text', array(
+            'server', 'choice', [
+            'choices'     => $this->serverList,
+            'label'       => 'commandeScheduler.detail.server',
+            'required'    => true
+            ]
+        );
+
+        $builder->add(
+            'cronExpression', 'text', [
                 'label'    => 'commandeScheduler.detail.cronExpression',
                 'required' => true
-            )
+            ]
         );
 
         $builder->add(
-            'logFile', 'text', array(
+            'logFile', 'text', [
                 'label'    => 'commandeScheduler.detail.logFile',
                 'required' => true
-            )
+            ]
         );
 
         $builder->add(
-            'priority', 'integer', array(
+            'priority', 'integer', [
                 'label'      => 'commandeScheduler.detail.priority',
                 'empty_data' => 0,
                 'required'   => false
-            )
+            ]
         );
 
         $builder->add(
-            'executeImmediately', 'checkbox', array(
+            'executeImmediately', 'checkbox', [
                 'label'    => 'commandeScheduler.detail.executeImmediately',
                 'required' => false
-            )
+            ]
         );
 
         $builder->add(
-            'disabled', 'checkbox', array(
+            'disabled', 'checkbox', [
                 'label'    => 'commandeScheduler.detail.disabled',
                 'required' => false
-            )
+            ]
         );
 
         $builder->add(
-            'save', 'submit', array(
+            'save', 'submit', [
                 'label' => 'commandeScheduler.detail.save',
-            )
+            ]
         );
 
     }
@@ -109,10 +124,10 @@ class ScheduledCommandType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class'   => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
                 'wrapper_attr' => 'default_wrapper'
-            )
+            ]
         );
     }
 

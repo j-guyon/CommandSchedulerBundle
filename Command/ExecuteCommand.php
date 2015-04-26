@@ -51,13 +51,14 @@ class ExecuteCommand extends ContainerAwareCommand
             false === is_writable($this->getContainer()->getParameter('jmose_command_scheduler.log_path'))
         ) {
             $output->writeln('<error>' . $this->getContainer()->getParameter('jmose_command_scheduler.log_path') .
-                ' not found or not writable. You should override `jmose_command_scheduler.log_path` in your app/parameters.yml' . '</error>');
+                ' not found or not writable. You should override `jmose_command_scheduler.log_path` in you app/parameters.yml' . '</error>');
 
             return;
         }
 
-        $this->em         = $this->getContainer()->get('doctrine')->getManager();
-        $scheduledCommand = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
+        $this->em           = $this->getContainer()->get('doctrine')->getManager();
+        $scheduledCommand   = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
+        $currentServer      = $this->getContainer()->getParameter('jmose_command_scheduler.server.current');
 
         $noneExecution = true;
         foreach ($scheduledCommand as $command) {
@@ -67,7 +68,9 @@ class ExecuteCommand extends ContainerAwareCommand
             $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
             $now         = new \DateTime();
 
-            if ($command->isExecuteImmediately()) {
+            if($command->getServer() != '-' && ($currentServer != $command->getServer())) {
+                $noneExecution = false;
+            } elseif ($command->isExecuteImmediately()) {
                 $noneExecution = false;
                 $output->writeln(
                     'Immediately execution asked for : <comment>' . $command->getCommand() . '</comment>'
@@ -75,6 +78,7 @@ class ExecuteCommand extends ContainerAwareCommand
 
                 if (!$input->getOption('dump')) {
                     $this->executeCommand($command, $output, $input);
+                    $command->setExecuteImmediately(false);
                 }
             } elseif ($nextRunDate < $now) {
                 $noneExecution = false;
@@ -87,6 +91,15 @@ class ExecuteCommand extends ContainerAwareCommand
                     $this->executeCommand($command, $output, $input);
                 }
             }
+
+            $this->em->merge($command);
+            $this->em->flush();
+
+            /*
+             * This clear() is necessary to avoid conflict between commands and to be sure that none entity are managed
+             * before entering in a new command
+             */
+            $this->em->clear();
         }
 
         if (true === $noneExecution) $output->writeln('Nothing to do.');
@@ -99,8 +112,6 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
-        $scheduledCommand = $this->em->merge($scheduledCommand);
-        $scheduledCommand->setLastExecution(new \DateTime());
         $scheduledCommand->setLocked(true);
         $this->em->flush();
 
@@ -138,22 +149,10 @@ class ExecuteCommand extends ContainerAwareCommand
             $result = -1;
         }
 
-        if (false === $this->em->isOpen()) {
-            $output->writeln('<comment>Entity manager closed by the last command.</comment>');
-            $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
-        }
-
-        $scheduledCommand = $this->em->merge($scheduledCommand);
         $scheduledCommand->setLastReturnCode($result);
+        $scheduledCommand->setLastExecution(new \DateTime());
         $scheduledCommand->setLocked(false);
-        $scheduledCommand->setExecuteImmediately(false);
         $this->em->flush();
-
-        /*
-         * This clear() is necessary to avoid conflict between commands and to be sure that none entity are managed
-         * before entering in a new command
-         */
-        $this->em->clear();
 
         unset($command);
         gc_collect_cycles();
