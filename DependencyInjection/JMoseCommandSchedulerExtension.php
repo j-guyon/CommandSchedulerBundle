@@ -21,5 +21,9 @@ class JMoseCommandSchedulerExtension extends Extension
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        
+        $asseticBundle   = $container->getParameter( 'assetic.bundles' );
+        $asseticBundle[] = 'JMoseCommandSchedulerBundle';
+        $container->setParameter( 'assetic.bundles', $asseticBundle );
     }
 }
