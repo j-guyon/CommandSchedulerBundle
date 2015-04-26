@@ -52,15 +52,7 @@ framework:
 
 For more information about translations, check [Symfony documentation](http://symfony.com/doc/current/book/translation.html).
 
-If you use assetic, you have to register the bundle in your assetic configuration : 
-```yaml
-# app/config/config.yml
-
-assetic:
-    bundles: [ ... , JMoseCommandSchedulerBundle ]
-```
-
-And run these commands : 
+Run assetic commands : 
 ``` bash
 $ php app/console assets:install
 $ php app/console assetic:dump
