@@ -63,6 +63,11 @@ Update your database
 $ php app/console doctrine:schema:update --force
 ```
 
+In case you're using another doctrine manager
+``` bash
+$ php app/console doctrine:schema:update --em=[manager_name] --force
+```
+
 Now, you can use the bundle and manage your scheduling here : **http://{you-app-root}/command-scheduler/list** and execute them with this new command
 ``` bash
 $ php app/console scheduler:execute --dump
@@ -92,6 +97,9 @@ parameters:
         - generate
         - init
         - router
+
+    # Doctrine manager
+    jmose_command_scheduler.doctrine_manager: default
 ```
 
 You will find the default configuration file  [here](../config/services.yml). 

@@ -18,6 +18,10 @@ parameters:
     # Class use to populate the command list
     jmose_command_scheduler.command_choice_list.class: JMose\CommandSchedulerBundle\Form\CommandChoiceList
 
+    # Doctrine manager
+    jmose_command_scheduler.doctrine_manager: default
+
+
 services:
 
     # This service execute native command "list" to populate a LazeChoiceList

@@ -62,7 +62,8 @@ class DetailController extends Controller
      */
     public function initEditScheduledCommandAction($scheduledCommandId)
     {
-        $scheduledCommand = $this->getDoctrine()->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
             ->find($scheduledCommandId);
 
         return $this->forward(
@@ -80,7 +81,8 @@ class DetailController extends Controller
      */
     public function saveAction(Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $entityManager = $this->getDoctrine()->getManager($manager);
 
         // Init and populate form object
         if ($request->request->get('command_scheduler_detail')['id'] != '') {
