@@ -81,7 +81,7 @@ class DetailController extends Controller
      */
     public function saveAction(Request $request)
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $manager       = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
         $entityManager = $this->getDoctrine()->getManager($manager);
 
         // Init and populate form object
@@ -99,9 +99,7 @@ class DetailController extends Controller
 
             // Handle save to the database
             if (null === $scheduledCommand->getId()) {
-                $scheduledCommand->setLastExecution( new \DateTime());
-                $scheduledCommand->setLocked(false);
-                $entityManager->persist($scheduledCommand);
+                $entityManager->persist($scheduledCommand->init());
             }
             $entityManager->flush();
 

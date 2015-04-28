@@ -398,4 +398,16 @@ class ScheduledCommand
         $this->locked = $locked;
     }
 
+    /**
+     * Init new ScheduledCommand
+     *
+     * @return ScheduledCommand
+     */
+    public function init()
+    {
+        $this->setLastExecution(new \DateTime());
+        $this->setLocked(false);
+
+        return $this;
+    }
 }
