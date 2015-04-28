@@ -18,7 +18,8 @@ class ListController extends Controller
      */
     public function indexAction()
     {
-        $scheduledCommands = $this->getDoctrine()->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $scheduledCommands = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
 
         return $this->render(
             'JMoseCommandSchedulerBundle:List:index.html.twig',
@@ -32,8 +33,9 @@ class ListController extends Controller
      */
     public function removeAction($id)
     {
-        $scheduledCommand = $this->getDoctrine()->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
-        $entityManager    = $this->getDoctrine()->getManager();
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
+        $entityManager    = $this->getDoctrine()->getManager($manager);
         $entityManager->remove($scheduledCommand);
         $entityManager->flush();
 
@@ -49,14 +51,15 @@ class ListController extends Controller
      */
     public function toggleAction($id)
     {
-        $scheduledCommand = $this->getDoctrine()->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
         if ($scheduledCommand->isDisabled()) {
             $scheduledCommand->setDisabled(false);
         } else {
             $scheduledCommand->setDisabled(true);
         }
 
-        $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager($manager)->flush();
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
@@ -67,9 +70,10 @@ class ListController extends Controller
      */
     public function executeAction($id)
     {
-        $scheduledCommand = $this->getDoctrine()->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
         $scheduledCommand->setExecuteImmediately(true);
-        $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager($manager)->flush();
 
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('commandeScheduler.flash.execute'));
@@ -83,9 +87,10 @@ class ListController extends Controller
      */
     public function unlockAction($id)
     {
-        $scheduledCommand = $this->getDoctrine()->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->gcontainer->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
         $scheduledCommand->setLocked(false);
-        $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager($manager)->flush();
 
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('commandeScheduler.flash.unlocked'));

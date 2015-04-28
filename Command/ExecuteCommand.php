@@ -55,8 +55,8 @@ class ExecuteCommand extends ContainerAwareCommand
 
             return;
         }
-
-        $this->em         = $this->getContainer()->get('doctrine')->getManager();
+        $manager          = ($this->getContainer()->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $this->em         = $this->getContainer()->get('doctrine')->getManager($manager);
         $scheduledCommand = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
 
         $noneExecution = true;
