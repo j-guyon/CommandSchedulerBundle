@@ -41,6 +41,18 @@ jmose_command_scheduler:
     prefix:   /
 ```
 
+If you do not have auto_mapping set to true or you are using multiple entity managers, then set the bundle in the proper entity manager:
+```yaml
+# app/config/config.yml
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                mappings:
+                    YourBundle: ~
+                    JMoseCommandSchedulerBundle: ~
+```
+
 If you wish to use default texts provided in this bundle, you have to make sure you have translator enabled in your config.
 
 ``` yaml
