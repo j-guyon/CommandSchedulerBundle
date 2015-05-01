@@ -8,6 +8,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use JMose\CommandSchedulerBundle\Form\Type\ScheduledCommandType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DetailController
@@ -24,7 +25,7 @@ class DetailController extends Controller
      *
      * @param ScheduledCommand $scheduledCommand
      * @param Form             $scheduledCommandForm
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
     {
@@ -42,7 +43,7 @@ class DetailController extends Controller
     /**
      * Initialize a new ScheduledCommand object and forward to the index action (view)
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function initNewScheduledCommandAction()
     {
@@ -59,7 +60,7 @@ class DetailController extends Controller
      * Get a ScheduledCommand object with its id and forward it to the index action (view)
      *
      * @param $scheduledCommandId
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function initEditScheduledCommandAction($scheduledCommandId)
     {
@@ -78,7 +79,7 @@ class DetailController extends Controller
      * Handle save after form is submit and forward to the index action (view)
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function saveAction(Request $request)
     {
