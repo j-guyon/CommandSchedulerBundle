@@ -1,30 +1,6 @@
-parameters:
-
-    # Default directory where scheduler will write output files
-    #  This default value assume that php app/console is launched from project's root and that the directory is writable
-    jmose_command_scheduler.log_path: app\logs\
-
-    # Namespaces listed here won't be listed in the list
-    jmose_command_scheduler.command_choice_list.excluded_namespaces:
-        - _global
-        - scheduler
-        - server
-        - container
-        - config
-        - generate
-        - init
-        - router
-
-    # Class use to populate the command list
-    jmose_command_scheduler.command_choice_list.class: JMose\CommandSchedulerBundle\Form\CommandChoiceList
-
-    # Doctrine manager
-    jmose_command_scheduler.doctrine_manager: default
-
-
 services:
-
-    # This service execute native command "list" to populate a LazeChoiceList
     jmose_command_scheduler.command_choice_list:
-        class: %jmose_command_scheduler.command_choice_list.class%
-        arguments: [@kernel, %jmose_command_scheduler.command_choice_list.excluded_namespaces%]
+        class: JMose\CommandSchedulerBundle\Form\CommandChoiceList
+        arguments:
+            - @kernel
+            - %jmose_command_scheduler.excluded_command_namespaces%

@@ -5,121 +5,121 @@
 
             <!-- Bundle -->
             <trans-unit id="1">
-                <source>commandeScheduler.name</source>
+                <source>name</source>
                 <target>Symfony's scheduler</target>
             </trans-unit>
             <trans-unit id="2">
-                <source>commandeScheduler.dateFormat</source>
+                <source>dateFormat</source>
                 <target>d/m/Y H:i</target>
             </trans-unit>
             <trans-unit id="3">
-                <source>commandeScheduler.list.title</source>
+                <source>list.title</source>
                 <target>Taches planifiées</target>
             </trans-unit>
 
             <!-- Actions -->
             <trans-unit id="100">
-                <source>commandeScheduler.action.delete</source>
+                <source>action.delete</source>
                 <target>Supprimer</target>
             </trans-unit>
             <trans-unit id="101">
-                <source>commandeScheduler.action.execute</source>
+                <source>action.execute</source>
                 <target>Executer</target>
             </trans-unit>
             <trans-unit id="102">
-                <source>commandeScheduler.action.edit</source>
+                <source>action.edit</source>
                 <target>Modifier</target>
             </trans-unit>
             <trans-unit id="103">
-                <source>commandeScheduler.action.new</source>
+                <source>action.new</source>
                 <target>Nouvelle planification</target>
             </trans-unit>
             <trans-unit id="104">
-                <source>commandeScheduler.confirm.delete</source>
+                <source>confirm.delete</source>
                 <target>Supprimer définitivement cette planification ?</target>
             </trans-unit>
             <trans-unit id="105">
-                <source>commandeScheduler.confirm.execute</source>
+                <source>confirm.execute</source>
                 <target>Forcer une exécution de cette commande ?</target>
             </trans-unit>
             <trans-unit id="106">
-                <source>commandeScheduler.action.unlock</source>
+                <source>action.unlock</source>
                 <target>Dévérouiller la planification</target>
             </trans-unit>
             <trans-unit id="107">
-                <source>commandeScheduler.confirm.unlock</source>
+                <source>confirm.unlock</source>
                 <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le dévérouiller ?</target>
             </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
-                <source>commandeScheduler.detail.title</source>
+                <source>detail.title</source>
                 <target>Tache planifiée</target>
             </trans-unit>
             <trans-unit id="202">
-                <source>commandeScheduler.detail.name</source>
+                <source>detail.name</source>
                 <target>Nom</target>
             </trans-unit>
             <trans-unit id="203">
-                <source>commandeScheduler.detail.command</source>
+                <source>detail.command</source>
                 <target>Commande</target>
             </trans-unit>
             <trans-unit id="204">
-                <source>commandeScheduler.detail.arguments</source>
+                <source>detail.arguments</source>
                 <target>Arguments</target>
             </trans-unit>
             <trans-unit id="205">
-                <source>commandeScheduler.detail.cronExpression</source>
+                <source>detail.cronExpression</source>
                 <target>Expression cron</target>
             </trans-unit>
             <trans-unit id="206">
-                <source>commandeScheduler.detail.logFile</source>
+                <source>detail.logFile</source>
                 <target>Nom du fichier de log</target>
             </trans-unit>
             <trans-unit id="207">
-                <source>commandeScheduler.detail.priority</source>
+                <source>detail.priority</source>
                 <target>Priorité</target>
             </trans-unit>
             <trans-unit id="208">
-                <source>commandeScheduler.detail.executeImmediately</source>
+                <source>detail.executeImmediately</source>
                 <target>Executer maintenant</target>
             </trans-unit>
             <trans-unit id="209">
-                <source>commandeScheduler.detail.disabled</source>
+                <source>detail.disabled</source>
                 <target>Désactiver</target>
             </trans-unit>
             <trans-unit id="210">
-                <source>commandeScheduler.detail.save</source>
+                <source>detail.save</source>
                 <target>Enregistrer</target>
             </trans-unit>
             <trans-unit id="211">
-                <source>commandeScheduler.detail.lastExecution</source>
+                <source>detail.lastExecution</source>
                 <target>Dernière exécution</target>
             </trans-unit>
             <trans-unit id="212">
-                <source>commandeScheduler.detail.lastReturnCode</source>
+                <source>detail.lastReturnCode</source>
                 <target>Dernier code retour</target>
             </trans-unit>
             <trans-unit id="213">
-                <source>commandeScheduler.detail.actions</source>
+                <source>detail.actions</source>
                 <target>Actions</target>
             </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">
-                <source>commandeScheduler.flash.success</source>
+                <source>flash.success</source>
                 <target>Planification sauvegardée avec succés.</target>
             </trans-unit>
             <trans-unit id="301">
-                <source>commandeScheduler.flash.deleted</source>
+                <source>flash.deleted</source>
                 <target>Planification supprimée avec succés.</target>
             </trans-unit>
             <trans-unit id="302">
-                <source>commandeScheduler.flash.execute</source>
+                <source>flash.execute</source>
                 <target>Le traitement sera exécutée lors de la prochaine vérification (scheduler:execute).</target>
             </trans-unit>
             <trans-unit id="303">
-                <source>commandeScheduler.flash.unlocked</source>
+                <source>flash.unlocked</source>
                 <target>Traitement dévérouillée avec succès.</target>
             </trans-unit>
 

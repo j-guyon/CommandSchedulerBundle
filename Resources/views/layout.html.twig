@@ -1,18 +1,13 @@
+{% trans_default_domain 'JMoseCommandScheduler' %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app.request.attributes.get('_locale', 'en') }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Command Scheduler</title>
-
-    <!-- Bootstrap -->
-    {% stylesheets
-        'bundles/jmosecommandscheduler/css/bootstrap.min.css'
-        'bundles/jmosecommandscheduler/css/bootstrap-theme.min.css'
-    filter='cssrewrite' %}
-        <link href="{{ asset_url }}" rel="stylesheet">
-    {% endstylesheets %}
+    <link href="{{ asset('@JMoseCommandSchedulerBundle/Resources/public/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('@JMoseCommandSchedulerBundle/Resources/public/css/bootstrap-theme.min.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -24,7 +19,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">{{ 'commandeScheduler.name'|trans }}</a>
+            <a class="navbar-brand" href="#">{{ 'name'|trans }}</a>
         </div>
     </div>
 </div>
@@ -62,17 +57,10 @@
     </div>
 </div><!-- /container -->
 
-{% javascripts '@JMoseCommandSchedulerBundle/Resources/public/js/jquery-1.11.1.min.js' %}
-    <script type="text/javascript" src="{{ asset_url }}" ></script>
-{% endjavascripts %}
-
-{% javascripts
-    '@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap.min.js'
-    '@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap-tooltip.js'
-    '@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap-confirmation.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}" ></script>
-{% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('@JMoseCommandSchedulerBundle/Resources/public/js/jquery-1.11.1.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap-tooltip.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('@JMoseCommandSchedulerBundle/Resources/public/js/bootstrap-confirmation.js') }}" ></script>
 
     <script type="text/javascript" >
         // Enable bootstrap-confirmation
@@ -87,5 +75,3 @@
     </script>
 </body>
 </html>
-
-

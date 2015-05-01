@@ -1,0 +1,12 @@
+jmose_command_scheduler:
+    log_path: build
+    excluded_command_namespaces:
+        - _global
+        - scheduler
+        - server
+        - container
+        - config
+        - generate
+        - init
+        - router
+    doctrine_manager: default

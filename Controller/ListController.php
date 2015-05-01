@@ -40,7 +40,7 @@ class ListController extends Controller
         $entityManager->flush();
 
         // Add a flash message and do a redirect to the list
-        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('commandeScheduler.flash.deleted'));
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.deleted', array(), 'JMoseCommandScheduler'));
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
@@ -76,7 +76,7 @@ class ListController extends Controller
         $this->getDoctrine()->getManager($manager)->flush();
 
         // Add a flash message and do a redirect to the list
-        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('commandeScheduler.flash.execute'));
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.execute', array(), 'JMoseCommandScheduler'));
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
@@ -87,13 +87,13 @@ class ListController extends Controller
      */
     public function unlockAction($id)
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->gcontainer->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
         $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
         $scheduledCommand->setLocked(false);
         $this->getDoctrine()->getManager($manager)->flush();
 
         // Add a flash message and do a redirect to the list
-        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('commandeScheduler.flash.unlocked'));
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.unlocked', array(), 'JMoseCommandScheduler'));
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
