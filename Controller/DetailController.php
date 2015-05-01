@@ -104,7 +104,7 @@ class DetailController extends Controller
             $entityManager->flush();
 
             // Add a flash message and do a redirect to the list
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('commandeScheduler.flash.success'));
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.success', array(), 'JMoseCommandScheduler'));
 
             return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
 

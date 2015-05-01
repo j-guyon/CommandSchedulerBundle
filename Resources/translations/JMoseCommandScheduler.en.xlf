@@ -5,124 +5,124 @@
 
             <!-- Bundle -->
             <trans-unit id="1">
-                <source>commandeScheduler.name</source>
+                <source>name</source>
                 <target>Symfony's scheduler</target>
             </trans-unit>
 
             <trans-unit id="2">
-                <source>commandeScheduler.dateFormat</source>
+                <source>dateFormat</source>
                 <target>Y-m-d H:i</target>
             </trans-unit>
 
             <trans-unit id="3">
-                <source>commandeScheduler.list.title</source>
+                <source>list.title</source>
                 <target>Scheduled commands</target>
             </trans-unit>
 
             <!-- Actions -->
             <trans-unit id="100">
-                <source>commandeScheduler.action.delete</source>
+                <source>action.delete</source>
                 <target>Remove</target>
             </trans-unit>
             <trans-unit id="101">
-                <source>commandeScheduler.action.execute</source>
+                <source>action.execute</source>
                 <target>Execute</target>
             </trans-unit>
             <trans-unit id="102">
-                <source>commandeScheduler.action.edit</source>
+                <source>action.edit</source>
                 <target>Edit</target>
             </trans-unit>
             <trans-unit id="103">
-                <source>commandeScheduler.action.new</source>
+                <source>action.new</source>
                 <target>New scheduling</target>
             </trans-unit>
             <trans-unit id="104">
-                <source>commandeScheduler.confirm.delete</source>
+                <source>confirm.delete</source>
                 <target>Permanently delete this task ?</target>
             </trans-unit>
             <trans-unit id="105">
-                <source>commandeScheduler.confirm.execute</source>
+                <source>confirm.execute</source>
                 <target>Force an execution for this task ?</target>
             </trans-unit>
             <trans-unit id="106">
-                <source>commandeScheduler.action.unlock</source>
+                <source>action.unlock</source>
                 <target>Unlock task</target>
             </trans-unit>
             <trans-unit id="107">
-                <source>commandeScheduler.confirm.unlock</source>
+                <source>confirm.unlock</source>
                 <target>The task may be running. Are you sure you want to unlock it ?</target>
             </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
-                <source>commandeScheduler.detail.title</source>
+                <source>detail.title</source>
                 <target>Scheduled command</target>
             </trans-unit>
 
             <trans-unit id="202">
-                <source>commandeScheduler.detail.name</source>
+                <source>detail.name</source>
                 <target>Name</target>
             </trans-unit>
             <trans-unit id="203">
-                <source>commandeScheduler.detail.command</source>
+                <source>detail.command</source>
                 <target>Command</target>
             </trans-unit>
             <trans-unit id="204">
-                <source>commandeScheduler.detail.arguments</source>
+                <source>detail.arguments</source>
                 <target>Arguments</target>
             </trans-unit>
             <trans-unit id="205">
-                <source>commandeScheduler.detail.cronExpression</source>
+                <source>detail.cronExpression</source>
                 <target>Cron expression</target>
             </trans-unit>
             <trans-unit id="206">
-                <source>commandeScheduler.detail.logFile</source>
+                <source>detail.logFile</source>
                 <target>Output file</target>
             </trans-unit>
             <trans-unit id="207">
-                <source>commandeScheduler.detail.priority</source>
+                <source>detail.priority</source>
                 <target>Priority</target>
             </trans-unit>
             <trans-unit id="208">
-                <source>commandeScheduler.detail.executeImmediately</source>
+                <source>detail.executeImmediately</source>
                 <target>Execute now</target>
             </trans-unit>
             <trans-unit id="209">
-                <source>commandeScheduler.detail.disabled</source>
+                <source>detail.disabled</source>
                 <target>Disable</target>
             </trans-unit>
             <trans-unit id="210">
-                <source>commandeScheduler.detail.save</source>
+                <source>detail.save</source>
                 <target>Save</target>
             </trans-unit>
             <trans-unit id="211">
-                <source>commandeScheduler.detail.lastExecution</source>
+                <source>detail.lastExecution</source>
                 <target>Last run</target>
             </trans-unit>
             <trans-unit id="212">
-                <source>commandeScheduler.detail.lastReturnCode</source>
+                <source>detail.lastReturnCode</source>
                 <target>Last return code</target>
             </trans-unit>
             <trans-unit id="213">
-                <source>commandeScheduler.detail.actions</source>
+                <source>detail.actions</source>
                 <target>Actions</target>
             </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">
-                <source>commandeScheduler.flash.success</source>
+                <source>flash.success</source>
                 <target>Scheduling successfully saved.</target>
             </trans-unit>
             <trans-unit id="301">
-                <source>commandeScheduler.flash.deleted</source>
+                <source>flash.deleted</source>
                 <target>Scheduling successfully deleted.</target>
             </trans-unit>
             <trans-unit id="302">
-                <source>commandeScheduler.flash.execute</source>
+                <source>flash.execute</source>
                 <target>Command will be execute during the next "scheduler:execute".</target>
             </trans-unit>
             <trans-unit id="303">
-                <source>commandeScheduler.flash.unlocked</source>
+                <source>flash.unlocked</source>
                 <target>Scheduling successfully unlocked.</target>
             </trans-unit>
 
