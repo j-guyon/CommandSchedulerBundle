@@ -18,6 +18,42 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('jmose_command_scheduler');
+        $rootNode
+            ->children()
+                ->scalarNode('doctrine_manager')->defaultValue('default')->end()
+                ->scalarNode('log_path')
+                    ->defaultValue('%kernel.root_dir%/logs')
+                    ->validate()
+                        ->always(function($path){
+                            if (!is_dir($path)) {
+                                throw new \InvalidArgumentException('Log path for CommandScheduler must be a valid directory.');
+                            }
+                            return $path;
+                        })
+                    ->end()
+                ->end()
+                ->variableNode('excluded_command_namespaces')
+                    ->defaultValue(array(
+                        '_global',
+                        'scheduler',
+                        'server',
+                        'container',
+                        'config',
+                        'generate',
+                        'init',
+                        'router',
+                    ))
+                    ->validate()
+                        ->always(function($value) {
+                            if (is_string($value)) {
+                                return explode(',', $value);
+                            }
+                            return $value;
+                        })
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
