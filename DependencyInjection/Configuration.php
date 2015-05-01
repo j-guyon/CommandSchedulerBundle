@@ -22,17 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('doctrine_manager')->defaultValue('default')->end()
-                ->scalarNode('log_path')
-                    ->defaultValue('%kernel.root_dir%/logs')
-                    ->validate()
-                        ->always(function($path){
-                            if (!is_dir($path)) {
-                                throw new \InvalidArgumentException('Log path for CommandScheduler must be a valid directory.');
-                            }
-                            return $path;
-                        })
-                    ->end()
-                ->end()
+                ->scalarNode('log_path')->isRequired()->end()
                 ->variableNode('excluded_command_namespaces')
                     ->defaultValue(array(
                         '_global',
