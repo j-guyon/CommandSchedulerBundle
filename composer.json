@@ -28,6 +28,5 @@
         "psr-4": {
             "JMose\\CommandSchedulerBundle\\": ""
         }
-    },
-    "target-dir": "JMose/CommandSchedulerBundle"
+    }
 }

@@ -42,10 +42,6 @@ class JMoseCommandSchedulerExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        if (!is_dir($config['log_path'])) {
-            throw new \InvalidArgumentException('Log path for CommandScheduler must be a valid directory.');
-        }
-
         foreach ($config as $key => $value) {
             $container->setParameter('jmose_command_scheduler.'.$key, $value);
         }

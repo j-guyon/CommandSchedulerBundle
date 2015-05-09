@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('doctrine_manager')->defaultValue('default')->end()
-                ->scalarNode('log_path')->isRequired()->end()
+                ->scalarNode('log_path')->defaultValue('app\logs')->end()
                 ->variableNode('excluded_command_namespaces')
                     ->defaultValue(array(
                         '_global',
