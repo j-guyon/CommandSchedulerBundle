@@ -2,11 +2,13 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
+use JMose\CommandSchedulerBundle\Form\CommandChoiceList;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use JMose\CommandSchedulerBundle\Form\Type\ScheduledCommandType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DetailController
@@ -23,7 +25,7 @@ class DetailController extends Controller
      *
      * @param ScheduledCommand $scheduledCommand
      * @param Form             $scheduledCommandForm
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
     {
@@ -41,7 +43,7 @@ class DetailController extends Controller
     /**
      * Initialize a new ScheduledCommand object and forward to the index action (view)
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function initNewScheduledCommandAction()
     {
@@ -58,7 +60,7 @@ class DetailController extends Controller
      * Get a ScheduledCommand object with its id and forward it to the index action (view)
      *
      * @param $scheduledCommandId
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function initEditScheduledCommandAction($scheduledCommandId)
     {
@@ -77,7 +79,7 @@ class DetailController extends Controller
      * Handle save after form is submit and forward to the index action (view)
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function saveAction(Request $request)
     {
@@ -92,7 +94,9 @@ class DetailController extends Controller
             $scheduledCommand = new ScheduledCommand();
         }
 
-        $scheduledCommandForm = $this->createForm(new ScheduledCommandType($this->get('jmose_command_scheduler.command_choice_list')), $scheduledCommand);
+        /** @var CommandChoiceList $choicesList */
+        $choicesList = $this->get('jmose_command_scheduler.command_choice_list');
+        $scheduledCommandForm = $this->createForm(new ScheduledCommandType($choicesList), $scheduledCommand);
         $scheduledCommandForm->handleRequest($request);
 
         if ($scheduledCommandForm->isValid()) {
@@ -104,7 +108,7 @@ class DetailController extends Controller
             $entityManager->flush();
 
             // Add a flash message and do a redirect to the list
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('commandeScheduler.flash.success'));
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.success', array(), 'JMoseCommandScheduler'));
 
             return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
 
