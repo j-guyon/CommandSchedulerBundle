@@ -5,7 +5,7 @@ CommandSchedulerBundle
 
 This bundle will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 
-**Version**: 1.0-dev  
+**Version**: 1.1-dev  
 **Compatibility**: Symfony >= 2.3.0, Doctrine ORM
 
 ## Features
@@ -23,11 +23,11 @@ This bundle will allow you to easily manage scheduling for Symfony's console com
 - Translated in french and english
 
 ## Screenshots
-![list](https://raw.githubusercontent.com/J-Mose/CommandSchedulerBundle/master/Resources/doc/images/scheduled-list.png)
+![list](Resources/doc/images/scheduled-list.png)
 
-![new](https://raw.githubusercontent.com/J-Mose/CommandSchedulerBundle/master/Resources/doc/images/new-schedule.png)
+![new](Resources/doc/images/new-schedule.png)
 
-![new2](https://raw.githubusercontent.com/J-Mose/CommandSchedulerBundle/master/Resources/doc/images/command-list.png)
+![new2](Resources/doc/images/command-list.png)
 
 ## Documentation
 
