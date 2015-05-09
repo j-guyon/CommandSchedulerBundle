@@ -27,7 +27,7 @@
     -->
 
     <php>
-        <server name="KERNEL_DIR" value="./Tests/Fixtures/App" />
+        <server name="KERNEL_DIR" value="./Tests/App" />
         <ini name="zend.enable_gc" value="0" />
     </php>
 

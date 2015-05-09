@@ -24,8 +24,8 @@ class JMoseCommandSchedulerExtensionTest extends \PHPUnit_Framework_TestCase
 
         $ext->load($config, $builder);
 
-        foreach ($expected[$rootNode] as $key => $value){
-            $this->assertEquals($value, $builder->getParameter($rootNode.'.'.$key));
+        foreach ($expected[$rootNode] as $key => $value) {
+            $this->assertEquals($value, $builder->getParameter($rootNode . '.' . $key));
         }
     }
 
@@ -33,10 +33,10 @@ class JMoseCommandSchedulerExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $rootNode = 'jmose_command_scheduler';
 
-        $dir = __DIR__.'/../Fixtures/App/extension_test/';
+        $dir = __DIR__ . '/configuration_set/';
 
-        $configFiles = glob($dir.'config_*.yml');
-        $resultFiles = glob($dir.'result_*.yml');
+        $configFiles = glob($dir . 'config_*.yml');
+        $resultFiles = glob($dir . 'result_*.yml');
 
         sort($configFiles);
         sort($resultFiles);

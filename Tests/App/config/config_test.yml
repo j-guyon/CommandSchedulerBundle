@@ -34,3 +34,6 @@ security:
 
 jmose_command_scheduler:
     log_path: %kernel.root_dir%/logs
+
+liip_functional_test:
+    cache_sqlite_db: true

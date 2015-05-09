@@ -392,10 +392,13 @@ class ScheduledCommand
      * locked Setter
      *
      * @param boolean $locked
+     * @return $this
      */
     public function setLocked($locked)
     {
         $this->locked = $locked;
+
+        return $this;
     }
 
     /**
