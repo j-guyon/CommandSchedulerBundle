@@ -41,15 +41,4 @@ class AppKernel extends Kernel
     {
         return __DIR__ . '/../../../build/kernel_logs/' . $this->getEnvironment();
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function boot()
-    {
-        parent::boot();
-        if (Kernel::MAJOR_VERSION == 2 && Kernel::MINOR_VERSION > 6) {
-            ErrorHandler::register(null, false)->traceAt(E_USER_DEPRECATED);
-        }
-    }
 }

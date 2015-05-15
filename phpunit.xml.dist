@@ -29,6 +29,9 @@
     <php>
         <server name="KERNEL_DIR" value="./Tests/App" />
         <ini name="zend.enable_gc" value="0" />
+        <!-- disable E_USER_DEPRECATED -->
+        <!-- -16385 is the same as -1 & ~E_USER_DEPRECATED -->
+        <ini name="error_reporting" value="-16385"/>
     </php>
 
     <filter>
