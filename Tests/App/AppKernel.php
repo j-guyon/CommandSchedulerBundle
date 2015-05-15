@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\Debug\ErrorHandler;
 
 class AppKernel extends Kernel
 {
@@ -22,7 +23,7 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+        $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
 
     /**
@@ -30,7 +31,7 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-        return __DIR__.'/../../../build/cache/'.$this->getEnvironment();
+        return __DIR__ . '/../../../build/cache/' . $this->getEnvironment();
     }
 
     /**
@@ -38,6 +39,17 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {
-        return __DIR__.'/../../../build/kernel_logs/'.$this->getEnvironment();
+        return __DIR__ . '/../../../build/kernel_logs/' . $this->getEnvironment();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function boot()
+    {
+        parent::boot();
+        if (Kernel::MAJOR_VERSION == 2 && Kernel::MINOR_VERSION > 6) {
+            ErrorHandler::register(null, false)->traceAt(E_USER_DEPRECATED);
+        }
     }
 }

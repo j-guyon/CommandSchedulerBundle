@@ -76,7 +76,7 @@ class DetailControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         $this->assertEquals(1, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
-        $this->assertEquals("wtc", trim($crawler->filter('td')->getNode(1)->textContent));
+        $this->assertEquals("wtc", trim($crawler->filter('td')->eq(1)->text()));
     }
 
     /**
@@ -99,7 +99,7 @@ class DetailControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
-        $this->assertEquals("edited one", trim($crawler->filter('td')->getNode(1)->textContent));
+        $this->assertEquals("edited one", trim($crawler->filter('td')->eq(1)->text()));
     }
 
 }
