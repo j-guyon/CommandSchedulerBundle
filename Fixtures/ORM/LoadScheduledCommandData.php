@@ -20,10 +20,10 @@ class LoadScheduledCommandData implements FixtureInterface
     {
         $this->manager = $manager;
 
-        $this->createScheduledCommand('one', 'twig:lint', '', '@daily', 'one.log', 1, new \DateTime());
-        $this->createScheduledCommand('two', 'twig:lint', '', '@daily', 'two.log', 2, new \DateTime(), true);
-        $this->createScheduledCommand('three', 'twig:lint', '', '@daily', 'three.log', 3, new \DateTime(), false, true);
-        $this->createScheduledCommand('four', 'twig:lint', '', '@daily', 'four.log', 4, new \DateTime(), false, false, true);
+        $this->createScheduledCommand('one', 'twig:lint', '--help', '@daily', 'one.log', 100, new \DateTime());
+        $this->createScheduledCommand('two', 'twig:lint', '', '@daily', 'two.log', 80, new \DateTime(), true);
+        $this->createScheduledCommand('three', 'twig:lint', '', '@daily', 'three.log',60, new \DateTime(), false, true);
+        $this->createScheduledCommand('four', 'twig:lint', '', '@daily', 'four.log', 40, new \DateTime(), false, false, true);
     }
 
     /**
