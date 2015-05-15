@@ -92,28 +92,26 @@ See the [Usage](#usage) section to have more information
 Here is the default bundle configuration.
 
 ```yaml
-    jmose_command_scheduler:
+jmose_command_scheduler:
 
-        # Default directory where scheduler will write output files
-        #  This default value assume that php app/console is launched from project's root and that the directory is writable
-        log_path: app\logs\
+    # Default directory where scheduler will write output files
+    #  This default value assume that php app/console is launched from project's root and that the directory is writable
+    log_path: app\logs\
 
-        # Namespaces listed here won't be listed in the list
-        excluded_command_namespaces:
-            - _global
-            - scheduler
-            - server
-            - container
-            - config
-            - generate
-            - init
-            - router
+    # Namespaces listed here won't be listed in the list
+    excluded_command_namespaces:
+        - _global
+        - scheduler
+        - server
+        - container
+        - config
+        - generate
+        - init
+        - router
 
-        # Doctrine manager
-        doctrine_manager: default
+    # Doctrine manager
+    doctrine_manager: default
 ```
-
-You will find the default configuration file  [here](../config/services.yml). 
 
 Feel free to override it (especially `log_path`) in your `config.yml` file.
 
