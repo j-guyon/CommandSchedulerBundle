@@ -1,7 +1,8 @@
 {% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
 
 {% block title %}
-    {{ 'commandeScheduler.detail.title'|trans }}
+    {{ 'detail.title'|trans }}
 {% endblock title %}
 
 {% block content %}
@@ -35,4 +36,3 @@
         {{ form_end( scheduledCommandForm ) }}
     </div>
 {% endblock content %}
-

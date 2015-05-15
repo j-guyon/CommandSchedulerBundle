@@ -39,7 +39,7 @@ class ScheduledCommandType extends AbstractType
 
         $builder->add(
             'name', 'text', array(
-                'label'    => 'commandeScheduler.detail.name',
+                'label'    => 'detail.name',
                 'required' => true
             )
         );
@@ -47,35 +47,35 @@ class ScheduledCommandType extends AbstractType
         $builder->add(
             'command', 'choice', array(
                 'choice_list' => $this->choiceListService,
-                'label'       => 'commandeScheduler.detail.command',
+                'label'       => 'detail.command',
                 'required'    => true
             )
         );
 
         $builder->add(
             'arguments', 'text', array(
-                'label'    => 'commandeScheduler.detail.arguments',
+                'label'    => 'detail.arguments',
                 'required' => false
             )
         );
 
         $builder->add(
             'cronExpression', 'text', array(
-                'label'    => 'commandeScheduler.detail.cronExpression',
+                'label'    => 'detail.cronExpression',
                 'required' => true
             )
         );
 
         $builder->add(
             'logFile', 'text', array(
-                'label'    => 'commandeScheduler.detail.logFile',
+                'label'    => 'detail.logFile',
                 'required' => true
             )
         );
 
         $builder->add(
             'priority', 'integer', array(
-                'label'      => 'commandeScheduler.detail.priority',
+                'label'      => 'detail.priority',
                 'empty_data' => 0,
                 'required'   => false
             )
@@ -83,21 +83,21 @@ class ScheduledCommandType extends AbstractType
 
         $builder->add(
             'executeImmediately', 'checkbox', array(
-                'label'    => 'commandeScheduler.detail.executeImmediately',
+                'label'    => 'detail.executeImmediately',
                 'required' => false
             )
         );
 
         $builder->add(
             'disabled', 'checkbox', array(
-                'label'    => 'commandeScheduler.detail.disabled',
+                'label'    => 'detail.disabled',
                 'required' => false
             )
         );
 
         $builder->add(
             'save', 'submit', array(
-                'label' => 'commandeScheduler.detail.save',
+                'label' => 'detail.save',
             )
         );
 
@@ -110,8 +110,9 @@ class ScheduledCommandType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class'   => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
-                'wrapper_attr' => 'default_wrapper'
+                'data_class'         => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
+                'wrapper_attr'       => 'default_wrapper',
+                'translation_domain' => 'JMoseCommandScheduler'
             )
         );
     }

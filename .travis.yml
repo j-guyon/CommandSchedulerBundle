@@ -1,0 +1,45 @@
+language: php
+
+php:
+    - 5.4
+    - 5.5
+    - 5.6
+    - nightly
+    - hhvm
+    - hhvm-nightly
+
+branches:
+    only:
+        - master
+        - /^\d+\.\d+$/
+
+matrix:
+    include:
+        - php: 5.5
+          env: SYMFONY_VERSION=2.3.*
+        - php: 5.5
+          env: SYMFONY_VERSION=2.4.*
+        - php: 5.5
+          env: SYMFONY_VERSION=2.6.*
+        - php: 5.5
+          env: SYMFONY_VERSION='2.7.*@dev'
+    allow_failures:
+        - php: 5.3
+        - php: nightly
+        - php: hhvm-nightly
+
+before_script:
+    - composer self-update
+    - sh -c 'if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/symfony=$SYMFONY_VERSION; fi;'
+    - composer update --prefer-dist
+
+script:
+    - mkdir -p build/logs
+    - phpunit --coverage-clover build/logs/clover.xml
+
+# Run coveralls ONLY if under php native, and NOT hhvm
+after_success: |
+ sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" -a "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;'
+
+notifications:
+    email: julienguyon@hotmail.com

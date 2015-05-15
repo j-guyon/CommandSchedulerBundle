@@ -3,7 +3,7 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>commandeScheduler.validation.cron</source>
+                <source>commandScheduler.validation.cron</source>
                 <target>Expression cron non valide.</target>
             </trans-unit>
         </body>

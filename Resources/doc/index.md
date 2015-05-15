@@ -64,10 +64,9 @@ framework:
 
 For more information about translations, check [Symfony documentation](http://symfony.com/doc/current/book/translation.html).
 
-Run assetic commands : 
+Install bundle's assets :
 ``` bash
 $ php app/console assets:install
-$ php app/console assetic:dump
 ```
 
 Update your database 
@@ -85,7 +84,7 @@ Now, you can use the bundle and manage your scheduling here : **http://{you-app-
 $ php app/console scheduler:execute --dump
 ```
 
-See the [Usage](#usage) section to have more informations
+See the [Usage](#usage) section to have more information
 
 
 ### 4 - Available configuration
@@ -93,14 +92,14 @@ See the [Usage](#usage) section to have more informations
 Here is the default bundle configuration.
 
 ```yaml
-parameters:
+jmose_command_scheduler:
 
     # Default directory where scheduler will write output files
     #  This default value assume that php app/console is launched from project's root and that the directory is writable
-    jmose_command_scheduler.log_path: app\logs\
+    log_path: app\logs\
 
     # Namespaces listed here won't be listed in the list
-    jmose_command_scheduler.command_choice_list.excluded_namespaces:
+    excluded_command_namespaces:
         - _global
         - scheduler
         - server
@@ -111,18 +110,16 @@ parameters:
         - router
 
     # Doctrine manager
-    jmose_command_scheduler.doctrine_manager: default
+    doctrine_manager: default
 ```
 
-You will find the default configuration file  [here](../config/services.yml). 
-
-Feel free to override it (especially `log_path`) in your app's parameters file.
+Feel free to override it (especially `log_path`) in your `config.yml` file.
 
  
 Usage
 ============
 
-After a succesfull installation, you can access to this URL: 
+After a successful installation, you can access to this URL:
 
 `http://{you-app-root}/command-scheduler/list`. 
 
@@ -130,8 +127,8 @@ From this screen, you can do following actions :
   - Create a new scheduling
   - Edit an existing scheduling
   - Enable or disable scheduling (by clicking the "Power Off/On" switch)
-  - Manualy execute a command (It will be launched during the next `scheduler:execute`, regardless of the cron expression)
-  - Unlock a task (if the lock is due to an uncoverable error for example)
+  - Manually execute a command (It will be launched during the next `scheduler:execute`, regardless of the cron expression)
+  - Unlock a task (if the lock is due to an unrecoverable error for example)
 
 After that, you have to set (every few minutes, it depends of your needs) the following command in your system : 
 ``` bash
@@ -147,11 +144,11 @@ The `scheduler:execute` command will do following actions :
   - Get all scheduled commands in database (unlocked and enabled only)
   - Sort them by priority (desc)
   - Check if the command has to be executed at current time, based on its cron expression and on its last execution time
-  - Execute eligible commands (without `exec` php fonction)
+  - Execute eligible commands (without `exec` php function)
  
   
 **Note** : Each command is locked just before his execution (and unlocked after). 
 This system avoid to have simultaneous process for the same command. 
-Thus, if an non-catchable error occurs, the command won't be executed again unless the problem is solved and the task is unlocked manualy.
+Thus, if an non-catchable error occurs, the command won't be executed again unless the problem is solved and the task is unlocked manually.
 
 For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).

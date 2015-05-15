@@ -18,6 +18,32 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('jmose_command_scheduler');
+        $rootNode
+            ->children()
+                ->scalarNode('doctrine_manager')->defaultValue('default')->end()
+                ->scalarNode('log_path')->defaultValue('app\logs')->end()
+                ->variableNode('excluded_command_namespaces')
+                    ->defaultValue(array(
+                        '_global',
+                        'scheduler',
+                        'server',
+                        'container',
+                        'config',
+                        'generate',
+                        'init',
+                        'router',
+                    ))
+                    ->validate()
+                        ->always(function($value) {
+                            if (is_string($value)) {
+                                return explode(',', $value);
+                            }
+                            return $value;
+                        })
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

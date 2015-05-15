@@ -1,0 +1,40 @@
+parameters:
+    database_path: %kernel.root_dir%/../../../build/test.db
+
+framework:
+    translator:      ~
+    secret:          secret
+    test:            ~
+    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    form:            true
+    csrf_protection: false
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] }
+    session:
+        storage_id: session.storage.filesystem
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        dbname:   jmose_command_scheduler_test
+        user:     root
+        charset:  UTF8
+        path:     %database_path%
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true
+
+security:
+    firewalls:
+        secured_area:
+            pattern:    ^/
+            anonymous:  true
+    providers:
+        in_memory:
+             memory: ~
+
+jmose_command_scheduler:
+    log_path: %kernel.root_dir%/logs
+
+liip_functional_test:
+    cache_sqlite_db: true

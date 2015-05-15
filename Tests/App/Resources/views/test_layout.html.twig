@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.attributes.get('_locale') }}">
+<head>
+    <meta charset="UTF-8" />
+    <title>One change of the layout is this special hardcoded title. {% block title %}{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {% block jmose_command_scheduler_head_metas %}{% endblock %}
+</head>
+<body>
+
+{# Add this wrapper to test it in the crawler #}
+<div id="test_layout_wrapper">
+    {% block jmose_command_scheduler_breadcrumbs %}{% endblock %}
+
+    {% block jmose_command_scheduler_page_content %}
+        {% block jmose_command_scheduler_pages_list %}{% endblock %}
+    {% endblock %}
+</div>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>
