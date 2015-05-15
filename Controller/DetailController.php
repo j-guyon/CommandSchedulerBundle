@@ -87,9 +87,10 @@ class DetailController extends Controller
         $entityManager = $this->getDoctrine()->getManager($manager);
 
         // Init and populate form object
-        if ($request->request->get('command_scheduler_detail')['id'] != '') {
+        $commandDetail = $request->request->get('command_scheduler_detail');
+        if ($commandDetail['id'] != '') {
             $scheduledCommand = $entityManager->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
-                ->find($request->request->get('command_scheduler_detail')['id']);
+                ->find($commandDetail['id']);
         } else {
             $scheduledCommand = new ScheduledCommand();
         }
