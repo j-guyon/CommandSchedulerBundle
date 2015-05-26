@@ -132,13 +132,15 @@ From this screen, you can do following actions :
 
 After that, you have to set (every few minutes, it depends of your needs) the following command in your system : 
 ``` bash
-$ php app/console scheduler:execute --env=env -vvv [--dump]
+$ php app/console scheduler:execute --env=env -vvv [--dump] [--no-output]
 ```
 
 If the `--dump` option is set, the scheduler won't execute any command, but just list commands that should be executed.
 Without the option, commands will be executed depending their priority and last execution time (highest priority will run first).
 
 The `--env=` and `-v` (or `--verbosity`) arguments are passed to all scheduled command from `scheduler:execute`, so you don't have to put these on each scheduling !
+
+If you don't want to have any message (except error) from scheduler itself you can use the `--no-output` option.
 
 The `scheduler:execute` command will do following actions : 
   - Get all scheduled commands in database (unlocked and enabled only)

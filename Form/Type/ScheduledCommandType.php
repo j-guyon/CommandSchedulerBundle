@@ -5,7 +5,6 @@ namespace JMose\CommandSchedulerBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use JMose\CommandSchedulerBundle\Form\CommandChoiceList;
 
 /**
  * Class ScheduledCommandType

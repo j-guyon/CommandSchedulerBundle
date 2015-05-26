@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
@@ -85,7 +84,7 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Start : ' . ($input->getOption('dump') ? 'Dump' : 'Execute') . ' all scheduled command</info>');
+        $output->writeln('<info>Start : ' . ($this->dumpMode ? 'Dump' : 'Execute') . ' all scheduled command</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
         if (strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
