@@ -13,6 +13,8 @@ If you don't have composer yet, please refer to [the official Composer website](
 
 Composer will install the bundle to your project's `vendor` directory.
 
+*Note : use the last release, dev-master is not stable*
+
 ### 2 - Enable the bundle
 
 Enable the bundle in the kernel:
