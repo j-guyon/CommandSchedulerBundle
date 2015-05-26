@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
@@ -26,6 +27,21 @@ class ExecuteCommand extends ContainerAwareCommand
     private $em;
 
     /**
+     * @var string
+     */
+    private $logPath;
+
+    /**
+     * @var boolean
+     */
+    private $dumpMode;
+
+    /**
+     * @var integer
+     */
+    private $commandsVerbosity;
+
+    /**
      * @inheritdoc
      */
     protected function configure()
@@ -34,7 +50,32 @@ class ExecuteCommand extends ContainerAwareCommand
             ->setName('scheduler:execute')
             ->setDescription('Execute scheduled commands')
             ->addOption('dump', null, InputOption::VALUE_NONE, 'Display next execution')
+            ->addOption('no-output', null, InputOption::VALUE_NONE, 'Disable output message from scheduler')
             ->setHelp('This class is the entry point to execute all scheduled command');
+    }
+
+    /**
+     * Initialize parameters and services used in execute function
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->dumpMode = $input->getOption('dump');
+        $this->logPath = rtrim($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), '/\\');
+        $this->logPath .= DIRECTORY_SEPARATOR;
+
+        // store the original verbosity before apply the quiet parameter
+        $this->commandsVerbosity = $output->getVerbosity();
+
+        if( true === $input->getOption('no-output')){
+            $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
+        }
+
+        $this->em = $this->getContainer()->get('doctrine')->getManager(
+            $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
+        );
     }
 
     /**
@@ -45,23 +86,21 @@ class ExecuteCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Start : ' . ($input->getOption('dump') ? 'Dump' : 'Execute') . ' all scheduled command</info>');
-        $output->writeln('<info>Current server datetime : ' . date('d/m/Y H:i:s') .'</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
-        if (strpos($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), 'gaufrette:') !== 0 &&
-            false === is_writable($this->getContainer()->getParameter('jmose_command_scheduler.log_path'))
-        ) {
-            $output->writeln('<error>' . $this->getContainer()->getParameter('jmose_command_scheduler.log_path') .
-                ' not found or not writable. You should override `log_path` in your config.yml' . '</error>');
+        if (strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
+            $output->writeln(
+                '<error>'.$this->logPath.
+                ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
+            );
 
             return;
         }
-        $manager          = ($this->getContainer()->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $this->em         = $this->getContainer()->get('doctrine')->getManager($manager);
-        $scheduledCommand = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
+
+        $commands = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
 
         $noneExecution = true;
-        foreach ($scheduledCommand as $command) {
+        foreach ($commands as $command) {
 
             /** @var ScheduledCommand $command */
             $cron        = CronExpression::factory($command->getCronExpression());
@@ -80,8 +119,9 @@ class ExecuteCommand extends ContainerAwareCommand
             } elseif ($nextRunDate < $now) {
                 $noneExecution = false;
                 $output->writeln(
-                    'Command <comment>' . $command->getCommand() . '</comment> should be executed - last execution : <comment>' .
-                    $command->getLastExecution()->format('d/m/Y H:i:s') . '.</comment>'
+                    'Command <comment>'.$command->getCommand().
+                    '</comment> should be executed - last execution : <comment>'.
+                    $command->getLastExecution()->format('d/m/Y H:i:s').'.</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
@@ -127,11 +167,12 @@ class ExecuteCommand extends ContainerAwareCommand
             $this->getContainer()->getParameter('jmose_command_scheduler.log_path') .
             $scheduledCommand->getLogFile(), 'a', false
         ));
-        $logOutput->setVerbosity($output->getVerbosity());
+        $logOutput->setVerbosity($this->commandsVerbosity);
 
         // Execute command and get return code
         try {
-            $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand() . ' ' .$scheduledCommand->getArguments() . '</comment>');
+            $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand()
+                . ' ' .$scheduledCommand->getArguments() . '</comment>');
             $result = $command->run($input, $logOutput);
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());

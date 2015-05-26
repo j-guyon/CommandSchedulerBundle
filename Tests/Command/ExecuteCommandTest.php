@@ -28,8 +28,33 @@ class ExecuteCommandTest extends WebTestCase
         $this->assertStringStartsWith('Start : Execute all scheduled command', $output);
         $this->assertRegExp('/container:debug should be executed/', $output);
         $this->assertRegExp('/Execute : container:debug --help/', $output);
-        $this->assertRegExp('/Immediately execution asked for : debug:router/', $output);
-        $this->assertRegExp('/Execute : debug:router/', $output);
+        $this->assertRegExp('/Immediately execution asked for : router:debug/', $output);
+        $this->assertRegExp('/Execute : router:debug/', $output);
+
+        $output = $this->runCommand('scheduler:execute');
+        $this->assertRegExp('/Nothing to do/', $output);
+    }
+
+    /**
+     * Test scheduler:execute without option
+     */
+    public function testExecuteWithNoOutput()
+    {
+        //DataFixtures create 4 records
+        $this->loadFixtures(
+            array(
+                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
+            )
+        );
+
+        $output = $this->runCommand(
+            'scheduler:execute',
+            array(
+                '--no-output' => true
+            )
+        );
+
+        $this->assertEquals('', $output);
 
         $output = $this->runCommand('scheduler:execute');
         $this->assertRegExp('/Nothing to do/', $output);
@@ -56,6 +81,6 @@ class ExecuteCommandTest extends WebTestCase
 
         $this->assertStringStartsWith('Start : Dump all scheduled command', $output);
         $this->assertRegExp('/Command container:debug should be executed/', $output);
-        $this->assertRegExp('/Immediately execution asked for : debug:router/', $output);
+        $this->assertRegExp('/Immediately execution asked for : router:debug/', $output);
     }
 }

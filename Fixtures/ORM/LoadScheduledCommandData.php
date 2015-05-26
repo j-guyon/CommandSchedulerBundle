@@ -27,7 +27,7 @@ class LoadScheduledCommandData implements FixtureInterface
         $this->createScheduledCommand('one', 'container:debug', '--help', '@daily', 'one.log', 100, $beforeYesterday);
         $this->createScheduledCommand('two', 'container:debug', '', '@daily', 'two.log', 80, $beforeYesterday, true);
         $this->createScheduledCommand('three', 'container:debug', '', '@daily', 'three.log',60, $today, false, true);
-        $this->createScheduledCommand('four', 'debug:router', '', '@daily', 'four.log', 40, $today, false, false, true);
+        $this->createScheduledCommand('four', 'router:debug', '', '@daily', 'four.log', 40, $today, false, false, true);
     }
 
     /**
