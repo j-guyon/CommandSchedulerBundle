@@ -1,11 +1,9 @@
 <?php
-namespace JMose\CommandSchedulerBundle\Form;
+namespace JMose\CommandSchedulerBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\Form\Extension\Core\ChoiceList\LazyChoiceList;
-use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
@@ -14,7 +12,7 @@ use Symfony\Component\HttpKernel\Kernel;
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @package JMose\CommandSchedulerBundle\Form
  */
-class CommandChoiceList extends LazyChoiceList
+class CommandParser
 {
 
     /**
@@ -29,27 +27,27 @@ class CommandChoiceList extends LazyChoiceList
 
     /**
      * @param Kernel $kernel
-     * @param array  $excludedNamespaces
+     * @param array $excludedNamespaces
      */
-    public function __construct(Kernel $kernel, array $excludedNamespaces)
+    public function __construct(Kernel $kernel, array $excludedNamespaces = array())
     {
-        $this->kernel             = $kernel;
+        $this->kernel = $kernel;
         $this->excludedNamespaces = $excludedNamespaces;
     }
 
     /**
-     * Execute the console commande "list" with XML output to have all available command
+     * Execute the console command "list" with XML output to have all available command
      *
-     * @return \Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface|SimpleChoiceList
+     * @return array
      */
-    protected function loadChoiceList()
+    public function getCommands()
     {
         $application = new Application($this->kernel);
         $application->setAutoExit(false);
 
         $input = new ArrayInput(
             array(
-                'command'  => 'list',
+                'command' => 'list',
                 '--format' => 'xml'
             )
         );
@@ -58,11 +56,11 @@ class CommandChoiceList extends LazyChoiceList
         $application->run($input, $output);
         rewind($output->getStream());
 
-        return new SimpleChoiceList($this->extractCommandsFromXML(stream_get_contents($output->getStream())));
+        return $this->extractCommandsFromXML(stream_get_contents($output->getStream()));
     }
 
     /**
-     * Extract an array of available symfony command from the XML output
+     * Extract an array of available Symfony command from the XML output
      *
      * @param $xml
      * @return array
@@ -73,7 +71,7 @@ class CommandChoiceList extends LazyChoiceList
             return array();
         }
 
-        $node         = new \SimpleXMLElement($xml);
+        $node = new \SimpleXMLElement($xml);
         $commandsList = array();
 
         foreach ($node->namespaces->namespace as $namespace) {

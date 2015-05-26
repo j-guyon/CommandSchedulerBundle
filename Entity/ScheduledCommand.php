@@ -77,6 +77,15 @@ class ScheduledCommand
     private $locked;
 
     /**
+     * Init new ScheduledCommand
+     */
+    public function __construct()
+    {
+        $this->setLastExecution(new \DateTime());
+        $this->setLocked(false);
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -401,16 +410,4 @@ class ScheduledCommand
         return $this;
     }
 
-    /**
-     * Init new ScheduledCommand
-     *
-     * @return ScheduledCommand
-     */
-    public function init()
-    {
-        $this->setLastExecution(new \DateTime());
-        $this->setLocked(false);
-
-        return $this;
-    }
 }

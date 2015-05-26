@@ -15,20 +15,6 @@ use JMose\CommandSchedulerBundle\Form\CommandChoiceList;
  */
 class ScheduledCommandType extends AbstractType
 {
-
-    /**
-     * @var CommandChoiceList
-     */
-    private $choiceListService;
-
-    /**
-     * @param CommandChoiceList $choiceListService
-     */
-    public function __construct(CommandChoiceList $choiceListService)
-    {
-        $this->choiceListService = $choiceListService;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -45,8 +31,7 @@ class ScheduledCommandType extends AbstractType
         );
 
         $builder->add(
-            'command', 'choice', array(
-                'choice_list' => $this->choiceListService,
+            'command', 'command_choice', array(
                 'label'       => 'detail.command',
                 'required'    => true
             )
@@ -124,5 +109,4 @@ class ScheduledCommandType extends AbstractType
     {
         return 'command_scheduler_detail';
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
-use JMose\CommandSchedulerBundle\Form\CommandChoiceList;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,16 +94,14 @@ class DetailController extends Controller
             $scheduledCommand = new ScheduledCommand();
         }
 
-        /** @var CommandChoiceList $choicesList */
-        $choicesList = $this->get('jmose_command_scheduler.command_choice_list');
-        $scheduledCommandForm = $this->createForm(new ScheduledCommandType($choicesList), $scheduledCommand);
+        $scheduledCommandForm = $this->createForm(new ScheduledCommandType(), $scheduledCommand);
         $scheduledCommandForm->handleRequest($request);
 
         if ($scheduledCommandForm->isValid()) {
 
             // Handle save to the database
             if (null === $scheduledCommand->getId()) {
-                $entityManager->persist($scheduledCommand->init());
+                $entityManager->persist($scheduledCommand);
             }
             $entityManager->flush();
 
