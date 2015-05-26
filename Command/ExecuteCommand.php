@@ -45,13 +45,14 @@ class ExecuteCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Start : ' . ($input->getOption('dump') ? 'Dump' : 'Execute') . ' all scheduled command</info>');
+        $output->writeln('<info>Current server datetime : ' . date('d/m/Y H:i:s') .'</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
         if (strpos($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), 'gaufrette:') !== 0 &&
             false === is_writable($this->getContainer()->getParameter('jmose_command_scheduler.log_path'))
         ) {
             $output->writeln('<error>' . $this->getContainer()->getParameter('jmose_command_scheduler.log_path') .
-                ' not found or not writable. You should override `jmose_command_scheduler.log_path` in your app/parameters.yml' . '</error>');
+                ' not found or not writable. You should override `log_path` in your config.yml' . '</error>');
 
             return;
         }
@@ -130,7 +131,7 @@ class ExecuteCommand extends ContainerAwareCommand
 
         // Execute command and get return code
         try {
-            $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand() . $scheduledCommand->getArguments() . '</comment>');
+            $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand() . ' ' .$scheduledCommand->getArguments() . '</comment>');
             $result = $command->run($input, $logOutput);
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());

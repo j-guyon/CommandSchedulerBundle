@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+$file = __DIR__ . '/../../vendor/autoload.php';
+if (!file_exists($file)) {
+    throw new RuntimeException('Install dependencies to run test suite.');
+}
+$autoload = require_once $file;
+
+require_once __DIR__.'/AppKernel.php';
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Debug\Debug;
+
+$input = new ArgvInput();
+Debug::enable();
+
+$kernel = new AppKernel('test', true);
+$application = new Application($kernel);
+$application->run($input);

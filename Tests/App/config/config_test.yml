@@ -1,5 +1,5 @@
 parameters:
-    database_path: %kernel.root_dir%/../../../build/test.db
+    database_path: %kernel.root_dir%/../../build/test.db
 
 framework:
     translator:      ~
@@ -34,7 +34,9 @@ security:
              memory: ~
 
 jmose_command_scheduler:
-    log_path: %kernel.root_dir%/logs
+    log_path: %kernel.root_dir%/logs/
+    excluded_command_namespaces:
+        - scheduler
 
 liip_functional_test:
     cache_sqlite_db: true
