@@ -29,7 +29,7 @@ class DetailController extends Controller
     public function indexAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
     {
         if (null === $scheduledCommandForm) {
-            $scheduledCommandForm = $this->createForm(new ScheduledCommandType($this->get('jmose_command_scheduler.command_choice_list')), $scheduledCommand);
+            $scheduledCommandForm = $this->createForm(new ScheduledCommandType(), $scheduledCommand);
         }
 
         return $this->render(
