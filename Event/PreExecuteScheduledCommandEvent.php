@@ -35,7 +35,7 @@ class PreExecuteScheduledCommandEvent extends Event
      * @param ScheduledCommand $scheduledCommand
      * @param Command $command
      */
-    public function __construct(InputInterface $input, ScheduledCommand $scheduledCommand, Command $command)
+    public function __construct(InputInterface &$input, ScheduledCommand &$scheduledCommand, Command &$command)
     {
         $this->input = $input;
         $this->scheduledCommand = $scheduledCommand;
@@ -54,7 +54,7 @@ class PreExecuteScheduledCommandEvent extends Event
      * @param InputInterface $input
      * @return $this
      */
-    public function setInput($input)
+    public function setInput(&$input)
     {
         $this->input = $input;
 
@@ -73,7 +73,7 @@ class PreExecuteScheduledCommandEvent extends Event
      * @param ScheduledCommand $scheduledCommand
      * @return $this
      */
-    public function setScheduledCommand($scheduledCommand)
+    public function setScheduledCommand(&$scheduledCommand)
     {
         $this->scheduledCommand = $scheduledCommand;
 
@@ -92,7 +92,7 @@ class PreExecuteScheduledCommandEvent extends Event
      * @param Command $command
      * @return $this
      */
-    public function setCommand($command)
+    public function setCommand(&$command)
     {
         $this->command = $command;
 
