@@ -3,6 +3,8 @@
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Cron\CronExpression;
+use JMose\CommandSchedulerBundle\Event\PreExecuteCommandEvent;
+use JMose\CommandSchedulerBundle\Event\PreExecuteScheduledCommandEvent;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -160,6 +162,10 @@ class ExecuteCommand extends ContainerAwareCommand
             ),
             $scheduledCommand->getArguments(true)
         ));
+
+        $event = new PreExecuteScheduledCommandEvent($input, $scheduledCommand);
+        $eventDispatcher = $this->getContainer()->get('event_dispatcher');
+        $eventDispatcher->dispatch('jmose_command_scheduler.event.pre_execute_command', $event);
 
         // Use a StreamOutput to redirect write() and writeln() in a log file
         $logOutput = new StreamOutput(fopen(
