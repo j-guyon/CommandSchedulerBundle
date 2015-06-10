@@ -155,6 +155,10 @@ class ExecuteCommand extends ContainerAwareCommand
             return;
         }
 
+        $event = new PreExecuteScheduledCommandEvent($input, $scheduledCommand, $command);
+        $eventDispatcher = $this->getContainer()->get('event_dispatcher');
+        $eventDispatcher->dispatch('jmose_command_scheduler.event.pre_execute_command', $event);
+
         $input = new ArrayInput(array_merge(
             array(
                 'command' => $scheduledCommand->getCommand(),
@@ -162,10 +166,6 @@ class ExecuteCommand extends ContainerAwareCommand
             ),
             $scheduledCommand->getArguments(true)
         ));
-
-        $event = new PreExecuteScheduledCommandEvent($input, $scheduledCommand, $command);
-        $eventDispatcher = $this->getContainer()->get('event_dispatcher');
-        $eventDispatcher->dispatch('jmose_command_scheduler.event.pre_execute_command', $event);
 
         // Use a StreamOutput to redirect write() and writeln() in a log file
         $logOutput = new StreamOutput(fopen(
