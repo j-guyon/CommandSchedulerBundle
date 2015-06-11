@@ -3,8 +3,8 @@
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Cron\CronExpression;
-use JMose\CommandSchedulerBundle\Event\PreExecuteCommandEvent;
 use JMose\CommandSchedulerBundle\Event\PreExecuteScheduledCommandEvent;
+use JMose\CommandSchedulerBundle\Event\PostExecuteScheduledCommandEvent;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -189,6 +189,10 @@ class ExecuteCommand extends ContainerAwareCommand
             $output->writeln('<comment>Entity manager closed by the last command.</comment>');
             $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
         }
+
+        $event = new PostExecuteScheduledCommandEvent($input, $scheduledCommand, $command, $result);
+        $eventDispatcher = $this->getContainer()->get('event_dispatcher');
+        $eventDispatcher->dispatch('jmose_command_scheduler.event.post_execute_command', $event);
 
         $scheduledCommand = $this->em->merge($scheduledCommand);
         $scheduledCommand->setLastReturnCode($result);
