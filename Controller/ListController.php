@@ -112,18 +112,36 @@ class ListController extends Controller
         $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
         $scheduledCommands = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
 
+        $timeoutValue = $this->container->getParameter('jmose_command_scheduler.lock_timeout');
+
         $failed = array();
+        $now = time();
+
         foreach($scheduledCommands as $command) {
+            // don't care about disabled commands
+            if($command->isDisabled()) {
+                continue;
+            }
+
+            $executionTime = $command->getLastExecution();
+            $executionTimestamp = strtotime($executionTime->date);
+
+            $timedOut = (($executionTimestamp + $timeoutValue) < $now);
+
             if(
-                !$command->isDisabled() &&
+                ($command->getLastReturnCode() != 0) || // last return code not OK
                 (
-                    $command->getLocked() ||
-                    ($command->getLastReturnCode() != 0)
+                    $command->getLocked() &&
+                    (
+                        ($timeoutValue === false) || // don't check for timeouts -> locked is bad
+                        $timedOut // check for timeouts, but (starttime + timeout) is in the past
+                    )
                 )
             ) {
                 $failed[$command->getName()] = array(
-                    'return' => $command->getLastReturnCode(),
-                    'locked' => $command->getLocked() ? 'true' : 'false'
+                    'LAST_RETURN_CODE' => $command->getLastReturnCode(),
+                    'B_LOCKED' => $command->getLocked() ? 'true' : 'false',
+                    'DH_LAST_EXECUTION' => $executionTime
                 );
             }
         }
