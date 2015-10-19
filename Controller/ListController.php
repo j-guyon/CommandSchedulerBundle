@@ -3,6 +3,8 @@
 namespace JMose\CommandSchedulerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ListController
@@ -96,5 +98,42 @@ class ListController extends Controller
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.unlocked', array(), 'JMoseCommandScheduler'));
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
+    }
+
+    /**
+     * method checks if there are jobs which are enabled but did not return 0 on last execution or are locked.<br>
+     * if a match is found, HTTP status 417 is sent along with an array which contains name, return code and locked-state.
+     * if no matches found, HTTP status 200 is sent with an empty array
+     *
+     * @return JsonResponse
+     */
+    public function monitorAction()
+    {
+        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $scheduledCommands = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
+
+        $failed = array();
+        foreach($scheduledCommands as $command) {
+            if(
+                !$command->isDisabled() &&
+                (
+                    $command->getLocked() ||
+                    ($command->getLastReturnCode() != 0)
+                )
+            ) {
+                $failed[$command->getName()] = array(
+                    'return' => $command->getLastReturnCode(),
+                    'locked' => $command->getLocked() ? 'true' : 'false'
+                );
+            }
+        }
+
+        $status = count($failed) > 0 ? Response::HTTP_EXPECTATION_FAILED : Response::HTTP_OK;
+
+        $response = new JsonResponse();
+        $response->setContent(json_encode($failed));
+        $response->setStatusCode($status);
+
+        return $response;
     }
 }
