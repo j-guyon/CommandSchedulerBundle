@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('doctrine_manager')->defaultValue('default')->end()
                 ->scalarNode('log_path')->defaultValue('app\logs')->end()
-                ->scalarNode('lock_timeout')->defaultValue('0')->end()
+                ->scalarNode('lock_timeout')->defaultValue(false)->end()
                 ->variableNode('excluded_command_namespaces')
                     ->defaultValue(array(
                         '_global',
