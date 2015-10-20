@@ -99,6 +99,8 @@ jmose_command_scheduler:
     # Default directory where scheduler will write output files
     #  This default value assume that php app/console is launched from project's root and that the directory is writable
     log_path: app\logs\
+    # This default value disables timeout checking (see monitoring), set to a numeric value (seconds) to enable it
+    log_timeout: false
 
     # Namespaces listed here won't be listed in the list
     excluded_command_namespaces:
@@ -156,3 +158,18 @@ This system avoid to have simultaneous process for the same command.
 Thus, if an non-catchable error occurs, the command won't be executed again unless the problem is solved and the task is unlocked manually.
 
 For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
+
+Monitor Jobs
+=============
+
+To enable (external) checks if the jobs are running correctly there is a URL which runs a check with the following requirements/limits:
+ 
+ - only check enabled commands
+ - return value not equal 0 means there is something wrong
+ - running jobs can be checked for a maximum runtime
+ 
+To run the check simply call
+
+`http://{you-app-root}/command-scheduler/monitor`
+
+The call returns a JSON object with either HTTP 200 and an empty array (everything ok) or HTTP 417 (Expectation failed) and an object containing all the (failed) jobs with name, last execution time, locked state and return code.
