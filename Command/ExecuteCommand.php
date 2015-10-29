@@ -171,13 +171,14 @@ class ExecuteCommand extends ContainerAwareCommand
 
         // Use a StreamOutput to redirect write() and writeln() in a log file
         $path = $this->logPath;
-        if($path !== false) {
+        $file =  $scheduledCommand->getLogFile();
+        if(($path !== false) && ("null" != strtolower($file))) {
             // append directory separator if there is none
             if(substr($path, -1) !== DIRECTORY_SEPARATOR) {
                 $path = $path . DIRECTORY_SEPARATOR;
             }
             //
-            $path = $path . $scheduledCommand->getLogFile();
+            $path = $path . $file;
 
 	        // initialize streamoutput with specified target and verbosity
 	        $logOutput = new StreamOutput(fopen(
