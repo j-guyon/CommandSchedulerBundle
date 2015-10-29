@@ -27,7 +27,7 @@ matrix:
         - php: nightly
 
 before_script:
-    - phpenv config-add travis-php.ini
+    - mkdir -p ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d && echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - composer self-update
     - sh -c 'if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/symfony=$SYMFONY_VERSION; fi;'
     - composer update --prefer-dist
