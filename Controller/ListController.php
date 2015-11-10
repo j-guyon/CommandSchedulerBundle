@@ -124,7 +124,7 @@ class ListController extends Controller
             }
 
             $executionTime = $command->getLastExecution();
-            $executionTimestamp = strtotime($executionTime->date);
+            $executionTimestamp = $executionTime->getTimestamp();
 
             $timedOut = (($executionTimestamp + $timeoutValue) < $now);
 
