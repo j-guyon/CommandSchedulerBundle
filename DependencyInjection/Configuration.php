@@ -24,6 +24,10 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('doctrine_manager')->defaultValue('default')->end()
                 ->scalarNode('log_path')->defaultValue('app\logs')->end()
                 ->scalarNode('lock_timeout')->defaultValue(false)->end()
+                ->arrayNode('monitor_mail')
+                    ->defaultValue(array())
+                    ->prototype('scalar')->end()
+                ->end()
                 ->variableNode('excluded_command_namespaces')
                     ->defaultValue(array(
                         '_global',
