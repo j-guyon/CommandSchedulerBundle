@@ -98,9 +98,12 @@ jmose_command_scheduler:
 
     # Default directory where scheduler will write output files
     #  This default value assume that php app/console is launched from project's root and that the directory is writable
+    # if log_path is set to false, logging to files is disabled at all 
     log_path: app\logs\
     # This default value disables timeout checking (see monitoring), set to a numeric value (seconds) to enable it
     log_timeout: false
+    # receivers for reporting mails
+    monitor_mail: [ "nobody@example.com" ]
 
     # Namespaces listed here won't be listed in the list
     excluded_command_namespaces:
@@ -173,3 +176,5 @@ To run the check simply call
 `http://{you-app-root}/command-scheduler/monitor`
 
 The call returns a JSON object with either HTTP 200 and an empty array (everything ok) or HTTP 417 (Expectation failed) and an object containing all the (failed) jobs with name, last execution time, locked state and return code.
+
+For "internal" monitoring of jobs there is also a command "scheduler:monitor" which does the same check as the monitor call before except it sends emails to an arbitrary number of receivers (if the server allows sending mails with the "mail" command).
