@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array())
                     ->prototype('scalar')->end()
                 ->end()
+                ->scalarNode('send_ok')->defaultValue(false)->end()
                 ->variableNode('excluded_command_namespaces')
                     ->defaultValue(array(
                         '_global',
