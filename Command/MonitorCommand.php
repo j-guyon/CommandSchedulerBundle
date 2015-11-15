@@ -14,9 +14,9 @@ use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Validator\Constraints\Null;
 
 /**
- * Class ExecuteCommand : This class is the entry point to execute all scheduled command
+ * Class MonitorCommand : This class is used for monitoring scheduled commands if they run for too long or failed to execute
  *
- * @author  Julien Guyon <julienguyon@hotmail.com>
+ * @author  Daniel Fischer <dfischer000@gmail.com>
  * @package JMose\CommandSchedulerBundle\Command
  */
 class MonitorCommand extends ContainerAwareCommand
@@ -72,7 +72,7 @@ class MonitorCommand extends ContainerAwareCommand
         $this->receiver = $this->getContainer()->getParameter('jmose_command_scheduler.monitor_mail');
 
 	    // set logpath to false if specified in parameters to suppress logging
-	    if("false" == $this->logPath) {
+	    if(("false" == $this->logPath)||(false == $this->logPath)) {
 		    $this->logPath = false;
 	    } else {
 		    $this->logPath .= DIRECTORY_SEPARATOR;
@@ -161,20 +161,36 @@ class MonitorCommand extends ContainerAwareCommand
                 $output->writeln($this->dumpMode);
             }
 
-            // prepare email constants
-            $hostname = gethostname();
-            $subject = "cronjob monitoring " . $hostname;
-            $headers = 'From: webmaster@' . $hostname . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-
             // send mail to every receiver
             if(count($this->receiver)) {
-                foreach($this->receiver as $rcv) {
-                    mail(trim($rcv), $subject, $message, $headers);
-                }
+                $this->sendMails($message);
             }
-        } else if($this->dumpMode) { // no errors + dumpmode
-            $output->writeln('Nothing to do.');
+        } else {// no errors
+            $sendOk = $this->getContainer()->getParameter('jmose_command_scheduler.send_ok');
+
+            if($sendOk) {
+                $this->sendMails('no errors found');
+            }
+            if($this->dumpMode) { // dumpmode
+                $output->writeln('Nothing to do.');
+            }
+        }
+    }
+
+    /**
+     * send message to email receivers
+     *
+     * @param string $message message to be sent
+     */
+    private function sendMails($message) {
+        // prepare email constants
+        $hostname = gethostname();
+        $subject = "cronjob monitoring " . $hostname . ", " . date('Y-m-d H:i:s');
+        $headers = 'From: cron-monitor@' . $hostname . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        foreach($this->receiver as $rcv) {
+            mail(trim($rcv), $subject, $message, $headers);
         }
     }
 }
