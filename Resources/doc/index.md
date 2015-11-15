@@ -104,6 +104,8 @@ jmose_command_scheduler:
     log_timeout: false
     # receivers for reporting mails
     monitor_mail: [ "nobody@example.com" ]
+    # to send "everything's all right" emails to receivers for reporting mails set this value to "true"
+    send_ok: false
 
     # Namespaces listed here won't be listed in the list
     excluded_command_namespaces:
@@ -122,22 +124,22 @@ jmose_command_scheduler:
 
 Feel free to override it (especially `log_path`) in your `config.yml` file.
 
- 
+
 Usage
 ============
 
 After a successful installation, you can access to this URL:
 
-`http://{you-app-root}/command-scheduler/list`. 
+`http://{you-app-root}/command-scheduler/list`.
 
-From this screen, you can do following actions : 
+From this screen, you can do following actions :
   - Create a new scheduling
   - Edit an existing scheduling
   - Enable or disable scheduling (by clicking the "Power Off/On" switch)
   - Manually execute a command (It will be launched during the next `scheduler:execute`, regardless of the cron expression)
   - Unlock a task (if the lock is due to an unrecoverable error for example)
 
-After that, you have to set (every few minutes, it depends of your needs) the following command in your system : 
+After that, you have to set (every few minutes, it depends of your needs) the following command in your system :
 ``` bash
 $ php app/console scheduler:execute --env=env -vvv [--dump] [--no-output]
 ```
@@ -149,15 +151,15 @@ The `--env=` and `-v` (or `--verbosity`) arguments are passed to all scheduled c
 
 If you don't want to have any message (except error) from scheduler itself you can use the `--no-output` option.
 
-The `scheduler:execute` command will do following actions : 
+The `scheduler:execute` command will do following actions :
   - Get all scheduled commands in database (unlocked and enabled only)
   - Sort them by priority (desc)
   - Check if the command has to be executed at current time, based on its cron expression and on its last execution time
   - Execute eligible commands (without `exec` php function)
- 
-  
-**Note** : Each command is locked just before his execution (and unlocked after). 
-This system avoid to have simultaneous process for the same command. 
+
+
+**Note** : Each command is locked just before his execution (and unlocked after).
+This system avoid to have simultaneous process for the same command.
 Thus, if an non-catchable error occurs, the command won't be executed again unless the problem is solved and the task is unlocked manually.
 
 For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
@@ -166,11 +168,11 @@ Monitor Jobs
 =============
 
 To enable (external) checks if the jobs are running correctly there is a URL which runs a check with the following requirements/limits:
- 
+
  - only check enabled commands
  - return value not equal 0 means there is something wrong
  - running jobs can be checked for a maximum runtime
- 
+
 To run the check simply call
 
 `http://{you-app-root}/command-scheduler/monitor`
@@ -178,3 +180,4 @@ To run the check simply call
 The call returns a JSON object with either HTTP 200 and an empty array (everything ok) or HTTP 417 (Expectation failed) and an object containing all the (failed) jobs with name, last execution time, locked state and return code.
 
 For "internal" monitoring of jobs there is also a command "scheduler:monitor" which does the same check as the monitor call before except it sends emails to an arbitrary number of receivers (if the server allows sending mails with the "mail" command).
+As some kind of "self-monitoring" job the monitor command can be configured to send emails to all receivers if everything's ok - if there is no mail at all a problem occured.
