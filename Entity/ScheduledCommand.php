@@ -76,6 +76,8 @@ class ScheduledCommand
      */
     private $locked;
 
+    private $expectedRuntime;
+
     /**
      * Init new ScheduledCommand
      */

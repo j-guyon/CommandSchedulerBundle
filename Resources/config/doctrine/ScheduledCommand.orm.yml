@@ -80,3 +80,13 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             unique: false
             nullable: false
             column: B_LOCKED
+        expectedRuntime:
+            type: integer
+            column: EXP_RUNTIME
+    manyToOne:
+      address:
+        targetEntity: UserHost
+    oneToMany:
+      executions:
+        targetEntity: Execution
+        mappedBy: command
