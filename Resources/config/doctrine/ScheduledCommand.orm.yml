@@ -84,7 +84,7 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             type: integer
             column: EXP_RUNTIME
     manyToOne:
-      address:
+      rights:
         targetEntity: UserHost
     oneToMany:
       executions:

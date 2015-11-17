@@ -2,6 +2,9 @@
 
 namespace JMose\CommandSchedulerBundle\Entity;
 
+use JMose\CommandSchedulerBundle\Entity\UserHost;
+use JMose\CommandSchedulerBundle\Entity\Execution;
+
 /**
  * Entity ScheduledCommand
  *
@@ -76,7 +79,20 @@ class ScheduledCommand
      */
     private $locked;
 
+    /**
+     * @var integer
+     */
     private $expectedRuntime;
+
+    /**
+     * @var array Execution every time a command is executed an execution is created
+     */
+    private $executions;
+
+    /**
+     * @var UserHost requirements for executing user and host
+     */
+    private $rights;
 
     /**
      * Init new ScheduledCommand
@@ -412,4 +428,70 @@ class ScheduledCommand
         return $this;
     }
 
+
+    /**
+     * get expected runtime in seconds
+     *
+     * @return int
+     */
+    public function getExpectedRuntime()
+    {
+        return $this->expectedRuntime;
+    }
+
+    /**
+     * set expected runtime
+     *
+     * @param int $expectedRuntime
+     */
+    public function setExpectedRuntime($expectedRuntime)
+    {
+        $this->expectedRuntime = $expectedRuntime;
+    }
+
+    /**
+     * get array with all executions since last rotation
+     *
+     * @return array
+     */
+    public function getExecutions()
+    {
+        return $this->executions;
+    }
+
+    /**
+     * @param array $executions
+     */
+    public function setExecutions($executions)
+    {
+        $this->executions = $executions;
+    }
+
+    /**
+     * get right constraints for execution of command
+     *
+     * @return UserHost
+     */
+    public function getRights()
+    {
+        return $this->rights;
+    }
+
+    /**
+     * set user and host constraints
+     *
+     * @param UserHost $rights
+     */
+    public function setRights($rights)
+    {
+        $this->rights = $rights;
+    }
+
+    /**
+     * check if command it to be executed under given "circumstances" (user and host matching)
+     */
+    public function checkRights()
+    {
+        
+    }
 }

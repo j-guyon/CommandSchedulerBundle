@@ -110,6 +110,11 @@ class ExecuteCommand extends ContainerAwareCommand
         foreach ($commands as $command) {
 
             /** @var ScheduledCommand $command */
+            // check if the command's rights (user and host) allow execution of the command at all.
+            if(!$command->checkRights()) {
+                continue;
+            }
+
             $cron        = CronExpression::factory($command->getCronExpression());
             $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
             $now         = new \DateTime();
