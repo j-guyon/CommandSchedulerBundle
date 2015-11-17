@@ -1,6 +1,7 @@
 JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
     type: entity
     table: SCHEDULED_COMMAND
+    engine: myISAM
     repositoryClass: JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository
     fields:
         id:
@@ -11,7 +12,7 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             id: true
             column: ID_SCHEDULED_COMMAND
             generator:
-                strategy: IDENTITY
+                strategy: AUTO
         name:
             type: string
             length: 100

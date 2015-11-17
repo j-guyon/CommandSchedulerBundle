@@ -492,6 +492,6 @@ class ScheduledCommand
      */
     public function checkRights()
     {
-        
+
     }
 }
