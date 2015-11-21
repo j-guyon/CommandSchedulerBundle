@@ -15,17 +15,36 @@ use Symfony\Component\HttpFoundation\Response;
 class ListController extends Controller
 {
 
+    /** @var string doctrine managername */
+    private $managerName = 'default';
+
+    /** @var ObjectManager doctrine manager  */
+    private $doctrineManager;
+
+    private $bundleName = 'JMoseCommandSchedulerBundle';
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $scheduledCommands = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
+        $this->setManager();
+        $scheduledCommands = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
 
         return $this->render(
-            'JMoseCommandSchedulerBundle:List:index.html.twig',
+            $this->bundleName . ':List:index.html.twig',
             array('scheduledCommands' => $scheduledCommands)
+        );
+    }
+
+    public function indexRightsAction()
+    {
+        $this->setManager();
+        $rights = $this->doctrineManager->getRepository($this->bundleName . ':UserHost')->findAll();
+
+        return $this->render(
+            $this->bundleName . ':List:indexRights.html.twig',
+            array('userHosts' => $rights)
         );
     }
 
@@ -35,9 +54,9 @@ class ListController extends Controller
      */
     public function removeAction($id)
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
-        $entityManager    = $this->getDoctrine()->getManager($manager);
+        $this->setManager();
+        $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
+        $entityManager = $this->doctrineManager;
         $entityManager->remove($scheduledCommand);
         $entityManager->flush();
 
@@ -53,15 +72,12 @@ class ListController extends Controller
      */
     public function toggleAction($id)
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
-        if ($scheduledCommand->isDisabled()) {
-            $scheduledCommand->setDisabled(false);
-        } else {
-            $scheduledCommand->setDisabled(true);
-        }
+        $this->setManager();
+        $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
 
-        $this->getDoctrine()->getManager($manager)->flush();
+        $scheduledCommand->setDisabled(!$scheduledCommand->isDisabled());
+
+        $this->doctrineManager->flush();
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
@@ -72,10 +88,11 @@ class ListController extends Controller
      */
     public function executeAction($id)
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
+        $this->setManager();
+
+        $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
         $scheduledCommand->setExecuteImmediately(true);
-        $this->getDoctrine()->getManager($manager)->flush();
+        $this->doctrineManager->flush();
 
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.execute', array(), 'JMoseCommandScheduler'));
@@ -89,10 +106,10 @@ class ListController extends Controller
      */
     public function unlockAction($id)
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find($id);
+        $this->setManager();
+        $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
         $scheduledCommand->setLocked(false);
-        $this->getDoctrine()->getManager($manager)->flush();
+        $this->doctrineManager->flush();
 
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.unlocked', array(), 'JMoseCommandScheduler'));
@@ -109,17 +126,18 @@ class ListController extends Controller
      */
     public function monitorAction()
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $scheduledCommands = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
+        $this->setManager();
+
+        $scheduledCommands = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
 
         $timeoutValue = $this->container->getParameter('jmose_command_scheduler.lock_timeout');
 
         $failed = array();
         $now = time();
 
-        foreach($scheduledCommands as $command) {
+        foreach ($scheduledCommands as $command) {
             // don't care about disabled commands
-            if($command->isDisabled()) {
+            if ($command->isDisabled()) {
                 continue;
             }
 
@@ -128,7 +146,7 @@ class ListController extends Controller
 
             $timedOut = (($executionTimestamp + $timeoutValue) < $now);
 
-            if(
+            if (
                 ($command->getLastReturnCode() != 0) || // last return code not OK
                 (
                     $command->getLocked() &&
@@ -153,5 +171,25 @@ class ListController extends Controller
         $response->setStatusCode($status);
 
         return $response;
+    }
+
+    /**
+     * get name of doctrine manager if set in params, return default otherwise
+     * @return string
+     */
+    private function setManager()
+    {
+        // parameter name
+        $paramName = 'jmose_command_scheduler.doctrine_manager';
+        // prepare default value
+        $manager = 'default';
+
+        // check parameter and set return value
+        if ($this->container->hasParameter($paramName)) {
+            $manager = $this->container->getParameter($paramName);
+        }
+
+        $this->managerName = $manager;
+        $this->doctrineManager = $this->getDoctrine()->getManager($manager);
     }
 }

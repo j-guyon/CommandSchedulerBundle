@@ -43,7 +43,7 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             type: datetime
             length: null
             unique: false
-            nullable: false
+            nullable: true
             column: DH_LAST_EXECUTION
         lastReturnCode:
             type: integer
@@ -83,10 +83,14 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             column: B_LOCKED
         expectedRuntime:
             type: integer
+            length: null
+            nullable: true
+            unique: false
             column: EXP_RUNTIME
     manyToOne:
       rights:
         targetEntity: UserHost
+        column: REQUIRED_RIGHTS
         joinColumn:
           name: rights
           referencedColumnName: ID_USER_HOST
