@@ -15,12 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 class ListController extends Controller
 {
 
-    /** @var string doctrine managername */
+    /** @var string doctrine manager name */
     private $managerName = 'default';
 
     /** @var ObjectManager doctrine manager  */
     private $doctrineManager;
 
+    /** @var string bundle name to be used in (almost) all actions */
     private $bundleName = 'JMoseCommandSchedulerBundle';
 
     /**
@@ -37,6 +38,9 @@ class ListController extends Controller
         );
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexRightsAction()
     {
         $this->setManager();

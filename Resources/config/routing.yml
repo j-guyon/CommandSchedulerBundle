@@ -2,6 +2,10 @@ jmose_command_scheduler_list:
     pattern:  /command-scheduler/list
     defaults: { _controller: JMoseCommandSchedulerBundle:List:index }
 
+jmose_command_scheduler_list_rights:
+    pattern:  /command-scheduler/listRights
+    defaults: { _controller: JMoseCommandSchedulerBundle:ListRights:index }
+
 jmose_command_scheduler_monitor:
     pattern:  /command-scheduler/monitor
     defaults: { _controller: JMoseCommandSchedulerBundle:List:monitor }
@@ -37,3 +41,7 @@ jmose_command_scheduler_detail_new:
 jmose_command_scheduler_detail_save:
     pattern:  /command-scheduler/detail/save
     defaults: { _controller: JMoseCommandSchedulerBundle:Detail:save }
+
+jmose_command_scheduler_detail_executions:
+    pattern:  /command-scheduler/detail/executions/{scheduledCommandId}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:showExecutions }
