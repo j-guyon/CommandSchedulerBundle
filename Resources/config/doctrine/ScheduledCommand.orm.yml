@@ -87,7 +87,12 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
     manyToOne:
       rights:
         targetEntity: UserHost
+        joinColumn:
+          name: rights
+          referencedColumnName: ID_USER_HOST
+          nullable: true
     oneToMany:
       executions:
         targetEntity: Execution
-        mappedBy: command
+        mappedBy: command_id
+        nullable: true

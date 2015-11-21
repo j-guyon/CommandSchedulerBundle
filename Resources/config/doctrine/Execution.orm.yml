@@ -1,0 +1,32 @@
+JMose\CommandSchedulerBundle\Entity\Execution:
+    type: entity
+    table: EXECUTION
+    engine: myISAM
+    repositoryClass: JMose\CommandSchedulerBundle\Entity\ExecutionRepository
+    fields:
+        id:
+            type: integer
+            length: null
+            unique: false
+            nullable: false
+            id: true
+            column: ID_EXECUTION
+            generator:
+                strategy: AUTO
+        executionDate:
+            type: datetime
+            column: EXECUTION_DATE
+        runtime:
+            type: integer
+            column: RUNTIME
+        returnCode:
+            type: integer
+            column: RETURN_CODE
+    manyToOne:
+      command:
+        targetEntity: ScheduledCommand
+        inversedBy: executions
+        joinColumn:
+          name: command
+          referencedColumnName: ID_SCHEDULED_COMMAND
+    lifecycleCallbacks: {  }
