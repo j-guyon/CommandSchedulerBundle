@@ -18,6 +18,10 @@
                 <source>list.title</source>
                 <target>Scheduled commands</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>list.rights.title</source>
+                <target>User and Host requirements</target>
+            </trans-unit>
 
             <!-- Actions -->
             <trans-unit id="100">
@@ -51,6 +55,10 @@
             <trans-unit id="107">
                 <source>confirm.unlock</source>
                 <target>The task may be running. Are you sure you want to unlock it ?</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>action.userhost.new</source>
+                <target>New requirement</target>
             </trans-unit>
 
             <!-- Detail  -->
@@ -106,6 +114,23 @@
             <trans-unit id="213">
                 <source>detail.actions</source>
                 <target>Actions</target>
+            </trans-unit>
+
+            <trans-unit id="214">
+                <source>rights.title</source>
+                <target>Short name</target>
+            </trans-unit>
+            <trans-unit id="215">
+                <source>rights.user</source>
+               <target>Required user</target>
+            </trans-unit>
+            <trans-unit id="216">
+                <source>rights.host</source>
+               <target>Required host</target>
+            </trans-unit>
+            <trans-unit id="217">
+                <source>rights.info</source>
+                <target>Description</target>
             </trans-unit>
 
             <!-- Flashs messages -->

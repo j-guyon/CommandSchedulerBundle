@@ -2,7 +2,7 @@ JMose\CommandSchedulerBundle\Entity\Execution:
     type: entity
     table: EXECUTION
     engine: myISAM
-    repositoryClass: JMose\CommandSchedulerBundle\Entity\ExecutionRepository
+    repositoryClass: JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository
     fields:
         id:
             type: integer

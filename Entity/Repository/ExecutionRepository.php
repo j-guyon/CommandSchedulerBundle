@@ -1,6 +1,6 @@
 <?php
 
-namespace JMose\CommandSchedulerBundle\Entity;
+namespace JMose\CommandSchedulerBundle\Entity\Repository;
 
 /**
  * ExecutionRepository

@@ -2,7 +2,7 @@ JMose\CommandSchedulerBundle\Entity\UserHost:
     type: entity
     table: EXECUTION_RIGHTS
     engine: myISAM
-    repositoryClass: JMose\CommandSchedulerBundle\Entity\UserHostRepository
+    repositoryClass: JMose\CommandSchedulerBundle\Entity\Repository\UserHostRepository
     fields:
         id:
             type: integer

@@ -2,6 +2,7 @@
 
 namespace JMose\CommandSchedulerBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use JMose\CommandSchedulerBundle\Entity\UserHost;
 use JMose\CommandSchedulerBundle\Entity\Execution;
 
@@ -82,17 +83,17 @@ class ScheduledCommand
     /**
      * @var integer
      */
-    private $expectedRuntime;
+    private $expectedRuntime = 0;
 
     /**
-     * @var array Execution every time a command is executed an execution is created
+     * @var ArrayCollection Execution every time a command is executed an execution is created
      */
     private $executions;
 
     /**
      * @var UserHost requirements for executing user and host
      */
-    private $rights;
+    private $rights = null;
 
     /**
      * Init new ScheduledCommand
@@ -101,6 +102,8 @@ class ScheduledCommand
     {
         $this->setLastExecution(new \DateTime());
         $this->setLocked(false);
+
+        $this->executions = new ArrayCollection();
     }
 
     /**

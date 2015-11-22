@@ -1,0 +1,58 @@
+{% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+{% block title %}
+    {{ 'list.rights.title'|trans }}
+{% endblock title %}
+
+{% block content %}
+    <div class="table-responsive table-stripped">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>{{ "rights.title"|trans }}</th>
+                <th>{{ "rights.user"|trans }}</th>
+                <th>{{ "rights.host"|trans }}</th>
+                <th>{{ "rights.info"|trans }}</th>
+                <th>{{ "detail.actions"|trans }}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for req in userHosts %}
+            <tr>
+                <td>
+                    {{ req.title }}
+                </td>
+                <td>
+                    {{ req.user }}
+                </td>
+                <td>
+                    {{ req.host }}
+                </td>
+                <td>
+                    {{ req.info }}
+                </td>
+                <td>
+                <td style="min-width: 90px;">
+                    <a href="{{ path('jmose_command_scheduler_detail_edit', {'scheduledCommandId': req.id}) }}" >
+                        <span class="text-info glyphicon glyphicon-pencil"></span> <span class="sr-only">{{ "action.edit"|trans }}</span>
+                    </a>
+                    <a href="#"
+                       data-href="{{ path('jmose_command_scheduler_action_remove', {'id': req.id}) }}"
+                       data-toggle="confirmation"
+                       data-btnOkLabel="{{ "action.delete"|trans }}"
+                       data-title="{{ "confirm.delete"|trans }}"
+                            >
+                        <span class="text-danger glyphicon glyphicon-trash"></span> <span class="sr-only">{{ "action.delete"|trans }}</span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <a href="{{ path('jmose_command_scheduler_detail_new') }}" class="btn btn-primary btn-lg pull-right" role="button">{{ "action.userhost.new"|trans }} »</a>
+{% endblock content %}

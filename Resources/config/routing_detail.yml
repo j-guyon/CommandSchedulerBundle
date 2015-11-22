@@ -1,0 +1,20 @@
+# detail actions
+jmose_command_scheduler_detail_index:
+    pattern:  /command-scheduler/detail/view/
+    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:index }
+
+jmose_command_scheduler_detail_edit:
+    pattern:  /command-scheduler/detail/edit/{scheduledCommandId}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:initEditScheduledCommand }
+
+jmose_command_scheduler_detail_new:
+    pattern:  /command-scheduler/detail/new
+    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:initNewScheduledCommand }
+
+jmose_command_scheduler_detail_save:
+    pattern:  /command-scheduler/detail/save
+    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:save }
+
+jmose_command_scheduler_detail_executions:
+    pattern:  /command-scheduler/detail/executions/{scheduledCommandId}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:showExecutions }
