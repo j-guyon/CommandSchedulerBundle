@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @package JMose\CommandSchedulerBundle\Controller
  */
-class DetailController extends Controller
+class DetailController extends BaseController
 {
 
     /**
@@ -26,14 +26,14 @@ class DetailController extends Controller
      * @param Form             $scheduledCommandForm
      * @return Response
      */
-    public function indexAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
+    public function indexCommandAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
     {
         if (null === $scheduledCommandForm) {
             $scheduledCommandForm = $this->createForm(new ScheduledCommandType(), $scheduledCommand);
         }
 
         return $this->render(
-            'JMoseCommandSchedulerBundle:Detail:index.html.twig', array(
+            'JMoseCommandSchedulerBundle:Detail:indexCommands.html.twig', array(
                 'scheduledCommandForm' => $scheduledCommandForm->createView()
             )
         );
@@ -80,7 +80,7 @@ class DetailController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function saveAction(Request $request)
+    public function saveCommandAction(Request $request)
     {
         $manager       = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
         $entityManager = $this->getDoctrine()->getManager($manager);
@@ -108,7 +108,7 @@ class DetailController extends Controller
             // Add a flash message and do a redirect to the list
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.success', array(), 'JMoseCommandScheduler'));
 
-            return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
+            return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands'));
 
         } else {
             // Redirect to indexAction with the form object that has validation errors

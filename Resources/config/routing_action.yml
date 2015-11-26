@@ -1,16 +1,16 @@
 # list actions
-jmose_command_scheduler_action_toggle:
-    pattern:  /command-scheduler/action/toggle/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:toggle }
+jmose_command_scheduler_action_command_toggle:
+    pattern:  /toggle/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:List:toggleCommand }
 
-jmose_command_scheduler_action_remove:
-    pattern:  /command-scheduler/action/remove/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:remove }
+jmose_command_scheduler_action_command_remove:
+    pattern:  /remove/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:List:removeCommand }
 
-jmose_command_scheduler_action_execute:
-    pattern:  /command-scheduler/action/execute/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:execute }
+jmose_command_scheduler_action_command_execute:
+    pattern:  /execute/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:List:executeCommand }
 
-jmose_command_scheduler_action_unlock:
-    pattern:  /command-scheduler/action/unlock/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:unlock }
+jmose_command_scheduler_action_command_unlock:
+    pattern:  /unlock/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:List:unlockCommand }

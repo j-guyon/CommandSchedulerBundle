@@ -1,0 +1,6 @@
+jmose_command_scheduler_list_commands:
+    pattern:  /{_type}
+    defaults:
+      _controller: JMoseCommandSchedulerBundle:List:index
+    requirements:
+      _type: "commands|rights|executions"

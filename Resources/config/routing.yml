@@ -1,14 +1,15 @@
+jmose_command_scheduler_list_overview:
+    pattern:  /command-scheduler/
+    defaults:
+      _controller: JMoseCommandSchedulerBundle:Base:index
+
 # lists
 jmose_command_scheduler_list:
-    pattern:  /command-scheduler/list
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:index }
-
-jmose_command_scheduler_list_rights:
-    pattern:  /command-scheduler/listRights
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:indexRights }
+    resource: @JMoseCommandSchedulerBundle/Resources/config/routing_list.yml
+    prefix:   /command-scheduler/list
 
 jmose_command_scheduler_action:
-    resource:  @JMoseCommandSchedulerBundle/Resources/config/routing_action.yml
+    resource: @JMoseCommandSchedulerBundle/Resources/config/routing_action.yml
     prefix:   /command-scheduler/action
 
 jmose_command_scheduler_detail:
@@ -18,4 +19,4 @@ jmose_command_scheduler_detail:
 # misc
 jmose_command_scheduler_monitor:
     pattern:  /command-scheduler/monitor
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:monitor }
+    defaults: { _controller: JMoseCommandSchedulerBundle:Base:monitor }

@@ -18,9 +18,35 @@
                 <source>list.title</source>
                 <target>Scheduled commands</target>
             </trans-unit>
+
             <trans-unit id="4">
                 <source>list.rights.title</source>
                 <target>User and Host requirements</target>
+            </trans-unit>
+
+            <trans-unit id="5">
+                <source>list.commands</source>
+                <target>Show list of commands</target>
+            </trans-unit>
+
+            <trans-unit id="6">
+                <source>list.rights</source>
+                <target>Show list of user and host requirements</target>
+            </trans-unit>
+
+            <trans-unit id="7">
+                <source>list.executions</source>
+                <target>Show list of all previous executions</target>
+            </trans-unit>
+
+            <trans-unit id="8">
+                <source>list.monitor</source>
+                <target>Open monitoring</target>
+            </trans-unit>
+
+            <trans-unit id="9">
+                <source>list.monitor.notice</source>
+                <target>Machine readable output only</target>
             </trans-unit>
 
             <!-- Actions -->
