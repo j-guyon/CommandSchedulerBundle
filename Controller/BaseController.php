@@ -26,15 +26,14 @@ class BaseController extends Controller
     protected $bundleName = 'JMoseCommandSchedulerBundle';
 
     /**
- * Override method to call #containerInitialized method when container set.
- * {@inheritdoc}
- */
-public function setContainer(ContainerInterface $container = null)
-{
-    parent::setContainer($container);
-    $this->setManager();
-}
-
+     * Override method to call #containerInitialized method when container set.
+     * {@inheritdoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        parent::setContainer($container);
+        $this->setManager();
+    }
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response

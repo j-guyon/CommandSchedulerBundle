@@ -33,7 +33,7 @@ class DetailController extends BaseController
         }
 
         return $this->render(
-            'JMoseCommandSchedulerBundle:Detail:indexCommands.html.twig', array(
+            'JMoseCommandSchedulerBundle:Detail:command.html.twig', array(
                 'scheduledCommandForm' => $scheduledCommandForm->createView()
             )
         );
@@ -49,7 +49,7 @@ class DetailController extends BaseController
         $scheduledCommand = new ScheduledCommand();
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Detail:index', array(
+            'JMoseCommandSchedulerBundle:Detail:indexCommand', array(
                 'scheduledCommand' => $scheduledCommand
             )
         );
@@ -68,7 +68,7 @@ class DetailController extends BaseController
             ->find($scheduledCommandId);
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Detail:index', array(
+            'JMoseCommandSchedulerBundle:Detail:indexCommand', array(
                 'scheduledCommand' => $scheduledCommand
             )
         );
@@ -108,7 +108,7 @@ class DetailController extends BaseController
             // Add a flash message and do a redirect to the list
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.success', array(), 'JMoseCommandScheduler'));
 
-            return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands'));
+            return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands', array('_type'=>'commands')));
 
         } else {
             // Redirect to indexAction with the form object that has validation errors
