@@ -87,6 +87,12 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             nullable: true
             unique: false
             column: EXP_RUNTIME
+        logExecutions:
+            type: boolean
+            length: null
+            unique: false
+            nullable: true
+            column: B_LOG_EXECUTIONS
     manyToOne:
       rights:
         targetEntity: UserHost

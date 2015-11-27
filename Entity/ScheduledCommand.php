@@ -90,6 +90,8 @@ class ScheduledCommand
      */
     private $executions;
 
+    private $logExecutions = false;
+
     /**
      * @var UserHost requirements for executing user and host
      */
