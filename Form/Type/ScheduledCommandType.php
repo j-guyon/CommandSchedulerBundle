@@ -80,11 +80,17 @@ class ScheduledCommandType extends AbstractType
         );
 
         $builder->add(
+            'logExecutions', 'checkbox', array(
+                'label'    => 'detail.logExecutions',
+                'required' => false
+            )
+        );
+
+        $builder->add(
             'save', 'submit', array(
                 'label' => 'detail.save',
             )
         );
-
     }
 
     /**

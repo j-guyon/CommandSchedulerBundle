@@ -3,6 +3,10 @@ jmose_command_scheduler_action_command_toggle:
     pattern:  /toggle/command/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:toggleCommand }
 
+jmose_command_scheduler_action_command_toggle_logging:
+    pattern:  /toggleLogging/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:List:toggleLogging }
+
 jmose_command_scheduler_action_command_remove:
     pattern:  /remove/command/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:removeCommand }

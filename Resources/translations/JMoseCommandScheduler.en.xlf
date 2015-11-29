@@ -141,6 +141,10 @@
                 <source>detail.actions</source>
                 <target>Actions</target>
             </trans-unit>
+            <trans-unit id="218">
+                <source>detail.logExecutions</source>
+                <target>Log Executions</target>
+            </trans-unit>
 
             <trans-unit id="214">
                 <source>rights.title</source>

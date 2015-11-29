@@ -18,6 +18,7 @@
                 <th>{{ "detail.lastExecution"|trans }}</th>
                 <th>{{ "detail.lastReturnCode"|trans }}</th>
                 <th>{{ "detail.priority"|trans }}</th>
+                <th>{{ "detail.logExecutions"|trans }}</th>
                 <th>{{ "detail.actions"|trans }}</th>
             </tr>
         </thead>
@@ -54,6 +55,15 @@
                 </td>
                 <td>
                     {{ command.priority }}
+                </td>
+                <td>
+                    <a href="{{ path('jmose_command_scheduler_action_command_toggle_logging', {'id': command.id}) }}">
+                    {% if command.logExecutions == true %}
+                        <span class="glyphicon glyphicon-check"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-unchecked"></span>
+                    {% endif %}
+                    </a>
                 </td>
                 <td style="min-width: 90px;">
                     {% if command.locked == true %}

@@ -90,7 +90,11 @@ class ScheduledCommand
      */
     private $executions;
 
+    /**
+     * @var boolean should executions be logged in database
+     */
     private $logExecutions = false;
+
 
     /**
      * @var UserHost requirements for executing user and host
@@ -498,5 +502,21 @@ class ScheduledCommand
     public function checkRights()
     {
 
+    }
+
+    /**
+     * @return boolean
+     */
+    public function logExecutions()
+    {
+        return $this->logExecutions;
+    }
+
+    /**
+     * @param boolean $logExecutions
+     */
+    public function setLogExecutions($logExecutions)
+    {
+        $this->logExecutions = $logExecutions;
     }
 }

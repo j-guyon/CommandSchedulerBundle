@@ -5,6 +5,7 @@ namespace JMose\CommandSchedulerBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 
 /**
  * Class ListController
@@ -38,6 +39,7 @@ class ListController extends BaseController
      */
     public function removeCommandAction($id)
     {
+        /** @var ScheduledCommand $scheduledCommand */
         $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
         $entityManager = $this->doctrineManager;
         $entityManager->remove($scheduledCommand);
@@ -55,9 +57,27 @@ class ListController extends BaseController
      */
     public function toggleCommandAction($id)
     {
+        /** @var ScheduledCommand $scheduledCommand */
         $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
 
         $scheduledCommand->setDisabled(!$scheduledCommand->isDisabled());
+
+        $this->doctrineManager->flush();
+
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands', array('_type' => 'commands')));
+    }
+
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function toggleLoggingAction($id)
+    {
+        /** @var ScheduledCommand $scheduledCommand */
+        $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
+
+        $scheduledCommand->setLogExecutions(!$scheduledCommand->logExecutions());
 
         $this->doctrineManager->flush();
 
@@ -70,6 +90,7 @@ class ListController extends BaseController
      */
     public function executeCommandAction($id)
     {
+        /** @var ScheduledCommand $scheduledCommand */
         $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
         $scheduledCommand->setExecuteImmediately(true);
         $this->doctrineManager->flush();
@@ -86,6 +107,7 @@ class ListController extends BaseController
      */
     public function unlockCommandAction($id)
     {
+        /** @var ScheduledCommand $scheduledCommand */
         $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->find($id);
         $scheduledCommand->setLocked(false);
         $this->doctrineManager->flush();
