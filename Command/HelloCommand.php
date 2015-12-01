@@ -28,7 +28,7 @@ class HelloCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('scheduler:hello')
+            ->setName('schedulerTest:hello')
             ->setDescription('Hello world testcommand')
             ->addOption(
                 'name',
