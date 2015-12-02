@@ -37,11 +37,32 @@ class HelloCommand extends ContainerAwareCommand
                 'Person who shall be greeted',
                 'World'
             )
+            ->addOption(
+                'randReturn',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'set to enable random return value',
+                false
+            )
+            ->addOption(
+                'randReturn',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'set to enable random return value',
+                false
+            )
+            ->addOption(
+                'randSleep',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'set to enable random sleep to increase runtime',
+                false
+            )
             ->setHelp('This class is used for testing purposes only');
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
      */
@@ -49,5 +70,16 @@ class HelloCommand extends ContainerAwareCommand
     {
         $name = $input->getOption('name');
         $output->writeln('<info>Hello ' . $name . '</info>');
+
+        if ($input->getOption('randSleep')) {
+            sleep(rand(1, 10));
+        }
+
+        $return = 0;
+        if ($input->getOption('randReturn')) {
+            $return = rand(-5, 5);
+        }
+
+        return $return;
     }
 }

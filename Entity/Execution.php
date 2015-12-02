@@ -22,7 +22,7 @@ class Execution
     /**
      * @var integer
      */
-    private $runtime;
+    private $runtime = -1;
 
     /**
      * @var integer

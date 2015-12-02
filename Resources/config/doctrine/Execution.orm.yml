@@ -18,9 +18,11 @@ JMose\CommandSchedulerBundle\Entity\Execution:
             column: EXECUTION_DATE
         runtime:
             type: integer
+            nullable: true
             column: RUNTIME
         returnCode:
             type: integer
+            nullable: true
             column: RETURN_CODE
     manyToOne:
       command:

@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Validator\Constraints\Null;
+use JMose\CommandSchedulerBundle\Entity\Execution;
 
 /**
  * Class ExecuteCommand : This class is the entry point to execute all scheduled command
@@ -42,6 +43,9 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     private $commandsVerbosity;
 
+    /** @var string $bundleName */
+    private $bundleName = 'JMoseCommandSchedulerBundle';
+
     /**
      * @inheritdoc
      */
@@ -64,10 +68,13 @@ class ExecuteCommand extends ContainerAwareCommand
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dumpMode = $input->getOption('dump');
-        $this->logPath = rtrim($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), '/\\');
+        $this->logPath = $this->getContainer()->getParameter('jmose_command_scheduler.log_path');
+        if($this->logPath) {
+            $this->logPath = rtrim($this->logPath, '/\\');
+        }
 
 	    // set logpath to false if specified in parameters to suppress logging
-	    if("false" == $this->logPath) {
+	    if(("false" == $this->logPath) || !$this->logPath) {
 		    $this->logPath = false;
 	    } else {
 		    $this->logPath .= DIRECTORY_SEPARATOR;
@@ -104,7 +111,7 @@ class ExecuteCommand extends ContainerAwareCommand
             return;
         }
 
-        $commands = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
+        $commands = $this->em->getRepository($this->bundleName . ':ScheduledCommand')->findEnabledCommand();
 
         $noneExecution = true;
         foreach ($commands as $command) {
@@ -113,6 +120,10 @@ class ExecuteCommand extends ContainerAwareCommand
             // check if the command's rights (user and host) allow execution of the command at all.
             if(!$command->checkRights()) {
                 continue;
+            }
+            if($command->logExecutions()){
+                $executions = $this->em->getRepository($this->bundleName . ':Execution')->findCommandExecutions($command->getId());
+                $command->setExecutions($executions);
             }
 
             $cron        = CronExpression::factory($command->getCronExpression());
@@ -152,9 +163,20 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
+        $now = new \DateTime();
+        /** @var ScheduledCommand $scheduledCommand */
         $scheduledCommand = $this->em->merge($scheduledCommand);
-        $scheduledCommand->setLastExecution(new \DateTime());
+        $scheduledCommand->setLastExecution($now);
         $scheduledCommand->setLocked(true);
+
+        if($scheduledCommand->logExecutions()){
+            $log = new Execution();
+            $log->setCommand($scheduledCommand);
+            $log->setExecutionDate($now);
+            $this->em->persist($log);
+            $scheduledCommand->addLog($log);
+        }
+
         $this->em->flush();
 
         try {
@@ -213,6 +235,18 @@ class ExecuteCommand extends ContainerAwareCommand
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);
         $scheduledCommand->setExecuteImmediately(false);
+
+        if($scheduledCommand->logExecutions()){
+            /** @var Execution $log */
+            $log = $scheduledCommand->getCurrentLog();
+            $log->setReturnCode($result);
+
+            // calculate runtime in seconds
+            $now = new \DateTime();
+            $runtime = $now->getTimestamp() - $log->getExecutionDate()->getTimestamp();
+            $log->setRuntime($runtime);
+        }
+
         $this->em->flush();
 
         /*

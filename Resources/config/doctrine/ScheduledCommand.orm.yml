@@ -104,5 +104,5 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
     oneToMany:
       executions:
         targetEntity: Execution
-        mappedBy: command_id
+        mappedBy: command
         nullable: true

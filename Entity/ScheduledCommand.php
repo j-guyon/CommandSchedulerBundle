@@ -461,7 +461,7 @@ class ScheduledCommand
     /**
      * get array with all executions since last rotation
      *
-     * @return array
+     * @return ArrayCollection
      */
     public function getExecutions()
     {
@@ -469,7 +469,7 @@ class ScheduledCommand
     }
 
     /**
-     * @param array $executions
+     * @param ArrayCollection $executions
      */
     public function setExecutions($executions)
     {
@@ -498,10 +498,11 @@ class ScheduledCommand
 
     /**
      * check if command it to be executed under given "circumstances" (user and host matching)
+     * @return boolean
      */
     public function checkRights()
     {
-
+        return true;
     }
 
     /**
@@ -518,5 +519,20 @@ class ScheduledCommand
     public function setLogExecutions($logExecutions)
     {
         $this->logExecutions = $logExecutions;
+    }
+
+    /**
+     * add new Execution to collection
+     * @param Execution $log
+     */
+    public function addLog($log) {
+        $this->executions->add($log);
+    }
+
+    /**
+     * @return Execution
+     */
+    public function getCurrentLog(){
+        return $this->executions->last();
     }
 }

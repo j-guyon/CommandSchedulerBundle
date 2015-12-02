@@ -125,6 +125,7 @@ class ListController extends BaseController
      */
     private function getListCommands()
     {
+        /** @var ArrayCollection $scheduledCommands */
         $scheduledCommands = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
 
         $result = $this->render(
@@ -142,6 +143,7 @@ class ListController extends BaseController
      */
     private function getListRights()
     {
+        /** @var ArrayCollection $rights */
         $rights = $this->doctrineManager->getRepository($this->bundleName . ':UserHost')->findAll();
 
         $result = $this->render(

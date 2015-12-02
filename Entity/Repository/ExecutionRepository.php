@@ -2,6 +2,8 @@
 
 namespace JMose\CommandSchedulerBundle\Entity\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * ExecutionRepository
  *
@@ -10,4 +12,22 @@ namespace JMose\CommandSchedulerBundle\Entity\Repository;
  */
 class ExecutionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * find all executions fo a given command
+     *
+     * @param integer $commandId
+     * @return ArrayCollection
+     */
+    public function findCommandExecutions($commandId)
+    {
+        $result = new ArrayCollection();
+        $logs = $this->findBy(array('command' => $commandId), array('id' => 'ASC'));
+
+        // convert array to ArrayCollection
+        foreach($logs as $log) {
+            $result->add($log);
+        }
+
+        return $result;
+    }
 }
