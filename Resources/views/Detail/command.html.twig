@@ -34,7 +34,7 @@
 
         {# Form's actions #}
         <div class="row">
-            <a href="{{ path('jmose_command_scheduler_list_commands', {'_type':'commands'}) }}" class="btn btn-default btn-lg" role="button">Cancel</a>
+            <a href="{{ path('jmose_command_scheduler_list', {'_type':'commands'}) }}" class="btn btn-default btn-lg" role="button">Cancel</a>
             {{ form_widget( scheduledCommandForm.save, {'attr': {'class': 'btn btn-success btn-lg pull-right'} } ) }}
         </div>
         {{ form_end( scheduledCommandForm ) }}

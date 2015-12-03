@@ -1,45 +1,16 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
-        <body>
+{"name":
+                "Symfony's scheduler",
+                "dateFormat":
+                "Y-m-d H:i",
+  "list": {
+  "title":"Scheduled commands",
+"rightstitle":"User and Host requirements",
+    "commands":"Show list of commands",
+    "rights":"Show list of user and host requirements",
+    "executions":"Show list of all previous executions"
+}
 
-            <!-- Bundle -->
-            <trans-unit id="1">
-                <source>name</source>
-                <target>Symfony's scheduler</target>
-            </trans-unit>
-
-            <trans-unit id="2">
-                <source>dateFormat</source>
-                <target>Y-m-d H:i</target>
-            </trans-unit>
-
-            <trans-unit id="3">
-                <source>list.title</source>
-                <target>Scheduled commands</target>
-            </trans-unit>
-
-            <trans-unit id="4">
-                <source>list.rights.title</source>
-                <target>User and Host requirements</target>
-            </trans-unit>
-
-            <trans-unit id="5">
-                <source>list.commands</source>
-                <target>Show list of commands</target>
-            </trans-unit>
-
-            <trans-unit id="6">
-                <source>list.rights</source>
-                <target>Show list of user and host requirements</target>
-            </trans-unit>
-
-            <trans-unit id="7">
-                <source>list.executions</source>
-                <target>Show list of all previous executions</target>
-            </trans-unit>
-
-            <trans-unit id="10">
+           <trans-unit id="10">
                 <source>list.previousExecutions</source>
                 <target>Previous executions</target>
             </trans-unit>

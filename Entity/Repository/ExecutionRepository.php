@@ -16,18 +16,12 @@ class ExecutionRepository extends \Doctrine\ORM\EntityRepository
      * find all executions fo a given command
      *
      * @param integer $commandId
-     * @return ArrayCollection
+     * @return array
      */
     public function findCommandExecutions($commandId)
     {
-        $result = new ArrayCollection();
         $logs = $this->findBy(array('command' => $commandId), array('id' => 'ASC'));
 
-        // convert array to ArrayCollection
-        foreach($logs as $log) {
-            $result->add($log);
-        }
-
-        return $result;
+        return $logs;
     }
 }

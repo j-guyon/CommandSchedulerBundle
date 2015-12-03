@@ -48,7 +48,7 @@ class ListController extends BaseController
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.deleted', array(), 'JMoseCommandScheduler'));
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
     }
 
     /**
@@ -64,7 +64,7 @@ class ListController extends BaseController
 
         $this->doctrineManager->flush();
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
     }
 
 
@@ -81,7 +81,7 @@ class ListController extends BaseController
 
         $this->doctrineManager->flush();
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
     }
 
     /**
@@ -98,7 +98,7 @@ class ListController extends BaseController
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.execute', array(), 'JMoseCommandScheduler'));
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
     }
 
     /**
@@ -115,7 +115,7 @@ class ListController extends BaseController
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.unlocked', array(), 'JMoseCommandScheduler'));
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_commands', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
     }
 
     /**
@@ -125,7 +125,7 @@ class ListController extends BaseController
      */
     private function getListCommands()
     {
-        /** @var ArrayCollection $scheduledCommands */
+        /** @var array $scheduledCommands */
         $scheduledCommands = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
 
         $result = $this->render(

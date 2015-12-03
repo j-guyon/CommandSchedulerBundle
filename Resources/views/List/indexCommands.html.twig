@@ -10,14 +10,16 @@
     <table class="table">
         <thead>
             <tr>
-                <th>&nbsp;</th>
-                <th>{{ "detail.name"|trans }}</th>
+                <th rowspan="2">&nbsp;</th>
+                <th rowspan="2">{{ "detail.name"|trans }}</th>
                 <th>{{ "detail.command"|trans }}</th>
                 <th>{{ "detail.cronExpression"|trans }}</th>
                 <th>{{ "detail.logFile"|trans }}</th>
+                <th>{{ "detail.priority"|trans }}</th>
+            </tr>
+            <tr>
                 <th>{{ "detail.lastExecution"|trans }}</th>
                 <th>{{ "detail.lastReturnCode"|trans }}</th>
-                <th>{{ "detail.priority"|trans }}</th>
                 <th>{{ "detail.logExecutions"|trans }}</th>
                 <th>{{ "detail.actions"|trans }}</th>
             </tr>
@@ -26,7 +28,7 @@
         <tbody>
         {% for command in scheduledCommands %}
             <tr {% if command.disabled == true %}class="text-muted" {% endif %}>
-                <td>
+                <td rowspan="2">
                     <a href="{{ path('jmose_command_scheduler_action_command_toggle', {'id': command.id}) }}" >
                     {% if command.disabled == true %}
                         <span class="text-danger glyphicon glyphicon-off"></span> <span class="sr-only">&nbsp;</span>
@@ -35,7 +37,7 @@
                     {% endif %}
                     </a>
                 </td>
-                <td>
+                <td rowspan="2">
                     {{ command.name }}
                 </td>
                 <td>
@@ -48,22 +50,25 @@
                     {{ command.logFile }}
                 </td>
                 <td>
+                    {{ command.priority }}
+                </td>
+            </tr>
+            <tr>
+                <td>
                     {{ command.lastExecution|date( "dateFormat"|trans ) }}
                 </td>
                 <td>
                     {{ command.lastReturnCode }}
                 </td>
                 <td>
-                    {{ command.priority }}
-                </td>
-                <td>
                     <a href="{{ path('jmose_command_scheduler_action_command_toggle_logging', {'id': command.id}) }}">
                     {% if command.logExecutions == true %}
-                        <span class="glyphicon glyphicon-check"></span>
+                        <span class="text-success glyphicon glyphicon-check"></span>
                     {% else %}
-                        <span class="glyphicon glyphicon-unchecked"></span>
+                        <span class="text-danger glyphicon glyphicon-unchecked"></span>
                     {% endif %}
                     </a>
+                    <a href="{{ path('jmose_command_scheduler_detail_command_executions', {'commandId':command.id}) }}">Show Executions</a>
                 </td>
                 <td style="min-width: 90px;">
                     {% if command.locked == true %}

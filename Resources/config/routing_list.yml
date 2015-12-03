@@ -1,4 +1,4 @@
-jmose_command_scheduler_list_commands:
+jmose_command_scheduler_list:
     pattern:  /{_type}
     defaults:
       _controller: JMoseCommandSchedulerBundle:List:index
