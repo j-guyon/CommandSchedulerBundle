@@ -61,28 +61,30 @@
                     {{ command.lastReturnCode }}
                 </td>
                 <td>
-                    <a href="{{ path('jmose_command_scheduler_action_command_toggle_logging', {'id': command.id}) }}">
+                    <a href="{{ path('jmose_command_scheduler_action_command_toggle_logging', {'id': command.id}) }}" title="{{ "tooltip.toggle"|trans }}">
                     {% if command.logExecutions == true %}
                         <span class="text-success glyphicon glyphicon-check"></span>
                     {% else %}
                         <span class="text-danger glyphicon glyphicon-unchecked"></span>
                     {% endif %}
                     </a>
-                    <a href="{{ path('jmose_command_scheduler_detail_command_executions', {'commandId':command.id}) }}">Show Executions</a>
+                    <a href="{{ path('jmose_command_scheduler_detail_command_executions', {'commandId':command.id}) }}" title="{{ "tooltip.executions"|trans }}">
+                        <span class="glyphicon glyphicon-list text-info"></span>
+                    </a>
                 </td>
                 <td style="min-width: 90px;">
                     {% if command.locked == true %}
-                        <a href="#" data-href="{{ path('jmose_command_scheduler_action_command_unlock', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "action.unlock"|trans }}" data-title="{{ "confirm.unlock"|trans }}" >
+                        <a href="#" data-href="{{ path('jmose_command_scheduler_action_command_unlock', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "action.unlock"|trans }}" data-title="{{ "confirm.unlock"|trans }}" title="{{ "tooltip.unlock"|trans }}">
                             <span class="text-muted glyphicon glyphicon-lock"></span> <span class="sr-only">{{ "action.unlock"|trans }}</span>
                         </a>
                     {% endif %}
                     <a href="{{ path('jmose_command_scheduler_detail_command_edit', {'scheduledCommandId': command.id}) }}" >
                         <span class="text-info glyphicon glyphicon-pencil"></span> <span class="sr-only">{{ "action.edit"|trans }}</span>
                     </a>
-                    <a href="#" data-href="{{ path('jmose_command_scheduler_action_command_remove', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "action.delete"|trans }}" data-title="{{ "confirm.delete"|trans }}" >
+                    <a href="#" data-href="{{ path('jmose_command_scheduler_action_command_remove', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "action.delete"|trans }}" data-title="{{ "confirm.delete"|trans }}" title=""{{ "tooltip.delete"|trans }}>
                         <span class="text-danger glyphicon glyphicon-trash"></span> <span class="sr-only">{{ "action.delete"|trans }}</span>
                     </a>
-                    <a href="#" data-href="{{ path('jmose_command_scheduler_action_command_execute', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "action.execute"|trans }}" data-title="{{ "confirm.execute"|trans }}">
+                    <a href="#" data-href="{{ path('jmose_command_scheduler_action_command_execute', {'id': command.id}) }}" data-toggle="confirmation" data-btnOkLabel="{{ "action.execute"|trans }}" data-title="{{ "confirm.execute"|trans }}" title="{{ "tooltip.execute"|trans }}">
                         <span class="text-{% if command.executeImmediately == true %}muted{% else %}success{% endif %} glyphicon glyphicon-play"></span> <span class="sr-only">{{ "action.execute"|trans }}</span>
                     </a>
                 </td>

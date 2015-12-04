@@ -7,26 +7,32 @@
 
 {% block content %}
     <div class="table-responsive table-stripped">
-    <table class="table">
-        <thead>
+        <table class="table">
+            <thead>
             <tr>
-                <th>{{ "detail.execution"|trans }}</th>
-                <th>{{ "detail.runtime"|trans }}</th>
-                <th>{{ "detail.returnCode"|trans }}</th>
+                <th>{{ "execution.run"|trans }}</th>
+                <th>{{ "execution.runtime"|trans }}</th>
+                <th>{{ "execution.returnCode"|trans }}</th>
             </tr>
-        </thead>
+            </thead>
 
-        <tbody>
-        {% for execution in executions %}
-            <tr>
-                <td>{{ execution.executionDate|date( "dateFormat"|trans ) }}</td>
-                <td>{{ execution.runtime }}</td>
-                <td>{{ execution.returnCode }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <tbody>
+            {% for execution in executions %}
+                <tr>
+                    <td>{{ execution.executionDate|date( "dateFormat"|trans ) }}</td>
+                    <td>{{ execution.runtime }}</td>
+                    <td>{{ execution.returnCode }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 
-    <a href="{{ path('jmose_command_scheduler_list', {'_type':'commands'}) }}" class="btn btn-primary btn-lg pull-right" role="button">{{ "action.new"|trans }} »</a>
+    <a href="{{ path('jmose_command_scheduler_list', {'_type':'commands'}) }}" class="btn btn-primary btn-lg pull-right"
+       role="button">{{ "action.backList"|trans }} »</a>
+
+    {#<script type="text/javascript">#}
+        {#var data = {{ executions|json_encode }};#}
+        {#initFunction = 'initRuntimeGraph';#}
+    {#</script>#}
 {% endblock content %}
