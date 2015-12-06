@@ -1,0 +1,24 @@
+{
+  "name": "Command Scheduler",
+  "homepage": "https://github.com/homerjsimpson000/CommandSchedulerBundle",
+  "authors": [
+    "Daniel Fischer <dfischer000@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "jquery-ui": "jqueryui#~1.11.4",
+    "bootstrap": "~3.3.6"
+  }
+}

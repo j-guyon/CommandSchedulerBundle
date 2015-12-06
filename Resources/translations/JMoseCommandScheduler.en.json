@@ -54,8 +54,8 @@
     "info": "Description"
   },
   "flash": {
-    "save": "Save successfull",
-    "deleted": "Delete successfull",
+    "save": "Save successful",
+    "deleted": "Delete successful",
     "execute": "Command will be executed during the next \"scheduler:execute\".",
     "unlocked": "Scheduling successfully unlocked"
   }

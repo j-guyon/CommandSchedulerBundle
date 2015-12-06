@@ -1,0 +1,62 @@
+{
+  "name": "Symfony's scheduler",
+  "dateFormat": "d/m/Y H:i",
+  "list": {
+    "title": "Taches planifiées",
+    "rightstitle": "User and Host requirements",
+    "commands": "Show list of commands",
+    "rights": "Show list of user and host requirements",
+    "executions": "Show list of all previous executions",
+    "previousExecutions": "Previous executions",
+    "monitor": "Open monitoring",
+    "monitorNotice": "Machine readable output only"
+  },
+  "action": {
+    "delete": "Supprimer",
+    "execute": "Executer",
+    "edit": "Modifier",
+    "newScheduling": "Nouvelle planification",
+    "unlock": "Dévérouiller la planification",
+    "newUserHost": "New Requirement",
+    "backList": "Back to list",
+    "backOverview": "Back to overview"
+  },
+  "confirm": {
+    "deleteScheduling": "Supprimer définitivement cette planification?",
+    "execute": "Forcer une exécution de cette commande?",
+    "unlock": "Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le dévérouiller?"
+  },
+  "detail": {
+    "title": "Tache planifiée",
+    "name": "Nom",
+    "command": "Commande",
+    "arguments": "Arguments",
+    "cronExpression": "Expression cron",
+    "logFile": "Nom du fichier de log",
+    "priority": "Priorité",
+    "executeImmediately": "Executer maintenant",
+    "disabled": "Désactiver",
+    "save": "Enregistrer",
+    "lastExecution": "Dernière exécution",
+    "lastReturnCode": "Dernier code retour",
+    "actions": "Actions",
+    "logExecutions": "Log Executions"
+  },
+  "execution": {
+    "run": "Run",
+    "returnCode": "Return code",
+    "runtime": "Runtime (seconds)"
+  },
+  "rights": {
+    "title": "Short name",
+    "user": "Required user",
+    "host": "Required host",
+    "info": "Description"
+  },
+  "flash": {
+    "save": "sauver succès",
+    "deleted": "supprimer succès",
+    "execute": "Le traitement sera exécutée lors de la prochaine vérification (\"scheduler:execute\").",
+    "unlocked": "Traitement dévérouillée avec succès."
+  }
+}
