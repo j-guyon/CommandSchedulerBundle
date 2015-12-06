@@ -58,5 +58,15 @@
     "deleted": "supprimer succès",
     "execute": "Le traitement sera exécutée lors de la prochaine vérification (\"scheduler:execute\").",
     "unlocked": "Traitement dévérouillée avec succès."
+  },
+  "tooltip":{
+    "enableCommand":"enable command",
+    "disableCommand":"disable command",
+    "enableLogging":"enable log executions",
+    "disableLogging":"disable log executions",
+    "executions":"show logged executions",
+    "editCommand":"edit command",
+    "deleteCommand": "delete command",
+    "executeCommand":"execute command immediately"
   }
 }

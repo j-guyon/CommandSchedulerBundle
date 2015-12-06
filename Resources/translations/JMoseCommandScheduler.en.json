@@ -58,5 +58,15 @@
     "deleted": "Delete successful",
     "execute": "Command will be executed during the next \"scheduler:execute\".",
     "unlocked": "Scheduling successfully unlocked"
+  },
+  "tooltip":{
+    "enableCommand":"enable command",
+    "disableCommand":"disable command",
+    "enableLogging":"enable log executions",
+    "disableLogging":"disable log executions",
+    "executions":"show logged executions",
+    "editCommand":"edit command",
+    "deleteCommand": "delete command",
+    "executeCommand":"execute command immediately"
   }
 }
