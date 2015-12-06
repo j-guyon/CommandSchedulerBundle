@@ -19,7 +19,9 @@
     "unlock": "Dévérouiller la planification",
     "newUserHost": "New Requirement",
     "backList": "Back to list",
-    "backOverview": "Back to overview"
+    "backOverview": "Back to overview",
+    "save": "Enregistrer",
+    "close":"Close"
   },
   "confirm": {
     "deleteScheduling": "Supprimer définitivement cette planification?",
@@ -36,7 +38,6 @@
     "priority": "Priorité",
     "executeImmediately": "Executer maintenant",
     "disabled": "Désactiver",
-    "save": "Enregistrer",
     "lastExecution": "Dernière exécution",
     "lastReturnCode": "Dernier code retour",
     "actions": "Actions",
@@ -60,13 +61,43 @@
     "unlocked": "Traitement dévérouillée avec succès."
   },
   "tooltip":{
-    "enableCommand":"enable command",
-    "disableCommand":"disable command",
-    "enableLogging":"enable log executions",
-    "disableLogging":"disable log executions",
+    "toggleCommand":"Click to enable/disable command",
+    "toggleLogging":"Click to toggle log executions",
     "executions":"show logged executions",
     "editCommand":"edit command",
     "deleteCommand": "delete command",
     "executeCommand":"execute command immediately"
+  },
+  "cronhelper":{
+    "m":"Minute",
+    "h":"Hour",
+    "dom":"Day of month",
+    "mon":"Month",
+    "dow":"Day of week",
+    "every": "Every nth...",
+    "month":{
+      "monthly":"monthly",
+      "january":"January",
+      "february":"February",
+      "march":"March",
+      "april":"April",
+      "may":"May",
+      "june":"June",
+      "july":"July",
+      "august":"August",
+      "september":"September",
+      "october":"October",
+      "november":"November",
+      "december":"December"
+    },
+    "day":{
+      "monday":"Monday",
+      "tuesday":"Tuesday",
+      "wednesday":"Wednesday",
+      "thursday":"Thursday",
+      "friday":"Friday",
+      "saturday":"Saturday",
+      "sunday":"Sunday"
+    }
   }
 }

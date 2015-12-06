@@ -20,6 +20,7 @@
     "jquery": "~2.1.4",
     "jquery-ui": "jqueryui#~1.11.4",
     "bootstrap": "~3.3.6",
-    "bs-confirmation": "tavicu/bs-confirmation#~1.0.5"
+    "bs-confirmation": "tavicu/bs-confirmation#~1.0.5",
+    "fancybox": "~2.1.5"
   }
 }

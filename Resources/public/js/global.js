@@ -1,28 +1,60 @@
 /**
  * Created by daniel on 04.12.15.
  */
-var initFunction = false;
 
-function initRuntimeGraph() {
-    google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawRuntimeGraph);
+// Enable bootstrap-confirmation
+$(document).ready(function () {
+    //$('[data-toggle="confirmation"]').confirmation();
+    $('[data-toggle="confirmation"]').confirmation({
+        singleton: true,
+        popout: true,
+        placement: 'left'
+    });
+
+    $('.hasTooltip').tooltip();
+
+    if (document.getElementById('runChartHolder')) {
+        google.load("visualization", "1", {packages: ["corechart"]});
+        google.setOnLoadCallback(initRuntimeGraph);
+    }
+
+    if (document.getElementById('cronhelper')) {
+        initCronHelper();
+    }
+});
+
+/**
+ * initialize Cronhelper
+ */
+function initCronHelp() {
+    var $cronField = $('#command_scheduler_detail_cronExpression'),
+        oldExpression = $cronField.val();
+
+    $('#cronhelper').on('select', '.cron_toggle', function (e) {
+        var $this = $(this),
+            selector = '.' + $this.attr('id');
+
+        $(selector).toggleClass('hide');
+        $(selector + '.hide').select('*');
+    });
 }
 
-function drawRuntimeGraph() {
-    var graphData = google.visualization.arrayToDataTable([
-        ['Execution', 'Runtime', 'Return Code'],
-        ['2013',       400],
-        ['2014',       460],
-        ['2015',         1120],
-        ['2016',        540]
-    ]);
+/**
+ * initialize runtime graph
+ */
+function initRuntimeGraph() {
+    var runtimeData = new Array(),
+        graphData = null,
+        graphOptions = {
+            title: 'Runtime',
+            hAxis: {title: 'ExecutionDate', titleTextStyle: {color: '#333'}},
+            vAxis: {minValue: 0}
+        },
+        chart = null;
 
-    var options = {
-        title: 'Runtime',
-        hAxis: {title: 'ExecutionDate',  titleTextStyle: {color: '#333'}},
-        vAxis: {minValue: 0}
-    };
+    runtimeData.push(['Execution', 'Runtime', 'Return Code']);
+    graphData = google.visualization.arrayToDataTable(runtimeData);
 
-    //var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+    //chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
     //chart.draw(graphData, options);
 }

@@ -39,4 +39,6 @@
         </div>
         {{ form_end( scheduledCommandForm ) }}
     </div>
+
+    {{ include('JMoseCommandSchedulerBundle:Detail:cronhelper.html.twig' with {'expression':scheduledCommandForm.cronExpression}) }}
 {% endblock content %}
