@@ -41,7 +41,8 @@
     "lastExecution": "Dernière exécution",
     "lastReturnCode": "Dernier code retour",
     "actions": "Actions",
-    "logExecutions": "Log Executions"
+    "logExecutions": "Log Executions",
+    "openHelper":"open Cron Expression Helper"
   },
   "execution": {
     "run": "Run",
@@ -69,6 +70,8 @@
     "executeCommand":"execute command immediately"
   },
   "cronhelper":{
+    "title":"Cron Expression Generator",
+    "saveExpression":"Save Cron expression",
     "m":"Minute",
     "h":"Hour",
     "dom":"Day of month",

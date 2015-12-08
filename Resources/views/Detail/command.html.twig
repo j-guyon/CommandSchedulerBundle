@@ -17,6 +17,12 @@
         {{ form_row( scheduledCommandForm.command, {'attr': styleConfiguration } ) }}
         {{ form_row( scheduledCommandForm.arguments, {'attr': styleConfiguration|merge({'placeholder': '--argument1=foo --bar'}) } ) }}
         {{ form_row( scheduledCommandForm.cronExpression, {'attr': styleConfiguration|merge({'placeholder': '*/10 * * * *'}) } ) }}
+        <div>
+            <a href="#" id="cronHelperLink">
+                <i class="fa fa-question"></i>
+                {{ "detail.openHelper"|trans }}
+            </a>
+        </div>
         {{ form_row( scheduledCommandForm.logFile, {'attr': styleConfiguration|merge({'placeholder': 'myFile.log'}) } ) }}
         {{ form_row( scheduledCommandForm.priority, {'attr': styleConfiguration } ) }}
         <div>
@@ -40,5 +46,7 @@
         {{ form_end( scheduledCommandForm ) }}
     </div>
 
-    {{ include('JMoseCommandSchedulerBundle:Detail:cronhelper.html.twig' with {'expression':scheduledCommandForm.cronExpression}) }}
+    {% include 'JMoseCommandSchedulerBundle:Detail:cronhelper.html.twig' with
+        { 'expression': scheduledCommandForm.cronExpression }
+    %}
 {% endblock content %}

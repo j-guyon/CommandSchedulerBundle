@@ -59,11 +59,11 @@ class ListControllerTest extends WebTestCase
 
         //toggle off
         $crawler = $client->request('GET', '/command-scheduler/action/toggle/1');
-        $this->assertEquals(1, $crawler->filter('a[href="/command-scheduler/action/toggle/1"] > span[class="text-danger glyphicon glyphicon-off"]')->count());
+        $this->assertEquals(1, $crawler->filter('a[href="/command-scheduler/action/toggle/1"] > span[class="text-danger fa fa-power-off"]')->count());
 
         //toggle on
         $crawler = $client->request('GET', '/command-scheduler/action/toggle/1');
-        $this->assertEquals(0, $crawler->filter('a[href="/command-scheduler/action/toggle/1"] > span[class="text-danger glyphicon glyphicon-off"]')->count());
+        $this->assertEquals(0, $crawler->filter('a[href="/command-scheduler/action/toggle/1"] > span[class="text-danger fa fa-power-off"]')->count());
     }
 
     /**
@@ -81,7 +81,7 @@ class ListControllerTest extends WebTestCase
 
         //call execute now button
         $crawler = $client->request('GET', '/command-scheduler/action/execute/1');
-        $this->assertEquals(1, $crawler->filter('a[data-href="/command-scheduler/action/execute/1"] > span[class="text-muted glyphicon glyphicon-play"]')->count());
+        $this->assertEquals(1, $crawler->filter('a[data-href="/command-scheduler/action/execute/1"] > span[class="text-muted fa fa-play"]')->count());
     }
 
     /**

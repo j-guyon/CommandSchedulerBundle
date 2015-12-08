@@ -33,10 +33,10 @@
                        class="hasTooltip"
                        title="{{ "tooltip.toggleCommand" | trans }}">
                     {% if command.disabled == true %}
-                        <span class="text-danger glyphicon glyphicon-off"></span>
+                        <span class="text-danger fa fa-power-off"></span>
                         <span class="sr-only">&nbsp;</span>
                     {% else %}
-                        <span class="text-success glyphicon glyphicon-off"></span>
+                        <span class="text-success fa fa-power-off"></span>
                         <span class="sr-only">&nbsp;</span>
                     {% endif %}
                     </a>
@@ -69,15 +69,15 @@
                        class="hasTooltip"
                        title="{{ "tooltip.toggleLogging"|trans }}">
                     {% if command.logExecutions == true %}
-                        <span class="text-success glyphicon glyphicon-check"></span>
+                        <span class="text-success fa fa-check-square-o"></span>
                     {% else %}
-                        <span class="text-danger glyphicon glyphicon-unchecked"></span>
+                        <span class="text-danger fa fa-square-o"></span>
                     {% endif %}
                     </a>
                     <a href="{{ path('jmose_command_scheduler_detail_command_executions', {'commandId':command.id}) }}"
                        class="hasTooltip"
                        title="{{ "tooltip.executions"|trans }}">
-                        <span class="glyphicon glyphicon-list text-info"></span>
+                        <span class="fa fa-archive text-info"></span>
                     </a>
                 </td>
                 <td style="min-width: 90px;">
@@ -87,13 +87,13 @@
                            data-toggle="confirmation"
                            data-btnOkLabel="{{ "action.unlock"|trans }}"
                            data-title="{{ "confirm.unlock"|trans }}">
-                            <span class="text-muted glyphicon glyphicon-lock hasTooltip"
+                            <span class="text-muted fa fa-lock hasTooltip"
                                   title="{{ "tooltip.unlock"|trans }}"></span>
                             <span class="sr-only">{{ "action.unlock"|trans }}</span>
                         </a>
                     {% endif %}
                     <a href="{{ path('jmose_command_scheduler_detail_command_edit', {'scheduledCommandId': command.id}) }}">
-                        <span class="text-info glyphicon glyphicon-pencil hasTooltip"
+                        <span class="text-info fa fa-pencil hasTooltip"
                               title="{{ "tooltip.editCommand"|trans }}"></span>
                         <span class="sr-only">{{ "action.edit"|trans }}</span>
                     </a>
@@ -102,7 +102,7 @@
                        data-toggle="confirmation"
                        data-btnOkLabel="{{ "action.delete"|trans }}"
                        data-title="{{ "confirm.delete"|trans }}">
-                        <span class="text-danger glyphicon glyphicon-trash hasTooltip"
+                        <span class="text-danger fa fa-trash hasTooltip"
                               title="{{ "tooltip.deleteCommand"|trans }}"></span>
                         <span class="sr-only">{{ "action.delete"|trans }}</span>
                     </a>
@@ -111,7 +111,7 @@
                        data-toggle="confirmation"
                        data-btnOkLabel="{{ "action.execute"|trans }}"
                        data-title="{{ "confirm.execute"|trans }}">
-                        <span class="text-{% if command.executeImmediately == true %}muted{% else %}success{% endif %} glyphicon glyphicon-play hasTooltip"
+                        <span class="text-{% if command.executeImmediately == true %}muted{% else %}success{% endif %} fa fa-play hasTooltip"
                               title="{{ "tooltip.executeCommand"|trans }}"></span>
                         <span class="sr-only">{{ "action.execute"|trans }}</span>
                     </a>
