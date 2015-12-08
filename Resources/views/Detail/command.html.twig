@@ -25,6 +25,7 @@
         </div>
         {{ form_row( scheduledCommandForm.logFile, {'attr': styleConfiguration|merge({'placeholder': 'myFile.log'}) } ) }}
         {{ form_row( scheduledCommandForm.priority, {'attr': styleConfiguration } ) }}
+        {{ form_row( scheduledCommandForm.expectedRuntime, {'attr': styleConfiguration } ) }}
         <div>
             {{ form_widget( scheduledCommandForm.executeImmediately ) }}
             {{ form_label( scheduledCommandForm.executeImmediately ) }}

@@ -35,6 +35,7 @@
     "arguments": "Arguments",
     "cronExpression": "Cron expression",
     "logFile": "Output file",
+    "expectedRuntime": "Expected runtime",
     "priority": "Priority",
     "executeImmediately": "Execute now",
     "disabled": "Disable",

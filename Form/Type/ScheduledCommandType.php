@@ -64,6 +64,13 @@ class ScheduledCommandType extends AbstractType
                 'required'   => false
             )
         );
+        
+        $builder->add(
+            'expectedRuntime', 'integer', array(
+                'label'    => 'detail.expectedRuntime',
+                'required' => false
+            )
+        );
 
         $builder->add(
             'executeImmediately', 'checkbox', array(
@@ -85,6 +92,7 @@ class ScheduledCommandType extends AbstractType
                 'required' => false
             )
         );
+
 
         $builder->add(
             'save', 'submit', array(
