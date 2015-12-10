@@ -13,9 +13,9 @@ $(document).ready(function () {
 
     $('.hasTooltip').tooltip();
 
-    if (document.getElementById('runChartHolder')) {
-        google.load("visualization", "1", {packages: ["corechart"]});
-        google.setOnLoadCallback(initRuntimeGraph);
+    if (document.getElementById('runtimeGraph')) {
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(initGraphs);
     }
 
     if (document.getElementById('cronhelper')) {
@@ -203,20 +203,50 @@ function handleVal(value) {
 }
 
 /**
- * initialize runtime graph
+ * initialize runtime and returncode graph
  */
-function initRuntimeGraph() {
-    var runtimeData = [],
-        graphData = null,
-        graphOptions = {
-            title: 'Runtime',
+function initGraphs() {
+    $('body').on('click', '.toggleGraph', function (e) {
+        var $this = $(this);
+        e.preventDefault();
+        $('.' + $this.data('graph')).toggleClass('hide');
+    });
+
+    var returnData = {},
+        returnGraphData = [],
+        returnGraphOptions = {
+            title: js_lang.title_return
+        },
+        chartReturn = null,
+        runtimeData = [],
+        runtimeGraphData = [],
+        runtimeGraphOption = {
+            title: js_lang.title_runtime,
             hAxis: {title: 'ExecutionDate', titleTextStyle: {color: '#333'}},
             vAxis: {minValue: 0}
         },
-        chart = null;
+        chartRuntime = null,
+        help = null;
 
-    runtimeData.push(['Execution', 'Runtime', 'Return Code']);
-    graphData = google.visualization.arrayToDataTable(runtimeData);
+    for (var i in executionData) {
+        help = executionData[i];
+        if (returnData.hasOwnProperty(help.returnCode)) {
+            returnData[help.returnCode]++;
+        } else {
+            returnData[help.returnCode] = 1;
+        }
+
+        runtimeData.push([
+            help.executionDate,
+            help.runtime
+        ]);
+    }
+
+    console.log(runtimeData);
+    console.log(returnData);
+
+    //runtimeGraphData = google.visualization.arrayToDataTable(runtimeData);
+    //returnGraphData = google.visualization.arrayToDataTable(returnData);
 
     //chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
     //chart.draw(graphData, options);

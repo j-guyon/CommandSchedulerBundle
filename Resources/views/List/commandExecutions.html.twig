@@ -28,11 +28,19 @@
         </table>
     </div>
 
+    <div class="graphs row">
+        <a href="#" class="toggleGraph" data-graph="returnGraph">{{ "execution.returnGraph"|trans }}</a><br>
+        <div id="returnGraph" class="col-xs-10 col-ox-offset-1 graphHolder"></div>
+    </div>
+    <div class="graphs row">
+        <a href="#" class="toggleGraph" data-graph="runtimeGraph">{{ "execution.runtimeGraph"|trans }}</a><br>
+        <div id="runtimeGraph" class="col-xs-10 col-xs-offset-1 graphHolder"></div>
+    </div>
+
     <a href="{{ path('jmose_command_scheduler_list', {'_type':'commands'}) }}" class="btn btn-primary btn-lg pull-right"
        role="button">{{ "action.backList"|trans }} »</a>
 
-    {#<script type="text/javascript">#}
-        {#var data = {{ executions|json_encode }};#}
-        {#initFunction = 'initRuntimeGraph';#}
-    {#</script>#}
+    <script type="text/javascript">
+        var executionData = {{ executions|json_encode|raw }};
+    </script>
 {% endblock content %}

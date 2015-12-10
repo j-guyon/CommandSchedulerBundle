@@ -10,6 +10,9 @@
     <link href="{{ asset('bundles/jmosecommandscheduler/vendor/bootstrap/dist/css/bootstrap-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/jmosecommandscheduler/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/jmosecommandscheduler/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/jmosecommandscheduler/css/global.css') }}" rel="stylesheet">
+    {#<script type="text/javascript" src="https://www.google.com/jsapi"></script>#}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -57,13 +60,19 @@
         </footer>
         -->
     </div>
-</div><!-- /container -->
+</div>
+<!-- /container -->
 
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/jquery/dist/jquery.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/jquery-ui/jquery-ui.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/bootstrap/dist/js/bootstrap.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/bs-confirmation/bootstrap-confirmation.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/global.js') }}" ></script>
-    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/jmosecommandscheduler/vendor/jquery/dist/jquery.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/jmosecommandscheduler/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/jmosecommandscheduler/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/jmosecommandscheduler/vendor/bs-confirmation/bootstrap-confirmation.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/global.js') }}"></script>
+{% include 'JMoseCommandSchedulerBundle:Tools:lang.html.twig' %}
+
 </body>
 </html>

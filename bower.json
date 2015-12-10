@@ -17,10 +17,10 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.4",
-    "jquery-ui": "jqueryui#~1.11.4",
-    "bootstrap": "~3.3.6",
+    "jquery": "2.*",
+    "jquery-ui": "jqueryui#1.*",
+    "bootstrap": "3.*",
     "bs-confirmation": "tavicu/bs-confirmation#~1.0.5",
-    "font-awesome": "fontawesome#~4.5.0"
+    "font-awesome": "fontawesome#4.*"
   }
 }
