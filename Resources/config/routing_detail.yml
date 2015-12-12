@@ -1,20 +1,38 @@
 # detail actions
 jmose_command_scheduler_detail_command_index:
-    pattern:  /view/
+    pattern:  /commands/view/
     defaults: { _controller: JMoseCommandSchedulerBundle:Command:indexCommand }
 
 jmose_command_scheduler_detail_command_edit:
-    pattern:  /edit/{scheduledCommandId}
+    pattern:  /commands/edit/{scheduledCommandId}
     defaults: { _controller: JMoseCommandSchedulerBundle:Command:initEditScheduledCommand }
 
 jmose_command_scheduler_detail_command_new:
-    pattern:  /new
+    pattern:  /commands/new
     defaults: { _controller: JMoseCommandSchedulerBundle:Command:initNewScheduledCommand }
 
 jmose_command_scheduler_detail_command_save:
-    pattern:  /save
+    pattern:  /commands/save
     defaults: { _controller: JMoseCommandSchedulerBundle:Command:saveCommand }
 
 jmose_command_scheduler_detail_command_executions:
-    pattern:  /executions/{commandId}
+    pattern:  /commands/executions/{commandId}
     defaults: { _controller: JMoseCommandSchedulerBundle:Execution:showCommandExecutions }
+
+# user/host requirements
+jmose_command_scheduler_detail_rights_index:
+    pattern:  /rights/view/
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:indexCommand }
+
+jmose_command_scheduler_detail_rights_edit:
+    pattern:  /rights/edit/{scheduledCommandId}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:initEditScheduledCommand }
+
+jmose_command_scheduler_detail_rights_new:
+    pattern:  /rights/new
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:initNewScheduledCommand }
+
+jmose_command_scheduler_detail_rights_save:
+    pattern:  /rights/save
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:saveCommand }
+

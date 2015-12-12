@@ -96,7 +96,7 @@ class ScheduledCommandType extends AbstractType
 
         $builder->add(
             'save', 'submit', array(
-                'label' => 'detail.save',
+                'label' => 'action.save',
             )
         );
     }

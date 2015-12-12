@@ -35,6 +35,7 @@
     "arguments": "Arguments",
     "cronExpression": "Expression cron",
     "logFile": "Nom du fichier de log",
+    "expectedRuntime": "Expected runtime",
     "priority": "Priorité",
     "executeImmediately": "Executer maintenant",
     "disabled": "Désactiver",
@@ -78,8 +79,11 @@
     "mon":"Month",
     "dow":"Day of week",
     "every": "Every nth...",
+    "minutely": "minutely",
+    "hourly": "hourly",
+    "daily": "daily",
+    "monthly": "monthly",
     "month":{
-      "monthly":"monthly",
       "january":"January",
       "february":"February",
       "march":"March",
@@ -102,5 +106,14 @@
       "saturday":"Saturday",
       "sunday":"Sunday"
     }
+  },
+  "graph": {
+    "title_return": "Distribution of return codes",
+    "number": "Number of occurrences",
+    "return_code": "Return code",
+    "title_runtime": "Runtime overview",
+    "execution_date": "Execution date",
+    "runtime": "Runtime",
+    "avg_runtime": "average runtime"
   }
 }
