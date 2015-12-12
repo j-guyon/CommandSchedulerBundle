@@ -1,4 +1,5 @@
 # list actions
+# commands
 jmose_command_scheduler_action_command_toggle:
     pattern:  /toggle/command/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:toggleCommand }
@@ -18,3 +19,8 @@ jmose_command_scheduler_action_command_execute:
 jmose_command_scheduler_action_command_unlock:
     pattern:  /unlock/command/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:unlockCommand }
+
+# rights
+jmose_command_scheduler_action_right_remove:
+    pattern:  /remove/right/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:List:removeRight }

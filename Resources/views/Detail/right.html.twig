@@ -9,7 +9,7 @@
 
     {% set styleConfiguration = {'class': 'form-control'} %}
     <div class="col-lg-6 col-sm-12">
-        {{ form_start( userHostForm, {'action': path('jmose_command_scheduler_detail_rights_save')} ) }}
+        {{ form_start( userHostForm, {'action': path('jmose_command_scheduler_detail_right_save')} ) }}
 
         {# Form's fields #}
         {{ form_row( userHostForm.id ) }}
@@ -19,7 +19,7 @@
         {{ form_row( userHostForm.info, {'attr': styleConfiguration } ) }}
 
         {# Form's actions #}
-        <div class="row">
+        <div class="row marginTop1">
             <a href="{{ path('jmose_command_scheduler_list', {'_type':'commands'}) }}" class="btn btn-default btn-lg" role="button">Cancel</a>
             {{ form_widget( userHostForm.save, {'attr': {'class': 'btn btn-success btn-lg pull-right'} } ) }}
         </div>

@@ -48,6 +48,15 @@ class UserHost
      */
     private $info;
 
+    /**
+     * Set id
+     *
+     * @param integer $id ID
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * Get id

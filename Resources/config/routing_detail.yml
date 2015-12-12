@@ -20,19 +20,19 @@ jmose_command_scheduler_detail_command_executions:
     defaults: { _controller: JMoseCommandSchedulerBundle:Execution:showCommandExecutions }
 
 # user/host requirements
-#jmose_command_scheduler_detail_rights_index:
+#jmose_command_scheduler_detail_right_index:
 #    pattern:  /rights/view/
 #    defaults: { _controller: JMoseCommandSchedulerBundle:Rights:indexCommand }
 
-jmose_command_scheduler_detail_rights_edit:
-    pattern:  /rights/edit/{scheduledCommandId}
-    defaults: { _controller: JMoseCommandSchedulerBundle:Command:initEditScheduledCommand }
+jmose_command_scheduler_detail_right_edit:
+    pattern:  /rights/edit/{rightId}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Right:initEditRight }
 
-jmose_command_scheduler_detail_rights_new:
+jmose_command_scheduler_detail_right_new:
     pattern:  /rights/new
     defaults: { _controller: JMoseCommandSchedulerBundle:Right:initNewUserHost }
 
-jmose_command_scheduler_detail_rights_save:
+jmose_command_scheduler_detail_right_save:
     pattern:  /rights/save
-    defaults: { _controller: JMoseCommandSchedulerBundle:Command:saveCommand }
+    defaults: { _controller: JMoseCommandSchedulerBundle:Right:saveRight }
 

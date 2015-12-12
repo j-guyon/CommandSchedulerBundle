@@ -25,14 +25,14 @@ class RightController extends BaseController
      * @param Form $userHostForm
      * @return Response
      */
-    public function indexCommandAction(UserHost $userHost, Form $userHostForm = null)
+    public function indexRightAction(UserHost $userHost, Form $userHostForm = null)
     {
         if (null === $userHostForm) {
             $userHostForm = $this->createForm(new UserHostType(), $userHost);
         }
 
         return $this->render(
-            'JMoseCommandSchedulerBundle:Detail:rights.html.twig', array(
+            'JMoseCommandSchedulerBundle:Detail:right.html.twig', array(
                 'userHostForm' => $userHostForm->createView()
             )
         );
@@ -57,17 +57,17 @@ class RightController extends BaseController
     /**
      * Get a ScheduledCommand object with its id and forward it to the index action (view)
      *
-     * @param $scheduledCommandId
+     * @param int $rightId
      * @return Response
      */
-    public function initEditScheduledCommandAction($scheduledCommandId)
+    public function initEditRightAction($rightId)
     {
-        $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')
-            ->find($scheduledCommandId);
+        $right = $this->doctrineManager->getRepository($this->bundleName . ':UserHost')
+            ->find($rightId);
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Command:indexCommand', array(
-                'scheduledCommand' => $scheduledCommand
+            'JMoseCommandSchedulerBundle:Right:indexRight', array(
+                'userHost' => $right
             )
         );
     }
@@ -78,39 +78,39 @@ class RightController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function saveCommandAction(Request $request)
+    public function saveRightAction(Request $request)
     {
         // Init and populate form object
-        $commandDetail = $request->request->get('command_scheduler_detail');
-        if ($commandDetail['id'] != '') {
-            $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')
-                ->find($commandDetail['id']);
+        $rightDetail = $request->request->get('command_scheduler_userhost');
+        if ($rightDetail['id'] != '') {
+            $right = $this->doctrineManager->getRepository($this->bundleName . ':UserHost')
+                ->find($rightDetail['id']);
         } else {
-            $scheduledCommand = new ScheduledCommand();
+            $right = new UserHost();
         }
 
-        $scheduledCommandForm = $this->createForm(new ScheduledCommandType(), $scheduledCommand);
-        $scheduledCommandForm->handleRequest($request);
+        $rightForm = $this->createForm(new UserHostType(), $right);
+        $rightForm->handleRequest($request);
 
-        if ($scheduledCommandForm->isValid()) {
+        if ($rightForm->isValid()) {
 
             // Handle save to the database
-            if (null === $scheduledCommand->getId()) {
-                $this->doctrineManager->persist($scheduledCommand);
+            if (null === $right->getId()) {
+                $this->doctrineManager->persist($right);
             }
             $this->doctrineManager->flush();
 
             // Add a flash message and do a redirect to the list
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.save', array(), 'JMoseCommandScheduler'));
 
-            return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+            return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'rights')));
 
         } else {
             // Redirect to indexAction with the form object that has validation errors
             return $this->forward(
-                'JMoseCommandSchedulerBundle:Command:index', array(
-                    'scheduledCommand' => $scheduledCommand,
-                    'scheduledCommandForm' => $scheduledCommandForm
+                'JMoseCommandSchedulerBundle:Right:indexRight', array(
+                    'userHost' => $right,
+                    'userHostForm' => $rightForm
                 )
             );
         }

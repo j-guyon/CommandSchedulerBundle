@@ -19,33 +19,33 @@
         </thead>
 
         <tbody>
-        {% for req in userHosts %}
+        {% for elem in userHosts %}
             <tr>
                 <td>
-                    {{ req.title }}
+                    {{ elem.title }}
                 </td>
                 <td>
-                    {{ req.user }}
+                    {{ elem.user }}
                 </td>
                 <td>
-                    {{ req.host }}
+                    {{ elem.host }}
                 </td>
                 <td>
-                    {{ req.info }}
+                    {{ elem.info }}
                 </td>
                 <td>
                 <td style="min-width: 90px;">
-                    {#<a href="{{ path('jmose_command_scheduler_detail_edit', {'scheduledCommandId': req.id}) }}" >#}
+                    <a href="{{ path('jmose_command_scheduler_detail_right_edit', {'rightId': elem.id}) }}" >
                         <span class="text-info fa fa-pencil"></span> <span class="sr-only">{{ "action.edit"|trans }}</span>
-                    {#</a>#}
-                    {#<a href="#"#}
-                       {#data-href="{{ path('jmose_command_scheduler_action_remove', {'id': req.id}) }}"#}
-                       {#data-toggle="confirmation"#}
-                       {#data-btnOkLabel="{{ "action.delete"|trans }}"#}
-                       {#data-title="{{ "confirm.delete"|trans }}"#}
-                            {#>#}
-                        {#<span class="text-danger fa fa-trash"></span> <span class="sr-only">{{ "action.delete"|trans }}</span>#}
-                    {#</a>#}
+                    </a>
+                    <a href="#"
+                       data-href="{{ path('jmose_command_scheduler_action_right_remove', {'id': elem.id}) }}"
+                       data-toggle="confirmation"
+                       data-btnOkLabel="{{ "action.delete"|trans }}"
+                       data-title="{{ "confirm.delete"|trans }}"
+                            >
+                        <span class="text-danger fa fa-trash"></span> <span class="sr-only">{{ "action.delete"|trans }}</span>
+                    </a>
                 </td>
             </tr>
         {% endfor %}
@@ -53,5 +53,5 @@
     </table>
     </div>
 
-    <a href="{{ path('jmose_command_scheduler_detail_rights_new') }}" class="btn btn-primary btn-lg pull-right" role="button">{{ "action.userhost.new"|trans }} »</a>
+    <a href="{{ path('jmose_command_scheduler_detail_right_new') }}" class="btn btn-primary btn-lg pull-right" role="button">{{ "action.userhost.new"|trans }} »</a>
 {% endblock content %}
