@@ -20,8 +20,8 @@
     "newUserHost": "New Requirement",
     "backList": "Back to list",
     "backOverview": "Back to overview",
-    "save":"Save",
-    "close":"Close"
+    "save": "Save",
+    "close": "Close"
   },
   "confirm": {
     "deleteScheduling": "Permanently delete this task?",
@@ -43,12 +43,14 @@
     "lastReturnCode": "Last return code",
     "actions": "Actions",
     "logExecutions": "Log Executions",
-    "openHelper":"open Cron Expression Helper"
+    "openHelper": "open Cron Expression Helper"
   },
   "execution": {
     "run": "Run",
     "returnCode": "Return code",
-    "runtime": "Runtime (seconds)"
+    "runtime": "Runtime (seconds)",
+    "returnGraph": "Show/Hide return code distribution",
+    "runtimeGraph": "Show/Hide runtime graph"
   },
   "rights": {
     "title": "Short name",
@@ -62,49 +64,57 @@
     "execute": "Command will be executed during the next \"scheduler:execute\".",
     "unlocked": "Scheduling successfully unlocked"
   },
-  "tooltip":{
-    "toggleCommand":"Click to enable/disable command",
-    "toggleLogging":"Click to toggle log executions",
-    "executions":"show logged executions",
-    "editCommand":"edit command",
+  "tooltip": {
+    "toggleCommand": "Click to enable/disable command",
+    "toggleLogging": "Click to toggle log executions",
+    "executions": "show logged executions",
+    "editCommand": "edit command",
     "deleteCommand": "delete command",
-    "executeCommand":"execute command immediately"
+    "executeCommand": "execute command immediately"
   },
-  "cronhelper":{
-    "title":"Cron Expression Generator",
-    "saveExpression":"Save Cron expression",
-    "m":"Minute",
-    "h":"Hour",
-    "dom":"Day of month",
-    "mon":"Month",
-    "dow":"Day of week",
+  "cronhelper": {
+    "title": "Cron Expression Generator",
+    "saveExpression": "Save Cron expression",
+    "m": "Minute",
+    "h": "Hour",
+    "dom": "Day of month",
+    "mon": "Month",
+    "dow": "Day of week",
     "every": "Every nth...",
-    "minutely":"minutely",
-    "hourly":"hourly",
-    "daily":"daily",
-    "monthly":"monthly",
-    "month":{
-      "january":"January",
-      "february":"February",
-      "march":"March",
-      "april":"April",
-      "may":"May",
-      "june":"June",
-      "july":"July",
-      "august":"August",
-      "september":"September",
-      "october":"October",
-      "november":"November",
-      "december":"December"
+    "minutely": "minutely",
+    "hourly": "hourly",
+    "daily": "daily",
+    "monthly": "monthly",
+    "month": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
     },
-    "day":{
-      "monday":"Monday",
-      "tuesday":"Tuesday",
-      "wednesday":"Wednesday",
-      "thursday":"Thursday",
-      "friday":"Friday",
-      "saturday":"Saturday",
-      "sunday":"Sunday"
+    "day": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
     }
+  },
+  "graph": {
+    "title_return": "Distribution of return codes",
+    "number": "Number of occurrences",
+    "return_code": "Return code",
+    "title_runtime": "Runtime overview",
+    "execution_date": "Execution date",
+    "runtime": "Runtime"
   }
 }

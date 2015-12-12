@@ -208,32 +208,25 @@ function handleVal(value) {
 function initGraphs() {
     $('body').on('click', '.toggleGraph', function (e) {
         var $this = $(this);
+        $('#' + $this.data('graph')).toggleClass('hide');
         e.preventDefault();
-        $('.' + $this.data('graph')).toggleClass('hide');
     });
 
+    if (executionData.length == 0) {
+        $('.toggleGraph').hide();
+        return;
+    }
+
     var returnData = {},
-        returnGraphData = [],
-        returnGraphOptions = {
-            title: js_lang.title_return
-        },
-        chartReturn = null,
         runtimeData = [],
-        runtimeGraphData = [],
-        runtimeGraphOption = {
-            title: js_lang.title_runtime,
-            hAxis: {title: 'ExecutionDate', titleTextStyle: {color: '#333'}},
-            vAxis: {minValue: 0}
-        },
-        chartRuntime = null,
         help = null;
 
     for (var i in executionData) {
         help = executionData[i];
         if (returnData.hasOwnProperty(help.returnCode)) {
-            returnData[help.returnCode]++;
+            returnData[help.returnCode][1]++;
         } else {
-            returnData[help.returnCode] = 1;
+            returnData[help.returnCode] = [help.returnCode, 1];
         }
 
         runtimeData.push([
@@ -242,12 +235,131 @@ function initGraphs() {
         ]);
     }
 
-    console.log(runtimeData);
-    console.log(returnData);
+    //initReturnGraph(returnData);
+    initRuntimeGraph(runtimeData);
+}
 
-    //runtimeGraphData = google.visualization.arrayToDataTable(runtimeData);
-    //returnGraphData = google.visualization.arrayToDataTable(returnData);
+function initRuntimeGraph(data){
+    var runtimeData = [[js_lang.execution_date, js_lang.runtime]],
+        runtimeGraphData,
+        runtimeGraphOptions = {
+            title: js_lang.title_runtime,
+            textStyle: {
+                bold: true,
+                fontSize: 10,
+                color: '#4d4d4d'
+            },
+            titleTextStyle: {
+                bold: true,
+                fontSize: 14,
+                color: '#4d4d4d'
+            },
+            hAxis: {
+                title: js_lang.execution_date,
+                minValue: 0,
+                gridlines: {
+                    count: 0
+                },
+                minorGridlines:{
+                    count:0
+                }
+            },
+            vAxis: {
+                title: js_lang.runtime + '/s'
+            },
+            animation:{
+                duration: 750,
+                easing: 'linear',
+                startup: true
+            },
+            legend: {
+                position:'bottom'
+            },
+           trendlines: {
+    0: {
+      type: 'linear',
+      color: 'red',
+      lineWidth: 3,
+      visibleInLegend: true
+    },
+    1: {
+      type: 'linear',
+      color: 'green',
+      lineWidth: 3,
+      visibleInLegend: true
+    },
+    2: {
+      type: 'linear',
+      color: 'pink',
+      lineWidth: 3,
+      visibleInLegend: true
+    }
+  }
+        },
+        runtimeChart;
 
-    //chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-    //chart.draw(graphData, options);
+    // convert data
+    for(var i in data){
+        runtimeData.push([data[i][0].date, data[i][1]]);
+    }
+    
+    // that's it, render graph
+    runtimeGraphData = google.visualization.arrayToDataTable(runtimeData);
+
+    runtimeChart = new google.visualization.LineChart(document.getElementById('runtimeGraph'));
+    runtimeChart.draw(runtimeGraphData, runtimeGraphOptions);
+}
+
+/**
+ * render returncode statistics as bargraph
+ *
+ * @param data object statistical data
+ */
+function initReturnGraph(data) {
+    var returnData = [[js_lang.return_code, js_lang.number]],
+        returnGraphData,
+        returnGraphOptions = {
+            title: js_lang.title_return,
+            textStyle: {
+                bold: true,
+                fontSize: 10,
+                color: '#4d4d4d'
+            },
+            titleTextStyle: {
+                bold: true,
+                fontSize: 14,
+                color: '#4d4d4d'
+            },
+            hAxis: {
+                title: js_lang.return_code,
+                minValue: 0,
+                gridlines: {
+                    count: 0
+                },
+                minorGridlines:{
+                    count:0
+                }
+            },
+            vAxis: {
+                title: js_lang.number
+            },
+            animation:{
+                duration: 750,
+                easing: 'linear',
+                startup: true
+            },
+            legend: {position:'none'}
+        },
+        returnChart;
+
+    // convert data to array
+    for(var i in data) {
+        returnData.push(data[i]);
+    }
+
+    // that's it, render graph
+    returnGraphData = google.visualization.arrayToDataTable(returnData);
+
+    returnChart = new google.visualization.ColumnChart(document.getElementById('returnGraph'));
+    returnChart.draw(returnGraphData, returnGraphOptions);
 }
