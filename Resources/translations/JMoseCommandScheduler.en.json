@@ -48,9 +48,7 @@
   "execution": {
     "run": "Run",
     "returnCode": "Return code",
-    "runtime": "Runtime (seconds)",
-    "returnGraph": "Show/Hide return code distribution",
-    "runtimeGraph": "Show/Hide runtime graph"
+    "runtime": "Runtime (seconds)"
   },
   "rights": {
     "title": "Short name",

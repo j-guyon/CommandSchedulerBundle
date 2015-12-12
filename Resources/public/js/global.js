@@ -206,12 +206,7 @@ function handleVal(value) {
  * initialize runtime and returncode graph
  */
 function initGraphs() {
-    $('body').on('click', '.toggleGraph', function (e) {
-        var $this = $(this);
-        $('#' + $this.data('graph')).toggleClass('hide');
-        e.preventDefault();
-    });
-
+    // if there are no executions do nothing
     if (executionData.length == 0) {
         $('.toggleGraph').hide();
         return;
@@ -219,8 +214,10 @@ function initGraphs() {
 
     var returnData = {},
         runtimeData = [],
+        avgRuntime = 0,
         help = null;
 
+    // prepare dataset
     for (var i in executionData) {
         help = executionData[i];
         if (returnData.hasOwnProperty(help.returnCode)) {
@@ -233,14 +230,25 @@ function initGraphs() {
             help.executionDate,
             help.runtime
         ]);
+
+        avgRuntime += help.runtime;
     }
 
-    //initReturnGraph(returnData);
-    initRuntimeGraph(runtimeData);
+    avgRuntime /= executionData.length;
+
+    // init graphs
+    initReturnGraph(returnData);
+    initRuntimeGraph(runtimeData, avgRuntime);
 }
 
-function initRuntimeGraph(data){
-    var runtimeData = [[js_lang.execution_date, js_lang.runtime]],
+/**
+ * render runtime statistics as line graph with trendline
+ *
+ * @param data array runtime data
+ * @param avgRuntime double average runtime
+ */
+function initRuntimeGraph(data, avgRuntime) {
+    var runtimeData = [[js_lang.execution_date, js_lang.runtime, js_lang.avg_runtime]],
         runtimeGraphData,
         runtimeGraphOptions = {
             title: js_lang.title_runtime,
@@ -256,53 +264,47 @@ function initRuntimeGraph(data){
             },
             hAxis: {
                 title: js_lang.execution_date,
-                minValue: 0,
-                gridlines: {
-                    count: 0
-                },
-                minorGridlines:{
-                    count:0
-                }
+                minValue: 0
             },
             vAxis: {
-                title: js_lang.runtime + '/s'
+                title: js_lang.runtime + '/s',
+                minValue: 0
             },
-            animation:{
+            animation: {
                 duration: 750,
                 easing: 'linear',
                 startup: true
             },
             legend: {
-                position:'bottom'
+                position: 'bottom'
             },
-           trendlines: {
-    0: {
-      type: 'linear',
-      color: 'red',
-      lineWidth: 3,
-      visibleInLegend: true
-    },
-    1: {
-      type: 'linear',
-      color: 'green',
-      lineWidth: 3,
-      visibleInLegend: true
-    },
-    2: {
-      type: 'linear',
-      color: 'pink',
-      lineWidth: 3,
-      visibleInLegend: true
-    }
-  }
+            curveType: 'function',
+            pointSize: 5
         },
         runtimeChart;
 
+    var len = data.length,
+        average = 0,
+        avglen = 5; // number of values for moving average
+
     // convert data
-    for(var i in data){
-        runtimeData.push([data[i][0].date, data[i][1]]);
+    for (var i = 0; i < len; i++) {
+        average = 0;
+
+        // first entry has no average - set value
+        if (i == 0) {
+            average = data[i][1];
+        } else {
+            // calculate moving average
+            for (var j = i; (j >= 0) && (j > (i - avglen)); j--) {
+                average += data[j][1];
+            }
+            average /= ((i >= avglen) ? avglen : (i + 1));
+        }
+
+        runtimeData.push([data[i][0].date, data[i][1], average]);
     }
-    
+
     // that's it, render graph
     runtimeGraphData = google.visualization.arrayToDataTable(runtimeData);
 
@@ -336,24 +338,25 @@ function initReturnGraph(data) {
                 gridlines: {
                     count: 0
                 },
-                minorGridlines:{
-                    count:0
-                }
+                minorGridlines: {
+                    count: 0
+                },
+                ticks: []
             },
             vAxis: {
                 title: js_lang.number
             },
-            animation:{
+            animation: {
                 duration: 750,
                 easing: 'linear',
                 startup: true
             },
-            legend: {position:'none'}
+            legend: {position: 'none'}
         },
         returnChart;
 
     // convert data to array
-    for(var i in data) {
+    for (var i in data) {
         returnData.push(data[i]);
     }
 
