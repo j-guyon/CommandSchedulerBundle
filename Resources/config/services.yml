@@ -5,9 +5,23 @@ services:
             - @kernel
             - %jmose_command_scheduler.excluded_command_namespaces%
 
+    jmose_command_scheduler.rights_parser:
+        class: JMose\CommandSchedulerBundle\Service\RightsParser
+        arguments:
+            - @kernel
+            - @doctrine
+            - %jmose_command_scheduler.doctrine_manager%
+
     jmose_command_scheduler.form.type.command_choice:
         class: JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType
         arguments:
             - @jmose_command_scheduler.command_parser
         tags:
             - { name: form.type, alias: command_choice }
+
+    jmose_command_scheduler.form.type.rights_choice:
+        class: JMose\CommandSchedulerBundle\Form\Type\UserHostChoiceType
+        arguments:
+            - @jmose_command_scheduler.rights_parser
+        tags:
+            - { name: form.type, alias: rights_choice }

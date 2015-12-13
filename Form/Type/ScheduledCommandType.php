@@ -5,6 +5,7 @@ namespace JMose\CommandSchedulerBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JMose\CommandSchedulerBundle\Entity\UserHost;
 
 /**
  * Class ScheduledCommandType
@@ -16,7 +17,7 @@ class ScheduledCommandType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,71 +25,95 @@ class ScheduledCommandType extends AbstractType
 
         $builder->add(
             'name', 'text', array(
-                'label'    => 'detail.name',
+                'label' => 'detail.name',
                 'required' => true
             )
         );
 
         $builder->add(
             'command', 'command_choice', array(
-                'label'       => 'detail.command',
-                'required'    => true
+                'label' => 'detail.command',
+                'required' => true
             )
         );
 
         $builder->add(
             'arguments', 'text', array(
-                'label'    => 'detail.arguments',
+                'label' => 'detail.arguments',
                 'required' => false
             )
         );
 
         $builder->add(
             'cronExpression', 'text', array(
-                'label'    => 'detail.cronExpression',
+                'label' => 'detail.cronExpression',
                 'required' => true
             )
         );
 
         $builder->add(
             'logFile', 'text', array(
-                'label'    => 'detail.logFile',
+                'label' => 'detail.logFile',
                 'required' => true
             )
         );
 
         $builder->add(
-            'priority', 'integer', array(
-                'label'      => 'detail.priority',
-                'empty_data' => 0,
-                'required'   => false
+            'rights', 'rights_choice', array(
+                'choices_as_values' => true,
+                'choice_label' => function ($right, $key, $index) {
+                    /** @var UserHost $right */
+                    $user = (($user = $right->getUser()) ? $user : '*');
+                    $host = (($host = $right->getHost()) ? $host : '*');
+                    $val = $right->getTitle();
+
+                    if(($user != '*') || ($host != '*')){
+                        $val = sprintf("%s (%s@%s)",
+                            $right->getTitle(),
+                            $user,
+                            $host
+                        );
+                    }
+
+                    return $val;
+                },
+                'label' => 'detail.rights',
+                'required' => false
             )
         );
-        
+
+        $builder->add(
+            'priority', 'integer', array(
+                'label' => 'detail.priority',
+                'empty_data' => 0,
+                'required' => false
+            )
+        );
+
         $builder->add(
             'expectedRuntime', 'integer', array(
-                'label'    => 'detail.expectedRuntime',
+                'label' => 'detail.expectedRuntime',
                 'required' => false
             )
         );
 
         $builder->add(
             'executeImmediately', 'checkbox', array(
-                'label'    => 'detail.executeImmediately',
+                'label' => 'detail.executeImmediately',
                 'required' => false
             )
         );
 
         $builder->add(
             'disabled', 'checkbox', array(
-                'label'    => 'detail.disabled',
+                'label' => 'detail.disabled',
                 'required' => false
             )
         );
 
         $builder->add(
             'logExecutions', 'checkbox', array(
-                'label'    => 'detail.logExecutions',
+                'label' => 'detail.logExecutions',
                 'required' => false
             )
         );
@@ -108,8 +133,8 @@ class ScheduledCommandType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class'         => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
-                'wrapper_attr'       => 'default_wrapper',
+                'data_class' => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
+                'wrapper_attr' => 'default_wrapper',
                 'translation_domain' => 'JMoseCommandScheduler'
             )
         );

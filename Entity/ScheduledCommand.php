@@ -97,7 +97,7 @@ class ScheduledCommand
 
 
     /**
-     * @var UserHost requirements for executing user and host
+     * @var integer requirements for executing user and host
      */
     private $rights = null;
 

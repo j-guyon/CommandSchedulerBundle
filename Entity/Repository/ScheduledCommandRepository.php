@@ -42,4 +42,11 @@ class ScheduledCommandRepository extends EntityRepository
     public function findById($id) {
         return $this->findBy(array('id' => $id));
     }
+
+//    public function find($id) {
+//        $command = $this->findById($id);
+//        $command = array_shift($command);
+//
+//        return $command;
+//    }
 }

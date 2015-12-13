@@ -76,6 +76,6 @@ class UserHostType extends AbstractType
      */
     public function getName()
     {
-        return 'command_scheduler_userhost';
+        return 'rights_choice';
     }
 }

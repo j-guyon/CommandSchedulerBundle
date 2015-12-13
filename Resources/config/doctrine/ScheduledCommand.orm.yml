@@ -97,12 +97,15 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
       rights:
         targetEntity: UserHost
         column: REQUIRED_RIGHTS
+        fetch_mode: eager
         joinColumn:
           name: rights
           referencedColumnName: ID_USER_HOST
           nullable: true
+          fetch_mode: eager
     oneToMany:
       executions:
         targetEntity: Execution
         mappedBy: command
         nullable: true
+        fetch_mode: eager
