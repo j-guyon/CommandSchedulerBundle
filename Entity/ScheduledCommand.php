@@ -97,7 +97,7 @@ class ScheduledCommand
 
 
     /**
-     * @var integer requirements for executing user and host
+     * @var ArrayCollection requirements for executing user and host
      */
     private $rights = null;
 
@@ -110,6 +110,7 @@ class ScheduledCommand
         $this->setLocked(false);
 
         $this->executions = new ArrayCollection();
+        $this->rights = new ArrayCollection();
     }
 
     /**
