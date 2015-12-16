@@ -11,11 +11,13 @@ use JMose\CommandSchedulerBundle\Entity\UserHost;
  * Class ScheduledCommandType
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Form\Type
+ * @author  Daniel Fischer <dfischer000@gmail.com>
  */
 class ScheduledCommandType extends AbstractType
 {
     /**
+     * {@inheritdoc}
+     *
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -60,13 +62,18 @@ class ScheduledCommandType extends AbstractType
 
         $builder->add(
             'rights', 'rights_choice', array(
+                // use object as value
                 'choices_as_values' => true,
+                // anonymous function to build labels from object
                 'choice_label' => function ($right, $key, $index) {
                     /** @var UserHost $right */
                     $user = (($user = $right->getUser()) ? $user : '*');
                     $host = (($host = $right->getHost()) ? $host : '*');
+
                     $val = $right->getTitle();
 
+                    // if user ot host are set append to title
+                    // output similar to mysql syntax
                     if(($user != '*') || ($host != '*')){
                         $val = sprintf("%s (%s@%s)",
                             $right->getTitle(),
@@ -118,7 +125,6 @@ class ScheduledCommandType extends AbstractType
             )
         );
 
-
         $builder->add(
             'save', 'submit', array(
                 'label' => 'action.save',
@@ -127,6 +133,8 @@ class ScheduledCommandType extends AbstractType
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -141,6 +149,8 @@ class ScheduledCommandType extends AbstractType
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return string
      */
     public function getName()

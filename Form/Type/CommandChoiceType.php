@@ -10,7 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * Class CommandChoiceType
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Form\Type
  */
 class CommandChoiceType extends AbstractType
 {

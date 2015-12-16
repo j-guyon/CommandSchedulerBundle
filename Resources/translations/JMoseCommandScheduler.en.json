@@ -43,7 +43,8 @@
     "lastReturnCode": "Last return code",
     "actions": "Actions",
     "logExecutions": "Log Executions",
-    "openHelper": "open Cron Expression Helper"
+    "openHelper": "open Cron Expression Helper",
+    "rights":"User/Host Requirements"
   },
   "execution": {
     "run": "Run",
@@ -51,6 +52,7 @@
     "runtime": "Runtime (seconds)"
   },
   "rights": {
+    "pageTitle":"User Host Requirement",
     "title": "Short name",
     "user": "Required user",
     "host": "Required host",

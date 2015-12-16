@@ -18,9 +18,9 @@
                 <th>{{ "detail.priority"|trans }}</th>
             </tr>
             <tr>
+                <th>{{ "detail.userhost"|trans }}</th>
                 <th>{{ "detail.lastExecution"|trans }}</th>
                 <th>{{ "detail.lastReturnCode"|trans }}</th>
-                <th>{{ "detail.logExecutions"|trans }}</th>
                 <th>{{ "detail.actions"|trans }}</th>
             </tr>
         </thead>
@@ -59,26 +59,16 @@
             </tr>
             <tr>
                 <td>
+                    {% if command.rights is defined and command.rights.title is defined %}
+                        <span>{{ command.rights.title }}</span>
+                        <span class="fa fa-info-circle hasTooltip" title="{{ command.rights.info }}"></span>
+                    {% endif %}
+                </td>
+                <td>
                     {{ command.lastExecution|date( "dateFormat"|trans ) }}
                 </td>
                 <td>
                     {{ command.lastReturnCode }}
-                </td>
-                <td>
-                    <a href="{{ path('jmose_command_scheduler_action_command_toggle_logging', {'id': command.id}) }}"
-                       class="hasTooltip"
-                       title="{{ "tooltip.toggleLogging"|trans }}">
-                    {% if command.logExecutions == true %}
-                        <span class="text-success fa fa-check-square-o"></span>
-                    {% else %}
-                        <span class="text-danger fa fa-square-o"></span>
-                    {% endif %}
-                    </a>
-                    <a href="{{ path('jmose_command_scheduler_detail_command_executions', {'commandId':command.id}) }}"
-                       class="hasTooltip"
-                       title="{{ "tooltip.executions"|trans }}">
-                        <span class="fa fa-archive text-info"></span>
-                    </a>
                 </td>
                 <td style="min-width: 90px;">
                     {% if command.locked == true %}
@@ -92,6 +82,20 @@
                             <span class="sr-only">{{ "action.unlock"|trans }}</span>
                         </a>
                     {% endif %}
+                    <a href="{{ path('jmose_command_scheduler_action_command_toggle_logging', {'id': command.id}) }}"
+                       class="hasTooltip"
+                       title="{{ "tooltip.toggleLogging"|trans }}">
+                        {% if command.logExecutions == true %}
+                            <span class="text-success fa fa-check-square-o"></span>
+                        {% else %}
+                            <span class="text-danger fa fa-square-o"></span>
+                        {% endif %}
+                    </a>
+                    <a href="{{ path('jmose_command_scheduler_detail_command_executions', {'commandId':command.id}) }}"
+                       class="hasTooltip"
+                       title="{{ "tooltip.executions"|trans }}">
+                        <span class="fa fa-archive text-info"></span>
+                    </a>
                     <a href="{{ path('jmose_command_scheduler_detail_command_edit', {'scheduledCommandId': command.id}) }}">
                         <span class="text-info fa fa-pencil hasTooltip"
                               title="{{ "tooltip.editCommand"|trans }}"></span>

@@ -43,12 +43,12 @@ class RightController extends BaseController
      *
      * @return Response
      */
-    public function initNewUserHostAction()
+    public function initNewUserHostAction($_returnID = null)
     {
         $userHost = new UserHost();
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Right:indexCommand', array(
+            'JMoseCommandSchedulerBundle:Right:indexRight', array(
                 'userHost' => $userHost
             )
         );

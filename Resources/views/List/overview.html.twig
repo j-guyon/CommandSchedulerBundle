@@ -11,7 +11,6 @@
     <a href="{{ path('jmose_command_scheduler_list', {'_type':'rights'}) }}">{{ "list.rights"|trans }} »</a><br>
     <a href="{{ path('jmose_command_scheduler_list', {'_type':'executions'}) }}">{{ "list.executions"|trans }} »</a><br>
     <h2>{{ 'new'|trans }}</h2>
-    {#<a href="{{ path('jmose_command_scheduler_list_commands', {'_type':'executions'}) }}">{{ "list.executions"|trans }} »</a><br>#}
-    {#<h2>{{ '' }}</h2>#}
-    {#<a href="{{  }}"#}
+    <a href="{{ path('jmose_command_scheduler_detail_command_new') }}">{{ "action.newScheduling"|trans }} »</a><br>
+    <a href="{{ path('jmose_command_scheduler_detail_right_new') }}">{{ "action.newUserHost"|trans }} »</a><br>
 {% endblock content %}

@@ -7,10 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class UserHostType
+ * Class UserHostType, used to edit/create UserHost Requirements
  *
  * @author  Daniel Fischer <dfischer000@gmail.com>
- * @package JMose\CommandSchedulerBundle\Form\Type
  */
 class UserHostType extends AbstractType
 {
