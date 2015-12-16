@@ -63,7 +63,7 @@ class MonitorCommand extends SchedulerBaseCommand
             return;
         }
 
-        $commands = $this->entityManager->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
+        $commands = $this->getRepository('ScheduledCommand')->findAll();
 
         $timeoutValue = $this->getContainer()->getParameter('jmose_command_scheduler.lock_timeout');
 

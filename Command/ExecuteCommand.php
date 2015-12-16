@@ -80,7 +80,7 @@ class ExecuteCommand extends SchedulerBaseCommand
             return;
         }
 
-        $commands = $this->entityManager->getRepository($this->bundleName . ':ScheduledCommand')->findEnabledCommand();
+        $commands = $this->getRepository('ScheduledCommand')->findEnabledCommand();
 
         $noneExecution = true;
         foreach ($commands as $command) {

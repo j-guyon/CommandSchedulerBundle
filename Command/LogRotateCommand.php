@@ -6,8 +6,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository;
-use JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository;
+use JMose\CommandSchedulerBundle\Entity\Execution;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 /**
  * Class LogRotateCommand : This class rotates (deletes) old Executionlogs
@@ -93,14 +93,16 @@ class LogRotateCommand extends SchedulerBaseCommand
             (($this->limit = $this->input->getOption('date_limit')) !== false) &&
             preg_match("/\\d+-\\d+-\\d+ \\d+:\\d+:\\d+/", $this->limit)
         ) {
+            $this->limit = new \DateTime($this->limit);
+            $this->limit = $this->limit->getTimestamp();
+
             $this->action = 'date';
-            $this->limit = strtotime($this->input->getOption('date_limit'));
         } else if (
             (($this->limit = $this->input->getOption('nr_limit')) !== false) &&
             is_numeric($this->limit)
         ) {
             $this->action = 'number';
-        } else if(
+        } else if (
             ($this->input->getOption('truncate') == 'true') &&
             ($this->input->getOption('verify') == 'true')
         ) {
@@ -117,26 +119,75 @@ class LogRotateCommand extends SchedulerBaseCommand
     {
         $output->writeln('<info>Start: Logrotate</info>');
 
-        $action = '';
-        if($this->action) {
-            $output->writeln('<info>' .  $this->action . ' is configured</info>');
+        if ($this->action) {
+            $output->writeln('<info>' . $this->action . ' is configured</info>');
             $action = ($this->action . 'Action');
 
             $this->$action();
+
+            $this->endExecution();
         } else {
             $this->endExecution('no action configured');
         }
     }
 
-    /**
-     * remove all execution logs for every command except specified number, at least one
-     */
-    private function numberAction() {
-        $commands = $this->entityManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
+    private function dateAction()
+    {
+        $commands = $this->getRepository('ScheduledCommand')->findAll();
 
         $delete = array();
         /** @var ScheduledCommand $command */
-        foreach($commands as $command) {
+        foreach ($commands as $command) {
+            $executions = $command->getExecutions();
+            $executions = $executions->toArray();
+            // every element for which callback evaluates to false is removed
+            /** @var array $help */
+            $help = array_filter($executions, function ($elem) {
+                /** @var Execution $elem */
+                $help = $elem->getExecutionDate();
+                try {
+                    $result = ($this->limit >= $help->getTimestamp());
+                    return $help && $result;
+                } catch (\Exception $e) {
+                    return false;
+                }
+            });
+
+            if (count($help) > 1) {
+                // keep at least one entry
+                array_pop($help);
+                $delete = array_merge($delete, $help);
+            }
+        }
+
+        $this->deleteExecutions($delete);
+    }
+
+    /**
+     * remove ALL execution logs
+     */
+    private function truncateAction()
+    {
+        $executions = $this->getRepository('Execution')->findAll();
+
+        $this->deleteExecutions($executions);
+    }
+
+    /**
+     * remove all execution logs for every command except specified number. if there are less entries none will be removed. At least one entry is kept all the times
+     */
+    private function numberAction()
+    {
+        $commands = $this->getRepository('ScheduledCommand')->findAll();
+
+        // keep at least one entry
+        if ($this->limit < 1) {
+            $this->limit = 1;
+        }
+
+        $delete = array();
+        /** @var ScheduledCommand $command */
+        foreach ($commands as $command) {
             // get all executions
             $executions = $command->getExecutions();
             $executions = $executions->toArray();
@@ -144,7 +195,7 @@ class LogRotateCommand extends SchedulerBaseCommand
             // calculate how many entries are to be removed
             $itemCount = count($executions) - $this->limit;
 
-            if($itemCount > 0) {
+            if ($itemCount > 1) {
                 // collect log entries
                 $delete = array_merge(
                     $delete,
@@ -153,11 +204,7 @@ class LogRotateCommand extends SchedulerBaseCommand
             }
         }
 
-        // now we have every execution log to be removed - let's rock
-        foreach($delete as $item){
-            $this->entityManager->remove($item);
-        }
-        $this->entityManager->flush();
+        $this->deleteExecutions($delete);
     }
 
     /**
@@ -166,14 +213,29 @@ class LogRotateCommand extends SchedulerBaseCommand
      * @param string $message additional information
      * @param string $type type of output. can be 'info', 'comment' (default), 'error' and 'question'
      */
-    private function endExecution($message = "", $type = 'comment'){
-        if($message) {
+    private function endExecution($message = "", $type = 'comment')
+    {
+        if ($message) {
             $this->output->writeln(sprintf("<%s>%s</%s>",
-                $type,
-                $message,
-                $type)
+                    $type,
+                    $message,
+                    $type)
             );
         }
         $this->output->writeln("<info>Finished: Logrotate " . date('Y-M-D H:i:s') . "</info>");
+    }
+
+    /**
+     * delete given executions
+     *
+     * @param array $delete array of Executions
+     */
+    private function deleteExecutions($delete)
+    {
+        // now we have every execution log to be removed - let's rock
+        foreach ($delete as $item) {
+            $this->entityManager->remove($item);
+        }
+        $this->entityManager->flush();
     }
 }

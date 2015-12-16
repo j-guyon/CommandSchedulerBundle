@@ -7,6 +7,8 @@ namespace JMose\CommandSchedulerBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository;
+use JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository;
 
 abstract class SchedulerBaseCommand extends ContainerAwareCommand
 {
@@ -79,5 +81,17 @@ abstract class SchedulerBaseCommand extends ContainerAwareCommand
         $this->entityManager = $this->getContainer()->get('doctrine')->getManager(
             $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
         );
+    }
+
+    /**
+     * get a doctrine repository
+     *
+     * @param string $entity name of entity for which a repository should be loaded
+     *
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getRepository($entity)
+    {
+        return $this->entityManager->getRepository($this->bundleName . ':' . $entity);
     }
 }
