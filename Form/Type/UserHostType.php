@@ -14,8 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class UserHostType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,6 +42,20 @@ class UserHostType extends AbstractType
         );
 
         $builder->add(
+            'user_excluded', 'text', array(
+                'label'    => 'rights.userExcluded',
+                'required' => false
+            )
+        );
+
+        $builder->add(
+            'host_excluded', 'text', array(
+                'label'    => 'rights.hostExcluded',
+                'required' => false
+            )
+        );
+
+        $builder->add(
             'info', 'textarea', array(
                 'label'    => 'rights.info',
                 'required' => false
@@ -57,7 +70,7 @@ class UserHostType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -71,10 +84,12 @@ class UserHostType extends AbstractType
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return string
      */
     public function getName()
     {
-        return 'rights_choice';
+        return 'rights';
     }
 }

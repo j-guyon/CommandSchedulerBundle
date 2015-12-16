@@ -17,7 +17,7 @@
     "edit": "Edit",
     "newScheduling": "New scheduling",
     "unlock": "Unlock task",
-    "newUserHost": "New Requirement",
+    "newUserHost": "New user/host requirement",
     "backList": "Back to list",
     "backOverview": "Back to overview",
     "save": "Save",
@@ -56,6 +56,8 @@
     "title": "Short name",
     "user": "Required user",
     "host": "Required host",
+    "userExcluded": "User excluded from execution",
+    "hostExcluded": "Host excluded from execution",
     "info": "Description"
   },
   "flash": {
@@ -70,7 +72,9 @@
     "executions": "show logged executions",
     "editCommand": "edit command",
     "deleteCommand": "delete command",
-    "executeCommand": "execute command immediately"
+    "executeCommand": "execute command immediately",
+    "userFormat":"Username who executes the script is matched against the expression. Please don't use delimiters if you enter a Regexp.",
+    "hostFormat":"Hostname on which the script is executed is matched against the expression. Please don't use delimiters if you enter a Regexp."
   },
   "cronhelper": {
     "title": "Cron Expression Generator",

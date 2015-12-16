@@ -27,6 +27,16 @@ JMose\CommandSchedulerBundle\Entity\UserHost:
             length: '127'
             nullable: true
             column: HOST
+        user_excluded:
+            type: string
+            length: '127'
+            nullable: true
+            column: USER_EXCLUDED
+        host_excluded:
+            type: string
+            length: '127'
+            nullable: true
+            column: HOST_EXCLUDED
         info:
             type: string
             length: 255

@@ -97,7 +97,7 @@ class ScheduledCommand
 
 
     /**
-     * @var ArrayCollection requirements for executing user and host
+     * @var UserHost $rights requirements for executing user and host
      */
     private $rights = null;
 
@@ -503,7 +503,48 @@ class ScheduledCommand
      */
     public function checkRights()
     {
-        return true;
+        // no requirements assigned -> execute always
+        if (!$this->rights) {
+            return true;
+        }
+
+        $result = true;
+
+        $requiredUser = $this->rights->getUser();
+        $requiredHost = $this->rights->getHost();
+
+        $excludedUser = $this->rights->getUserExcluded();
+        $excludedHost = $this->rights->getHostExcluded();
+
+        // check user requirements
+        $result = (
+            $result && // not yet invalidated
+            $requiredUser && // user requirements set
+            preg_match("{" . $requiredUser . "}", $_SERVER['USER']) // requirement does match executing user
+        );
+
+        // check excluded user requirements
+        $result = (
+            $result && // not yet invalidated
+            $excludedUser && // user requirements set
+            !preg_match("{" . $excludedUser . "}", $_SERVER['USER']) // requirement must not match executing user
+        );
+
+        // check host requirements
+        $result = (
+            $result && // not yet invalidated
+            $requiredHost && // host requirements set
+            preg_match("{" . $requiredHost . "}", gethostname()) // requirement does match hostname
+        );
+
+        // check excluded host requirements
+        $result = (
+            $result && // not yet invalidated
+            $excludedHost && // host requirements set
+            !preg_match("{" . $excludedHost . "}", gethostname()) // requirement must not match hostname
+        );
+
+        return $result;
     }
 
     /**
@@ -526,14 +567,16 @@ class ScheduledCommand
      * add new Execution to collection
      * @param Execution $log
      */
-    public function addLog($log) {
+    public function addLog($log)
+    {
         $this->executions->add($log);
     }
 
     /**
      * @return Execution
      */
-    public function getCurrentLog(){
+    public function getCurrentLog()
+    {
         return $this->executions->last();
     }
 }

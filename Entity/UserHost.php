@@ -13,9 +13,34 @@ class UserHost
     private $id;
 
     /**
-     * @var string
+     * @var string $title short description
      */
     private $title;
+
+    /**
+     * @var string $user user required for exection
+     */
+    private $user;
+
+    /**
+     * @var string $host hostname required for execution
+     */
+    private $host;
+
+    /**
+     * @var string $user_excluded user excluded from execution
+     */
+    private $user_excluded;
+
+    /**
+     * @var string $host_excluded hostname excluded from execution
+     */
+    private $host_excluded;
+
+    /**
+     * @var string $info detailed description of requirement (optional)
+     */
+    private $info;
 
     /**
      * @return string
@@ -32,21 +57,6 @@ class UserHost
     {
         $this->title = $title;
     }
-
-    /**
-     * @var string
-     */
-    private $user;
-
-    /**
-     * @var string
-     */
-    private $host;
-
-    /**
-     * @var string
-     */
-    private $info;
 
     /**
      * Set id
@@ -114,6 +124,47 @@ class UserHost
     public function getHost()
     {
         return $this->host;
+    }
+
+
+    /**
+     * get excluded user
+     *
+     * @return string
+     */
+    public function getUserExcluded()
+    {
+        return $this->user_excluded;
+    }
+
+    /**
+     * set excluded user
+     *
+     * @param string $user_excluded
+     */
+    public function setUserExcluded($user_excluded)
+    {
+        $this->user_excluded = $user_excluded;
+    }
+
+    /**
+     * get excluded hostname
+     *
+     * @return string
+     */
+    public function getHostExcluded()
+    {
+        return $this->host_excluded;
+    }
+
+    /**
+     * set excluded hostname
+     *
+     * @param string $host_excluded
+     */
+    public function setHostExcluded($host_excluded)
+    {
+        $this->host_excluded = $host_excluded;
     }
 
     /**

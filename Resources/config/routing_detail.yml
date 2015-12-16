@@ -26,13 +26,13 @@ jmose_command_scheduler_detail_command_executions:
 
 jmose_command_scheduler_detail_right_edit:
     pattern:  /rights/edit/{rightId}
-    defaults: { _controller: JMoseCommandSchedulerBundle:Right:initEditRight }
+    defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:initEditRight }
 
 jmose_command_scheduler_detail_right_new:
     pattern:  /rights/new
-    defaults: { _controller: JMoseCommandSchedulerBundle:Right:initNewUserHost }
+    defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:initNewUserHost }
 
 jmose_command_scheduler_detail_right_save:
     pattern:  /rights/save
-    defaults: { _controller: JMoseCommandSchedulerBundle:Right:saveRight }
+    defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:saveRight }
 

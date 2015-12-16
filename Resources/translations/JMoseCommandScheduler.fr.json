@@ -21,7 +21,7 @@
     "backList": "Back to list",
     "backOverview": "Back to overview",
     "save": "Enregistrer",
-    "close":"Close"
+    "close": "Close"
   },
   "confirm": {
     "deleteScheduling": "Supprimer définitivement cette planification?",
@@ -43,8 +43,8 @@
     "lastReturnCode": "Dernier code retour",
     "actions": "Actions",
     "logExecutions": "Log Executions",
-    "openHelper":"open Cron Expression Helper",
-    "rights":"User/Host Requirements"
+    "openHelper": "open Cron Expression Helper",
+    "rights": "User/Host Requirements"
   },
   "execution": {
     "run": "Run",
@@ -52,9 +52,12 @@
     "runtime": "Runtime (seconds)"
   },
   "rights": {
+    "pageTitle": "User Host Requirement",
     "title": "Short name",
     "user": "Required user",
     "host": "Required host",
+    "userExcluded": "User excluded from execution",
+    "hostExcluded": "Host excluded from execution",
     "info": "Description"
   },
   "flash": {
@@ -63,49 +66,51 @@
     "execute": "Le traitement sera exécutée lors de la prochaine vérification (\"scheduler:execute\").",
     "unlocked": "Traitement dévérouillée avec succès."
   },
-  "tooltip":{
-    "toggleCommand":"Click to enable/disable command",
-    "toggleLogging":"Click to toggle log executions",
-    "executions":"show logged executions",
-    "editCommand":"edit command",
+  "tooltip": {
+    "toggleCommand": "Click to enable/disable command",
+    "toggleLogging": "Click to toggle log executions",
+    "executions": "show logged executions",
+    "editCommand": "edit command",
     "deleteCommand": "delete command",
-    "executeCommand":"execute command immediately"
+    "executeCommand": "execute command immediately",
+    "userFormat":"Username who executes the script is matched against the expression. Please don't use delimiters if you enter a Regexp.",
+    "hostFormat":"Hostname on which the script is executed is matched against the expression. Please don't use delimiters if you enter a Regexp."
   },
-  "cronhelper":{
-    "title":"Cron Expression Generator",
-    "saveExpression":"Save Cron expression",
-    "m":"Minute",
-    "h":"Hour",
-    "dom":"Day of month",
-    "mon":"Month",
-    "dow":"Day of week",
+  "cronhelper": {
+    "title": "Cron Expression Generator",
+    "saveExpression": "Save Cron expression",
+    "m": "Minute",
+    "h": "Hour",
+    "dom": "Day of month",
+    "mon": "Month",
+    "dow": "Day of week",
     "every": "Every nth...",
     "minutely": "minutely",
     "hourly": "hourly",
     "daily": "daily",
     "monthly": "monthly",
-    "month":{
-      "january":"January",
-      "february":"February",
-      "march":"March",
-      "april":"April",
-      "may":"May",
-      "june":"June",
-      "july":"July",
-      "august":"August",
-      "september":"September",
-      "october":"October",
-      "november":"November",
-      "december":"December"
+    "month": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
     },
-    "day":{
-      "monday":"Monday",
-      "tuesday":"Tuesday",
-      "wednesday":"Wednesday",
-      "thursday":"Thursday",
-      "friday":"Friday",
-      "saturday":"Saturday",
-      "sunday":"Sunday"
+    "day": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
     }
   },
   "graph": {

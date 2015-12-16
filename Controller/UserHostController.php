@@ -13,9 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
  * Class RightController
  *
  * @author  Daniel Fischer <dfischer000@gmail.com>
- * @package JMose\CommandSchedulerBundle\Controller
  */
-class RightController extends BaseController
+class UserHostController extends BaseController
 {
     /**
      * Handle display of new/existing ScheduledCommand object.
@@ -48,7 +47,7 @@ class RightController extends BaseController
         $userHost = new UserHost();
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Right:indexRight', array(
+            'JMoseCommandSchedulerBundle:UserHost:indexRight', array(
                 'userHost' => $userHost
             )
         );
@@ -66,7 +65,7 @@ class RightController extends BaseController
             ->find($rightId);
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Right:indexRight', array(
+            'JMoseCommandSchedulerBundle:UserHost:indexRight', array(
                 'userHost' => $right
             )
         );
@@ -83,7 +82,8 @@ class RightController extends BaseController
         // Init and populate form object
         $rightDetail = $request->request->get('command_scheduler_userhost');
         if ($rightDetail['id'] != '') {
-            $right = $this->doctrineManager->getRepository($this->bundleName . ':UserHost')
+            $right = $this->doctrineManager
+                ->getRepository($this->bundleName . ':UserHost')
                 ->find($rightDetail['id']);
         } else {
             $right = new UserHost();
@@ -108,7 +108,7 @@ class RightController extends BaseController
         } else {
             // Redirect to indexAction with the form object that has validation errors
             return $this->forward(
-                'JMoseCommandSchedulerBundle:Right:indexRight', array(
+                'JMoseCommandSchedulerBundle:UserHost:indexRight', array(
                     'userHost' => $right,
                     'userHostForm' => $rightForm
                 )
