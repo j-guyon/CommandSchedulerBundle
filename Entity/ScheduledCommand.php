@@ -472,7 +472,7 @@ class ScheduledCommand
     /**
      * @param ArrayCollection $executions
      */
-    public function setExecutions($executions)
+    public function setExecutions(ArrayCollection $executions)
     {
         $this->executions = $executions;
     }

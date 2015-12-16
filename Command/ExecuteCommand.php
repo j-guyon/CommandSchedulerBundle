@@ -3,7 +3,6 @@
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Cron\CronExpression;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,32 +19,8 @@ use JMose\CommandSchedulerBundle\Entity\Execution;
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @package JMose\CommandSchedulerBundle\Command
  */
-class ExecuteCommand extends ContainerAwareCommand
+class ExecuteCommand extends SchedulerBaseCommand
 {
-
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $em;
-
-    /**
-     * @var string
-     */
-    private $logPath;
-
-    /**
-     * @var boolean
-     */
-    private $dumpMode;
-
-    /**
-     * @var integer
-     */
-    private $commandsVerbosity;
-
-    /** @var string $bundleName */
-    private $bundleName = 'JMoseCommandSchedulerBundle';
-
     /**
      * @inheritdoc
      */
@@ -67,6 +42,8 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
+        parent::initialize($input, $output);
+
         $this->dumpMode = $input->getOption('dump');
         $this->logPath = $this->getContainer()->getParameter('jmose_command_scheduler.log_path');
         if($this->logPath) {
@@ -82,14 +59,6 @@ class ExecuteCommand extends ContainerAwareCommand
 
         // store the original verbosity before apply the quiet parameter
         $this->commandsVerbosity = $output->getVerbosity();
-
-        if( true === $input->getOption('no-output')){
-            $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
-        }
-
-        $this->em = $this->getContainer()->get('doctrine')->getManager(
-            $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
-        );
     }
 
     /**
@@ -120,10 +89,6 @@ class ExecuteCommand extends ContainerAwareCommand
             // check if the command's rights (user and host) allow execution of the command at all.
             if(!$command->checkRights()) {
                 continue;
-            }
-            if($command->logExecutions()){
-                $executions = $this->em->getRepository($this->bundleName . ':Execution')->findCommandExecutions($command->getId());
-                $command->setExecutions($executions);
             }
 
             $cron        = CronExpression::factory($command->getCronExpression());

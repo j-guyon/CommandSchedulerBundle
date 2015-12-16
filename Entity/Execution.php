@@ -131,5 +131,15 @@ class Execution
     {
         return $this->returnCode;
     }
+
+    /**
+     * set members to values in object
+     * @param array $data data to be stored in object
+     */
+    public function setData($data){
+        foreach($data as $key => $val){
+            $this->$key = $val;
+        }
+    }
 }
 

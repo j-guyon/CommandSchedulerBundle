@@ -2,45 +2,18 @@
 
 namespace JMose\CommandSchedulerBundle\Command;
 
-use Cron\CronExpression;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\StreamOutput;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use Symfony\Component\Validator\Constraints\Null;
 
 /**
  * Class MonitorCommand : This class is used for monitoring scheduled commands if they run for too long or failed to execute
  *
  * @author  Daniel Fischer <dfischer000@gmail.com>
- * @package JMose\CommandSchedulerBundle\Command
  */
-class MonitorCommand extends ContainerAwareCommand
+class MonitorCommand extends SchedulerBaseCommand
 {
-
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $em;
-
-    /**
-     * @var string
-     */
-    private $logPath;
-
-    /**
-     * @var boolean
-     */
-    private $dumpMode;
-
-    /**
-     * @var integer
-     */
-    private $commandsVerbosity;
 
     /** @var string|array receiver for statusmail if an error occured */
     private $receiver;
@@ -66,28 +39,9 @@ class MonitorCommand extends ContainerAwareCommand
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->dumpMode = $input->getOption('dump');
-        $this->logPath = rtrim($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), '/\\');
+        parent::initialize($input, $output);
 
         $this->receiver = $this->getContainer()->getParameter('jmose_command_scheduler.monitor_mail');
-
-	    // set logpath to false if specified in parameters to suppress logging
-	    if(("false" == $this->logPath)||(false == $this->logPath)) {
-		    $this->logPath = false;
-	    } else {
-		    $this->logPath .= DIRECTORY_SEPARATOR;
-	    }
-
-        // store the original verbosity before apply the quiet parameter
-        $this->commandsVerbosity = $output->getVerbosity();
-
-        if( true === $input->getOption('no-output')){
-            $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
-        }
-
-        $this->em = $this->getContainer()->get('doctrine')->getManager(
-            $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
-        );
     }
 
     /**
@@ -116,6 +70,7 @@ class MonitorCommand extends ContainerAwareCommand
         $failed = array();
         $now = time();
 
+        /** @var ScheduledCommand $command */
         foreach ($commands as $command) {
                 // don't care about disabled commands
                 if($command->isDisabled()) {

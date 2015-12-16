@@ -33,4 +33,21 @@ class ExecutionRepository extends \Doctrine\ORM\EntityRepository
 
         return $result;
     }
+
+    /**
+     * find all executions for command given by id, keep at most $limit
+     *
+     * @param int $commandId Command ID
+     * @param int $limit number of executions to keep at most
+     */
+    public function findCommandExecutionsLimitNumber($commandId, $limit) {
+        $logs = $this->findBy(
+            array('command' => $commandId),
+            array('id' => 'ASC')
+        );
+
+        $logs = array_slice($logs, $limit);
+
+        return $logs;
+    }
 }
