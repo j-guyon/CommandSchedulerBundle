@@ -37,7 +37,8 @@
         </div>
 
         <script type="text/javascript">
-            var executionData = {{ executions|json_encode|raw }};
+            var executionData = {{ executions|json_encode|raw }},
+                expectedRuntime = {{ command.expectedRuntime|default(0) }};
         </script>
     {% else %}
         <script type="text/javascript">

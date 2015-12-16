@@ -248,7 +248,7 @@ function initGraphs() {
  * @param avgRuntime double average runtime
  */
 function initRuntimeGraph(data, avgRuntime) {
-    var runtimeData = [[js_lang.execution_date, js_lang.runtime, js_lang.avg_runtime]],
+    var runtimeData = [[js_lang.execution_date, js_lang.runtime, js_lang.avg_runtime, js_lang.exp_runtime]],
         runtimeGraphData,
         runtimeGraphOptions = {
             title: js_lang.title_runtime,
@@ -278,8 +278,9 @@ function initRuntimeGraph(data, avgRuntime) {
             legend: {
                 position: 'bottom'
             },
-            curveType: 'function',
-            pointSize: 5
+            //curveType: 'function',
+            lineWidth: 1,
+            pointSize: 2
         },
         runtimeChart;
 
@@ -302,7 +303,7 @@ function initRuntimeGraph(data, avgRuntime) {
             average /= ((i >= avglen) ? avglen : (i + 1));
         }
 
-        runtimeData.push([data[i][0].date, data[i][1], average]);
+        runtimeData.push([data[i][0].date, data[i][1], average, expectedRuntime]);
     }
 
     // that's it, render graph

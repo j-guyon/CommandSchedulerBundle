@@ -120,6 +120,7 @@
     "title_runtime": "Runtime overview",
     "execution_date": "Execution date",
     "runtime": "Runtime",
-    "avg_runtime": "average runtime"
+    "avg_runtime": "average runtime",
+    "exp_runtime": "expected runtime"
   }
 }
