@@ -80,7 +80,7 @@ class ExecuteCommand extends SchedulerBaseCommand
             return;
         }
 
-        $commands = $this->em->getRepository($this->bundleName . ':ScheduledCommand')->findEnabledCommand();
+        $commands = $this->entityManager->getRepository($this->bundleName . ':ScheduledCommand')->findEnabledCommand();
 
         $noneExecution = true;
         foreach ($commands as $command) {
@@ -130,7 +130,7 @@ class ExecuteCommand extends SchedulerBaseCommand
     {
         $now = new \DateTime();
         /** @var ScheduledCommand $scheduledCommand */
-        $scheduledCommand = $this->em->merge($scheduledCommand);
+        $scheduledCommand = $this->entityManager->merge($scheduledCommand);
         $scheduledCommand->setLastExecution($now);
         $scheduledCommand->setLocked(true);
 
@@ -138,11 +138,11 @@ class ExecuteCommand extends SchedulerBaseCommand
             $log = new Execution();
             $log->setCommand($scheduledCommand);
             $log->setExecutionDate($now);
-            $this->em->persist($log);
+            $this->entityManager->persist($log);
             $scheduledCommand->addLog($log);
         }
 
-        $this->em->flush();
+        $this->entityManager->flush();
 
         try {
             $command = $this->getApplication()->find($scheduledCommand->getCommand());
@@ -191,12 +191,12 @@ class ExecuteCommand extends SchedulerBaseCommand
             $result = -1;
         }
 
-        if (false === $this->em->isOpen()) {
+        if (false === $this->entityManager->isOpen()) {
             $output->writeln('<comment>Entity manager closed by the last command.</comment>');
-            $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
+            $this->entityManager = $this->entityManager->create($this->entityManager->getConnection(), $this->entityManager->getConfiguration());
         }
 
-        $scheduledCommand = $this->em->merge($scheduledCommand);
+        $scheduledCommand = $this->entityManager->merge($scheduledCommand);
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);
         $scheduledCommand->setExecuteImmediately(false);
@@ -212,13 +212,13 @@ class ExecuteCommand extends SchedulerBaseCommand
             $log->setRuntime($runtime);
         }
 
-        $this->em->flush();
+        $this->entityManager->flush();
 
         /*
          * This clear() is necessary to avoid conflict between commands and to be sure that none entity are managed
          * before entering in a new command
          */
-        $this->em->clear();
+        $this->entityManager->clear();
 
         unset($command);
         gc_collect_cycles();

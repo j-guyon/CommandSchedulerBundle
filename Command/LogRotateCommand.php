@@ -84,7 +84,7 @@ class LogRotateCommand extends SchedulerBaseCommand
             $this->output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         }
 
-        $this->em = $this->getContainer()->get('doctrine')
+        $this->entityManager = $this->getContainer()->get('doctrine')
             ->getManager(
                 $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
             );
@@ -121,26 +121,43 @@ class LogRotateCommand extends SchedulerBaseCommand
         if($this->action) {
             $output->writeln('<info>' .  $this->action . ' is configured</info>');
             $action = ($this->action . 'Action');
+
+            $this->$action();
         } else {
             $this->endExecution('no action configured');
-            return;
         }
-
-        $this->$action();
-//        $commands = $this->em->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
     }
 
     /**
      * remove all execution logs for every command except specified number, at least one
      */
     private function numberAction() {
-        $commands = $this->em->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
-        $executionRepository = $this->em->getRepository($this->bundleName . ':Execution');
+        $commands = $this->entityManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
 
+        $delete = array();
         /** @var ScheduledCommand $command */
         foreach($commands as $command) {
-            $commandId = $command->getId();
+            // get all executions
+            $executions = $command->getExecutions();
+            $executions = $executions->toArray();
+
+            // calculate how many entries are to be removed
+            $itemCount = count($executions) - $this->limit;
+
+            if($itemCount > 0) {
+                // collect log entries
+                $delete = array_merge(
+                    $delete,
+                    array_slice($executions, 0, $itemCount)
+                );
+            }
         }
+
+        // now we have every execution log to be removed - let's rock
+        foreach($delete as $item){
+            $this->entityManager->remove($item);
+        }
+        $this->entityManager->flush();
     }
 
     /**

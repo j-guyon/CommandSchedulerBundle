@@ -8,11 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class SchedulerBaseCommand extends ContainerAwareCommand {
+abstract class SchedulerBaseCommand extends ContainerAwareCommand
+{
     /**
      * @var \Doctrine\ORM\EntityManager
      */
-    protected $em;
+    protected $entityManager;
 
     /** @var string $bundleName */
     protected $bundleName = 'JMoseCommandSchedulerBundle';
@@ -41,16 +42,20 @@ abstract class SchedulerBaseCommand extends ContainerAwareCommand {
     /**
      * {@inheritdoc}
      */
-    protected function initialize(InputInterface $input, OutputInterface $output) {
-        if( true === $input->getOption('no-output')){
-            $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        if (true === $input->getOption('no-output')) {
+            $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         }
 
-        $this->dumpMode = $input->getOption('dump');
+        if ($input->hasOption('dump')) {
+            $this->dumpMode = $input->getOption('dump');
+        }
+
         $this->logPath = rtrim($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), '/\\');
 
         // set logpath to false if specified in parameters to suppress logging
-        if(("false" == $this->logPath)||(false == $this->logPath)) {
+        if (("false" == $this->logPath) || (false == $this->logPath)) {
             $this->logPath = false;
         } else {
             $this->logPath .= DIRECTORY_SEPARATOR;
@@ -59,8 +64,11 @@ abstract class SchedulerBaseCommand extends ContainerAwareCommand {
         // store the original verbosity before apply the quiet parameter
         $this->commandsVerbosity = $output->getVerbosity();
 
-        if( true === $input->getOption('no-output')){
-            $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
+        if (
+            $input->hasOption('no-output') &&
+            (true === $input->getOption('no-output'))
+        ) {
+            $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         }
 
         // all configuration to input and output done, save references
@@ -68,7 +76,7 @@ abstract class SchedulerBaseCommand extends ContainerAwareCommand {
         $this->output = $output;
 
         // get doctrine manager
-        $this->em = $this->getContainer()->get('doctrine')->getManager(
+        $this->entityManager = $this->getContainer()->get('doctrine')->getManager(
             $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
         );
     }

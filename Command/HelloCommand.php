@@ -77,7 +77,7 @@ class HelloCommand extends ContainerAwareCommand
 
         $return = 0;
         if ($input->getOption('randReturn')) {
-            $return = rand(-5, 5);
+            $return = rand(0, 5);
         }
 
         return $return;
