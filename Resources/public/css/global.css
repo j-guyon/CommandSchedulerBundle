@@ -1,3 +1,7 @@
+td a:hover {
+    text-decoration: none;
+}
+
 .marginTop1{
     margin-top: 1em;
 }

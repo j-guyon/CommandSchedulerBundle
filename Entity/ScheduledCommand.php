@@ -3,8 +3,6 @@
 namespace JMose\CommandSchedulerBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use JMose\CommandSchedulerBundle\Entity\UserHost;
-use JMose\CommandSchedulerBundle\Entity\Execution;
 
 /**
  * Entity ScheduledCommand

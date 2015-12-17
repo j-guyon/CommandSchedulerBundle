@@ -4,6 +4,7 @@
   "list": {
     "title": "Scheduled commands",
     "rightstitle": "User and Host requirements",
+    "executionstitle": "Previous executions",
     "commands": "Show list of commands",
     "rights": "Show list of user and host requirements",
     "executions": "Show list of all previous executions",
@@ -25,6 +26,7 @@
   },
   "confirm": {
     "deleteScheduling": "Permanently delete this task?",
+    "deleteRequirement": "Permanently delete this requirement?",
     "execute": "Force an execution for this task?",
     "unlock": "The task may be running. Are you sure you want to unlock it?"
   },

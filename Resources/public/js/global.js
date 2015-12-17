@@ -21,6 +21,10 @@ $(document).ready(function () {
     if (document.getElementById('cronhelper')) {
         initCronHelper();
     }
+
+    if(document.getElementById('dataTable')){
+        initDataTable();
+    }
 });
 
 /**
@@ -200,6 +204,38 @@ function handleVal(value) {
     }
 
     return result.join(',');
+}
+
+function initDataTable() {
+    var $table = $('#dataTable'),
+        dataTable,
+        colIdx = 0;
+
+    dataTable = $table.DataTable({
+        ordering: true
+    });
+
+    // Create the select list and search operation
+    var select = $('<select />')
+        .appendTo(
+        dataTable.column(colIdx).footer()
+    )
+        .on( 'change', function () {
+            dataTable
+                .column( colIdx )
+                .search( $(this).val() )
+                .draw();
+        } );
+
+    // Get the search data for the first column and add to the select list
+    dataTable
+        .column( colIdx )
+        .cache( 'search' )
+        .sort()
+        .unique()
+        .each( function ( d ) {
+            select.append( $('<option value="'+d+'">'+d+'</option>') );
+        } );
 }
 
 /**

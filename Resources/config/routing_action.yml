@@ -2,25 +2,25 @@
 # commands
 jmose_command_scheduler_action_command_toggle:
     pattern:  /toggle/command/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:toggleCommand }
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:toggleCommand }
 
 jmose_command_scheduler_action_command_toggle_logging:
     pattern:  /toggleLogging/command/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:toggleLogging }
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:toggleLogging }
 
 jmose_command_scheduler_action_command_remove:
     pattern:  /remove/command/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:removeCommand }
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:removeCommand }
 
 jmose_command_scheduler_action_command_execute:
     pattern:  /execute/command/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:executeCommand }
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:executeCommand }
 
 jmose_command_scheduler_action_command_unlock:
     pattern:  /unlock/command/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:unlockCommand }
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:unlockCommand }
 
 # rights
 jmose_command_scheduler_action_right_remove:
     pattern:  /remove/right/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:removeRight }
+    defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:removeRight }

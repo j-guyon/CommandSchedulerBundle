@@ -28,6 +28,7 @@ JMose\CommandSchedulerBundle\Entity\Execution:
       command:
         targetEntity: ScheduledCommand
         inversedBy: executions
+        fetch: EAGER
         joinColumn:
           name: command
           referencedColumnName: ID_SCHEDULED_COMMAND

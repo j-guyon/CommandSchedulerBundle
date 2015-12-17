@@ -115,4 +115,24 @@ class UserHostController extends BaseController
             );
         }
     }
+
+    /**
+     * Remove User/Host requirement from database (once and for all, no backup)
+     *
+     * @param int $id RightID
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function removeRightAction($id)
+    {
+        /** @var UserHost $right */
+        $right = $this->doctrineManager->getRepository($this->bundleName . ':UserHost')->find($id);
+        $entityManager = $this->doctrineManager;
+        $entityManager->remove($right);
+        $entityManager->flush();
+
+        // Add a flash message and do a redirect to the list
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.deleted', array(), 'JMoseCommandScheduler'));
+
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'rights')));
+    }
 }

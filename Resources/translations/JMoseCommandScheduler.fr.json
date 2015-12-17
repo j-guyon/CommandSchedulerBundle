@@ -4,6 +4,7 @@
   "list": {
     "title": "Taches planifiées",
     "rightstitle": "User and Host requirements",
+    "executionstitle": "Previous executions",
     "commands": "Show list of commands",
     "rights": "Show list of user and host requirements",
     "executions": "Show list of all previous executions",
@@ -25,6 +26,7 @@
   },
   "confirm": {
     "deleteScheduling": "Supprimer définitivement cette planification?",
+    "deleteRequirement": "Permanently delete this requirement?",
     "execute": "Forcer une exécution de cette commande?",
     "unlock": "Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le dévérouiller?"
   },

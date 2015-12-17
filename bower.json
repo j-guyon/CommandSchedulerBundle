@@ -19,6 +19,7 @@
   "dependencies": {
     "jquery": "2.*",
     "jquery-ui": "jqueryui#1.*",
+    "datatables":"*",
     "bootstrap": "3.*",
     "bs-confirmation": "tavicu/bs-confirmation#~1.0.5",
     "font-awesome": "fontawesome#4.*"

@@ -1,16 +1,15 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: daniel
- * Date: 02.12.15
- * Time: 18:56
+ * Class ExecutionController
+ *
+ * @author Daniel Fischer <dfischer000@gmail.com>
  */
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
-use JMose\CommandSchedulerBundle\Controller\BaseController;
 use JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository;
 use JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExecutionController extends BaseController
 {
@@ -22,7 +21,7 @@ class ExecutionController extends BaseController
     public function showCommandExecutionsAction($commandId)
     {
         /** @var ExecutionRepository $repo */
-        $repo = $this->doctrineManager->getRepository($this->bundleName . ':Execution');
+        $repo = $this->getRepository('Execution');
         $executions = $repo->findCommandExecutions($commandId);
         /** @var ScheduledCommandRepository $repo */
         $repo = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand');

@@ -2,7 +2,6 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
@@ -14,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @author  Daniel Fischer <dfischer000@gmail.com>
- * @package JMose\CommandSchedulerBundle\Controller
  */
 class CommandController extends BaseController
 {
@@ -63,7 +61,7 @@ class CommandController extends BaseController
      */
     public function initEditScheduledCommandAction($scheduledCommandId)
     {
-        $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')
+        $scheduledCommand = $this->getRepository('ScheduledCommand')
             ->find($scheduledCommandId);
 
         return $this->forward(
@@ -84,7 +82,7 @@ class CommandController extends BaseController
         // Init and populate form object
         $commandDetail = $request->request->get('command_scheduler_detail');
         if ($commandDetail['id'] != '') {
-            $scheduledCommand = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')
+            $scheduledCommand = $this->getRepository('ScheduledCommand')
                 ->find($commandDetail['id']);
         } else {
             $scheduledCommand = new ScheduledCommand();
@@ -116,4 +114,98 @@ class CommandController extends BaseController
             );
         }
     }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function removeCommandAction($id)
+    {
+        /** @var ScheduledCommand $scheduledCommand */
+        $scheduledCommand = $this->getRepository('ScheduledCommand')->find($id);
+        $entityManager = $this->doctrineManager;
+        $entityManager->remove($scheduledCommand);
+        $entityManager->flush();
+
+        // Add a flash message and do a redirect to the list
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.deleted', array(), 'JMoseCommandScheduler'));
+
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+    }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function toggleCommandAction($id)
+    {
+        /** @var ScheduledCommand $scheduledCommand */
+        $scheduledCommand = $this->getRepository('ScheduledCommand')->find($id);
+
+        $scheduledCommand->setDisabled(!$scheduledCommand->isDisabled());
+
+        $this->doctrineManager->flush();
+
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+    }
+
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function toggleLoggingAction($id)
+    {
+        /** @var ScheduledCommand $scheduledCommand */
+        $scheduledCommand = $this->getRepository('ScheduledCommand')->find($id);
+
+        $scheduledCommand->setLogExecutions(!$scheduledCommand->logExecutions());
+
+        $this->doctrineManager->flush();
+
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+    }
+
+    /**
+     * set "execute immediately" flag
+     *
+     * @param int $id command id
+     *
+     * @return Response
+     */
+    public function executeCommandAction($id)
+    {
+        /** @var ScheduledCommand $scheduledCommand */
+        $scheduledCommand = $this->getRepository('ScheduledCommand')->find($id);
+        $scheduledCommand->setExecuteImmediately(true);
+        $this->doctrineManager->flush();
+
+        // Add a flash message and do a redirect to the list
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.execute', array(), 'JMoseCommandScheduler'));
+
+        return $this->redirect(
+            $this->generateUrl(
+                'jmose_command_scheduler_list',
+                array('_type' => 'commands')
+            )
+        );
+    }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function unlockCommandAction($id)
+    {
+        /** @var ScheduledCommand $scheduledCommand */
+        $scheduledCommand = $this->getRepository('ScheduledCommand')->find($id);
+        $scheduledCommand->setLocked(false);
+        $this->doctrineManager->flush();
+
+        // Add a flash message and do a redirect to the list
+        $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.unlocked', array(), 'JMoseCommandScheduler'));
+
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+    }
+
 }
