@@ -4,9 +4,12 @@ jmose_command_scheduler_list_overview:
       _controller: JMoseCommandSchedulerBundle:Base:index
 
 # lists
-jmose_command_scheduler_list:
-    resource: @JMoseCommandSchedulerBundle/Resources/config/routing_list.yml
-    prefix:   /command-scheduler/list
+jmose_command_scheduler_list_details:
+    pattern:  /command-scheduler/list/{_type}
+    defaults:
+      _controller: JMoseCommandSchedulerBundle:List:index
+    requirements:
+      _type: "commands|rights|executions"
 
 jmose_command_scheduler_action:
     resource: @JMoseCommandSchedulerBundle/Resources/config/routing_action.yml
@@ -19,4 +22,4 @@ jmose_command_scheduler_detail:
 # misc
 jmose_command_scheduler_monitor:
     pattern:  /command-scheduler/monitor
-    defaults: { _controller: JMoseCommandSchedulerBundle:Base:monitor }
+    defaults: { _controller: JMoseCommandSchedulerBundle:Monitor:monitor }

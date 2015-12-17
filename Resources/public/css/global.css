@@ -16,3 +16,11 @@ td a:hover {
     margin-top: 1em;
 }
 
+.filterholder label {
+    vertical-align: top;
+    padding-top: 5px;
+}
+
+.dataTables_filter {
+    display: none;
+}

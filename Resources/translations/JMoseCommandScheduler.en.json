@@ -22,7 +22,10 @@
     "backList": "Back to list",
     "backOverview": "Back to overview",
     "save": "Save",
-    "close": "Close"
+    "close": "Close",
+    "filterCommands": "Filter by command",
+    "filterDate": "Filter by date",
+    "filterAll": "all"
   },
   "confirm": {
     "deleteScheduling": "Permanently delete this task?",
@@ -46,7 +49,7 @@
     "actions": "Actions",
     "logExecutions": "Log Executions",
     "openHelper": "open Cron Expression Helper",
-    "rights":"User/Host Requirements"
+    "rights": "User/Host Requirements"
   },
   "execution": {
     "run": "Run",
@@ -54,7 +57,7 @@
     "runtime": "Runtime (seconds)"
   },
   "rights": {
-    "pageTitle":"User Host Requirement",
+    "pageTitle": "User Host Requirement",
     "title": "Short name",
     "user": "Required user",
     "host": "Required host",
@@ -75,8 +78,8 @@
     "editCommand": "edit command",
     "deleteCommand": "delete command",
     "executeCommand": "execute command immediately",
-    "userFormat":"Username who executes the script is matched against the expression. Please don't use delimiters if you enter a Regexp.",
-    "hostFormat":"Hostname on which the script is executed is matched against the expression. Please don't use delimiters if you enter a Regexp."
+    "userFormat": "Username who executes the script is matched against the expression. Please don't use delimiters if you enter a Regexp.",
+    "hostFormat": "Hostname on which the script is executed is matched against the expression. Please don't use delimiters if you enter a Regexp."
   },
   "cronhelper": {
     "title": "Cron Expression Generator",

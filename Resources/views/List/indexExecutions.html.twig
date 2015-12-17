@@ -6,7 +6,21 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="table-responsive table-stripped">
+    <div class="row filterholder marginBottom2">
+        <div class="col-xs-6">
+            <label for="commandfilter">{{ "action.filterCommand"|trans }}</label>
+            <select id="commandfilter">
+                <option value="">{{ "action.filterAll"|trans }}</option>
+            </select>
+        </div>
+        <div class="col-xs-6">
+            <label for="datefilter">{{ "action.filterDate"|trans }}</label>
+            <select id="datefilter" multiple>
+                <option value="">{{ "action.filterAll"|trans }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="table-responsive table-stripped marginBottom2">
         <table class="table" id="dataTable">
             <thead>
             <tr>

@@ -1,8 +1,4 @@
 # detail actions
-#jmose_command_scheduler_detail_command_index:
-#    pattern:  /commands/view/
-#    defaults: { _controller: JMoseCommandSchedulerBundle:Command:indexCommand }
-
 jmose_command_scheduler_detail_command_edit:
     pattern:  /commands/edit/{scheduledCommandId}
     defaults: { _controller: JMoseCommandSchedulerBundle:Command:initEditScheduledCommand }
@@ -20,10 +16,6 @@ jmose_command_scheduler_detail_command_executions:
     defaults: { _controller: JMoseCommandSchedulerBundle:Execution:showCommandExecutions }
 
 # user/host requirements
-#jmose_command_scheduler_detail_right_index:
-#    pattern:  /rights/view/
-#    defaults: { _controller: JMoseCommandSchedulerBundle:Rights:indexCommand }
-
 jmose_command_scheduler_detail_right_edit:
     pattern:  /rights/edit/{rightId}
     defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:initEditRight }
@@ -35,4 +27,3 @@ jmose_command_scheduler_detail_right_new:
 jmose_command_scheduler_detail_right_save:
     pattern:  /rights/save
     defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:saveRight }
-
