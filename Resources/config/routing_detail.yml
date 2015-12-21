@@ -1,29 +1,29 @@
 # detail actions
 jmose_command_scheduler_detail_command_edit:
-    pattern:  /commands/edit/{scheduledCommandId}
+    path:  /commands/edit/{scheduledCommandId}
     defaults: { _controller: JMoseCommandSchedulerBundle:Command:initEditScheduledCommand }
 
 jmose_command_scheduler_detail_command_new:
-    pattern:  /commands/new
+    path:  /commands/new
     defaults: { _controller: JMoseCommandSchedulerBundle:Command:initNewScheduledCommand }
 
 jmose_command_scheduler_detail_command_save:
-    pattern:  /commands/save
+    path:  /commands/save
     defaults: { _controller: JMoseCommandSchedulerBundle:Command:saveCommand }
 
 jmose_command_scheduler_detail_command_executions:
-    pattern:  /commands/executions/{commandId}
+    path:  /commands/executions/{commandId}
     defaults: { _controller: JMoseCommandSchedulerBundle:Execution:showCommandExecutions }
 
 # user/host requirements
 jmose_command_scheduler_detail_right_edit:
-    pattern:  /rights/edit/{rightId}
+    path:  /rights/edit/{rightId}
     defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:initEditRight }
 
 jmose_command_scheduler_detail_right_new:
-    pattern:  /rights/new
+    path:  /rights/new
     defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:initNewUserHost }
 
 jmose_command_scheduler_detail_right_save:
-    pattern:  /rights/save
+    path:  /rights/save
     defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:saveRight }

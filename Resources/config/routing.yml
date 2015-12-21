@@ -1,11 +1,11 @@
 jmose_command_scheduler_list_overview:
-    pattern:  /command-scheduler/
+    path:  /command-scheduler/
     defaults:
       _controller: JMoseCommandSchedulerBundle:Base:index
 
 # lists
 jmose_command_scheduler_list_details:
-    pattern:  /command-scheduler/list/{_type}
+    path:  /command-scheduler/list/{_type}
     defaults:
       _controller: JMoseCommandSchedulerBundle:List:index
     requirements:
@@ -21,5 +21,5 @@ jmose_command_scheduler_detail:
 
 # misc
 jmose_command_scheduler_monitor:
-    pattern:  /command-scheduler/monitor
+    path:  /command-scheduler/monitor
     defaults: { _controller: JMoseCommandSchedulerBundle:Monitor:monitor }
