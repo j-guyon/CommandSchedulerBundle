@@ -451,10 +451,14 @@ class ScheduledCommand
      * set expected runtime
      *
      * @param int $expectedRuntime
+     *
+     * @return $this
      */
     public function setExpectedRuntime($expectedRuntime)
     {
         $this->expectedRuntime = $expectedRuntime;
+
+        return $this;
     }
 
     /**
@@ -469,10 +473,14 @@ class ScheduledCommand
 
     /**
      * @param ArrayCollection $executions
+     *
+     * @return $this to allow chaining
      */
     public function setExecutions(ArrayCollection $executions)
     {
         $this->executions = $executions;
+
+        return $this;
     }
 
     /**
@@ -489,10 +497,14 @@ class ScheduledCommand
      * set user and host constraints
      *
      * @param UserHost $rights
+     *
+     * @return $this to allow chaining
      */
     public function setRights($rights)
     {
         $this->rights = $rights;
+
+        return $this;
     }
 
     /**
@@ -555,19 +567,28 @@ class ScheduledCommand
 
     /**
      * @param boolean $logExecutions
+     *
+     * @return $this to allow chaining
      */
     public function setLogExecutions($logExecutions)
     {
         $this->logExecutions = $logExecutions;
+
+        return $this;
     }
 
     /**
      * add new Execution to collection
+     *
      * @param Execution $log
+     *
+     * @return $this to allow chaining
      */
     public function addLog($log)
     {
         $this->executions->add($log);
+
+        return $this;
     }
 
     /**

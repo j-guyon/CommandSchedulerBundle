@@ -60,7 +60,10 @@ class LoadScheduledCommandData implements FixtureInterface
             ->setLocked($locked)
             ->setDisabled($disabled)
             ->setLastReturnCode(null)
-            ->setExecuteImmediately($executeNow);
+            ->setExecuteImmediately($executeNow)
+
+            ->setRights(new UserHost())
+            ->setLogExecutions(true);
 
         $this->manager->persist($scheduledCommand);
         $this->manager->flush();
