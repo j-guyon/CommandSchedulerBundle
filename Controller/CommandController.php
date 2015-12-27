@@ -102,7 +102,7 @@ class CommandController extends BaseController
             // Add a flash message and do a redirect to the list
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.save', array(), 'JMoseCommandScheduler'));
 
-            return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+            return $this->redirect($this->generateUrl('jmose_command_scheduler_list_details', array('_type' => 'commands')));
 
         } else {
             // Redirect to indexAction with the form object that has validation errors
@@ -121,16 +121,30 @@ class CommandController extends BaseController
      */
     public function removeCommandAction($id)
     {
+        $entityManager = $this->doctrineManager;
+
+        // check if there are executions and remove them
+        /** @var Execution $logs */
+        $logs = $this->getRepository('Execution')->findCommandExecutions($id, true);
+        if($logs) {
+            foreach($logs as $log) {
+                $entityManager->remove($log);
+            }
+        }
+
         /** @var ScheduledCommand $scheduledCommand */
         $scheduledCommand = $this->getRepository('ScheduledCommand')->find($id);
-        $entityManager = $this->doctrineManager;
+
+        // remove command
         $entityManager->remove($scheduledCommand);
+
+        // eliminate trash from existance
         $entityManager->flush();
 
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.deleted', array(), 'JMoseCommandScheduler'));
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_details', array('_type' => 'commands')));
     }
 
     /**
@@ -146,7 +160,7 @@ class CommandController extends BaseController
 
         $this->doctrineManager->flush();
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_details', array('_type' => 'commands')));
     }
 
 
@@ -163,7 +177,7 @@ class CommandController extends BaseController
 
         $this->doctrineManager->flush();
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_details', array('_type' => 'commands')));
     }
 
     /**
@@ -185,7 +199,7 @@ class CommandController extends BaseController
 
         return $this->redirect(
             $this->generateUrl(
-                'jmose_command_scheduler_list',
+                'jmose_command_scheduler_list_details',
                 array('_type' => 'commands')
             )
         );
@@ -205,7 +219,7 @@ class CommandController extends BaseController
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.unlocked', array(), 'JMoseCommandScheduler'));
 
-        return $this->redirect($this->generateUrl('jmose_command_scheduler_list', array('_type' => 'commands')));
+        return $this->redirect($this->generateUrl('jmose_command_scheduler_list_details', array('_type' => 'commands')));
     }
 
 }

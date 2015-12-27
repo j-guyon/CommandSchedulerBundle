@@ -17,12 +17,20 @@ class ExecutionRepository extends EntityRepository
      * find all executions fo a given command
      *
      * @param integer $commandId
+     * @param boolean|false $returnAsObject set to true to return entity-objects instead of arrays
+     *
      * @return array
      */
-    public function findCommandExecutions($commandId)
+    public function findCommandExecutions($commandId, $returnAsObject = false)
     {
         $logs = $this->findBy(array('command' => $commandId), array('id' => 'ASC'));
         $result = array();
+
+        // we need objects - no more work to do
+        if($returnAsObject) {
+            return $logs;
+        }
+
         /** @var Execution $log */
         foreach($logs as $log){
             array_push($result, array(
