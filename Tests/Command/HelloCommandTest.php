@@ -6,7 +6,7 @@
  * Time: 16:31
  */
 
-namespace scheduler\Command;
+namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 
 class HelloCommandTest extends \PHPUnit_Framework_TestCase {

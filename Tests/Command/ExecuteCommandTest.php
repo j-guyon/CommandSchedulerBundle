@@ -12,7 +12,7 @@ class ExecuteCommandTest extends WebTestCase
 {
 
     /**
-     * Test scheduler:execute without option
+     * Test JMose\CommandSchedulerBundle\Tests:execute without option
      */
     public function testExecute()
     {
@@ -23,7 +23,7 @@ class ExecuteCommandTest extends WebTestCase
             )
         );
 
-        $output = $this->runCommand('scheduler:execute');
+        $output = $this->runCommand('JMose\CommandSchedulerBundle\Tests:execute');
 
         $this->assertStringStartsWith('Start : Execute all scheduled command', $output);
         $this->assertRegExp('/container:debug should be executed/', $output);
@@ -31,12 +31,12 @@ class ExecuteCommandTest extends WebTestCase
         $this->assertRegExp('/Immediately execution asked for : router:debug/', $output);
         $this->assertRegExp('/Execute : router:debug/', $output);
 
-        $output = $this->runCommand('scheduler:execute');
+        $output = $this->runCommand('JMose\CommandSchedulerBundle\Tests:execute');
         $this->assertRegExp('/Nothing to do/', $output);
     }
 
     /**
-     * Test scheduler:execute without option
+     * Test JMose\CommandSchedulerBundle\Tests:execute without option
      */
     public function testExecuteWithNoOutput()
     {
@@ -48,7 +48,7 @@ class ExecuteCommandTest extends WebTestCase
         );
 
         $output = $this->runCommand(
-            'scheduler:execute',
+            'JMose\CommandSchedulerBundle\Tests:execute',
             array(
                 '--no-output' => true
             )
@@ -56,12 +56,12 @@ class ExecuteCommandTest extends WebTestCase
 
         $this->assertEquals('', $output);
 
-        $output = $this->runCommand('scheduler:execute');
+        $output = $this->runCommand('JMose\CommandSchedulerBundle\Tests:execute');
         $this->assertRegExp('/Nothing to do/', $output);
     }
 
     /**
-     * Test scheduler:execute with --dump option
+     * Test JMose\CommandSchedulerBundle\Tests:execute with --dump option
      */
     public function testExecuteWithDump()
     {
@@ -73,7 +73,7 @@ class ExecuteCommandTest extends WebTestCase
         );
 
         $output = $this->runCommand(
-            'scheduler:execute',
+            'JMose\CommandSchedulerBundle\Tests:execute',
             array(
                 '--dump' => true
             )

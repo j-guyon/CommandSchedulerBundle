@@ -6,7 +6,7 @@
  * Time: 16:32
  */
 
-namespace scheduler\Command;
+namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 
 class MonitorCommandTest extends \PHPUnit_Framework_TestCase {

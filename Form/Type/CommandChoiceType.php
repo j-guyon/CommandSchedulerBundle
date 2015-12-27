@@ -4,7 +4,7 @@ namespace JMose\CommandSchedulerBundle\Form\Type;
 
 use JMose\CommandSchedulerBundle\Service\CommandParser;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CommandChoiceType
@@ -30,7 +30,7 @@ class CommandChoiceType extends AbstractType
     /**
      * @inheritdoc
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
@@ -42,16 +42,8 @@ class CommandChoiceType extends AbstractType
     /**
      * @inheritdoc
      */
-    public function getName()
-    {
-        return 'command_choice';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getParent()
     {
-        return 'choice';
+        return 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
     }
 }

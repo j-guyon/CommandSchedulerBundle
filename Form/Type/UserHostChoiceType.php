@@ -4,10 +4,10 @@ namespace JMose\CommandSchedulerBundle\Form\Type;
 
 use JMose\CommandSchedulerBundle\Service\RightsParser;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class UserHostChoiceType, used for selection of UserHost Reequirements when editing commands
+ * Class UserHostChoiceType, used for selection of UserHost Requirements when editing commands
  *
  * @author  Daniel Fischer <dfischer000@gmail.com>
  */
@@ -26,7 +26,7 @@ class UserHostChoiceType extends AbstractType
     /**
      * @inheritdoc
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
@@ -41,16 +41,16 @@ class UserHostChoiceType extends AbstractType
     /**
      * @inheritdoc
      */
-    public function getName()
-    {
-        return 'rights_choice';
-    }
+//    public function getName()
+//    {
+//        return 'rights_choice';
+//    }
 
     /**
      * @inheritdoc
      */
     public function getParent()
     {
-        return 'choice';
+        return 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
     }
 }

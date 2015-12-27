@@ -82,14 +82,4 @@ class UserHostType extends AbstractType
             )
         );
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'rights';
-    }
 }

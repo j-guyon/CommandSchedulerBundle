@@ -27,7 +27,7 @@ class CommandController extends BaseController
     public function indexCommandAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
     {
         if (null === $scheduledCommandForm) {
-            $scheduledCommandForm = $this->createForm(new ScheduledCommandType(), $scheduledCommand);
+            $scheduledCommandForm = $this->createForm('JMose\CommandSchedulerBundle\Form\Type\ScheduledCommandType', $scheduledCommand);
         }
 
         return $this->render(

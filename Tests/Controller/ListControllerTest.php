@@ -22,8 +22,8 @@ class ListControllerTest extends WebTestCase
         ));
 
         $client = parent::createClient();
-        $crawler = $client->request('GET', '/command-scheduler/list');
-        $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
+        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/list');
+        $this->assertEquals(4, $crawler->filter('a[href^="/command-JMose\CommandSchedulerBundle\Tests/action/toggle/"]')->count());
     }
 
     /**
@@ -40,8 +40,8 @@ class ListControllerTest extends WebTestCase
         $client->followRedirects(true);
 
         //toggle off
-        $crawler = $client->request('GET', '/command-scheduler/action/remove/1');
-        $this->assertEquals(3, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
+        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/action/remove/1');
+        $this->assertEquals(3, $crawler->filter('a[href^="/command-JMose\CommandSchedulerBundle\Tests/action/toggle/"]')->count());
     }
 
     /**
@@ -58,12 +58,12 @@ class ListControllerTest extends WebTestCase
         $client->followRedirects(true);
 
         //toggle off
-        $crawler = $client->request('GET', '/command-scheduler/action/toggle/1');
-        $this->assertEquals(1, $crawler->filter('a[href="/command-scheduler/action/toggle/1"] > span[class="text-danger fa fa-power-off"]')->count());
+        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/action/toggle/1');
+        $this->assertEquals(1, $crawler->filter('a[href="/command-JMose\CommandSchedulerBundle\Tests/action/toggle/1"] > span[class="text-danger fa fa-power-off"]')->count());
 
         //toggle on
-        $crawler = $client->request('GET', '/command-scheduler/action/toggle/1');
-        $this->assertEquals(0, $crawler->filter('a[href="/command-scheduler/action/toggle/1"] > span[class="text-danger fa fa-power-off"]')->count());
+        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/action/toggle/1');
+        $this->assertEquals(0, $crawler->filter('a[href="/command-JMose\CommandSchedulerBundle\Tests/action/toggle/1"] > span[class="text-danger fa fa-power-off"]')->count());
     }
 
     /**
@@ -80,8 +80,8 @@ class ListControllerTest extends WebTestCase
         $client->followRedirects(true);
 
         //call execute now button
-        $crawler = $client->request('GET', '/command-scheduler/action/execute/1');
-        $this->assertEquals(1, $crawler->filter('a[data-href="/command-scheduler/action/execute/1"] > span[class="text-muted fa fa-play"]')->count());
+        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/action/execute/1');
+        $this->assertEquals(1, $crawler->filter('a[data-href="/command-JMose\CommandSchedulerBundle\Tests/action/execute/1"] > span[class="text-muted fa fa-play"]')->count());
     }
 
     /**
@@ -98,11 +98,11 @@ class ListControllerTest extends WebTestCase
         $client->followRedirects(true);
 
         // One command is locked in fixture (2)
-        $crawler = $client->request('GET', '/command-scheduler/list');
-        $this->assertEquals(1, $crawler->filter('a[data-href="/command-scheduler/action/unlock/2"]')->count());
+        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/list');
+        $this->assertEquals(1, $crawler->filter('a[data-href="/command-JMose\CommandSchedulerBundle\Tests/action/unlock/2"]')->count());
 
-        $crawler = $client->request('GET', '/command-scheduler/action/unlock/2');
-        $this->assertEquals(0, $crawler->filter('a[data-href="/command-scheduler/action/unlock/2"]')->count());
+        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/action/unlock/2');
+        $this->assertEquals(0, $crawler->filter('a[data-href="/command-JMose\CommandSchedulerBundle\Tests/action/unlock/2"]')->count());
     }
 
 }
