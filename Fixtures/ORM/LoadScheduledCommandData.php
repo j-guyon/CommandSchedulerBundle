@@ -5,6 +5,7 @@ namespace JMose\CommandSchedulerBundle\Fixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
+use JMose\CommandSchedulerBundle\Entity\UserHost;
 
 class LoadScheduledCommandData implements FixtureInterface
 {

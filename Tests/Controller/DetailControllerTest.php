@@ -19,7 +19,7 @@ class DetailControllerTest extends WebTestCase
         $this->loadFixtures(array());
 
         $client = parent::createClient();
-        $crawler = $client->request('GET', '/command-scheduler/detail/new');
+        $crawler = $client->request('GET', '/command-scheduler/detail/commands/new');
         $this->assertEquals(1, $crawler->filter('button[id="command_scheduler_detail_save"]')->count());
     }
 
