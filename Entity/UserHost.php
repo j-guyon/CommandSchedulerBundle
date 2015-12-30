@@ -43,6 +43,11 @@ class UserHost
     private $info;
 
     /**
+     * @var bool $superuser
+     */
+    private $superuser = false;
+
+    /**
      * @return string
      */
     public function getTitle()
@@ -189,6 +194,29 @@ class UserHost
     public function getInfo()
     {
         return $this->info;
+    }
+
+    /**
+     * set superuser flag
+     *
+     * @param bool $su
+     *
+     * @return $this to allow chaining
+     */
+    public function setSuperuser($su)
+    {
+        $this->superuser = $su;
+        return $this;
+    }
+
+    /**
+     * get Superuser flag
+     *
+     * @return bool
+     */
+    public function getSuperuser()
+    {
+        return $this->superuser;
     }
 }
 

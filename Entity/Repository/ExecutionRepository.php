@@ -19,7 +19,7 @@ class ExecutionRepository extends EntityRepository
      * @param integer $commandId
      * @param boolean|false $returnAsObject set to true to return entity-objects instead of arrays
      *
-     * @return array
+     * @return array|object
      */
     public function findCommandExecutions($commandId, $returnAsObject = false)
     {
@@ -48,6 +48,8 @@ class ExecutionRepository extends EntityRepository
      *
      * @param int $commandId Command ID
      * @param int $limit number of executions to keep at most
+     *
+     * @return array
      */
     public function findCommandExecutionsLimitNumber($commandId, $limit) {
         $logs = $this->findBy(

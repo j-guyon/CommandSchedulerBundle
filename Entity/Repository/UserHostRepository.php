@@ -16,13 +16,18 @@ class UserHostRepository extends EntityRepository
     /**
      * find all existing user/host requirements to be used in select
      *
+     * @param bool $superuser set to true to read superuser superuser commands (testing only)
+     *
      * @return array
      */
-    public function findAllSelect()
+    public function findAllSelect($superuser = false)
     {
         $result = array();
 
-        $data = $this->findBy(array(), array('id' => 'ASC'));
+        $data = $this->findBy(
+            array('superuser' => $superuser),
+            array('id' => 'ASC')
+        );
 
         /** @var UserHost $right */
         foreach ($data as $right) {

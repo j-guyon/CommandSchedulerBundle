@@ -17,12 +17,18 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * Find all enabled command ordered by priority
      *
+     * @param bool $superuser set to true to read superuser superuser commands (testing only)
+     *
      * @return ScheduledCommand[]
      */
-    public function findEnabledCommand()
+    public function findEnabledCommand($superuser = false)
     {
         return $this->findBy(
-            array('disabled' => false, 'locked' => false), // criteria
+            array(// criteria
+                'disabled' => false,
+                'locked' => false,
+                'superuser' => $superuser
+            ),
             array('priority' => 'DESC') // ordering
         );
     }
@@ -30,12 +36,14 @@ class ScheduledCommandRepository extends EntityRepository
     /**
      * findAll override to implement the default orderBy clause
      *
+     * @param bool $superuser set to true to read superuser superuser commands (testing only)
+     *
      * @return ScheduledCommand[]
      */
-    public function findAll()
+    public function findAll($superuser = false)
     {
         return $this->findBy(
-            array(), // criteria
+            array('superuser' => $superuser), // criteria
             array('priority' => 'DESC') // ordering
         );
     }
