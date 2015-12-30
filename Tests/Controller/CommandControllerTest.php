@@ -14,9 +14,6 @@ class CommandControllerTest extends CommandSchedulerBaseTest
      */
     public function testInitNewScheduledCommand()
     {
-        // load empty command
-        $this->loadFixtures(array());
-
         // get input form
         $client = parent::createClient();
         $crawler = $client->request('GET', '/command-scheduler/detail/commands/new');
@@ -113,54 +110,51 @@ class CommandControllerTest extends CommandSchedulerBaseTest
         $this->assertArraySubset($fixtureSet, $form->getValues());
     }
 
-//    /**
-//     * Test new scheduling creation
-//     */
-//    public function testNewSave()
-//    {
-//        $this->loadFixtures(array());
-//
-//        $client = parent::createClient();
-//        $client->followRedirects(true);
-//        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/detail/new');
-//        $buttonCrawlerNode = $crawler->selectButton('Save');
-//        $form = $buttonCrawlerNode->form();
-//
-//        $form->setValues(array(
-//            'command_scheduler_detail[name]' => "wtc",
-//            'command_scheduler_detail[command]' => "translation:update",
-//            'command_scheduler_detail[arguments]' => "--help",
-//            'command_scheduler_detail[cronExpression]' => "@daily",
-//            'command_scheduler_detail[logFile]' => "wtc.log",
-//            'command_scheduler_detail[priority]' => "5"
-//        ));
-//        $crawler = $client->submit($form);
-//
-//        $this->assertEquals(1, $crawler->filter('a[href^="/command-JMose\CommandSchedulerBundle\Tests/action/toggle/"]')->count());
-//        $this->assertEquals("wtc", trim($crawler->filter('td')->eq(1)->text()));
-//    }
-//
-//    /**
-//     * Test "Edit and save a scheduling"
-//     */
-//    public function testEditSave()
-//    {
-//        //DataFixtures create 4 records
-//        $this->loadFixtures(array(
-//            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-//        ));
-//
-//        $client = parent::createClient();
-//        $client->followRedirects(true);
-//        $crawler = $client->request('GET', '/command-JMose\CommandSchedulerBundle\Tests/detail/edit/1');
-//        $buttonCrawlerNode = $crawler->selectButton('Save');
-//        $form = $buttonCrawlerNode->form();
-//
-//        $form->get('command_scheduler_detail[name]')->setValue('edited one');
-//        $crawler = $client->submit($form);
-//
-//        $this->assertEquals(4, $crawler->filter('a[href^="/command-JMose\CommandSchedulerBundle\Tests/action/toggle/"]')->count());
-//        $this->assertEquals("edited one", trim($crawler->filter('td')->eq(1)->text()));
-//    }
+    /**
+     * Test new scheduling creation
+     */
+    public function testNewSave()
+    {
+        $crawler = $this->callFormUrlValues(
+            'GET', '/command-scheduler/detail/commands/new',
+            array(
+                'scheduled_command[name]' => "wtc",
+                'scheduled_command[command]' => "translation:update",
+                'scheduled_command[arguments]' => "--help",
+                'scheduled_command[cronExpression]' => "@daily",
+                'scheduled_command[logFile]' => "wtc.log",
+                'scheduled_command[priority]' => "5"
+            )
+        );
 
+        // make sure there is one command
+        $this->assertEquals(1, $crawler->filter('a[href^="/command-scheduler/action/toggle/command/"]')->count());
+        $this->assertEquals("wtc", trim($crawler->filter('td')->eq(1)->text()));
+    }
+
+    /**
+     * Test "Edit and save a scheduling"
+     */
+    public function testEditSave()
+    {
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(
+            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
+        ));
+
+        // edit command
+        $crawler = $this->callFormUrlValues(
+            'POST',
+            '/command-scheduler/detail/commands/edit/1',
+            array(
+                'scheduled_command[name]' => "edited one"
+            )
+        );
+
+        // now we are on list, assert there are toggle buttons
+        $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/command"]')->count());
+
+        // assert the command was changed
+        $this->assertEquals("edited one", trim($crawler->filter('td')->eq(1)->text()));
+    }
 }

@@ -31,12 +31,12 @@ class CommandSchedulerBaseTest extends WebTestCase
     /**
      * Tests completed, clean up
      */
-    protected function tearDown()
-    {
-        $this->dropDatabase();
-
-        parent::tearDown();
-    }
+//    protected function tearDown()
+//    {
+//        $this->dropDatabase();
+//
+//        parent::tearDown();
+//    }
 
     /**
      * drop database
@@ -48,5 +48,28 @@ class CommandSchedulerBaseTest extends WebTestCase
                 '--force' => true
             )
         );
+    }
+
+    /**
+     * call a URL, fill form with values and submit form
+     *
+     * @param string $method GET|POST
+     * @param string $url
+     * @param array $values form values
+     *
+     * @return \Symfony\Component\DomCrawler\Crawler
+     */
+    protected function callFormUrlValues($method, $url, $values)
+    {
+        $client = parent::createClient();
+        $client->followRedirects(true);
+        $crawler = $client->request($method, $url);
+        $buttonCrawlerNode = $crawler->selectButton('Save');
+        $form = $buttonCrawlerNode->form();
+
+        $form->setValues($values);
+        $crawler = $client->submit($form);
+
+        return $crawler;
     }
 }

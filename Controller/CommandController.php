@@ -80,7 +80,7 @@ class CommandController extends BaseController
     public function saveCommandAction(Request $request)
     {
         // Init and populate form object
-        $commandDetail = $request->request->get('command_scheduler_detail');
+        $commandDetail = $request->request->get('scheduled_command');
         if ($commandDetail['id'] != '') {
             $scheduledCommand = $this->getRepository('ScheduledCommand')
                 ->find($commandDetail['id']);
@@ -88,7 +88,7 @@ class CommandController extends BaseController
             $scheduledCommand = new ScheduledCommand();
         }
 
-        $scheduledCommandForm = $this->createForm(new ScheduledCommandType(), $scheduledCommand);
+        $scheduledCommandForm = $this->createForm('JMose\CommandSchedulerBundle\Form\Type\ScheduledCommandType', $scheduledCommand);
         $scheduledCommandForm->handleRequest($request);
 
         if ($scheduledCommandForm->isValid()) {
