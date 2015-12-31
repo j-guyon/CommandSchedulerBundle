@@ -1,26 +1,20 @@
-td a:hover {
-    text-decoration: none;
+.table th {
+    width: 7em;
 }
 
-.marginTop1{
-    margin-top: 1em;
+.table th.toggle {
+    width: 1em;
 }
 
-.marginBottom2{
-    margin-bottom: 2em;
+.table th.name {
+    width: 10em;
 }
 
-.graphHolder {
-    height: 15em;
-    margin-bottom: 1em;
-    margin-top: 1em;
+.table th.command {
+    width: 35em;
 }
 
-.filterholder label {
-    vertical-align: top;
-    padding-top: 5px;
+.table th.cron {
+    width: 10em;
 }
 
-.dataTables_filter {
-    display: none;
-}
