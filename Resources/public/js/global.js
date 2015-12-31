@@ -31,7 +31,7 @@ $(document).ready(function () {
  * initialize Cronhelper
  */
 function initCronHelper() {
-    var $cronField = $('#command_scheduler_detail_cronExpression'),
+    var $cronField = $('#scheduled_command_cronExpression'),
         oldExpression = $cronField.val();
 
     $('body').on('click', '#cronHelperLink', function (e) {
