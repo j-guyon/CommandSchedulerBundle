@@ -109,48 +109,23 @@ class ListController extends Controller
      */
     public function monitorAction()
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $scheduledCommands = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
+        $manager = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
+        $failedCommands = $this->getDoctrine()->getManager($manager)
+            ->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+            ->findFailedAndTimeoutCommands($this->container->getParameter('jmose_command_scheduler.lock_timeout'));
 
-        $timeoutValue = $this->container->getParameter('jmose_command_scheduler.lock_timeout');
-
-        $failed = array();
-        $now = time();
-
-        foreach($scheduledCommands as $command) {
-            // don't care about disabled commands
-            if($command->isDisabled()) {
-                continue;
-            }
-
-            $executionTime = $command->getLastExecution();
-            $executionTimestamp = $executionTime->getTimestamp();
-
-            $timedOut = (($executionTimestamp + $timeoutValue) < $now);
-
-            if(
-                ($command->getLastReturnCode() != 0) || // last return code not OK
-                (
-                    $command->getLocked() &&
-                    (
-                        ($timeoutValue === false) || // don't check for timeouts -> locked is bad
-                        $timedOut // check for timeouts, but (starttime + timeout) is in the past
-                    )
-                )
-            ) {
-                $failed[$command->getName()] = array(
-                    'LAST_RETURN_CODE' => $command->getLastReturnCode(),
-                    'B_LOCKED' => $command->getLocked() ? 'true' : 'false',
-                    'DH_LAST_EXECUTION' => $executionTime
-                );
-            }
+        $jsonArray = array();
+        foreach ($failedCommands as $command) {
+            $jsonArray[$command->getName()] = array(
+                'LAST_RETURN_CODE'  => $command->getLastReturnCode(),
+                'B_LOCKED'          => $command->getLocked() ? 'true' : 'false',
+                'DH_LAST_EXECUTION' => $command->getLastExecution()
+            );
         }
 
-        $status = count($failed) > 0 ? Response::HTTP_EXPECTATION_FAILED : Response::HTTP_OK;
-
         $response = new JsonResponse();
-        $response->setContent(json_encode($failed));
-        $response->setStatusCode($status);
+        $response->setContent(json_encode($jsonArray));
+        $response->setStatusCode(count($jsonArray) > 0 ? Response::HTTP_EXPECTATION_FAILED : Response::HTTP_OK);
 
         return $response;
     }

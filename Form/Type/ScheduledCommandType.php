@@ -53,7 +53,7 @@ class ScheduledCommandType extends AbstractType
         $builder->add(
             'logFile', 'text', array(
                 'label'    => 'detail.logFile',
-                'required' => true
+                'required' => false
             )
         );
 

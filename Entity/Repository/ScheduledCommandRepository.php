@@ -34,4 +34,50 @@ class ScheduledCommandRepository extends EntityRepository
         return $this->findBy(array(), array('priority' => 'DESC'));
     }
 
+    /**
+     * Find all locked commands
+     *
+     * @return ScheduledCommand[]
+     */
+    public function findLockedCommand()
+    {
+        return $this->findBy(array('disabled' => false, 'locked' => true), array('priority' => 'DESC'));
+    }
+
+    /**
+     * Find all failed command
+     *
+     * @return ScheduledCommand[]
+     */
+    public function findFailedCommand()
+    {
+        return $this->createQueryBuilder('command')
+            ->where('command.disabled = false')
+            ->andWhere('command.lastReturnCode != 0')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param integer|bool $lockTimeout
+     * @return array|\JMose\CommandSchedulerBundle\Entity\ScheduledCommand[]
+     */
+    public function findFailedAndTimeoutCommands($lockTimeout = false)
+    {
+        // Fist, get all failed commands (return != 0)
+        $failedCommands = $this->findFailedCommand();
+
+        // Then, si a timeout value is set, get locked commands and check timeout
+        if (false !== $lockTimeout) {
+            $lockedCommands = $this->findLockedCommand();
+            foreach ($lockedCommands as $lockedCommand) {
+                $now = time();
+                if ($lockedCommand->getLastExecution()->getTimestamp() + $lockTimeout < $now) {
+                    $failedCommands[] = $lockedCommand;
+                }
+            }
+        }
+
+        return $failedCommands;
+    }
 }

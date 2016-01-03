@@ -2,7 +2,6 @@
 
 namespace JMose\CommandSchedulerBundle\Command;
 
-use Cron\CronExpression;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,8 +9,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use Symfony\Component\Validator\Constraints\Null;
 
 /**
  * Class MonitorCommand : This class is used for monitoring scheduled commands if they run for too long or failed to execute
@@ -28,22 +25,24 @@ class MonitorCommand extends ContainerAwareCommand
     private $em;
 
     /**
-     * @var string
-     */
-    private $logPath;
-
-    /**
      * @var boolean
      */
     private $dumpMode;
 
     /**
-     * @var integer
+     * @var integer|boolean Number of seconds after a command is considered as timeout
      */
-    private $commandsVerbosity;
+    private $lockTimeout;
 
-    /** @var string|array receiver for statusmail if an error occured */
+    /**
+     * @var string|array receiver for statusmail if an error occured
+     */
     private $receiver;
+
+    /**
+     * @var boolean if true, current command will send mail even if all is ok.
+     */
+    private $sendMailIfNoError;
 
     /**
      * @inheritdoc
@@ -53,8 +52,7 @@ class MonitorCommand extends ContainerAwareCommand
         $this
             ->setName('scheduler:monitor')
             ->setDescription('Monitor scheduled commands')
-            ->addOption('dump', null, InputOption::VALUE_NONE, 'Display result before mailing (even if no receiver is set)')
-            ->addOption('no-output', null, InputOption::VALUE_NONE, 'Disable output message from scheduler')
+            ->addOption('dump', null, InputOption::VALUE_NONE, 'Display result instead of send mail')
             ->setHelp('This class is for monitoring all active commands.');
     }
 
@@ -66,24 +64,10 @@ class MonitorCommand extends ContainerAwareCommand
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
+        $this->lockTimeout = $this->getContainer()->getParameter('jmose_command_scheduler.lock_timeout');
         $this->dumpMode = $input->getOption('dump');
-        $this->logPath = rtrim($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), '/\\');
-
         $this->receiver = $this->getContainer()->getParameter('jmose_command_scheduler.monitor_mail');
-
-	    // set logpath to false if specified in parameters to suppress logging
-	    if(("false" == $this->logPath)||(false == $this->logPath)) {
-		    $this->logPath = false;
-	    } else {
-		    $this->logPath .= DIRECTORY_SEPARATOR;
-	    }
-
-        // store the original verbosity before apply the quiet parameter
-        $this->commandsVerbosity = $output->getVerbosity();
-
-        if( true === $input->getOption('no-output')){
-            $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
-        }
+        $this->sendMailIfNoError = $this->getContainer()->getParameter('jmose_command_scheduler.send_ok');
 
         $this->em = $this->getContainer()->get('doctrine')->getManager(
             $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
@@ -91,88 +75,48 @@ class MonitorCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Start : ' . ($this->dumpMode ? 'Dump' : 'Execute') . ' all scheduled command</info>');
-
-        // Before continue, we check that the output file is valid and writable (except for gaufrette)
-        if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
-            $output->writeln(
-                '<error>'.$this->logPath.
-                ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
-            );
+        // If not in dump mode and none receiver is set, exit.
+        if (!$this->dumpMode && count($this->receiver) === 0) {
+            $output->writeln('Please add receiver in configuration');
 
             return;
         }
 
-        $commands = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
+        // Fist, get all failed or potential timeout
+        $failedCommands = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+            ->findFailedAndTimeoutCommands($this->lockTimeout);
 
-        $timeoutValue = $this->getContainer()->getParameter('jmose_command_scheduler.lock_timeout');
-
-        $failed = array();
-        $now = time();
-
-        foreach ($commands as $command) {
-                // don't care about disabled commands
-                if($command->isDisabled()) {
-                    continue;
-                }
-
-                $executionTime = $command->getLastExecution();
-                $executionTimestamp = $executionTime->getTimestamp();
-
-                $timedOut = (($executionTimestamp + $timeoutValue) < $now);
-
-                if(
-                    ($command->getLastReturnCode() != 0) || // last return code not OK
-                    (
-                        $command->getLocked() &&
-                        (
-                            ($timeoutValue === false) || // don't check for timeouts -> locked is bad
-                            $timedOut // check for timeouts, but (starttime + timeout) is in the past
-                        )
-                    )
-                ) {
-                    $failed[$command->getName()] = array(
-                        'LAST_RETURN_CODE' => $command->getLastReturnCode(),
-                        'B_LOCKED' => $command->getLocked() ? 'true' : 'false',
-                        'DH_LAST_EXECUTION' => $executionTime
-                    );
-                }
-        }
-
-        if (count($failed)) { // errors occured
+        // Commands in error
+        if (count($failedCommands) > 0) {
             $message = "";
 
-            foreach($failed as $commandName => $fail) {
+            foreach ($failedCommands as $command) {
                 $message .= sprintf("%s: returncode %s, locked: %s, last execution: %s\n",
-                    $commandName,
-                    $fail['LAST_RETURN_CODE'],
-                    $fail['B_LOCKED'],
-                    $fail['DH_LAST_EXECUTION']->format('Y-m-d H:i')
+                    $command->getName(),
+                    $command->getLastReturnCode(),
+                    $command->getLocked(),
+                    $command->getLastExecution()->format('Y-m-d H:i')
                 );
             }
 
-            if($this->dumpMode) {
+            // if --dump option, don't send mail
+            if ($this->dumpMode) {
                 $output->writeln($this->dumpMode);
-            }
-
-            // send mail to every receiver
-            if(count($this->receiver)) {
+            } else {
                 $this->sendMails($message);
             }
-        } else {// no errors
-            $sendOk = $this->getContainer()->getParameter('jmose_command_scheduler.send_ok');
 
-            if($sendOk) {
-                $this->sendMails('no errors found');
-            }
-            if($this->dumpMode) { // dumpmode
-                $output->writeln('Nothing to do.');
+        } else {
+            if ($this->dumpMode) {
+                $output->writeln('No errors found.');
+            } elseif ($this->sendMailIfNoError) {
+                $this->sendMails('No errors found.');
             }
         }
     }
@@ -182,14 +126,15 @@ class MonitorCommand extends ContainerAwareCommand
      *
      * @param string $message message to be sent
      */
-    private function sendMails($message) {
+    private function sendMails($message)
+    {
         // prepare email constants
         $hostname = gethostname();
         $subject = "cronjob monitoring " . $hostname . ", " . date('Y-m-d H:i:s');
         $headers = 'From: cron-monitor@' . $hostname . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
 
-        foreach($this->receiver as $rcv) {
+        foreach ($this->receiver as $rcv) {
             mail(trim($rcv), $subject, $message, $headers);
         }
     }
