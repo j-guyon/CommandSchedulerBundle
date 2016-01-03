@@ -7,9 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Symfony\Component\Validator\Constraints\Null;
 
 /**
  * Class ExecuteCommand : This class is the entry point to execute all scheduled command
@@ -63,7 +65,13 @@ class ExecuteCommand extends ContainerAwareCommand
     {
         $this->dumpMode = $input->getOption('dump');
         $this->logPath = rtrim($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), '/\\');
-        $this->logPath .= DIRECTORY_SEPARATOR;
+
+	    // set logpath to false if specified in parameters to suppress logging
+	    if("false" == $this->logPath) {
+		    $this->logPath = false;
+	    } else {
+		    $this->logPath .= DIRECTORY_SEPARATOR;
+	    }
 
         // store the original verbosity before apply the quiet parameter
         $this->commandsVerbosity = $output->getVerbosity();
@@ -87,7 +95,7 @@ class ExecuteCommand extends ContainerAwareCommand
         $output->writeln('<info>Start : ' . ($this->dumpMode ? 'Dump' : 'Execute') . ' all scheduled command</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
-        if (strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
+        if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
             $output->writeln(
                 '<error>'.$this->logPath.
                 ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
@@ -162,11 +170,23 @@ class ExecuteCommand extends ContainerAwareCommand
         ));
 
         // Use a StreamOutput to redirect write() and writeln() in a log file
-        $logOutput = new StreamOutput(fopen(
-            $this->getContainer()->getParameter('jmose_command_scheduler.log_path') .
-            $scheduledCommand->getLogFile(), 'a', false
-        ));
-        $logOutput->setVerbosity($this->commandsVerbosity);
+        $path = $this->logPath;
+        $file =  $scheduledCommand->getLogFile();
+        if(($path !== false) && ("null" != strtolower($file))) {
+            // append directory separator if there is none
+            if(substr($path, -1) !== DIRECTORY_SEPARATOR) {
+                $path = $path . DIRECTORY_SEPARATOR;
+            }
+            //
+            $path = $path . $file;
+
+	        // initialize streamoutput with specified target and verbosity
+	        $logOutput = new StreamOutput(fopen(
+	            $path, 'a', false
+	        ), $this->commandsVerbosity);
+        } else { // initialize nulloutput to disable output
+            $logOutput = new NullOutput();
+        }
 
         // Execute command and get return code
         try {
