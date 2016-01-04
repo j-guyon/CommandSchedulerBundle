@@ -115,4 +115,15 @@ class ScheduledCommandType extends AbstractType
     {
         return 'command_scheduler_detail';
     }
+
+    /**
+     * Same as prefix, still used by Symfony 2.7
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        $this->getBlockPrefix();
+    }
+
 }

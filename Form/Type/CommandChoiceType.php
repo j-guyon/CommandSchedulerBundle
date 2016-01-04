@@ -42,6 +42,16 @@ class CommandChoiceType extends AbstractType
     }
 
     /**
+     * Same as prefix, still used by Symfony 2.7
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return 'command_choice';
+    }
+
+    /**
      * @inheritdoc
      */
     public function getParent()
