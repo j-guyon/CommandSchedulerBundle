@@ -3,7 +3,7 @@ parameters:
 
 framework:
     translator:      ~
-    assets:
+    #assets:
     secret:          secret
     test:            ~
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -42,4 +42,4 @@ jmose_command_scheduler:
 
 liip_functional_test:
     cache_sqlite_db: true
-    command_decoration: false
+    #command_decoration: false
