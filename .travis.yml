@@ -15,11 +15,7 @@ branches:
 matrix:
     include:
         - php: 5.5
-          env: SYMFONY_VERSION=2.7.*
-        - php: 5.5
           env: SYMFONY_VERSION=2.8.*
-        - php: 5.5
-          env: SYMFONY_VERSION=3.0.*
     allow_failures:
         - php: nightly
 
