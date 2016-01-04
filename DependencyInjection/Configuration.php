@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('doctrine_manager')->defaultValue('default')->end()
-                ->scalarNode('log_path')->defaultValue('app\logs')->end()
+                ->scalarNode('log_path')->defaultValue('var\logs')->end()
                 ->scalarNode('lock_timeout')->defaultValue(false)->end()
                 ->arrayNode('monitor_mail')
                     ->defaultValue(array())

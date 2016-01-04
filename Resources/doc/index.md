@@ -68,22 +68,22 @@ For more information about translations, check [Symfony documentation](http://sy
 
 Install bundle's assets :
 ``` bash
-$ php app/console assets:install
+$ php bin/console assets:install
 ```
 
 Update your database 
 ``` bash
-$ php app/console doctrine:schema:update --force
+$ php bin/console doctrine:schema:update --force
 ```
 
 In case you're using another doctrine manager
 ``` bash
-$ php app/console doctrine:schema:update --em=[manager_name] --force
+$ php bin/console doctrine:schema:update --em=[manager_name] --force
 ```
 
 Now, you can use the bundle and manage your scheduling here : **http://{you-app-root}/command-scheduler/list** and execute them with this new command
 ``` bash
-$ php app/console scheduler:execute --dump
+$ php bin/console scheduler:execute --dump
 ```
 
 See the [Usage](#usage) section to have more information
@@ -97,9 +97,9 @@ Here is the default bundle configuration.
 jmose_command_scheduler:
 
     # Default directory where scheduler will write output files
-    #  This default value assume that php app/console is launched from project's root and that the directory is writable
+    #  This default value assume that php bin/console is launched from project's root and that the directory is writable
     # if log_path is set to false, logging to files is disabled at all 
-    log_path: app\logs\
+    log_path: var\logs\
     # This default value disables timeout checking (see monitoring), set to a numeric value (seconds) to enable it
     lock_timeout: false
     # receivers for reporting mails
@@ -141,7 +141,7 @@ From this screen, you can do following actions :
 
 After that, you have to set (every few minutes, it depends of your needs) the following command in your system :
 ``` bash
-$ php app/console scheduler:execute --env=env -vvv [--dump] [--no-output]
+$ php bin/console scheduler:execute --env=env -vvv [--dump] [--no-output]
 ```
 
 If the `--dump` option is set, the scheduler won't execute any command, but just list commands that should be executed.
