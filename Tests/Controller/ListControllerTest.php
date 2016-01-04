@@ -121,7 +121,7 @@ class ListControllerTest extends WebTestCase
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
         $client->request('GET', '/command-scheduler/monitor');
-        $this->assertEquals(Response::HTTP_EXPECTATION_FAILED, $client->getResponse()->getStatusCode());
+        $this->assertEquals(417, $client->getResponse()->getStatusCode());
 
         $jsonResponse = $client->getResponse()->getContent();
         $jsonArray = json_decode($jsonResponse,true);
