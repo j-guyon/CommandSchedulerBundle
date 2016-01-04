@@ -3,8 +3,13 @@
 namespace JMose\CommandSchedulerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ScheduledCommandType
@@ -16,71 +21,71 @@ class ScheduledCommandType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
+        $builder->add('id', HiddenType::class);
 
         $builder->add(
-            'name', 'text', array(
-                'label'    => 'detail.name',
+            'name', TextType::class, array(
+                'label' => 'detail.name',
                 'required' => true
             )
         );
 
         $builder->add(
-            'command', 'command_choice', array(
-                'label'       => 'detail.command',
-                'required'    => true
-            )
-        );
-
-        $builder->add(
-            'arguments', 'text', array(
-                'label'    => 'detail.arguments',
-                'required' => false
-            )
-        );
-
-        $builder->add(
-            'cronExpression', 'text', array(
-                'label'    => 'detail.cronExpression',
+            'command', CommandChoiceType::class, array(
+                'label' => 'detail.command',
                 'required' => true
             )
         );
 
         $builder->add(
-            'logFile', 'text', array(
-                'label'    => 'detail.logFile',
+            'arguments', TextType::class, array(
+                'label' => 'detail.arguments',
                 'required' => false
             )
         );
 
         $builder->add(
-            'priority', 'integer', array(
-                'label'      => 'detail.priority',
+            'cronExpression', TextType::class, array(
+                'label' => 'detail.cronExpression',
+                'required' => true
+            )
+        );
+
+        $builder->add(
+            'logFile', TextType::class, array(
+                'label' => 'detail.logFile',
+                'required' => false
+            )
+        );
+
+        $builder->add(
+            'priority', IntegerType::class, array(
+                'label' => 'detail.priority',
                 'empty_data' => 0,
-                'required'   => false
-            )
-        );
-
-        $builder->add(
-            'executeImmediately', 'checkbox', array(
-                'label'    => 'detail.executeImmediately',
                 'required' => false
             )
         );
 
         $builder->add(
-            'disabled', 'checkbox', array(
-                'label'    => 'detail.disabled',
+            'executeImmediately', CheckboxType::class, array(
+                'label' => 'detail.executeImmediately',
                 'required' => false
             )
         );
 
         $builder->add(
-            'save', 'submit', array(
+            'disabled', CheckboxType::class, array(
+                'label' => 'detail.disabled',
+                'required' => false
+            )
+        );
+
+        $builder->add(
+            'save', SubmitType::class, array(
                 'label' => 'detail.save',
             )
         );
@@ -88,23 +93,25 @@ class ScheduledCommandType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'data_class'         => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
-                'wrapper_attr'       => 'default_wrapper',
+                'data_class' => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
+                'wrapper_attr' => 'default_wrapper',
                 'translation_domain' => 'JMoseCommandScheduler'
             )
         );
     }
 
     /**
+     * Fields prefix
+     *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'command_scheduler_detail';
     }

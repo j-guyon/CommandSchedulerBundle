@@ -17,15 +17,20 @@ branches:
 matrix:
     include:
         - php: 5.5
-          env: SYMFONY_VERSION=2.3.*
-        - php: 5.5
           env: SYMFONY_VERSION=2.4.*
         - php: 5.5
           env: SYMFONY_VERSION=2.6.*
         - php: 5.5
           env: SYMFONY_VERSION=2.7.*
+        - php: 5.5
+          env: SYMFONY_VERSION=2.8.*
+        - php: 5.5
+          env: SYMFONY_VERSION=3.0.*
     allow_failures:
         - php: nightly
+        - php: 5.3
+        - env: SYMFONY_VERSION=2.6.*
+        - env: SYMFONY_VERSION=2.4.*
 
 before_script:
     - mkdir -p ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d && echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini

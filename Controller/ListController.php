@@ -4,6 +4,7 @@ namespace JMose\CommandSchedulerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ListController
@@ -124,7 +125,7 @@ class ListController extends Controller
 
         $response = new JsonResponse();
         $response->setContent(json_encode($jsonArray));
-        $response->setStatusCode(count($jsonArray) > 0 ? 417 : 200);
+        $response->setStatusCode(count($jsonArray) > 0 ? Response::HTTP_EXPECTATION_FAILED : Response::HTTP_OK);
 
         return $response;
     }

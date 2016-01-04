@@ -29,7 +29,7 @@ class DetailController extends Controller
     public function indexAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
     {
         if (null === $scheduledCommandForm) {
-            $scheduledCommandForm = $this->createForm(new ScheduledCommandType(), $scheduledCommand);
+            $scheduledCommandForm = $this->createForm(ScheduledCommandType::class, $scheduledCommand);
         }
 
         return $this->render(
@@ -94,7 +94,7 @@ class DetailController extends Controller
             $scheduledCommand = new ScheduledCommand();
         }
 
-        $scheduledCommandForm = $this->createForm(new ScheduledCommandType(), $scheduledCommand);
+        $scheduledCommandForm = $this->createForm(ScheduledCommandType::class, $scheduledCommand);
         $scheduledCommandForm->handleRequest($request);
 
         if ($scheduledCommandForm->isValid()) {

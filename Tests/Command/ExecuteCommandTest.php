@@ -26,10 +26,10 @@ class ExecuteCommandTest extends WebTestCase
         $output = $this->runCommand('scheduler:execute');
 
         $this->assertStringStartsWith('Start : Execute all scheduled command', $output);
-        $this->assertRegExp('/container:debug should be executed/', $output);
-        $this->assertRegExp('/Execute : container:debug --help/', $output);
-        $this->assertRegExp('/Immediately execution asked for : router:debug/', $output);
-        $this->assertRegExp('/Execute : router:debug/', $output);
+        $this->assertRegExp('/debug:container should be executed/', $output);
+        $this->assertRegExp('/Execute : debug:container --help/', $output);
+        $this->assertRegExp('/Immediately execution asked for : debug:router/', $output);
+        $this->assertRegExp('/Execute : debug:router/', $output);
 
         $output = $this->runCommand('scheduler:execute');
         $this->assertRegExp('/Nothing to do/', $output);
@@ -80,7 +80,7 @@ class ExecuteCommandTest extends WebTestCase
         );
 
         $this->assertStringStartsWith('Start : Dump all scheduled command', $output);
-        $this->assertRegExp('/Command container:debug should be executed/', $output);
-        $this->assertRegExp('/Immediately execution asked for : router:debug/', $output);
+        $this->assertRegExp('/Command debug:container should be executed/', $output);
+        $this->assertRegExp('/Immediately execution asked for : debug:router/', $output);
     }
 }

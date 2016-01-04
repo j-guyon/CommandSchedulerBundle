@@ -13,6 +13,23 @@ class ListControllerTest extends WebTestCase
 {
 
     /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setUp()
+    {
+        self::bootKernel();
+
+        $this->em = static::$kernel->getContainer()
+            ->get('doctrine')
+            ->getManager();
+    }
+
+    /**
      * Test list display
      */
     public function testIndex()
@@ -121,10 +138,38 @@ class ListControllerTest extends WebTestCase
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
         $client->request('GET', '/command-scheduler/monitor');
-        $this->assertEquals(417, $client->getResponse()->getStatusCode());
+        $this->assertEquals(Response::HTTP_EXPECTATION_FAILED, $client->getResponse()->getStatusCode());
 
         $jsonResponse = $client->getResponse()->getContent();
         $jsonArray = json_decode($jsonResponse,true);
         $this->assertEquals(2, count($jsonArray));
+    }
+
+    /**
+     * Test monitoring URL with json
+     */
+    public function testMonitorWithoutErrors()
+    {
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(
+            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
+        ));
+
+        $two = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(2);
+        $four = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(4);
+        $two->setLocked(false);
+        $four->setLastReturnCode(0);
+        $this->em->flush();
+
+        $client = parent::createClient();
+        $client->followRedirects(true);
+
+        // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
+        $client->request('GET', '/command-scheduler/monitor');
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        $jsonResponse = $client->getResponse()->getContent();
+        $jsonArray = json_decode($jsonResponse,true);
+        $this->assertEquals(0, count($jsonArray));
     }
 }

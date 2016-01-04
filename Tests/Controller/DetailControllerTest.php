@@ -42,7 +42,7 @@ class DetailControllerTest extends WebTestCase
         $fixtureSet = array(
             'command_scheduler_detail[id]' => "1",
             'command_scheduler_detail[name]' => "one",
-            'command_scheduler_detail[command]' => "container:debug",
+            'command_scheduler_detail[command]' => "debug:container",
             'command_scheduler_detail[arguments]' => "--help",
             'command_scheduler_detail[cronExpression]' => "@daily",
             'command_scheduler_detail[logFile]' => "one.log",
