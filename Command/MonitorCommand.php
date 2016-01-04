@@ -3,12 +3,9 @@
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\StreamOutput;
 
 /**
  * Class MonitorCommand : This class is used for monitoring scheduled commands if they run for too long or failed to execute
@@ -107,7 +104,7 @@ class MonitorCommand extends ContainerAwareCommand
 
             // if --dump option, don't send mail
             if ($this->dumpMode) {
-                $output->writeln($this->dumpMode);
+                $output->writeln($message);
             } else {
                 $this->sendMails($message);
             }
@@ -122,7 +119,7 @@ class MonitorCommand extends ContainerAwareCommand
     }
 
     /**
-     * send message to email receivers
+     * Send message to email receivers
      *
      * @param string $message message to be sent
      */

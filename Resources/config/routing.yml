@@ -1,39 +1,39 @@
 jmose_command_scheduler_list:
-    pattern:  /command-scheduler/list
+    path:  /command-scheduler/list
     defaults: { _controller: JMoseCommandSchedulerBundle:List:index }
 
 jmose_command_scheduler_monitor:
-    pattern:  /command-scheduler/monitor
+    path:  /command-scheduler/monitor
     defaults: { _controller: JMoseCommandSchedulerBundle:List:monitor }
 
 jmose_command_scheduler_action_toggle:
-    pattern:  /command-scheduler/action/toggle/{id}
+    path:  /command-scheduler/action/toggle/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:toggle }
 
 jmose_command_scheduler_action_remove:
-    pattern:  /command-scheduler/action/remove/{id}
+    path:  /command-scheduler/action/remove/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:remove }
 
 jmose_command_scheduler_action_execute:
-    pattern:  /command-scheduler/action/execute/{id}
+    path:  /command-scheduler/action/execute/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:execute }
 
 jmose_command_scheduler_action_unlock:
-    pattern:  /command-scheduler/action/unlock/{id}
+    path:  /command-scheduler/action/unlock/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:List:unlock }
 
 jmose_command_scheduler_detail_index:
-    pattern:  /command-scheduler/detail/view/
+    path:  /command-scheduler/detail/view/
     defaults: { _controller: JMoseCommandSchedulerBundle:Detail:index }
 
 jmose_command_scheduler_detail_edit:
-    pattern:  /command-scheduler/detail/edit/{scheduledCommandId}
+    path:  /command-scheduler/detail/edit/{scheduledCommandId}
     defaults: { _controller: JMoseCommandSchedulerBundle:Detail:initEditScheduledCommand }
 
 jmose_command_scheduler_detail_new:
-    pattern:  /command-scheduler/detail/new
+    path:  /command-scheduler/detail/new
     defaults: { _controller: JMoseCommandSchedulerBundle:Detail:initNewScheduledCommand }
 
 jmose_command_scheduler_detail_save:
-    pattern:  /command-scheduler/detail/save
+    path:  /command-scheduler/detail/save
     defaults: { _controller: JMoseCommandSchedulerBundle:Detail:save }

@@ -27,7 +27,7 @@ class LoadScheduledCommandData implements FixtureInterface
         $this->createScheduledCommand('one', 'container:debug', '--help', '@daily', 'one.log', 100, $beforeYesterday);
         $this->createScheduledCommand('two', 'container:debug', '', '@daily', 'two.log', 80, $beforeYesterday, true);
         $this->createScheduledCommand('three', 'container:debug', '', '@daily', 'three.log',60, $today, false, true);
-        $this->createScheduledCommand('four', 'router:debug', '', '@daily', 'four.log', 40, $today, false, false, true);
+        $this->createScheduledCommand('four', 'router:debug', '', '@daily', 'four.log', 40, $today, false, false, true, -1);
     }
 
     /**
@@ -43,10 +43,11 @@ class LoadScheduledCommandData implements FixtureInterface
      * @param bool $locked
      * @param bool $disabled
      * @param bool $executeNow
+     * @param integer $lastReturnCode
      */
     protected function createScheduledCommand(
         $name, $command, $arguments, $cronExpression, $logFile, $priority, $lastExecution,
-        $locked = false, $disabled = false, $executeNow = false)
+        $locked = false, $disabled = false, $executeNow = false, $lastReturnCode = null)
     {
         $scheduledCommand = new ScheduledCommand();
         $scheduledCommand
@@ -59,7 +60,7 @@ class LoadScheduledCommandData implements FixtureInterface
             ->setLastExecution($lastExecution)
             ->setLocked($locked)
             ->setDisabled($disabled)
-            ->setLastReturnCode(null)
+            ->setLastReturnCode($lastReturnCode)
             ->setExecuteImmediately($executeNow);
 
         $this->manager->persist($scheduledCommand);
