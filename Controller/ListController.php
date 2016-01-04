@@ -125,7 +125,7 @@ class ListController extends Controller
 
         $response = new JsonResponse();
         $response->setContent(json_encode($jsonArray));
-        $response->setStatusCode(count($jsonArray) > 0 ? Response::HTTP_EXPECTATION_FAILED : Response::HTTP_OK);
+        $response->setStatusCode(count($jsonArray) > 0 ? 417 : 200);
 
         return $response;
     }
