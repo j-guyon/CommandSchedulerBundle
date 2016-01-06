@@ -29,17 +29,17 @@
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Commands<span class="caret"></span></a>
+                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ "menu.commands.title"|trans }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{  path('jmose_command_scheduler_list_details', {'_type' :'commands'}) }}">Overview</a></li>
-                        <li><a href="{{ path('jmose_command_scheduler_detail_command_new') }}">New</a></li>
+                        <li><a href="{{  path('jmose_command_scheduler_list_details', {'_type' :'commands'}) }}">{{ "menu.commands.overview"|trans }}</a></li>
+                        <li><a href="{{ path('jmose_command_scheduler_detail_command_new') }}">{{ "menu.commands.new" }}</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">User/Rights<span class="caret"></span></a>
+                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ "menu.rights.title"|trans }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{  path('jmose_command_scheduler_list_details', {'_type' :'rights'}) }}">Overview</a></li>
-                        <li><a href="{{ path('jmose_command_scheduler_detail_right_new') }}">New</a></li>
+                        <li><a href="{{  path('jmose_command_scheduler_list_details', {'_type' :'rights'}) }}">{{ "menu.rights.overview"|trans }}</a></li>
+                        <li><a href="{{ path('jmose_command_scheduler_detail_right_new') }}">{{ "menu.rights.new"|trans }}</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ path('jmose_command_scheduler_list_details', {'_type' :'executions'}) }}">Executions</a></li>
@@ -92,6 +92,9 @@
 <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/datatables/media/js/dataTables.bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/global.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/cron.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/table.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/graph.js') }}"></script>
 {% include 'JMoseCommandSchedulerBundle:Tools:lang.html.twig' %}
 
 </body>

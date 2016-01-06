@@ -1,6 +1,18 @@
 {
   "name": "Symfony's scheduler",
   "dateFormat": "Y-m-d H:i",
+  "menu": {
+    "commands": {
+      "title": "Scheduled commands",
+      "new": "New",
+      "overview": "Overview"
+    },
+    "rights": {
+      "title": "User/Host requirements",
+      "new": "New",
+      "overview": "Overview"
+    }
+  },
   "list": {
     "title": "Scheduled commands",
     "rightstitle": "User and Host requirements",
@@ -94,6 +106,7 @@
     "hourly": "hourly",
     "daily": "daily",
     "monthly": "monthly",
+    "last":"last",
     "month": {
       "january": "January",
       "february": "February",

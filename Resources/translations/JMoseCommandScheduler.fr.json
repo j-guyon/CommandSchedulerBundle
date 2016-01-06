@@ -1,6 +1,18 @@
 {
   "name": "Symfony's scheduler",
   "dateFormat": "d/m/Y H:i",
+  "menu": {
+    "commands": {
+      "title": "Scheduled commands",
+      "new": "New",
+      "overview": "Overview"
+    },
+    "rights": {
+      "title": "User/Host requirements",
+      "new": "New",
+      "overview": "Overview"
+    }
+  },
   "list": {
     "title": "Taches planifiées",
     "rightstitle": "User and Host requirements",
@@ -22,7 +34,10 @@
     "backList": "Back to list",
     "backOverview": "Back to overview",
     "save": "Enregistrer",
-    "close": "Close"
+    "close": "Close",
+    "filterCommands": "Filter by command",
+    "filterDate": "Filter by date",
+    "filterAll": "all"
   },
   "confirm": {
     "deleteScheduling": "Supprimer définitivement cette planification?",
@@ -91,6 +106,7 @@
     "hourly": "hourly",
     "daily": "daily",
     "monthly": "monthly",
+    "last":"last",
     "month": {
       "january": "January",
       "february": "February",

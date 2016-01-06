@@ -1,20 +1,21 @@
-.table th {
-    width: 7em;
+table.commands th {
+    min-width: 8em;
 }
 
-.table th.toggle {
+table.commands th.toggle {
     width: 1em;
+    min-width: 1em;
 }
 
-.table th.name {
+table.commands th.name {
     width: 10em;
 }
 
-.table th.command {
+table.commands th.command {
     width: 35em;
 }
 
-.table th.cron {
+table.commands th.cron {
     width: 10em;
 }
 

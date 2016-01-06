@@ -7,7 +7,7 @@
 
 {% block content %}
     <div class="table-responsive table-stripped">
-    <table class="table">
+    <table class="table commands">
         <thead>
             <tr>
                 <th rowspan="2" class="toggle">&nbsp;</th>
@@ -78,7 +78,7 @@
                            data-btnOkLabel="{{ "action.unlock"|trans }}"
                            data-title="{{ "confirm.unlock"|trans }}">
                             <span class="text-muted fa fa-lock hasTooltip"
-                                  title="{{ "tooltip.unlock"|trans }}"></span>
+                                  title="{{ "action.unlock"|trans }}"></span>
                             <span class="sr-only">{{ "action.unlock"|trans }}</span>
                         </a>
                     {% endif %}
