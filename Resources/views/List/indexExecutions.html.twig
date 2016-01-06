@@ -33,7 +33,7 @@
 
             <tbody>
             {% for execution in executions %}
-                <tr>
+                <tr class="execution">
                     <td>
                         <a href="{{ path('jmose_command_scheduler_detail_command_executions', {'commandId':execution.command.id}) }}"
                            class="hasTooltip"

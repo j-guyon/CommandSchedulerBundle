@@ -157,4 +157,157 @@ class CommandControllerTest extends CommandSchedulerBaseTest
         // assert the command was changed
         $this->assertEquals("edited one", trim($crawler->filter('td')->eq(1)->text()));
     }
+
+    /**
+     * test unlock a locked command
+     */
+    public function testUnlockCommand()
+    {
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(
+            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
+        ));
+
+        // make sure there is a locked command
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/list/commands'
+        );
+
+        $numberLockedBefore = $crawler
+            ->filter('a.unlockCommand')
+            ->count();
+
+        $this->assertEquals($numberLockedBefore, 1);
+
+        // unlock command
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/action/unlock/command/2'
+        );
+
+        // there shouldn't be a locked command any more
+        $numberLockedAfter = $crawler
+            ->filter('a.unlockCommand')
+            ->count();
+
+        $this->assertEquals($numberLockedAfter, 0);
+    }
+
+    /**
+     * test disable and enable a command
+     */
+    public function testToggleCommand()
+    {
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(
+            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
+        ));
+
+        $selector = 'a.toggleCommand > .text-danger.fa-power-off';
+
+        // make sure there is a disabled command
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/list/commands'
+        );
+
+        $numberLocked = $crawler
+            ->filter($selector)
+            ->count();
+
+        $this->assertEquals($numberLocked, 1);
+
+        // toggle command
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/action/toggle/command/3');
+
+        $numberLocked = $crawler
+            ->filter($selector)
+            ->count();
+
+        $this->assertEquals($numberLocked, 0);
+
+        // toggle command
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/action/toggle/command/3');
+
+        $numberLocked = $crawler
+            ->filter($selector)
+            ->count();
+
+        $this->assertEquals($numberLocked, 1);
+    }
+
+    /**
+     * test enable and disable logging
+     */
+    public function testToggleLogging()
+    {
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(
+            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
+        ));
+
+        $selector = 'a.toggleLogging > .fa-check-square-o';
+        $url = '/command-scheduler/action/toggleLogging/command/1';
+
+        // make sure there is a disabled command
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/list/commands'
+        );
+
+        $numberLogging = $crawler
+            ->filter($selector)
+            ->count();
+
+        $this->assertEquals($numberLogging, 0);
+
+        // toggle command
+        $crawler = $this->callUrl(
+            'GET',
+            $url);
+
+        $numberLogging = $crawler
+            ->filter($selector)
+            ->count();
+
+        $this->assertEquals($numberLogging, 1);
+
+        // toggle command
+        $crawler = $this->callUrl(
+            'GET',
+            $url);
+
+        $numberLogging = $crawler
+            ->filter($selector)
+            ->count();
+
+        $this->assertEquals($numberLogging, 0);
+    }
+
+    /**
+     * test removing a command
+     */
+    public function testRemoveCommand()
+    {
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(
+            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
+        ));
+
+        // remove command
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/action/remove/command/4'
+        );
+
+        $numberCommands = $crawler
+            ->filter('tr.command')
+            ->count();
+        $this->assertEquals($numberCommands, 3);
+    }
 }

@@ -14,7 +14,6 @@ class CommandSchedulerBaseTest extends WebTestCase
      */
     protected function setUp()
     {
-
         $this->dropDatabase(); // remove database just to be safe
 
         // (re)create database
@@ -30,6 +29,8 @@ class CommandSchedulerBaseTest extends WebTestCase
 
     /**
      * Tests completed, clean up
+     *
+     * TODO: enable as soon as all tests work as expected
      */
 //    protected function tearDown()
 //    {
@@ -69,6 +70,23 @@ class CommandSchedulerBaseTest extends WebTestCase
 
         $form->setValues($values);
         $crawler = $client->submit($form);
+
+        return $crawler;
+    }
+
+    /**
+     * call a URL, follow redirects
+     *
+     * @param string $method GET|POST
+     * @param string $url
+     *
+     * @return \Symfony\Component\DomCrawler\Crawler
+     */
+    protected function callUrl($method, $url)
+    {
+        $client = parent::createClient();
+        $client->followRedirects(true);
+        $crawler = $client->request($method, $url);
 
         return $crawler;
     }
