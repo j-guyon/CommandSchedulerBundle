@@ -19,7 +19,7 @@ class ExecuteCommandTest extends WebTestCase
         //DataFixtures create 4 records
         $this->loadFixtures(
             array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
+                'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
             )
         );
 
@@ -43,7 +43,7 @@ class ExecuteCommandTest extends WebTestCase
         //DataFixtures create 4 records
         $this->loadFixtures(
             array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
+                'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
             )
         );
 
@@ -68,7 +68,7 @@ class ExecuteCommandTest extends WebTestCase
         //DataFixtures create 4 records
         $this->loadFixtures(
             array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
+                'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
             )
         );
 
