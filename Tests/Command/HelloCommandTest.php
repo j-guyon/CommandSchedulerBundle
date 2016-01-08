@@ -1,14 +1,22 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: daniel
- * Date: 26.12.15
- * Time: 16:31
+ * Tests for Hello Command
  */
 
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
+use JMose\CommandSchedulerBundle\Command\HelloCommand;
 
-class HelloCommandTest extends \PHPUnit_Framework_TestCase {
+class HelloCommandTest extends CommandBaseTest {
 
+    public function testHelloCommand() {
+        $command = new HelloCommand();
+
+        $result = $this->runCommand($command, 'schedulerTest:hello');
+        $this->assertEquals("Hello World", trim($result));
+
+        $result = $this->runCommand($command, 'schedulerTest:hello', array('--name' => 'Sepp'));
+        $this->assertEquals("Hello Sepp", trim($result));
+
+    }
 }
