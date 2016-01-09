@@ -7,8 +7,8 @@ namespace JMose\CommandSchedulerBundle\Tests;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 class CommandSchedulerBaseTest extends WebTestCase
 {
@@ -20,7 +20,10 @@ class CommandSchedulerBaseTest extends WebTestCase
      */
     protected function setUp()
     {
-        $this->application = new Application();
+        $kernel = $this->createKernel();
+        $kernel->boot();
+
+        $this->application = new Application($kernel);
         $this->decorated = false;
 
         $this->dropDatabase(); // remove database just to be safe
