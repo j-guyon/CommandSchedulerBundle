@@ -6,14 +6,23 @@
 namespace JMose\CommandSchedulerBundle\Tests;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class CommandSchedulerBaseTest extends WebTestCase
 {
+    /** @var  Application */
+    protected $application;
+
     /**
      * prepare test environment
      */
     protected function setUp()
     {
+        $this->application = new Application();
+        $this->decorated = false;
+
         $this->dropDatabase(); // remove database just to be safe
 
         // (re)create database
@@ -89,5 +98,33 @@ class CommandSchedulerBaseTest extends WebTestCase
         $crawler = $client->request($method, $url);
 
         return $crawler;
+    }
+
+
+    /**
+     * Execute a command and return the outputs
+     *
+     * @param ContainerAwareCommand $commandClass instance of command to be tested
+     * @param string $name command name
+     * @param array $options options to be used for execution
+     * @param int $exitCode Reference, will be set to exit code
+     *
+     * @return string output
+     */
+    public function executeCommand($commandClass, $name, $options = array(), &$exitCode = null)
+    {
+        $this->application->add($commandClass);
+
+        $command = $this->application->find($name);
+
+        $commandTester = new CommandTester($command);
+        $return = $commandTester->execute($options);
+
+        // $exitCode is defined (something), set to commands exit code
+        if($exitCode !== null) {
+            $exitCode = $return;
+        }
+
+        return $commandTester->getDisplay();
     }
 }

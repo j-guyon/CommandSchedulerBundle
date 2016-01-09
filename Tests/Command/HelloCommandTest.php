@@ -6,17 +6,36 @@
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use JMose\CommandSchedulerBundle\Command\HelloCommand;
+use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 
-class HelloCommandTest extends CommandBaseTest {
+class HelloCommandTest extends CommandSchedulerBaseTest {
 
     public function testHelloCommand() {
         $command = new HelloCommand();
+        $commandName = 'schedulerTest:hello';
 
-        $result = $this->runCommand($command, 'schedulerTest:hello');
-        $this->assertEquals("Hello World", trim($result));
+        $result = $this->executeCommand($command, $commandName);
+        $this->assertStringStartsWith("Hello World", $result);
 
-        $result = $this->runCommand($command, 'schedulerTest:hello', array('--name' => 'Sepp'));
-        $this->assertEquals("Hello Sepp", trim($result));
+        $result = $this->executeCommand(
+            $command,
+            $commandName,
+            array('--name' => 'Sepp')
+        );
+        $this->assertStringStartsWith("Hello Sepp", $result);
 
+        $exitCode = "a";
+        $result = $this->executeCommand(
+            $command,
+            $commandName,
+            array(
+                '--name' => 'Franz',
+                '--randSleep' => true,
+                '--randReturn' => true,
+            ),
+            $exitCode
+        );
+        $this->assertStringStartsWith("Hello Franz", $result);
+        $this->assertNotEquals("a", $exitCode);
     }
 }
