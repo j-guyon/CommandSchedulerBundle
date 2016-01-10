@@ -6,6 +6,8 @@
 namespace JMose\CommandSchedulerBundle\Tests;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerDebugCommand;
+use Symfony\Bundle\FrameworkBundle\Command\RouterDebugCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -24,6 +26,10 @@ class CommandSchedulerBaseTest extends WebTestCase
         $kernel->boot();
 
         $this->application = new Application($kernel);
+        // add two (actually 4) commands to application for testing purposes
+        $this->application->add(new ContainerDebugCommand());
+        $this->application->add(new RouterDebugCommand());
+
         $this->decorated = false;
 
         $this->dropDatabase(); // remove database just to be safe

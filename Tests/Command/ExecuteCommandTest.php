@@ -2,17 +2,33 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use JMose\CommandSchedulerBundle\Command\ExecuteCommand;
+use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 
 /**
  * Class ExecuteCommandTest
  * @package JMose\CommandSchedulerBundle\Tests\Command
  */
-class ExecuteCommandTest extends WebTestCase
+class ExecuteCommandTest extends CommandSchedulerBaseTest
 {
+    /** @var ExecuteCommand $command instance of command */
+    protected $command;
+    /** @var string $commandName */
+    protected $commandName;
 
     /**
-     * Test JMose\CommandSchedulerBundle\Tests:execute without option
+     * set up variables needed in every test
+     */
+    public function setUp()
+    {
+        $this->command = new ExecuteCommand();
+        $this->commandName = 'scheduler:execute';
+
+        parent::setUp();
+    }
+
+    /**
+     * Test scheduler:execute without option
      */
     public function testExecute()
     {
@@ -23,45 +39,20 @@ class ExecuteCommandTest extends WebTestCase
             )
         );
 
-        $output = $this->runCommand('JMose\CommandSchedulerBundle\Tests:execute');
+        $output = $this->executeCommand($this->command, $this->commandName);
 
         $this->assertStringStartsWith('Start : Execute all scheduled command', $output);
-        $this->assertRegExp('/container:debug should be executed/', $output);
-        $this->assertRegExp('/Execute : container:debug --help/', $output);
-        $this->assertRegExp('/Immediately execution asked for : router:debug/', $output);
-        $this->assertRegExp('/Execute : router:debug/', $output);
+        $this->assertRegExp('/debug:container should be executed/', $output);
+        $this->assertRegExp('/Execute : debug:container --help/', $output);
+        $this->assertRegExp('/Immediately execution asked for : debug:router/', $output);
+        $this->assertRegExp('/Execute : debug:router/', $output);
 
-        $output = $this->runCommand('JMose\CommandSchedulerBundle\Tests:execute');
+        $output = $this->executeCommand($this->command, $this->commandName);
         $this->assertRegExp('/Nothing to do/', $output);
     }
 
     /**
-     * Test JMose\CommandSchedulerBundle\Tests:execute without option
-     */
-    public function testExecuteWithNoOutput()
-    {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-            )
-        );
-
-        $output = $this->runCommand(
-            'JMose\CommandSchedulerBundle\Tests:execute',
-            array(
-                '--no-output' => true
-            )
-        );
-
-        $this->assertEquals('', $output);
-
-        $output = $this->runCommand('JMose\CommandSchedulerBundle\Tests:execute');
-        $this->assertRegExp('/Nothing to do/', $output);
-    }
-
-    /**
-     * Test JMose\CommandSchedulerBundle\Tests:execute with --dump option
+     * Test scheduler:execute with --dump option
      */
     public function testExecuteWithDump()
     {
@@ -72,15 +63,39 @@ class ExecuteCommandTest extends WebTestCase
             )
         );
 
-        $output = $this->runCommand(
-            'JMose\CommandSchedulerBundle\Tests:execute',
+        $output = $this->executeCommand(
+            $this->command,
+            $this->commandName,
             array(
                 '--dump' => true
             )
         );
 
         $this->assertStringStartsWith('Start : Dump all scheduled command', $output);
-        $this->assertRegExp('/Command container:debug should be executed/', $output);
-        $this->assertRegExp('/Immediately execution asked for : router:debug/', $output);
+        $this->assertRegExp('/Command debug:container should be executed/', $output);
+        $this->assertRegExp('/Immediately execution asked for : debug:router/', $output);
+    }
+
+    /**
+     * Test scheduler:execute with no-output option
+     */
+    public function testExecuteWithNoOutput()
+    {
+        //DataFixtures create 4 records
+        $this->loadFixtures(
+            array(
+                'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
+            )
+        );
+        $output = $this->executeCommand(
+            $this->command,
+            $this->commandName,
+            array(
+                '--no-output' => true
+            )
+        );
+        $this->assertEquals('', $output);
+        $output = $this->executeCommand($this->command, $this->commandName);
+        $this->assertRegExp('/Nothing to do/', $output);
     }
 }
