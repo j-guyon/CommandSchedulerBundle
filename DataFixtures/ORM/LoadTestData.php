@@ -57,6 +57,7 @@ class LoadTestData implements FixtureInterface
      * @param bool $locked
      * @param bool $disabled
      * @param bool $executeNow
+     * @param mixed $rights
      */
     protected function createScheduledCommand(
         $id,
@@ -121,7 +122,7 @@ class LoadTestData implements FixtureInterface
      * @param string $host
      * @param string $userExcluded
      * @param string $hostExcluded
-     * @param string $info
+     * @param mixed $info
      */
     protected function createUserHost(
         $id,

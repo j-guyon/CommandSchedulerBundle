@@ -32,7 +32,7 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
      */
     public function testExecute()
     {
-        $this->loadFixtures();
+        $this->loadDataFixtures();
 
         $output = $this->executeCommand($this->command, $this->commandName);
 
@@ -51,7 +51,7 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
      */
     public function testExecuteWithDump()
     {
-        $this->loadFixtures();
+        $this->loadDataFixtures();
 
         $output = $this->executeCommand(
             $this->command,
@@ -71,7 +71,7 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
      */
     public function testExecuteWithNoOutput()
     {
-        $this->loadFixtures();
+        $this->loadDataFixtures();
 
         $output = $this->executeCommand(
             $this->command,
