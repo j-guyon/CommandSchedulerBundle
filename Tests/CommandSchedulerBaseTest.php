@@ -12,6 +12,13 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
+define('NUMBER_COMMANDS_TOTAL', 4);
+define('NUMBER_COMMANDS_ACTIVE', 3);
+define('NUMBER_COMMANDS_INACTIVE', (NUMBER_COMMANDS_TOTAL - NUMBER_COMMANDS_ACTIVE));
+define('NUMBER_COMMANDS_LOCKED', 1);
+
+define('NUMBER_RIGHTS_TOTAL', 8);
+
 class CommandSchedulerBaseTest extends WebTestCase
 {
     /** @var  Application */
@@ -22,6 +29,7 @@ class CommandSchedulerBaseTest extends WebTestCase
      */
     protected function setUp()
     {
+        // prepare test environment for command testing
         $kernel = $this->createKernel();
         $kernel->boot();
 
@@ -32,6 +40,7 @@ class CommandSchedulerBaseTest extends WebTestCase
 
         $this->decorated = false;
 
+        // prepare database
         $this->dropDatabase(); // remove database just to be safe
 
         // (re)create database
@@ -135,5 +144,32 @@ class CommandSchedulerBaseTest extends WebTestCase
         }
 
         return $commandTester->getDisplay();
+    }
+
+    /**
+     * load command fixtures
+     */
+    protected function loadDataFixtures() {
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(
+            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadTestData'
+        ));
+    }
+
+//    /**
+//     * load rights fixtures
+//     */
+//    protected function loadRightsFixtures() {
+//        //DataFixtures create 8 records
+//        $this->loadFixtures(array(
+//            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadUserHostData'
+//        ));
+//    }
+
+    /**
+     * dummy test so there is a test in every child test
+     */
+    public function testNothing(){
+        $this->assertTrue(true);
     }
 }

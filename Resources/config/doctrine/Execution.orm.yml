@@ -24,13 +24,6 @@ JMose\CommandSchedulerBundle\Entity\Execution:
             type: integer
             nullable: true
             column: RETURN_CODE
-        superuser:
-            type: boolean
-            length: null
-            unique: false
-            nullable: false
-            default: false
-            column: B_SUPERUSER
     manyToOne:
       command:
         targetEntity: ScheduledCommand

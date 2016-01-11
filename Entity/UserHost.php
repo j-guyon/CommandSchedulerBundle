@@ -43,11 +43,6 @@ class UserHost
     private $info;
 
     /**
-     * @var bool $superuser
-     */
-    private $superuser = false;
-
-    /**
      * @return string
      */
     public function getTitle()
@@ -57,20 +52,28 @@ class UserHost
 
     /**
      * @param string $title
+     *
+     * @return UserHost ($this)
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
      * Set id
      *
      * @param integer $id ID
+     *
+     * @return UserHost ($this)
      */
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -88,7 +91,7 @@ class UserHost
      *
      * @param string $user
      *
-     * @return UserHost
+     * @return UserHost ($this)
      */
     public function setUser($user)
     {
@@ -112,7 +115,7 @@ class UserHost
      *
      * @param string $host
      *
-     * @return UserHost
+     * @return UserHost ($this)
      */
     public function setHost($host)
     {
@@ -146,10 +149,14 @@ class UserHost
      * set excluded user
      *
      * @param string $user_excluded
+     *
+     * @return UserHost ($this)
      */
     public function setUserExcluded($user_excluded)
     {
         $this->user_excluded = $user_excluded;
+
+        return $this;
     }
 
     /**
@@ -166,10 +173,14 @@ class UserHost
      * set excluded hostname
      *
      * @param string $host_excluded
+     *
+     * @return UserHost ($this)
      */
     public function setHostExcluded($host_excluded)
     {
         $this->host_excluded = $host_excluded;
+
+        return $this;
     }
 
     /**
@@ -177,7 +188,7 @@ class UserHost
      *
      * @param string $info
      *
-     * @return UserHost
+     * @return UserHost ($this)
      */
     public function setInfo($info)
     {
@@ -194,29 +205,6 @@ class UserHost
     public function getInfo()
     {
         return $this->info;
-    }
-
-    /**
-     * set superuser flag
-     *
-     * @param bool $su
-     *
-     * @return $this to allow chaining
-     */
-    public function setSuperuser($su)
-    {
-        $this->superuser = $su;
-        return $this;
-    }
-
-    /**
-     * get Superuser flag
-     *
-     * @return bool
-     */
-    public function getSuperuser()
-    {
-        return $this->superuser;
     }
 }
 

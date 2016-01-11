@@ -35,11 +35,6 @@ class Execution
     private $command;
 
     /**
-     * @var bool $superuser
-     */
-    private $superuser = false;
-
-    /**
      * Get id
      *
      * @return integer
@@ -47,6 +42,20 @@ class Execution
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     *
+     * @return Execution
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -146,28 +155,4 @@ class Execution
             $this->$key = $val;
         }
     }
-
-    /**
-     * set superuser flag
-     *
-     * @param bool $su
-     *
-     * @return $this to allow chaining
-     */
-    public function setSuperuser($su)
-    {
-        $this->superuser = $su;
-        return $this;
-    }
-
-    /**
-     * get Superuser flag
-     *
-     * @return bool
-     */
-    public function getSuperuser()
-    {
-        return $this->superuser;
-    }
 }
-

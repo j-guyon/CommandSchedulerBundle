@@ -19,41 +19,41 @@ class CommandControllerTest extends CommandSchedulerBaseTest
         $crawler = $client->request('GET', '/command-scheduler/detail/commands/new');
 
         $fields = array(
-            'select#scheduled_command_command' => 1, // command select
-            'select#scheduled_command_rights' => 1, // user/host select
+            'select#scheduled_command_command', // command select
+            'select#scheduled_command_rights', // user/host select
 
             // input fields
-            '#scheduled_command_name' => 1,
-            '#scheduled_command_arguments' => 1,
-            '#scheduled_command_cronExpression' => 1,
-            '#scheduled_command_logFile' => 1,
-            '#scheduled_command_priority' => 1,
-            '#scheduled_command_expectedRuntime' => 1,
-            '#scheduled_command_executeImmediately' => 1,
-            '#scheduled_command_disabled' => 1,
-            '#scheduled_command_logExecutions' => 1,
+            '#scheduled_command_name',
+            '#scheduled_command_arguments',
+            '#scheduled_command_cronExpression',
+            '#scheduled_command_logFile',
+            '#scheduled_command_priority',
+            '#scheduled_command_expectedRuntime',
+            '#scheduled_command_executeImmediately',
+            '#scheduled_command_disabled',
+            '#scheduled_command_logExecutions',
 
-            'a.btn' => 1, // back button
-            'button#scheduled_command_save' => 1, // save button
+            'a.btn', // back button
+            'button#scheduled_command_save', // save button
 
             // cronhelper
-            'div#cronhelper' => 1,
+            'div#cronhelper',
 
-            '#cron_minute' => 1,
-            '#cron_minute_modulo' => 1,
-            '#cron_hour' => 1,
-            '#cron_hour_modulo' => 1,
-            '#cron_day' => 1,
-            '#cron_day_modulo' => 1,
-            '#cron_month' => 1,
-            '#cron_month_modulo' => 1,
-            '#cron_week' => 1,
-            '#cron_expression' => 1,
+            '#cron_minute',
+            '#cron_minute_modulo',
+            '#cron_hour',
+            '#cron_hour_modulo',
+            '#cron_day',
+            '#cron_day_modulo',
+            '#cron_month',
+            '#cron_month_modulo',
+            '#cron_week',
+            '#cron_expression',
         );
 
-        foreach ($fields as $field => $count) {
+        foreach ($fields as $field) {
             // check for fields
-            $this->assertEquals($count, $crawler->filter($field)->count());
+            $this->assertEquals(1, $crawler->filter($field)->count());
         }
     }
 
@@ -62,10 +62,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
      */
     public function testInitEditScheduledCommand()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-        ));
+        $this->loadDataFixtures();
 
         // get form
         $client = parent::createClient();
@@ -137,10 +134,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
      */
     public function testEditSave()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-        ));
+        $this->loadDataFixtures();
 
         // edit command
         $crawler = $this->callFormUrlValues(
@@ -152,7 +146,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
         );
 
         // now we are on list, assert there are toggle buttons
-        $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/command"]')->count());
+        $this->assertEquals(NUMBER_COMMANDS_TOTAL, $crawler->filter('a[href^="/command-scheduler/action/toggle/command"]')->count());
 
         // assert the command was changed
         $this->assertEquals("edited one", trim($crawler->filter('td')->eq(1)->text()));
@@ -163,10 +157,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
      */
     public function testUnlockCommand()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-        ));
+        $this->loadDataFixtures();
 
         // make sure there is a locked command
         $crawler = $this->callUrl(
@@ -199,10 +190,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
      */
     public function testToggleCommand()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-        ));
+        $this->loadDataFixtures();
 
         $selector = 'a.toggleCommand > .text-danger.fa-power-off';
 
@@ -246,10 +234,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
      */
     public function testToggleLogging()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-        ));
+        $this->loadDataFixtures();
 
         $selector = 'a.toggleLogging > .fa-check-square-o';
         $url = '/command-scheduler/action/toggleLogging/command/1';
@@ -294,13 +279,10 @@ class CommandControllerTest extends CommandSchedulerBaseTest
      */
     public function testRemoveCommand()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-        ));
+        $this->loadDataFixtures();
 
         // remove command
-        $crawler = $this->callUrl(
+         $crawler = $this->callUrl(
             'GET',
             '/command-scheduler/action/remove/command/4'
         );

@@ -32,12 +32,7 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
      */
     public function testExecute()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        $this->loadFixtures();
 
         $output = $this->executeCommand($this->command, $this->commandName);
 
@@ -56,12 +51,7 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
      */
     public function testExecuteWithDump()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        $this->loadFixtures();
 
         $output = $this->executeCommand(
             $this->command,
@@ -81,12 +71,8 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
      */
     public function testExecuteWithNoOutput()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        $this->loadFixtures();
+
         $output = $this->executeCommand(
             $this->command,
             $this->commandName,
@@ -96,6 +82,16 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
         );
         $this->assertEquals('', $output);
         $output = $this->executeCommand($this->command, $this->commandName);
+        $this->assertRegExp('/Nothing to do/', $output);
+    }
+
+    /**
+     * test scheduler:execute if there are no commands at all
+     */
+    public function testExecuteWithoutCommands()
+    {
+        $output = $this->executeCommand($this->command, $this->commandName);
+
         $this->assertRegExp('/Nothing to do/', $output);
     }
 }

@@ -100,11 +100,6 @@ class ScheduledCommand
     private $rights = null;
 
     /**
-     * @var bool $superuser
-     */
-    private $superuser = false;
-
-    /**
      * Init new ScheduledCommand
      */
     public function __construct()
@@ -602,28 +597,5 @@ class ScheduledCommand
     public function getCurrentLog()
     {
         return $this->executions->last();
-    }
-
-    /**
-     * set superuser flag
-     *
-     * @param bool $su
-     *
-     * @return $this to allow chaining
-     */
-    public function setSuperuser($su)
-    {
-        $this->superuser = $su;
-        return $this;
-    }
-
-    /**
-     * get Superuser flag
-     *
-     * @return bool
-     */
-    public function getSuperuser()
-    {
-        return $this->superuser;
     }
 }

@@ -93,13 +93,6 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             unique: false
             nullable: true
             column: B_LOG_EXECUTIONS
-        superuser:
-            type: boolean
-            length: null
-            unique: false
-            nullable: false
-            default: false
-            column: B_SUPERUSER
     manyToOne:
       rights:
         targetEntity: UserHost
