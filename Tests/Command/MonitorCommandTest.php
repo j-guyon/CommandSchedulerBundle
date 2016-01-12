@@ -8,7 +8,9 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
+use JMose\CommandSchedulerBundle\Command\ExecuteCommand;
+use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 
-class MonitorCommandTest extends \PHPUnit_Framework_TestCase {
+class MonitorCommandTest extends CommandSchedulerBaseTest {
 
 }
