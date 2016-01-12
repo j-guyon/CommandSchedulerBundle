@@ -17,7 +17,7 @@ class ListControllerTest extends CommandSchedulerBaseTest
      */
     public function testIndexCommands()
     {
-        $this->loadCommandFixtures();
+        $this->loadDataFixtures();
 
         $crawler = $this->callUrl('GET', '/command-scheduler/list/commands');
 
