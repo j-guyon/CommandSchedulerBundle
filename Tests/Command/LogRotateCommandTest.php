@@ -7,8 +7,8 @@
  */
 
 namespace JMose\CommandSchedulerBundle\Tests\Command;
+use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 
-
-class LogRotateCommandTest extends \PHPUnit_Framework_TestCase {
+class LogRotateCommandTest extends CommandSchedulerBaseTest {
 
 }
