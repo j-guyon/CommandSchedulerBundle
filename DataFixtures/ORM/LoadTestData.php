@@ -18,14 +18,13 @@ class LoadTestData implements FixtureInterface
     /** @var array */
     protected $rights = array();
 
-    protected $executions = array();
-
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
+        $this->rights = array();
 
         $this->createRights();
         $this->createCommands();
@@ -36,11 +35,41 @@ class LoadTestData implements FixtureInterface
         $now = new \DateTime();
         $today = clone $now;
         $beforeYesterday = $now->modify('-2 days');
+        $id = 1;
+        $rightId = 0;
 
-        $this->createScheduledCommand(1, 'one', 'debug:container', '--help', '@daily', 'one.log', 100, $beforeYesterday);
-        $this->createScheduledCommand(2, 'two', 'debug:container', '', '@daily', 'two.log', 80, $beforeYesterday, true);
-        $this->createScheduledCommand(3, 'three', 'debug:container', '', '@daily', 'three.log', 60, $today, false, true);
-        $this->createScheduledCommand(4, 'four', 'debug:router', '', '@daily', 'four.log', 40, $today, false, false, true);
+        // "regular" command
+        $this->createScheduledCommand($id++, 'one', 'debug:container', '--help', '@daily', 'one.log', 100, $beforeYesterday);
+
+        // locked command
+        $this->createScheduledCommand($id++, 'two', 'debug:container', '', '@daily', 'two.log', 80, $beforeYesterday, true);
+
+        // disabled command
+        $this->createScheduledCommand($id++, 'three', 'debug:container', '', '@daily', 'three.log', 60, $today, false, true, true);
+
+        // execute immediately
+        $this->createScheduledCommand($id++, 'four', 'debug:router', '', '@daily', 'four.log', 40, $today, false, false, true);
+
+        // command with empty userhost with executions
+        $this->createScheduledCommand($id++, 'no rights', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, true, $this->rights[$rightId++]);
+
+        // current user
+        $this->createScheduledCommand($id++, 'user only', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, true, $this->rights[$rightId++]);
+
+        // current host
+        $this->createScheduledCommand($id++, 'host only', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+
+        // current user and host
+        $this->createScheduledCommand($id++, 'user and host', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+
+        // not current user
+        $this->createScheduledCommand($id++, 'not user only', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+
+        // not current host
+        $this->createScheduledCommand($id++, 'not host only', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+
+        // not current user and host
+        $this->createScheduledCommand($id++, 'not user and host', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
     }
 
     /**
@@ -57,6 +86,7 @@ class LoadTestData implements FixtureInterface
      * @param bool $locked
      * @param bool $disabled
      * @param bool $executeNow
+     * @param bool $appendExecutions
      * @param mixed $rights
      */
     protected function createScheduledCommand(
@@ -71,6 +101,7 @@ class LoadTestData implements FixtureInterface
         $locked = false,
         $disabled = false,
         $executeNow = false,
+        $appendExecutions = false,
         $rights = null
     )
     {
@@ -93,7 +124,9 @@ class LoadTestData implements FixtureInterface
         $this->manager->persist($scheduledCommand);
         $this->manager->flush();
 
-        $this->createExecutions($scheduledCommand);
+        if($appendExecutions) {
+            $this->createExecutions($scheduledCommand);
+        }
     }
 
     /**
@@ -103,7 +136,7 @@ class LoadTestData implements FixtureInterface
     {
         $currentHostname = gethostname();
         $currentUser = $this->getUsername();
-
+        
         $this->createUserHost(1, 'empty', '', '', '', '');
         $this->createUserHost(2, 'user only', $currentUser, '', '', '');
         $this->createUserHost(3, 'host only', '', $currentHostname, '', '');
@@ -135,8 +168,8 @@ class LoadTestData implements FixtureInterface
     )
     {
         /** @var UserHost $userHost */
-        $rights = new UserHost();
-        $rights
+        $userHost = new UserHost();
+        $userHost
             ->setId($id)
             ->setUser($user)
             ->setHost($host)
@@ -145,12 +178,14 @@ class LoadTestData implements FixtureInterface
             ->setTitle($title);
 
         if ($info) {
-            $rights->setInfo($info);
+            $userHost->setInfo($info);
         } else {
-            $rights->setInfo($title);
+            $userHost->setInfo($title);
         }
+        
+        array_push($this->rights, $userHost);
 
-        $this->manager->persist($rights);
+        $this->manager->persist($userHost);
         $this->manager->flush();
     }
 
@@ -164,7 +199,7 @@ class LoadTestData implements FixtureInterface
         $now = new \DateTime();
 
         $id = 1;
-        for ($i = 7; $i; $i--) {
+        for ($i = NUMBER_EXECUTIONS; $i; $i--) {
             $time = clone $now;
             $this->createExecution(
                 $id++,

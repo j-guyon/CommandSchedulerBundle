@@ -23,6 +23,9 @@ class ListControllerTest extends CommandSchedulerBaseTest
 
         $result = $crawler->filter('tr.command')->count();
         $this->assertEquals(NUMBER_COMMANDS_TOTAL, $result);
+
+        $result = $crawler->filter('span.fa-info-circle')->count();
+        $this->assertEquals(NUMBER_COMMANDS_RIGHTS, $result);
     }
 
     /**
@@ -36,5 +39,18 @@ class ListControllerTest extends CommandSchedulerBaseTest
 
         $result = $crawler->filter('tr.userHost')->count();
         $this->assertEquals(NUMBER_RIGHTS_TOTAL, $result);
+    }
+
+    /**
+     * Test list Executions
+     */
+    public function testIndexExecutions()
+    {
+        $this->loadDataFixtures();
+
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/executions');
+
+        $result = $crawler->filter('tr.execution')->count();
+        $this->assertEquals(NUMBER_EXECUTIONS_TOTAL, $result);
     }
 }

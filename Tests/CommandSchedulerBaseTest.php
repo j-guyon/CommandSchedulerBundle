@@ -12,12 +12,17 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
-define('NUMBER_COMMANDS_TOTAL', 4);
+define('NUMBER_COMMANDS_NO_RIGHTS', 4);
+define('NUMBER_COMMANDS_RIGHTS', 7);
+define('NUMBER_COMMANDS_TOTAL', (NUMBER_COMMANDS_NO_RIGHTS + NUMBER_COMMANDS_RIGHTS));
 define('NUMBER_COMMANDS_ACTIVE', 3);
 define('NUMBER_COMMANDS_INACTIVE', (NUMBER_COMMANDS_TOTAL - NUMBER_COMMANDS_ACTIVE));
 define('NUMBER_COMMANDS_LOCKED', 1);
 
 define('NUMBER_RIGHTS_TOTAL', 7);
+
+define('NUMBER_EXECUTIONS', 7);
+define('NUMBER_EXECUTIONS_TOTAL', (NUMBER_EXECUTIONS * 2));
 
 class CommandSchedulerBaseTest extends WebTestCase
 {
@@ -139,7 +144,7 @@ class CommandSchedulerBaseTest extends WebTestCase
         $return = $commandTester->execute($options);
 
         // $exitCode is defined (something), set to commands exit code
-        if($exitCode !== null) {
+        if ($exitCode !== null) {
             $exitCode = $return;
         }
 
@@ -149,7 +154,8 @@ class CommandSchedulerBaseTest extends WebTestCase
     /**
      * load command fixtures
      */
-    protected function loadDataFixtures() {
+    protected function loadDataFixtures()
+    {
         //DataFixtures create 4 records
         $this->loadFixtures(array(
             'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadTestData'
@@ -169,7 +175,8 @@ class CommandSchedulerBaseTest extends WebTestCase
     /**
      * dummy test so there is a test in every child test
      */
-    public function testNothing(){
+    public function testNothing()
+    {
         $this->assertTrue(true);
     }
 }
