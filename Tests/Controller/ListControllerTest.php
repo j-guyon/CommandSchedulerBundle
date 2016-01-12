@@ -15,22 +15,22 @@ class ListControllerTest extends CommandSchedulerBaseTest
     /**
      * Test list commands
      */
-//    public function testIndexCommands()
-//    {
-//        $this->loadCommandFixtures();
-//
-//        $crawler = $this->callUrl('GET', '/command-scheduler/list/commands');
-//
-//        $result = $crawler->filter('tr.command')->count();
-//        $this->assertEquals(NUMBER_COMMANDS_TOTAL, $result);
-//    }
+    public function testIndexCommands()
+    {
+        $this->loadCommandFixtures();
+
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/commands');
+
+        $result = $crawler->filter('tr.command')->count();
+        $this->assertEquals(NUMBER_COMMANDS_TOTAL, $result);
+    }
 
     /**
      * Test list UserHost
      */
     public function testIndexUserHosts()
     {
-        $this->loadRightsFixtures();
+        $this->loadDataFixtures();
 
         $crawler = $this->callUrl('GET', '/command-scheduler/list/rights');
 
