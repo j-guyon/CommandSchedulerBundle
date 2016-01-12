@@ -17,7 +17,7 @@ define('NUMBER_COMMANDS_ACTIVE', 3);
 define('NUMBER_COMMANDS_INACTIVE', (NUMBER_COMMANDS_TOTAL - NUMBER_COMMANDS_ACTIVE));
 define('NUMBER_COMMANDS_LOCKED', 1);
 
-define('NUMBER_RIGHTS_TOTAL', 8);
+define('NUMBER_RIGHTS_TOTAL', 7);
 
 class CommandSchedulerBaseTest extends WebTestCase
 {
