@@ -34,7 +34,7 @@ class ListControllerTest extends CommandSchedulerBaseTest
 
         $crawler = $this->callUrl('GET', '/command-scheduler/list/rights');
 
-        $result = $crawler->filter('tr.right')->count();
+        $result = $crawler->filter('tr.userHost')->count();
         $this->assertEquals(NUMBER_RIGHTS_TOTAL, $result);
     }
 }
