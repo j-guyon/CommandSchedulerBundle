@@ -12,11 +12,11 @@ jmose_command_scheduler_list_details:
       _type: "commands|rights|executions"
 
 jmose_command_scheduler_action:
-    resource: @JMoseCommandSchedulerBundle/Resources/config/routing_action.yml
+    resource: '@JMoseCommandSchedulerBundle/Resources/config/routing_action.yml'
     prefix:   /command-scheduler/action
 
 jmose_command_scheduler_detail:
-    resource: @JMoseCommandSchedulerBundle/Resources/config/routing_detail.yml
+    resource: '@JMoseCommandSchedulerBundle/Resources/config/routing_detail.yml'
     prefix:   /command-scheduler/detail
 
 # misc
