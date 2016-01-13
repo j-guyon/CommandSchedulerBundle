@@ -5,6 +5,7 @@ namespace JMose\CommandSchedulerBundle\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
+use JMose\CommandSchedulerBundle\Service\MonitorService;
 
 /**
  * Class MonitorController handle monitoring requests
@@ -26,45 +27,9 @@ class MonitorController extends BaseController
 
         $scheduledCommands = $this->getRepository('ScheduledCommand')->findByActiveLocked();
 
-        $timeoutValue = $this->container->getParameter('jmose_command_scheduler.lock_timeout');
-
-        $failed = array();
-        $now = time();
-
-        /** @var ScheduledCommand $command */
-        foreach ($scheduledCommands as $command) {
-            // don't care about disabled commands
-            if ($command->isDisabled()) {
-                continue;
-            }
-
-            $executionTime = $command->getLastExecution();
-            if($executionTime == null) {
-                continue;
-            }
-
-            $executionTimestamp = $executionTime->getTimestamp();
-
-            $timedOut = (($executionTimestamp + $timeoutValue) < $now);
-
-            if (
-                ($command->getLastReturnCode() != 0) || // last return code not OK
-                (
-                    $command->getLocked() &&
-                    (
-                        ($timeoutValue === false) || // don't check for timeouts -> locked is bad
-                        $timedOut // check for timeouts, but (starttime + timeout) is in the past
-                    )
-                )
-            ) {
-                $failed[$command->getName()] = array(
-                    'ID_SCHEDULED_COMMAND' => $command->getId(),
-                    'LAST_RETURN_CODE' => $command->getLastReturnCode(),
-                    'B_LOCKED' => $command->getLocked() ? 'true' : 'false',
-                    'DH_LAST_EXECUTION' => $executionTime
-                );
-            }
-        }
+        /** @var MonitorService $monitorService */
+        $monitorService = $this->get('jmose_command_scheduler.monitorService');
+        $failed = $monitorService->processCommandsJSON($scheduledCommands);
 
         $status = count($failed) > 0 ? Response::HTTP_EXPECTATION_FAILED : Response::HTTP_OK;
 
@@ -73,5 +38,23 @@ class MonitorController extends BaseController
         $response->setStatusCode($status);
 
         return $response;
+    }
+
+    /**
+     * render monitoring results for Website
+     *
+     * @return Response
+     */
+    public function statusAction()
+    {
+        /** @var array $scheduledCommands */
+        $scheduledCommands = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
+
+        $result = $this->render(
+            $this->bundleName . ':List:indexCommands.html.twig',
+            array('scheduledCommands' => $scheduledCommands)
+        );
+
+        return $result;
     }
 }

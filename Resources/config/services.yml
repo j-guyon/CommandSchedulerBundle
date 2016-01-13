@@ -25,3 +25,8 @@ services:
             - '@jmose_command_scheduler.rights_parser'
         tags:
             - { name: form.type, alias: rights_choice }
+
+    jmose_command_scheduler.monitorService:
+        class: JMose\CommandSchedulerBundle\Service\MonitorService
+        arguments:
+          - '%jmose_command_scheduler.lock_timeout%'
