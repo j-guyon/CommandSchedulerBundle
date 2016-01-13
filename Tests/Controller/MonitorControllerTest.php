@@ -37,7 +37,7 @@ class MonitorControllerTest extends CommandSchedulerBaseTest {
         $json = $this->getMonitorResponse(Response::HTTP_EXPECTATION_FAILED);
 
         $this->assertNotEmpty($json);
-        $this->assertEquals(2, count($json));
+        $this->assertEquals(NUMBER_COMMANDS_MONITOR, count($json));
 
         // test every entry in array
         array_map(function($e) {
@@ -46,9 +46,6 @@ class MonitorControllerTest extends CommandSchedulerBaseTest {
             WebTestCase::assertArrayHasKey('LAST_RETURN_CODE', $e);
             WebTestCase::assertArrayHasKey('B_LOCKED', $e);
             WebTestCase::assertArrayHasKey('DH_LAST_EXECUTION', $e);
-
-            // check if command is really locked
-            WebTestCase::assertTrue($e['B_LOCKED'] == 'true');
         }, $json);
     }
 
@@ -66,6 +63,10 @@ class MonitorControllerTest extends CommandSchedulerBaseTest {
         );
         $this->callUrl(
             'GET',
+            '/command-scheduler/action/remove/command/5'
+        );
+        $this->callUrl(
+            'GET',
             '/command-scheduler/action/remove/command/13'
         );
 
@@ -73,6 +74,64 @@ class MonitorControllerTest extends CommandSchedulerBaseTest {
         $json = $this->getMonitorResponse();
 
         $this->assertEmpty($json);
+    }
+
+    /**
+     * test monitoring view with no commands
+     */
+    public function testMonitorViewNoCommands()
+    {
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/status'
+        );
+
+        $result = $crawler->filter('tr.status')->count();
+        $this->assertEquals(0, $result);
+    }
+
+    /**
+     * test monitoring view with no errors
+     */
+    public function testMonitorViewOK(){
+        $this->loadDataFixtures();
+
+        // remove commands to get 'OK' status
+        $this->callUrl(
+            'GET',
+            '/command-scheduler/action/remove/command/2'
+        );
+        $this->callUrl(
+            'GET',
+            '/command-scheduler/action/remove/command/5'
+        );
+        $this->callUrl(
+            'GET',
+            '/command-scheduler/action/remove/command/13'
+        );
+
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/status'
+        );
+
+        $result = $crawler->filter('tr.status')->count();
+        $this->assertEquals(0, $result);
+    }
+
+    /**
+     * test monitoring view with errors
+     */
+    public function testMonitorViewError(){
+        $this->loadDataFixtures();
+
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/status'
+        );
+
+        $result = $crawler->filter('tr.status')->count();
+        $this->assertEquals(NUMBER_COMMANDS_MONITOR, $result);
     }
 
     /**
