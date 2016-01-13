@@ -282,7 +282,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
         $this->loadDataFixtures();
 
         // remove command
-         $crawler = $this->callUrl(
+        $crawler = $this->callUrl(
             'GET',
             '/command-scheduler/action/remove/command/4'
         );
@@ -290,6 +290,6 @@ class CommandControllerTest extends CommandSchedulerBaseTest
         $numberCommands = $crawler
             ->filter('tr.command')
             ->count();
-        $this->assertEquals($numberCommands, 3);
+        $this->assertEquals($numberCommands, NUMBER_COMMANDS_TOTAL - 1);
     }
 }
