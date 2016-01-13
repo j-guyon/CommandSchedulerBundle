@@ -50,13 +50,23 @@ class ScheduledCommandRepository extends EntityRepository
      */
     public function findByActiveLocked()
     {
-        return $this->findBy(
+        $commands = $this->findBy(
             array( // criteria
-                'locked' => true,
                 'disabled' => false
             ),
             array('priority' => 'DESC') // ordering
         );
+
+        // keep only locked commands or commands with last returncode != 0
+        $commands = array_filter($commands, function($command){
+            /** @var ScheduledCommand $command */
+
+            return
+                $command->isLocked() ||
+                ($command->getLastReturnCode() != 0);
+        });
+
+        return $commands;
     }
 
     /**

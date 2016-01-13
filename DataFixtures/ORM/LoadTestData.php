@@ -30,6 +30,9 @@ class LoadTestData implements FixtureInterface
         $this->createCommands();
     }
 
+    /**
+     * create several test commands
+     */
     protected function createCommands()
     {
         $now = new \DateTime();
@@ -42,40 +45,40 @@ class LoadTestData implements FixtureInterface
         $this->createScheduledCommand($id++, 'one', 'debug:container', '--help', '@daily', 'one.log', 100, $beforeYesterday);
 
         // locked command
-        $this->createScheduledCommand($id++, 'two', 'debug:container', '', '@daily', 'two.log', 80, $beforeYesterday, true);
+        $this->createScheduledCommand($id++, 'two', 'debug:container', '', '@daily', 'two.log', 80, $beforeYesterday, 0, true);
 
         // disabled command
-        $this->createScheduledCommand($id++, 'three', 'debug:container', '', '@daily', 'three.log', 60, $today, false, true, true);
+        $this->createScheduledCommand($id++, 'three', 'debug:container', '', '@daily', 'three.log', 60, $today, 0, false, true, true);
 
         // execute immediately
-        $this->createScheduledCommand($id++, 'four', 'debug:router', '', '@daily', 'four.log', 40, $today, false, false, true);
+        $this->createScheduledCommand($id++, 'four', 'debug:router', '', '@daily', 'four.log', 40, $today, 0, false, false, true);
 
         // command with empty userhost with executions
-        $this->createScheduledCommand($id++, 'no rights', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, true, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'no rights', 'debug:container', '--help', '* * * * *', 'null', 0, null, 1, false, false, true, true, $this->rights[$rightId++]);
 
         // current user
-        $this->createScheduledCommand($id++, 'user only', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, true, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'user only', 'debug:container', '--help', '* * * * *', 'null', 0, null, 0, false, false, true, true, $this->rights[$rightId++]);
 
         // current host
-        $this->createScheduledCommand($id++, 'host only', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'host only', 'debug:container', '--help', '* * * * *', 'null', 0, null, 0, false, false, true, false, $this->rights[$rightId++]);
 
         // current user and host
-        $this->createScheduledCommand($id++, 'user and host', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'user and host', 'debug:container', '--help', '* * * * *', 'null', 0, null, 0, false, false, true, false, $this->rights[$rightId++]);
 
         // not current user
-        $this->createScheduledCommand($id++, 'not user only', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'not user only', 'debug:container', '--help', '* * * * *', 'null', 0, null, 0, false, false, true, false, $this->rights[$rightId++]);
 
         // not current host
-        $this->createScheduledCommand($id++, 'not host only', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'not host only', 'debug:container', '--help', '* * * * *', 'null', 0, null, 0, false, false, true, false, $this->rights[$rightId++]);
 
         // not current user and host
-        $this->createScheduledCommand($id++, 'not user and host', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'not user and host', 'debug:container', '--help', '* * * * *', 'null', 0, null, 0, false, false, true, false, $this->rights[$rightId++]);
 
         // locked, timeout and disabled
-        $this->createScheduledCommand($id++, 'locked, timeout and disabled', 'debug:container', '--help', '* * * * *', 'null', 0, $beforeYesterday, true, true);
+        $this->createScheduledCommand($id++, 'locked, timeout and disabled', 'debug:container', '--help', '* * * * *', 'null', 0, $beforeYesterday, 3, true, true);
 
         // locked, running
-        $this->createScheduledCommand($id++, 'locked, running', 'debug:container', '--help', '* * * * *', 'null', 0, $now, true);
+        $this->createScheduledCommand($id++, 'locked, running', 'debug:container', '--help', '* * * * *', 'null', 0, $now, 0, true);
     }
 
     /**
@@ -89,6 +92,7 @@ class LoadTestData implements FixtureInterface
      * @param string $logFile
      * @param integer $priority
      * @param string $lastExecution
+     * @param integer $lastReturnCode
      * @param bool $locked
      * @param bool $disabled
      * @param bool $executeNow
@@ -104,6 +108,7 @@ class LoadTestData implements FixtureInterface
         $logFile,
         $priority,
         $lastExecution,
+        $lastReturnCode = 0,
         $locked = false,
         $disabled = false,
         $executeNow = false,
@@ -121,16 +126,16 @@ class LoadTestData implements FixtureInterface
             ->setLogFile($logFile)
             ->setPriority($priority)
             ->setLastExecution($lastExecution)
+            ->setLastReturnCode($lastReturnCode)
             ->setLocked($locked)
             ->setDisabled($disabled)
-            ->setLastReturnCode(0)
             ->setExecuteImmediately($executeNow)
             ->setRights($rights);
 
         $this->manager->persist($scheduledCommand);
         $this->manager->flush();
 
-        if($appendExecutions) {
+        if ($appendExecutions) {
             $this->createExecutions($scheduledCommand);
         }
     }
@@ -142,7 +147,7 @@ class LoadTestData implements FixtureInterface
     {
         $currentHostname = gethostname();
         $currentUser = $this->getUsername();
-        
+
         $this->createUserHost(1, 'empty', '', '', '', '');
         $this->createUserHost(2, 'user only', $currentUser, '', '', '');
         $this->createUserHost(3, 'host only', '', $currentHostname, '', '');
@@ -188,7 +193,7 @@ class LoadTestData implements FixtureInterface
         } else {
             $userHost->setInfo($title);
         }
-        
+
         array_push($this->rights, $userHost);
 
         $this->manager->persist($userHost);
