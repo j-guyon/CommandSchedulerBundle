@@ -28,6 +28,16 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
     }
 
     /**
+     * test scheduler:execute if there are no commands at all
+     */
+    public function testExecuteWithoutCommands()
+    {
+        $output = $this->executeCommand($this->command, $this->commandName);
+
+        $this->assertRegExp('/Nothing to do/', $output);
+    }
+
+    /**
      * Test scheduler:execute without option
      */
     public function testExecute()
@@ -82,16 +92,6 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
         );
         $this->assertEquals('', $output);
         $output = $this->executeCommand($this->command, $this->commandName);
-        $this->assertRegExp('/Nothing to do/', $output);
-    }
-
-    /**
-     * test scheduler:execute if there are no commands at all
-     */
-    public function testExecuteWithoutCommands()
-    {
-        $output = $this->executeCommand($this->command, $this->commandName);
-
         $this->assertRegExp('/Nothing to do/', $output);
     }
 }
