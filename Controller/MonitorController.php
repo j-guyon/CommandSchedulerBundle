@@ -24,7 +24,7 @@ class MonitorController extends BaseController
     {
         $this->setManager();
 
-        $scheduledCommands = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
+        $scheduledCommands = $this->getRepository('ScheduledCommand')->findByActiveLocked();
 
         $timeoutValue = $this->container->getParameter('jmose_command_scheduler.lock_timeout');
 
@@ -39,6 +39,10 @@ class MonitorController extends BaseController
             }
 
             $executionTime = $command->getLastExecution();
+            if($executionTime == null) {
+                continue;
+            }
+
             $executionTimestamp = $executionTime->getTimestamp();
 
             $timedOut = (($executionTimestamp + $timeoutValue) < $now);
@@ -54,6 +58,7 @@ class MonitorController extends BaseController
                 )
             ) {
                 $failed[$command->getName()] = array(
+                    'ID_SCHEDULED_COMMAND' => $command->getId(),
                     'LAST_RETURN_CODE' => $command->getLastReturnCode(),
                     'B_LOCKED' => $command->getLocked() ? 'true' : 'false',
                     'DH_LAST_EXECUTION' => $executionTime

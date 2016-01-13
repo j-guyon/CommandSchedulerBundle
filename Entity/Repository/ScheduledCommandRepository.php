@@ -22,7 +22,7 @@ class ScheduledCommandRepository extends EntityRepository
     public function findEnabledCommand()
     {
         return $this->findBy(
-            array(// criteria
+            array( // criteria
                 'disabled' => false,
                 'locked' => false
             ),
@@ -39,6 +39,22 @@ class ScheduledCommandRepository extends EntityRepository
     {
         return $this->findBy(
             array(), // criteria
+            array('priority' => 'DESC') // ordering
+        );
+    }
+
+    /**
+     * find all locked, active commands for monitoring
+     *
+     * @return ScheduledCommand[]
+     */
+    public function findByActiveLocked()
+    {
+        return $this->findBy(
+            array( // criteria
+                'locked' => true,
+                'disabled' => false
+            ),
             array('priority' => 'DESC') // ordering
         );
     }

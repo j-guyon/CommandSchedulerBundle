@@ -70,6 +70,12 @@ class LoadTestData implements FixtureInterface
 
         // not current user and host
         $this->createScheduledCommand($id++, 'not user and host', 'debug:container', '--help', '* * * * *', 'null', 0, null, false, false, true, false, $this->rights[$rightId++]);
+
+        // locked, timeout and disabled
+        $this->createScheduledCommand($id++, 'locked, timeout and disabled', 'debug:container', '--help', '* * * * *', 'null', 0, $beforeYesterday, true, true);
+
+        // locked, running
+        $this->createScheduledCommand($id++, 'locked, running', 'debug:container', '--help', '* * * * *', 'null', 0, $now, true);
     }
 
     /**

@@ -12,12 +12,13 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
-define('NUMBER_COMMANDS_NO_RIGHTS', 4);
+define('NUMBER_COMMANDS_TOTAL', 13);
 define('NUMBER_COMMANDS_RIGHTS', 7);
-define('NUMBER_COMMANDS_TOTAL', (NUMBER_COMMANDS_NO_RIGHTS + NUMBER_COMMANDS_RIGHTS));
-define('NUMBER_COMMANDS_ACTIVE', 3);
+define('NUMBER_COMMANDS_NO_RIGHTS', (NUMBER_COMMANDS_TOTAL - NUMBER_COMMANDS_RIGHTS));
+
+define('NUMBER_COMMANDS_ACTIVE', 11);
 define('NUMBER_COMMANDS_INACTIVE', (NUMBER_COMMANDS_TOTAL - NUMBER_COMMANDS_ACTIVE));
-define('NUMBER_COMMANDS_LOCKED', 1);
+define('NUMBER_COMMANDS_LOCKED', 3);
 
 define('NUMBER_RIGHTS_TOTAL', 7);
 
@@ -110,19 +111,21 @@ class CommandSchedulerBaseTest extends WebTestCase
      * call a URL, follow redirects
      *
      * @param string $method GET|POST
-     * @param string $url
+     * @param string $url URL
+     * @param string $return crawler|response to return either a \Symfony\Component\DomCrawler\Crawler or a \Symfony\Component\HttpFoundation\Response
      *
-     * @return \Symfony\Component\DomCrawler\Crawler
+     * @return mixed
      */
-    protected function callUrl($method, $url)
+    protected function callUrl($method, $url, $return = 'crawler')
     {
         $client = parent::createClient();
         $client->followRedirects(true);
         $crawler = $client->request($method, $url);
 
-        return $crawler;
-    }
+        $response = $client->getResponse();
 
+        return ${$return};
+    }
 
     /**
      * Execute a command and return the outputs
@@ -162,18 +165,8 @@ class CommandSchedulerBaseTest extends WebTestCase
         ));
     }
 
-//    /**
-//     * load rights fixtures
-//     */
-//    protected function loadRightsFixtures() {
-//        //DataFixtures create 8 records
-//        $this->loadFixtures(array(
-//            'JMose\CommandSchedulerBundle\DataFixtures\ORM\LoadUserHostData'
-//        ));
-//    }
-
     /**
-     * dummy test so there is a test in every child test
+     * dummy test so there is one in every test
      */
     public function testNothing()
     {

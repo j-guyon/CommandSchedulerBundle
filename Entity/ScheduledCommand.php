@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Entity ScheduledCommand
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
+ * @author  Daniel Fischer <dfischer000@gmail.com>
  * @package JMose\CommandSchedulerBundle\Entity
  */
 class ScheduledCommand
