@@ -169,7 +169,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
             ->filter('a.unlockCommand')
             ->count();
 
-        $this->assertEquals($numberLockedBefore, 1);
+        $this->assertEquals($numberLockedBefore, NUMBER_COMMANDS_LOCKED);
 
         // unlock command
         $crawler = $this->callUrl(
@@ -182,7 +182,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
             ->filter('a.unlockCommand')
             ->count();
 
-        $this->assertEquals($numberLockedAfter, 0);
+        $this->assertEquals($numberLockedAfter, NUMBER_COMMANDS_LOCKED - 1);
     }
 
     /**
@@ -204,7 +204,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
             ->filter($selector)
             ->count();
 
-        $this->assertEquals($numberLocked, 1);
+        $this->assertEquals($numberLocked, NUMBER_COMMANDS_INACTIVE);
 
         // toggle command
         $crawler = $this->callUrl(
@@ -215,7 +215,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
             ->filter($selector)
             ->count();
 
-        $this->assertEquals($numberLocked, 0);
+        $this->assertEquals($numberLocked, NUMBER_COMMANDS_INACTIVE - 1);
 
         // toggle command
         $crawler = $this->callUrl(
@@ -226,7 +226,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
             ->filter($selector)
             ->count();
 
-        $this->assertEquals($numberLocked, 1);
+        $this->assertEquals($numberLocked, NUMBER_COMMANDS_INACTIVE);
     }
 
     /**
