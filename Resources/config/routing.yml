@@ -23,3 +23,7 @@ jmose_command_scheduler_detail:
 jmose_command_scheduler_monitor:
     path:  /command-scheduler/monitor
     defaults: { _controller: JMoseCommandSchedulerBundle:Monitor:monitor }
+
+jmose_command_scheduler_status:
+    path:  /command-scheduler/status
+    defaults: { _controller: JMoseCommandSchedulerBundle:Monitor:status }

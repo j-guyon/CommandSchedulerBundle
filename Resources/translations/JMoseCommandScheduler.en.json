@@ -11,6 +11,11 @@
       "title": "User/Host requirements",
       "new": "New",
       "overview": "Overview"
+    },
+    "tools": {
+      "title": "Tools",
+      "executions": "Executions",
+      "monitor": "Monitor"
     }
   },
   "list": {
@@ -22,7 +27,8 @@
     "executions": "Show list of all previous executions",
     "previousExecutions": "Previous executions",
     "monitor": "Open monitoring",
-    "monitorNotice": "Machine readable output only"
+    "monitorNotice": "Machine readable output only",
+    "monitortitle": "Monitoring"
   },
   "action": {
     "delete": "Remove",
@@ -61,7 +67,8 @@
     "actions": "Actions",
     "logExecutions": "Log Executions",
     "openHelper": "open Cron Expression Helper",
-    "rights": "User/Host Requirements"
+    "rights": "User/Host Requirements",
+    "timeout":"Timeout"
   },
   "execution": {
     "run": "Run",
@@ -106,7 +113,7 @@
     "hourly": "hourly",
     "daily": "daily",
     "monthly": "monthly",
-    "last":"last",
+    "last": "last",
     "month": {
       "january": "January",
       "february": "February",

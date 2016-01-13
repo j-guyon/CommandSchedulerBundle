@@ -14,6 +14,8 @@ use JMose\CommandSchedulerBundle\Service\MonitorService;
  */
 class MonitorController extends BaseController
 {
+/** @var MonitorService */
+    private $monitorService;
     /**
      * method checks if there are jobs which are enabled but did not return 0 on last execution or are locked.<br>
      * if a match is found, HTTP status 417 is sent along with an array which contains name, return code and locked-state.
@@ -23,13 +25,9 @@ class MonitorController extends BaseController
      */
     public function monitorAction()
     {
-        $this->setManager();
+        $scheduledCommands = $this->getMonitoringData();
 
-        $scheduledCommands = $this->getRepository('ScheduledCommand')->findByActiveLocked();
-
-        /** @var MonitorService $monitorService */
-        $monitorService = $this->get('jmose_command_scheduler.monitorService');
-        $failed = $monitorService->processCommandsJSON($scheduledCommands);
+        $failed = $this->monitorService->processCommandsJSON($scheduledCommands);
 
         $status = count($failed) > 0 ? Response::HTTP_EXPECTATION_FAILED : Response::HTTP_OK;
 
@@ -47,14 +45,31 @@ class MonitorController extends BaseController
      */
     public function statusAction()
     {
-        /** @var array $scheduledCommands */
-        $scheduledCommands = $this->doctrineManager->getRepository($this->bundleName . ':ScheduledCommand')->findAll();
+        $scheduledCommands = $this->getMonitoringData();
+        $data = $this->monitorService->processCommandsHTML($scheduledCommands);
 
         $result = $this->render(
-            $this->bundleName . ':List:indexCommands.html.twig',
-            array('scheduledCommands' => $scheduledCommands)
+            $this->bundleName . ':Tools:monitor.html.twig',
+            array('failed' => $data)
         );
 
         return $result;
+    }
+
+    /**
+     * get commands and init service
+     *
+     * @return array
+     */
+    protected function getMonitoringData()
+    {
+        /** @var MonitorService $monitorService */
+        $this->monitorService = $this->get('jmose_command_scheduler.monitorService');
+
+        $this->setManager();
+
+        $scheduledCommands = $this->getRepository('ScheduledCommand')->findByActiveLocked();
+
+        return $scheduledCommands;
     }
 }

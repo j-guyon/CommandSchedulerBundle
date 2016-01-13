@@ -6,11 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Command Scheduler</title>
-    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/bootstrap/dist/css/bootstrap-theme.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/datatables/media/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/bootstrap/dist/css/bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/bootstrap/dist/css/bootstrap-theme.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/font-awesome/css/font-awesome.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ asset('bundles/jmosecommandscheduler/vendor/datatables/media/css/dataTables.bootstrap.min.css') }}"
+          rel="stylesheet">
     <link href="{{ asset('bundles/jmosecommandscheduler/css/global.css') }}" rel="stylesheet">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
@@ -29,20 +34,41 @@
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ "menu.commands.title"|trans }}<span class="caret"></span></a>
+                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown"
+                       class="dropdown-toggle" href="#">{{ "menu.commands.title"|trans }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{  path('jmose_command_scheduler_list_details', {'_type' :'commands'}) }}">{{ "menu.commands.overview"|trans }}</a></li>
-                        <li><a href="{{ path('jmose_command_scheduler_detail_command_new') }}">{{ "menu.commands.new" }}</a></li>
+                        <li>
+                            <a href="{{ path('jmose_command_scheduler_list_details', {'_type' :'commands'}) }}">{{ "menu.commands.overview"|trans }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('jmose_command_scheduler_detail_command_new') }}">{{ "menu.commands.new"|trans }}</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ "menu.rights.title"|trans }}<span class="caret"></span></a>
+                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown"
+                       class="dropdown-toggle" href="#">{{ "menu.rights.title"|trans }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{  path('jmose_command_scheduler_list_details', {'_type' :'rights'}) }}">{{ "menu.rights.overview"|trans }}</a></li>
-                        <li><a href="{{ path('jmose_command_scheduler_detail_right_new') }}">{{ "menu.rights.new"|trans }}</a></li>
+                        <li>
+                            <a href="{{ path('jmose_command_scheduler_list_details', {'_type' :'rights'}) }}">{{ "menu.rights.overview"|trans }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('jmose_command_scheduler_detail_right_new') }}">{{ "menu.rights.new"|trans }}</a>
+                        </li>
                     </ul>
                 </li>
-                <li><a href="{{ path('jmose_command_scheduler_list_details', {'_type' :'executions'}) }}">Executions</a></li>
+                <li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown"
+                       class="dropdown-toggle" href="#">{{ "menu.tools.title"|trans }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ path('jmose_command_scheduler_list_details', {'_type' :'executions'}) }}">{{ "menu.tools.executions"|trans }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('jmose_command_scheduler_detail_right_new') }}">{{ "menu.tools.monitor"|trans }}</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -90,9 +116,12 @@
         src="{{ asset('bundles/jmosecommandscheduler/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
 <script type="text/javascript"
         src="{{ asset('bundles/jmosecommandscheduler/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/bs-confirmation/bootstrap-confirmation.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/vendor/datatables/media/js/dataTables.bootstrap.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/jmosecommandscheduler/vendor/bs-confirmation/bootstrap-confirmation.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/jmosecommandscheduler/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/jmosecommandscheduler/vendor/datatables/media/js/dataTables.bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/global.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/cron.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/table.js') }}"></script>

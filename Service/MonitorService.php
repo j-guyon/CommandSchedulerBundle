@@ -31,7 +31,7 @@ class MonitorService
     }
 
     /**
-     * check array of commands for timeouts and/or failed returncodes
+     * check array of commands for timeouts and/or failed returncodes to be used in JSON response
      *
      * @param array $scheduledCommands array of commands
      *
@@ -59,6 +59,34 @@ class MonitorService
     }
 
     /**
+     * check array of commands for timeouts and/or failed returncodes to be used in HTML monitoring
+     *
+     * @param array $scheduledCommands array of commands
+     *
+     * @return array
+     */
+    public function processCommandsHTML($scheduledCommands)
+    {
+        $failed = array();
+
+        /** @var ScheduledCommand $command */
+        foreach ($scheduledCommands as $command) {
+            // command was never executed -> ignore
+            if ($command->getLastExecution() == null) {
+                continue;
+            }
+
+            if (
+                $this->checkCommandFailed($command)
+            ) {
+                $failed[] = $this->getFailedHTMLEntry($command);
+            }
+        }
+
+        return $failed;
+    }
+
+    /**
      * get entry for failed command to be used in JSON response
      *
      * @param ScheduledCommand $command command to be handled
@@ -71,6 +99,23 @@ class MonitorService
             'LAST_RETURN_CODE' => $command->getLastReturnCode(),
             'B_LOCKED' => $command->getLocked() ? 'true' : 'false',
             'DH_LAST_EXECUTION' => $command->getLastExecution()
+        );
+    }
+
+    /**
+     * get entry for failed command to be used in HTML response
+     *
+     * @param ScheduledCommand $command command to be handled
+     * @return array
+     */
+    private function getFailedHTMLEntry($command)
+    {
+        return array(
+            'id' => $command->getId(),
+            'name' => $command->getName(),
+            'returncode' => $command->getLastReturnCode(),
+            'timeout' => $command->getLocked(),
+            'execution' => $command->getLastExecution()->getTimestamp()
         );
     }
 

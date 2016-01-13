@@ -54,7 +54,7 @@ class LoadTestData implements FixtureInterface
         $this->createScheduledCommand($id++, 'four', 'debug:router', '', '@daily', 'four.log', 40, $today, 0, false, false, true);
 
         // command with empty userhost with executions
-        $this->createScheduledCommand($id++, 'no rights', 'debug:container', '--help', '* * * * *', 'null', 0, null, 1, false, false, true, true, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'no rights', 'debug:container', '--help', '* * * * *', 'null', 0, $now, 1, false, false, true, true, $this->rights[$rightId++]);
 
         // current user
         $this->createScheduledCommand($id++, 'user only', 'debug:container', '--help', '* * * * *', 'null', 0, null, 0, false, false, true, true, $this->rights[$rightId++]);
