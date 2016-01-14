@@ -32,7 +32,7 @@
                     {% set className = className ~ " text-muted" %}
                 {% endif %}
 
-                <tr class="{{ className }}">
+                <tr class="{{ className }}" data-dbid="{{ command.id }}">
                     <td rowspan="2">
                         <a href="{{ path('jmose_command_scheduler_action_command_toggle', {'id': command.id}) }}"
                            class="hasTooltip toggleCommand"
