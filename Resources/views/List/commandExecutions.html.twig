@@ -18,7 +18,7 @@
 
             <tbody>
             {% for execution in executions %}
-                <tr>
+                <tr class="execution">
                     <td>{{ execution.executionDate|date( "dateFormat"|trans ) }}</td>
                     <td>{{ execution.runtime }}</td>
                     <td>{{ execution.returnCode }}</td>

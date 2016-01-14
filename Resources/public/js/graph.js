@@ -81,7 +81,7 @@ var Graph = Graph || {
             runtimeGraphData = google.visualization.arrayToDataTable(runtimeData);
 
             runtimeChart = new google.visualization.LineChart(document.getElementById('runtimeGraph'));
-            runtimeChart.draw(runtimeGraphData, runtimeGraphOptions);
+            runtimeChart.draw(runtimeGraphData, Graph.runtimeGraphOptions);
         },
 
         /**
