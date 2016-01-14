@@ -97,7 +97,7 @@ class ExecuteCommand extends SchedulerBaseCommand
             if ($command->isExecuteImmediately()) {
                 $noneExecution = false;
                 $output->writeln(
-                    'Immediately execution asked for : <comment>' . $command->getCommand() . '</comment>'
+                    'Immediately execution asked for : <comment>' . $command->getCommand() . ' ' . $command->getArguments() . '</comment>'
                 );
 
                 if (!$input->getOption('dump')) {

@@ -528,32 +528,36 @@ class ScheduledCommand
         $excludedHost = $this->rights->getHostExcluded();
 
         // check user requirements
-        $result = (
-            $result && // not yet invalidated
-            $requiredUser && // user requirements set
-            preg_match("{" . $requiredUser . "}", $_SERVER['USER']) // requirement does match executing user
-        );
+        if($requiredUser) {
+            $result = (
+                $result && // not yet invalidated
+                preg_match("{" . $requiredUser . "}", $_SERVER['USER']) // requirement does match executing user
+            );
+        }
 
         // check excluded user requirements
-        $result = (
-            $result && // not yet invalidated
-            $excludedUser && // user requirements set
-            !preg_match("{" . $excludedUser . "}", $_SERVER['USER']) // requirement must not match executing user
-        );
+        if($excludedUser) {
+            $result = (
+                $result && // not yet invalidated
+                !preg_match("{" . $excludedUser . "}", $_SERVER['USER']) // requirement must not match executing user
+            );
+        }
 
         // check host requirements
-        $result = (
-            $result && // not yet invalidated
-            $requiredHost && // host requirements set
-            preg_match("{" . $requiredHost . "}", gethostname()) // requirement does match hostname
-        );
+        if($requiredHost) {
+            $result = (
+                $result && // not yet invalidated
+                preg_match("{" . $requiredHost . "}", gethostname()) // requirement does match hostname
+            );
+        }
 
         // check excluded host requirements
-        $result = (
-            $result && // not yet invalidated
-            $excludedHost && // host requirements set
-            !preg_match("{" . $excludedHost . "}", gethostname()) // requirement must not match hostname
-        );
+        if($excludedHost) {
+            $result = (
+                $result && // not yet invalidated
+                !preg_match("{" . $excludedHost . "}", gethostname()) // requirement must not match hostname
+            );
+        }
 
         return $result;
     }

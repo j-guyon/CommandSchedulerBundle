@@ -94,4 +94,40 @@ class ExecuteCommandTest extends CommandSchedulerBaseTest
         $output = $this->executeCommand($this->command, $this->commandName);
         $this->assertRegExp('/Nothing to do/', $output);
     }
+
+    public function testExecuteRights()
+    {
+        $this->loadDataFixtures();
+
+        // remove commands without rights requirements (we already tested those
+        for ($i = 1; $i <= NUMBER_COMMANDS_NO_RIGHTS; $i++) {
+            // remove command
+            $this->callUrl(
+                'GET',
+                '/command-scheduler/action/remove/command/' . $i
+            );
+        }
+
+        // mark all remaining commands as execute immediately
+        for ($i = NUMBER_COMMANDS_NO_RIGHTS + 1; $i <= NUMBER_COMMANDS_TOTAL - 2; $i++) {
+            $this->callUrl(
+                'GET',
+                '/command-scheduler/action/execute/command/' . $i
+            );
+        }
+
+        // dump commands (no need to execute them, we already know dump works fine
+        $output = $this->executeCommand(
+            $this->command,
+            $this->commandName,
+            array(
+                '--dump' => true
+            )
+        );
+
+        $this->assertStringStartsWith('Start : Dump all scheduled command', $output);
+
+        $this->assertRegExp('/--trash=[5-8]/', $output);
+        $this->assertNotRegExp('/--trash=[9|10-12]/', $output);
+    }
 }
