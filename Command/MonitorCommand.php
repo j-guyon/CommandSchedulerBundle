@@ -24,7 +24,7 @@ class MonitorCommand extends SchedulerBaseCommand
     protected function configure()
     {
         $this
-            ->setName('scheduler:monitor')
+            ->setName('schedulerTools:monitor')
             ->setDescription('Monitor scheduled commands')
             ->addOption('dump', null, InputOption::VALUE_NONE, 'Display result before mailing (even if no receiver is set)')
             ->addOption('no-output', null, InputOption::VALUE_NONE, 'Disable output message from scheduler')
