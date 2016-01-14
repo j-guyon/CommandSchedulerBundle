@@ -11,7 +11,6 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use Symfony\Component\Validator\Constraints\Null;
 use JMose\CommandSchedulerBundle\Entity\Execution;
 
 /**

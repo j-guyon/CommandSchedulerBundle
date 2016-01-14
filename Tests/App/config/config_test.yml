@@ -2,6 +2,7 @@ parameters:
     database_path: %kernel.root_dir%/../../build/test.db
 
 framework:
+    assets:          ~
     translator:      ~
     secret:          secret
     test:            ~
