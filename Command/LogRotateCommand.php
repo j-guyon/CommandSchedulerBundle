@@ -30,7 +30,7 @@ class LogRotateCommand extends SchedulerBaseCommand
     protected function configure()
     {
         $this
-            ->setName('scheduler:logrotate')
+            ->setName('schedulerTools:logrotate')
             ->setDescription('Cleanup execution logs')
             ->addOption(
                 'no-output',
