@@ -274,6 +274,35 @@ class CommandControllerTest extends CommandSchedulerBaseTest
         $this->assertEquals($numberLogging, 0);
     }
 
+    public function testExecuteImmediately()
+    {
+        $this->loadDataFixtures();
+
+        // muted for commands to be executed immediately
+        $selector = 'span.text-muted.fa-play';
+
+        // make sure there is a locked command
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/list/commands'
+        );
+
+        $before = $crawler
+            ->filter($selector)
+            ->count();
+
+        $crawler = $this->callUrl(
+            'GET',
+            '/command-scheduler/action/execute/command/5'
+        );
+
+        $after = $crawler
+            ->filter($selector)
+            ->count();
+
+        $this->assertEquals($before + 1, $after);
+    }
+
     /**
      * test removing a command
      */

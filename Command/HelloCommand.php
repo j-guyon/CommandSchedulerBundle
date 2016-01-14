@@ -37,10 +37,10 @@ class HelloCommand extends ContainerAwareCommand
                 'World'
             )
             ->addOption(
-                'randReturn',
+                'trash',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'set to enable random return value',
+                'can be set to anything, not used',
                 false
             )
             ->addOption(

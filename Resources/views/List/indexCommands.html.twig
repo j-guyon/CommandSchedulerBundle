@@ -124,7 +124,7 @@
                            data-btnOkLabel="{{ "action.execute"|trans }}"
                            data-title="{{ "confirm.execute"|trans }}"
                            class="executeNow">
-                        <span class="text-{% if command.executeImmediately == true %}muted{% else %}success{% endif %} fa fa-play hasTooltip"
+                        <span class="text-{% if command.executeImmediately %}muted{% else %}success{% endif %} fa fa-play hasTooltip"
                               title="{{ "tooltip.executeCommand"|trans }}"></span>
                             <span class="sr-only">{{ "action.execute"|trans }}</span>
                         </a>
