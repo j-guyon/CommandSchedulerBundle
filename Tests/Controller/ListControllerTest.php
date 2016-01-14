@@ -13,6 +13,17 @@ class ListControllerTest extends CommandSchedulerBaseTest
 {
 
     /**
+     * Test list commands without data
+     */
+    public function testIndexCommandsEmpty()
+    {
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/commands');
+
+        $result = $crawler->filter('span.fa-info-circle')->count();
+        $this->assertEquals(0, $result);
+    }
+
+    /**
      * Test list commands
      */
     public function testIndexCommands()
@@ -29,6 +40,17 @@ class ListControllerTest extends CommandSchedulerBaseTest
     }
 
     /**
+     * Test list UserHost without data
+     */
+    public function testIndexUserHostsEmpty()
+    {
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/rights');
+
+        $result = $crawler->filter('tr.userHost')->count();
+        $this->assertEquals(0, $result);
+    }
+
+    /**
      * Test list UserHost
      */
     public function testIndexUserHosts()
@@ -39,6 +61,17 @@ class ListControllerTest extends CommandSchedulerBaseTest
 
         $result = $crawler->filter('tr.userHost')->count();
         $this->assertEquals(NUMBER_RIGHTS_TOTAL, $result);
+    }
+
+    /**
+     * Test list Executions without data
+     */
+    public function testIndexExecutionsEmpty()
+    {
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/executions');
+
+        $result = $crawler->filter('tr.execution')->count();
+        $this->assertEquals(0, $result);
     }
 
     /**
