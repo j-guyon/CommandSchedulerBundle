@@ -27,7 +27,7 @@ class UserHostController extends BaseController
     public function indexRightAction(UserHost $userHost, Form $userHostForm = null)
     {
         if (null === $userHostForm) {
-            $userHostForm = $this->createForm(new UserHostType(), $userHost);
+            $userHostForm = $this->createForm('JMose\CommandSchedulerBundle\Form\Type\UserHostType', $userHost);
         }
 
         return $this->render(
@@ -80,16 +80,16 @@ class UserHostController extends BaseController
     public function saveRightAction(Request $request)
     {
         // Init and populate form object
-        $rightDetail = $request->request->get('command_scheduler_userhost');
+        $rightDetail = $request->request->get('user_host');
         if ($rightDetail['id'] != '') {
-            $right = $this->doctrineManager
-                ->getRepository($this->bundleName . ':UserHost')
+            $right = $this
+                ->getRepository('UserHost')
                 ->find($rightDetail['id']);
         } else {
             $right = new UserHost();
         }
 
-        $rightForm = $this->createForm(new UserHostType(), $right);
+        $rightForm = $this->createForm('JMose\CommandSchedulerBundle\Form\Type\UserHostType', $right);
         $rightForm->handleRequest($request);
 
         if ($rightForm->isValid()) {

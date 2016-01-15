@@ -11,7 +11,7 @@ namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
 use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 
-class UserHostControllerTest extends CommandSchedulerBaseTest
+class ExecutionControllerTest extends CommandSchedulerBaseTest
 {
     protected $rowSelector = 'tr.execution';
     protected $graphSelector = 'div.graphs';

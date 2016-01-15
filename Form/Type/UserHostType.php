@@ -4,7 +4,7 @@ namespace JMose\CommandSchedulerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class UserHostType, used to edit/create UserHost Requirements
@@ -18,52 +18,66 @@ class UserHostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
+        $builder->add('id', 'Symfony\Component\Form\Extension\Core\Type\HiddenType');
 
         $builder->add(
-            'title', 'text', array(
+            'title',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
                 'label'    => 'rights.title',
                 'required' => true
             )
         );
 
         $builder->add(
-            'user', 'text', array(
+            'user',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
                 'label'    => 'rights.user',
                 'required' => false
             )
         );
 
         $builder->add(
-            'host', 'text', array(
+            'host',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
                 'label'    => 'rights.host',
                 'required' => false
             )
         );
 
         $builder->add(
-            'user_excluded', 'text', array(
+            'user_excluded',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
                 'label'    => 'rights.userExcluded',
                 'required' => false
             )
         );
 
         $builder->add(
-            'host_excluded', 'text', array(
+            'host_excluded',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
                 'label'    => 'rights.hostExcluded',
                 'required' => false
             )
         );
 
         $builder->add(
-            'info', 'textarea', array(
+            'info',
+            'Symfony\Component\Form\Extension\Core\Type\TextareaType',
+            array(
                 'label'    => 'rights.info',
                 'required' => false
             )
         );
 
         $builder->add(
-            'save', 'submit', array(
+            'save',
+            'Symfony\Component\Form\Extension\Core\Type\SubmitType',
+            array(
                 'label' => 'action.save',
             )
         );
@@ -72,7 +86,7 @@ class UserHostType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

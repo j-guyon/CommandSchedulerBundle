@@ -155,6 +155,7 @@ class LoadTestData implements FixtureInterface
         $this->createUserHost(5, 'user excluded', '', '', $currentUser, '');
         $this->createUserHost(6, 'host excluded', '', '', '', $currentHostname);
         $this->createUserHost(7, 'user and host excluded', '', '', $currentUser, $currentHostname);
+        $this->createUserHost(8, 'title', 'user', 'host', 'userExcluded', 'hostExcluded', 'info');
     }
 
     /**

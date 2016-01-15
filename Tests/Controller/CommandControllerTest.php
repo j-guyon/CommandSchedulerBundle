@@ -15,8 +15,7 @@ class CommandControllerTest extends CommandSchedulerBaseTest
     public function testInitNewScheduledCommand()
     {
         // get input form
-        $client = parent::createClient();
-        $crawler = $client->request('GET', '/command-scheduler/detail/commands/new');
+        $crawler = $this->callUrl('GET', '/command-scheduler/detail/commands/new');
 
         $fields = array(
             'select#scheduled_command_command', // command select
@@ -65,30 +64,29 @@ class CommandControllerTest extends CommandSchedulerBaseTest
         $this->loadDataFixtures();
 
         // get form
-        $client = parent::createClient();
-        $crawler = $client->request('GET', '/command-scheduler/detail/commands/edit/1');
+        $crawler = $this->callUrl('GET', '/command-scheduler/detail/commands/edit/1');
 
         $fields = array(
-            'select#scheduled_command_command' => 1, // command select
-            'select#scheduled_command_rights' => 1, // user/host select
+            'select#scheduled_command_command', // command select
+            'select#scheduled_command_rights', // user/host select
 
             // input fields
-            '#scheduled_command_name' => 1,
-            '#scheduled_command_arguments' => 1,
-            '#scheduled_command_cronExpression' => 1,
-            '#scheduled_command_logFile' => 1,
-            '#scheduled_command_priority' => 1,
-            '#scheduled_command_expectedRuntime' => 1,
-            '#scheduled_command_executeImmediately' => 1,
-            '#scheduled_command_disabled' => 1,
-            '#scheduled_command_logExecutions' => 1,
+            '#scheduled_command_name',
+            '#scheduled_command_arguments',
+            '#scheduled_command_cronExpression',
+            '#scheduled_command_logFile',
+            '#scheduled_command_priority',
+            '#scheduled_command_expectedRuntime',
+            '#scheduled_command_executeImmediately',
+            '#scheduled_command_disabled',
+            '#scheduled_command_logExecutions',
 
-            'a.btn' => 1, // back button
-            'button#scheduled_command_save' => 1, // save button
+            'a.btn', // back button
+            'button#scheduled_command_save', // save button
         );
 
-        foreach ($fields as $field => $count)
-            $this->assertEquals($count,
+        foreach ($fields as $field)
+            $this->assertEquals(1,
                 $crawler->filter($field)->count()
             );
 
