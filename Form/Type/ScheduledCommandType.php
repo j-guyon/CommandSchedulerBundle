@@ -12,6 +12,8 @@ use JMose\CommandSchedulerBundle\Entity\UserHost;
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @author  Daniel Fischer <dfischer000@gmail.com>
+ * 
+ * @package JMose\CommandSchedulerBundle\Form\Type
  */
 class ScheduledCommandType extends AbstractType
 {

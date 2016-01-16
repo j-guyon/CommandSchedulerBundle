@@ -45,15 +45,10 @@ class ExecuteCommand extends SchedulerBaseCommand
 
         $this->dumpMode = $input->getOption('dump');
         $this->logPath = $this->getContainer()->getParameter('jmose_command_scheduler.log_path');
-        if($this->logPath) {
-            $this->logPath = rtrim($this->logPath, '/\\');
-        }
 
-	    // set logpath to false if specified in parameters to suppress logging
-	    if(("false" == $this->logPath) || !$this->logPath) {
-		    $this->logPath = false;
-	    } else {
-		    $this->logPath .= DIRECTORY_SEPARATOR;
+	    // If logpath is not set to false, append the directory separator to it
+	    if(false !== $this->logPath) {
+            $this->logPath = rtrim($this->logPath, '/\\') . DIRECTORY_SEPARATOR ;
 	    }
 
         // store the original verbosity before apply the quiet parameter
@@ -160,23 +155,13 @@ class ExecuteCommand extends SchedulerBaseCommand
             $scheduledCommand->getArguments(true)
         ));
 
-        // Use a StreamOutput to redirect write() and writeln() in a log file
-        $path = $this->logPath;
-        $file =  $scheduledCommand->getLogFile();
-        if(($path !== false) && ("null" != strtolower($file))) {
-            // append directory separator if there is none
-            if(substr($path, -1) !== DIRECTORY_SEPARATOR) {
-                $path = $path . DIRECTORY_SEPARATOR;
-            }
-            //
-            $path = $path . $file;
-
-	        // initialize streamoutput with specified target and verbosity
-	        $logOutput = new StreamOutput(fopen(
-	            $path, 'a', false
-	        ), $this->commandsVerbosity);
-        } else { // initialize nulloutput to disable output
+        // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
+        if (false === $this->logPath && "" != $scheduledCommand->getLogFile()) {
             $logOutput = new NullOutput();
+        }else{
+            $logOutput = new StreamOutput(fopen(
+                $this->logPath . $scheduledCommand->getLogFile(), 'a', false
+            ),$this->commandsVerbosity );
         }
 
         // Execute command and get return code

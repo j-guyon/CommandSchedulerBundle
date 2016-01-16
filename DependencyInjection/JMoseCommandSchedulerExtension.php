@@ -20,7 +20,6 @@ class JMoseCommandSchedulerExtension extends Extension
     {
         $BCBreakParams = array(
             'jmose_command_scheduler.log_path' => 'log_path',
-            'jmose_command_scheduler.log_timeout' => false,
             'jmose_command_scheduler.command_choice_list.excluded_namespaces' => 'excluded_command_namespaces',
             'jmose_command_scheduler.doctrine_manager' => 'doctrine_manager',
         );

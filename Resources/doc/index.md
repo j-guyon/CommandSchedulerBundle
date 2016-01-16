@@ -101,10 +101,10 @@ jmose_command_scheduler:
     # if log_path is set to false, logging to files is disabled at all 
     log_path: app\logs\
     # This default value disables timeout checking (see monitoring), set to a numeric value (seconds) to enable it
-    log_timeout: false
+    lock_timeout: false
     # receivers for reporting mails
-    monitor_mail: [ "nobody@example.com" ]
-    # to send "everything's all right" emails to receivers for reporting mails set this value to "true"
+    monitor_mail: []
+    # to send "everything's all right" emails to receivers for reporting mails set this value to "true" (see monitoring)
     send_ok: false
 
     # Namespaces listed here won't be listed in the list
@@ -164,7 +164,7 @@ Thus, if an non-catchable error occurs, the command won't be executed again unle
 
 For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
 
-Monitor Jobs
+Monitoring
 =============
 
 To enable (external) checks if the jobs are running correctly there is a URL which runs a check with the following requirements/limits:
