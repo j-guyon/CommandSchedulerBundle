@@ -34,29 +34,7 @@ class ExecuteCommand extends SchedulerBaseCommand
     }
 
     /**
-     * Initialize parameters and services used in execute function
-     *
      * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
-        parent::initialize($input, $output);
-
-        $this->dumpMode = $input->getOption('dump');
-        $this->logPath = $this->getContainer()->getParameter('jmose_command_scheduler.log_path');
-
-	    // If logpath is not set to false, append the directory separator to it
-	    if(false !== $this->logPath) {
-            $this->logPath = rtrim($this->logPath, '/\\') . DIRECTORY_SEPARATOR ;
-	    }
-
-        // store the original verbosity before apply the quiet parameter
-        $this->commandsVerbosity = $output->getVerbosity();
-    }
-
-    /**
-     * @param InputInterface  $input
      * @param OutputInterface $output
      * @return int|null|void
      */
@@ -65,10 +43,14 @@ class ExecuteCommand extends SchedulerBaseCommand
         $output->writeln('<info>Start : ' . ($this->dumpMode ? 'Dump' : 'Execute') . ' all scheduled command</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
-        if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
+        if (
+            false !== $this->logPath &&
+            strpos($this->logPath, 'gaufrette:') !== 0 &&
+            false === is_writable($this->logPath)
+        ) {
             $output->writeln(
-                '<error>'.$this->logPath.
-                ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
+                '<error>' . $this->logPath .
+                ' not found or not writable. You should override `log_path` in your config.yml' . '</error>'
             );
 
             return;
@@ -81,13 +63,13 @@ class ExecuteCommand extends SchedulerBaseCommand
 
             /** @var ScheduledCommand $command */
             // check if the command's rights (user and host) allow execution of the command at all.
-            if(!$command->checkRights()) {
+            if (!$command->checkRights()) {
                 continue;
             }
 
-            $cron        = CronExpression::factory($command->getCronExpression());
+            $cron = CronExpression::factory($command->getCronExpression());
             $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
-            $now         = new \DateTime();
+            $now = new \DateTime();
 
             if ($command->isExecuteImmediately()) {
                 $noneExecution = false;
@@ -101,9 +83,9 @@ class ExecuteCommand extends SchedulerBaseCommand
             } elseif ($nextRunDate < $now) {
                 $noneExecution = false;
                 $output->writeln(
-                    'Command <comment>'.$command->getCommand().
-                    '</comment> should be executed - last execution : <comment>'.
-                    $command->getLastExecution()->format('d/m/Y H:i:s').'.</comment>'
+                    'Command <comment>' . $command->getCommand() .
+                    '</comment> should be executed - last execution : <comment>' .
+                    $command->getLastExecution()->format('d/m/Y H:i:s') . '.</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
@@ -128,7 +110,7 @@ class ExecuteCommand extends SchedulerBaseCommand
         $scheduledCommand->setLastExecution($now);
         $scheduledCommand->setLocked(true);
 
-        if($scheduledCommand->logExecutions()){
+        if ($scheduledCommand->logExecutions()) {
             $log = new Execution();
             $log->setCommand($scheduledCommand);
             $log->setExecutionDate($now);
@@ -150,24 +132,27 @@ class ExecuteCommand extends SchedulerBaseCommand
         $input = new ArrayInput(array_merge(
             array(
                 'command' => $scheduledCommand->getCommand(),
-                '--env'   => $input->getOption('env')
+                '--env' => $input->getOption('env')
             ),
             $scheduledCommand->getArguments(true)
         ));
 
         // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
-        if (false === $this->logPath && "" != $scheduledCommand->getLogFile()) {
+        if (
+            false === $this->logPath &&
+            "" != $scheduledCommand->getLogFile()
+        ) {
             $logOutput = new NullOutput();
-        }else{
+        } else {
             $logOutput = new StreamOutput(fopen(
                 $this->logPath . $scheduledCommand->getLogFile(), 'a', false
-            ),$this->commandsVerbosity );
+            ), $this->commandsVerbosity);
         }
 
         // Execute command and get return code
         try {
             $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand()
-                . ' ' .$scheduledCommand->getArguments() . '</comment>');
+                . ' ' . $scheduledCommand->getArguments() . '</comment>');
             $result = $command->run($input, $logOutput);
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());
@@ -185,7 +170,7 @@ class ExecuteCommand extends SchedulerBaseCommand
         $scheduledCommand->setLocked(false);
         $scheduledCommand->setExecuteImmediately(false);
 
-        if($scheduledCommand->logExecutions()){
+        if ($scheduledCommand->logExecutions()) {
             /** @var Execution $log */
             $log = $scheduledCommand->getCurrentLog();
             $log->setReturnCode($result);

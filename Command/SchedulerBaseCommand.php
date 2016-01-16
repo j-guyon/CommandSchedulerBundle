@@ -54,13 +54,11 @@ abstract class SchedulerBaseCommand extends ContainerAwareCommand
             $this->dumpMode = $input->getOption('dump');
         }
 
-        $this->logPath = rtrim($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), '/\\');
+        $this->logPath = $this->getContainer()->getParameter('jmose_command_scheduler.log_path');
 
-        // set logpath to false if specified in parameters to suppress logging
-        if (("false" == $this->logPath) || (false == $this->logPath)) {
-            $this->logPath = false;
-        } else {
-            $this->logPath .= DIRECTORY_SEPARATOR;
+        // If logpath is not set to false, append the directory separator to it
+        if(false !== $this->logPath) {
+            $this->logPath = rtrim($this->logPath, '/\\') . DIRECTORY_SEPARATOR ;
         }
 
         // store the original verbosity before apply the quiet parameter

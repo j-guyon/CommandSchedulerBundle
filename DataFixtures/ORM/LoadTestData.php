@@ -54,31 +54,31 @@ class LoadTestData implements FixtureInterface
         $this->createScheduledCommand($id++, 'four', 'debug:router', '', '@daily', 'four.log', 40, $today, 0, false, false, true);
 
         // command with empty userhost with executions
-        $this->createScheduledCommand($id++, 'no rights', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', 'null', 0, $now, 1, false, false, false, true, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'no rights', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', '', 0, $now, 1, false, false, false, true, $this->rights[$rightId++]);
 
         // current user
-        $this->createScheduledCommand($id++, 'user only', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', 'null', 0, null, 0, false, false, false, true, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'user only', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', '', 0, null, 0, false, false, false, true, $this->rights[$rightId++]);
 
         // current host
-        $this->createScheduledCommand($id++, 'host only', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', 'null', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'host only', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', '', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
 
         // current user and host
-        $this->createScheduledCommand($id++, 'user and host', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', 'null', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'user and host', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', '', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
 
         // not current user
-        $this->createScheduledCommand($id++, 'not user only', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', 'null', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'not user only', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', '', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
 
         // not current host
-        $this->createScheduledCommand($id++, 'not host only', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', 'null', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'not host only', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', '', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
 
         // not current user and host
-        $this->createScheduledCommand($id++, 'not user and host', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', 'null', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
+        $this->createScheduledCommand($id++, 'not user and host', 'schedulerTest:hello', '--trash=' . ($id - 1), '* * * * *', '', 0, null, 0, false, false, false, false, $this->rights[$rightId++]);
 
         // locked, timeout and disabled
-        $this->createScheduledCommand($id++, 'locked, timeout and disabled', 'debug:container', '--help', '* * * * *', 'null', 0, $beforeYesterday, 3, true, true);
+        $this->createScheduledCommand($id++, 'locked, timeout and disabled', 'debug:container', '--help', '* * * * *', '', 0, $beforeYesterday, 3, true, true);
 
         // locked, running
-        $this->createScheduledCommand($id++, 'locked, running', 'debug:container', '--help', '* * * * *', 'null', 0, $now, 0, true);
+        $this->createScheduledCommand($id++, 'locked, running', 'debug:container', '--help', '* * * * *', '', 0, $now, 0, true);
     }
 
     /**
