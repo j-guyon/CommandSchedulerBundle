@@ -46,7 +46,10 @@ abstract class SchedulerBaseCommand extends ContainerAwareCommand
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        if (true === $input->getOption('no-output')) {
+        if (
+            $input->hasOption('no-output') &&
+            (true === $input->getOption('no-output'))
+        ) {
             $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         }
 

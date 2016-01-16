@@ -14,8 +14,12 @@ use JMose\CommandSchedulerBundle\Service\MonitorService;
  */
 class MonitorController extends BaseController
 {
-/** @var MonitorService */
+    /** @var MonitorService */
     private $monitorService;
+
+    /** @var integer|false */
+    private $timeoutValue = false;
+
     /**
      * method checks if there are jobs which are enabled but did not return 0 on last execution or are locked.<br>
      * if a match is found, HTTP status 417 is sent along with an array which contains name, return code and locked-state.
@@ -61,14 +65,16 @@ class MonitorController extends BaseController
      *
      * @return array
      */
-    protected function getMonitoringData()
+    private function getMonitoringData()
     {
+        $this->timeoutValue = $this->container->getParameter('jmose_command_scheduler.lock_timeout');
+
         /** @var MonitorService $monitorService */
         $this->monitorService = $this->get('jmose_command_scheduler.monitorService');
 
         $this->setManager();
 
-        $scheduledCommands = $this->getRepository('ScheduledCommand')->findByActiveLocked();
+        $scheduledCommands = $this->getRepository('ScheduledCommand')->findFailedAndTimeoutCommands($this->timeoutValue);
 
         return $scheduledCommands;
     }

@@ -2,27 +2,94 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
+use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Class MonitorCommandTest
  * @package JMose\CommandSchedulerBundle\Tests\Command
  */
-class MonitorCommandTest extends WebTestCase
+class MonitorCommandTest extends CommandSchedulerBaseTest
 {
+    private $noErrors = 'No errors found.';
+
     /**
-     * Test scheduler:execute without option
+     * test monitor action with no existing commands
      */
-    public function testExecuteWithError()
+    public function testExecuteWithNoCommands()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-            )
+        // call monitor
+        $output = $this->callCommand();
+
+        $this->assertEquals($this->noErrors, $output);
+    }
+
+    /**
+     * test monitor action
+     */
+    public function testExecutionWithErrors()
+    {
+        $this->loadDataFixtures();
+
+        $output = $this->callCommand();
+
+        $expressions = array(
+            'no rights: returncode 1, locked: ,',
+            'two: returncode 0, locked: 1',
+            'locked, running: returncode 0'
         );
 
-        // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
+        $lines = explode("\n", $output);
+        $this->assertStringStartsNotWith($this->noErrors, $output);
+        $this->assertEquals(NUMBER_COMMANDS_MONITOR, count($lines));
+
+        // check every expected expression
+        foreach($expressions as $exp){
+            $found = false;
+
+            // search for expression in all lines
+            foreach($lines as $line) {
+                // if one is found everything's ok
+                $found = ($found || (stripos($line, $exp) === 0));
+            }
+
+            // expression found
+            $this->assertTrue($found);
+        }
+    }
+
+    /**
+     * test monitor action with no failed commands
+     */
+    public function testMonitorOK()
+    {
+        $this->loadDataFixtures();
+
+        // remove commands to get 'OK' status
+        $this->callUrl(
+            'GET',
+            '/command-scheduler/action/remove/command/2'
+        );
+        $this->callUrl(
+            'GET',
+            '/command-scheduler/action/remove/command/5'
+        );
+        $this->callUrl(
+            'GET',
+            '/command-scheduler/action/remove/command/13'
+        );
+
+        // call monitor
+        $output = $this->callCommand();
+
+        $this->assertEquals($this->noErrors, $output);
+    }
+
+    /**
+     * call command and return output
+     */
+    private function callCommand()
+    {
         $output = $this->runCommand(
             'scheduler:monitor',
             array(
@@ -30,8 +97,6 @@ class MonitorCommandTest extends WebTestCase
             )
         );
 
-        $this->assertRegExp('/two:/', $output);
-        $this->assertRegExp('/four:/', $output);
+        return trim($output);
     }
-
 }

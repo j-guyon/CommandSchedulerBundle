@@ -61,7 +61,13 @@ class ScheduledCommandRepository extends EntityRepository
      */
     public function findLockedCommand()
     {
-        return $this->findBy(array('disabled' => false, 'locked' => true), array('priority' => 'DESC'));
+        return $this->findBy(
+            array(
+                'disabled' => false,
+                'locked' => true
+            ),
+            array('priority' => 'DESC')
+        );
     }
 
     /**
@@ -90,8 +96,9 @@ class ScheduledCommandRepository extends EntityRepository
         // Then, si a timeout value is set, get locked commands and check timeout
         if (false !== $lockTimeout) {
             $lockedCommands = $this->findLockedCommand();
+            $now = time();
+
             foreach ($lockedCommands as $lockedCommand) {
-                $now = time();
                 if ($lockedCommand->getLastExecution()->getTimestamp() + $lockTimeout < $now) {
                     $failedCommands[] = $lockedCommand;
                 }
@@ -100,29 +107,4 @@ class ScheduledCommandRepository extends EntityRepository
 
         return $failedCommands;
     }
-    /**
-     * find all locked, active commands for monitoring
-     *
-     * @return ScheduledCommand[]
-     */
-/*    public function findByActiveLocked()
-    {
-        $commands = $this->findBy(
-            array( // criteria
-                'disabled' => false
-            ),
-            array('priority' => 'DESC') // ordering
-        );
-
-        // keep only locked commands or commands with last returncode != 0
-        $commands = array_filter($commands, function($command){
-
-            return
-                $command->isLocked() ||
-                ($command->getLastReturnCode() != 0);
-        });
-
-        return $commands;
-    }
-*/
 }

@@ -32,7 +32,12 @@ class MonitorCommand extends SchedulerBaseCommand
         $this
             ->setName('schedulerTools:monitor')
             ->setDescription('Monitor scheduled commands')
-            ->addOption('dump', null, InputOption::VALUE_NONE, 'Display result instead of send mail')
+            ->addOption(
+                'dump',
+                null,
+                InputOption::VALUE_NONE,
+                'Display result instead of send mail'
+            )
             ->setHelp('This class is for monitoring all active commands.');
     }
 
@@ -47,7 +52,6 @@ class MonitorCommand extends SchedulerBaseCommand
         parent::initialize($input, $output);
 
         $this->lockTimeout = $this->getContainer()->getParameter('jmose_command_scheduler.lock_timeout');
-        $this->dumpMode = $input->getOption('dump');
 
         $this->receiver = $this->getContainer()->getParameter('jmose_command_scheduler.monitor_mail');
         $this->sendMailIfNoError = $this->getContainer()->getParameter('jmose_command_scheduler.send_ok');
@@ -67,6 +71,8 @@ class MonitorCommand extends SchedulerBaseCommand
         // If not in dump mode and none receiver is set, exit.
         if (!$this->dumpMode && count($this->receiver) === 0) {
             $output->writeln('Please add receiver in configuration');
+            return;
+        }
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
         if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
@@ -79,7 +85,7 @@ class MonitorCommand extends SchedulerBaseCommand
         }
 
         // Fist, get all failed or potential timeout
-        $failedCommands = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+        $failedCommands = $this->getRepository('ScheduledCommand')
             ->findFailedAndTimeoutCommands($this->lockTimeout);
 
         // Commands in error
