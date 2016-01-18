@@ -45,4 +45,4 @@ after_success: |
  sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" -a "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;'
 
 notifications:
-    email: homerjsimpson000@gmail.com
+    email: homerj.simpson000@gmail.com
