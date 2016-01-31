@@ -7,7 +7,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use JMose\CommandSchedulerBundle\Entity\Execution;
+use JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class LogRotateCommand : This class rotates (deletes) old Executionlogs
@@ -16,13 +18,14 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
  */
 class LogRotateCommand extends SchedulerBaseCommand
 {
-
-
     /** @var string $action action to be executed */
     private $action = '';
 
     /** @var string $limit */
     private $limit = "";
+
+    /** @var ExecutionRepository */
+    private $executionRepo;
 
     /**
      * @inheritdoc
@@ -42,7 +45,14 @@ class LogRotateCommand extends SchedulerBaseCommand
                 'date_limit',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'remove logs older than specified date but keep at least one, use format Y-M-D H:i:s',
+                'remove logs older than specified date, keep at least one, use format Y-M-D H:i:s',
+                false
+            )
+            ->addOption(
+                'days_limit',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'remove logs older than given number of days, keep at least one',
                 false
             )
             ->addOption(
@@ -89,12 +99,23 @@ class LogRotateCommand extends SchedulerBaseCommand
                 $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
             );
 
+        /** @var ExecutionRepository $repo */
+        $this->executionRepo = $this->getRepository('Execution');
+
         if (
+            (($this->limit = $this->input->getOption('days_limit')) !== false) &&
+            is_numeric($this->limit) &&
+            ($this->limit > 0)
+        ) {
+            $limit = strtotime('-' . $this->limit . ' days');
+            $this->limit = new \DateTime(date('Y-m-d 00:00:00', $limit));
+
+            $this->action = 'date';
+        } else if (
             (($this->limit = $this->input->getOption('date_limit')) !== false) &&
             preg_match("/\\d+-\\d+-\\d+ \\d+:\\d+:\\d+/", $this->limit)
         ) {
             $this->limit = new \DateTime($this->limit);
-            $this->limit = $this->limit->getTimestamp();
 
             $this->action = 'date';
         } else if (
@@ -131,36 +152,12 @@ class LogRotateCommand extends SchedulerBaseCommand
         }
     }
 
+    /**
+     * remove logs older than specified date but keep at least one
+     */
     private function dateAction()
     {
-        $commands = $this->getRepository('ScheduledCommand')->findAll();
-
-        $delete = array();
-        /** @var ScheduledCommand $command */
-        foreach ($commands as $command) {
-            $executions = $command->getExecutions();
-            $executions = $executions->toArray();
-            // every element for which callback evaluates to false is removed
-            /** @var array $help */
-            $help = array_filter($executions, function ($elem) {
-                /** @var Execution $elem */
-                $help = $elem->getExecutionDate();
-                try {
-                    $result = ($this->limit >= $help->getTimestamp());
-                    return $help && $result;
-                } catch (\Exception $e) {
-                    return false;
-                }
-            });
-
-            if (count($help) > 1) {
-                // keep at least one entry
-                array_pop($help);
-                $delete = array_merge($delete, $help);
-            }
-        }
-
-        $this->deleteExecutions($delete);
+        $this->executionRepo->deleteExecutionsForCommandsDateLimit($this->limit);
     }
 
     /**
@@ -168,9 +165,7 @@ class LogRotateCommand extends SchedulerBaseCommand
      */
     private function truncateAction()
     {
-        $executions = $this->getRepository('Execution')->findAll();
-
-        $this->deleteExecutions($executions);
+        $this->executionRepo->truncateExecutions();
     }
 
     /**
@@ -178,33 +173,13 @@ class LogRotateCommand extends SchedulerBaseCommand
      */
     private function numberAction()
     {
-        $commands = $this->getRepository('ScheduledCommand')->findAll();
-
         // keep at least one entry
         if ($this->limit < 1) {
             $this->limit = 1;
         }
 
-        $delete = array();
         /** @var ScheduledCommand $command */
-        foreach ($commands as $command) {
-            // get all executions
-            $executions = $command->getExecutions();
-            $executions = $executions->toArray();
-
-            // calculate how many entries are to be removed
-            $itemCount = count($executions) - $this->limit;
-
-            if ($itemCount > 1) {
-                // collect log entries
-                $delete = array_merge(
-                    $delete,
-                    array_slice($executions, 0, $itemCount)
-                );
-            }
-        }
-
-        $this->deleteExecutions($delete);
+        $this->executionRepo->deleteExecutionsForCommandsKeepLimit($this->limit);
     }
 
     /**
@@ -222,7 +197,7 @@ class LogRotateCommand extends SchedulerBaseCommand
                     $type)
             );
         }
-        $this->output->writeln("<info>Finished: Logrotate " . date('Y-M-D H:i:s') . "</info>");
+        $this->output->writeln("<info>Finished: Logrotate " . date('Y-m-d H:i:s') . "</info>");
     }
 
     /**
