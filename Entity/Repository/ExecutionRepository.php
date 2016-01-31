@@ -80,7 +80,7 @@ class ExecutionRepository extends EntityRepository
 
             $lastId = $executions[0]->getId();
 
-            $this->deleteExecutions($command, $lastId);
+            $this->deleteExecutions($commandId, $lastId);
         }
     }
 

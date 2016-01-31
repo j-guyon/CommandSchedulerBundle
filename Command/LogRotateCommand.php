@@ -79,7 +79,6 @@ class LogRotateCommand extends SchedulerBaseCommand
             ->setHelp('This class removes old execution logs');
     }
 
-
     /**
      * Initialize parameters and services used in execute function
      *
