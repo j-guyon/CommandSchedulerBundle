@@ -2,6 +2,7 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
+use JMose\CommandSchedulerBundle\Command\MonitorCommand;
 use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
@@ -90,8 +91,9 @@ class MonitorCommandTest extends CommandSchedulerBaseTest
      */
     private function callCommand()
     {
-        $output = $this->runCommand(
-            'scheduler:monitor',
+        $output = $this->executeCommand(
+            new MonitorCommand(),
+            'schedulerTools:monitor',
             array(
                 '--dump' => true
             )
