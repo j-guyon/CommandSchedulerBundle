@@ -212,4 +212,23 @@ class LogRotateCommand extends SchedulerBaseCommand
         }
         $this->entityManager->flush();
     }
+    
+    
+	/**
+	 * check if a command should really be executed, if check fails command is terminated with status E_USER_ERROR
+	 *
+	 * @param string     $question   question to be confirmed
+	 * @param string     $endMessage message if confirmation fails
+	 *
+	 * @param bool|false $default    default value for confirmation
+	 */
+	private function confirmCommand($question, $endMessage, $default = false) {
+		$helper = $this->getHelper('question');
+		$question = new ConfirmationQuestion($question, $default);
+
+		if (!$helper->ask($this->input, $this->output, $question)) {
+			$this->logMessage($endMessage, 'error', true);
+			exit(E_USER_ERROR);
+		}
+	}
 }
