@@ -80,7 +80,7 @@ class ScheduledCommandType extends AbstractType
                 // use object as value
                 'choices_as_values' => true,
                 // anonymous function to build labels from object
-                'choice_label' => function ($right, $key, $index) {
+                'choice_label' => function (UserHost $right, $key, $index) {
                     /** @var UserHost $right */
                     $user = (($user = $right->getUser()) ? $user : '*');
                     $host = (($host = $right->getHost()) ? $host : '*');
