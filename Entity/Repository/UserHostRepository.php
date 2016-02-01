@@ -20,24 +20,10 @@ class UserHostRepository extends EntityRepository
      */
     public function findAllSelect()
     {
-        $result = array();
-
         $data = $this->findBy(
             array(),
             array('id' => 'ASC')
         );
-
-        /** @var UserHost $right */
-        foreach ($data as $right) {
-            $user = (($user = $right->getUser()) ? $user : '*');
-            $host = (($host = $right->getHost()) ? $host : '*');
-            $val = sprintf("%s (%s@%s)",
-                $right->getTitle(),
-                $user,
-                $host
-            );
-            $result[$right->getId()] = $right;
-        }
 
         return $data;
     }
