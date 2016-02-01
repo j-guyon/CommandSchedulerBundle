@@ -26,7 +26,6 @@ class RightsParser
      */
     public function __construct($doctrine)
     {
-        $this->kernel = $kernel;
         $this->doctrine = $doctrine;
     }
 

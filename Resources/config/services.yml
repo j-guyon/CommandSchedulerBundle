@@ -8,9 +8,7 @@ services:
     jmose_command_scheduler.rights_parser:
         class: JMose\CommandSchedulerBundle\Service\RightsParser
         arguments:
-            - '@kernel'
             - '@doctrine'
-            - '%jmose_command_scheduler.doctrine_manager%'
 
     jmose_command_scheduler.form.type.command_choice:
         class: JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType
