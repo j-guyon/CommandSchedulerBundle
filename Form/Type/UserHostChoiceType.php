@@ -30,21 +30,12 @@ class UserHostChoiceType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-//                'data_class' => 'JMose\CommandSchedulerBundle\Entity\UserHost',
                 'wrapper_attr' => 'default_wrapper',
                 'translation_domain' => 'JMoseCommandScheduler',
                 'choices' => $this->rightsParser->getRights()
             )
         );
     }
-
-    /**
-     * @inheritdoc
-     */
-//    public function getName()
-//    {
-//        return 'rights_choice';
-//    }
 
     /**
      * @inheritdoc
