@@ -6,14 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use \Doctrine\ORM\EntityRepository;
 use \Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Class BaseController - contains basic functions and members used for all controller
  *
  * @author  Daniel Fischer <dfischer000@gmail.com>
  */
-class BaseController extends ContainerAware
+class BaseController extends Controller
 {
     /** @var string doctrine manager name */
     protected $managerName = 'default';
