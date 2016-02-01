@@ -5,7 +5,6 @@ namespace JMose\CommandSchedulerBundle\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 
 /**
  * Class MonitorCommand : This class is used for monitoring scheduled commands if they run for too long or failed to execute
