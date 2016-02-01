@@ -44,7 +44,7 @@ class MonitorService
         /** @var ScheduledCommand $command */
         foreach ($scheduledCommands as $command) {
             // command was never executed -> ignore
-            if ($command->getLastExecution() == null) {
+            if ($command->getLastExecution() === null) {
                 continue;
             }
 
@@ -72,7 +72,7 @@ class MonitorService
         /** @var ScheduledCommand $command */
         foreach ($scheduledCommands as $command) {
             // command was never executed -> ignore
-            if ($command->getLastExecution() == null) {
+            if ($command->getLastExecution() === null) {
                 continue;
             }
 
