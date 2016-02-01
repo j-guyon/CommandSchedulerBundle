@@ -1,9 +1,6 @@
 <?php
 namespace JMose\CommandSchedulerBundle\Service;
 
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\HttpKernel\Kernel;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMose\CommandSchedulerBundle\Entity\Repository\UserHostRepository;
