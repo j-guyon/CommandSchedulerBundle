@@ -4,7 +4,7 @@
 CommandSchedulerBundle
 ======================
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5/mini.png)](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f0991948-dd04-4f4d-a6a4-1a348d1ceb57/mini.png)](https://insight.sensiolabs.com/projects/f0991948-dd04-4f4d-a6a4-1a348d1ceb57)
 [![Build Status](https://travis-ci.org/homerjsimpson000/CommandSchedulerBundle.svg)](https://travis-ci.org/homerjsimpson000/CommandSchedulerBundle)
 [![Coverage Status](https://coveralls.io/repos/homerjsimpson000/CommandSchedulerBundle/badge.svg?branch=master&service=github)](https://coveralls.io/github/homerjsimpson000/CommandSchedulerBundle?branch=master)
 
