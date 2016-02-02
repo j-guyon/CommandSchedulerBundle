@@ -15,18 +15,24 @@ use Doctrine\Common\Collections\ArrayCollection;
 class ListController extends BaseController
 {
     /**
-     * @param string $_type list type to be shown, can be commands, rights or executions
+     * @param string $type list type to be shown, can be commands, rights or executions
      *
      * @return Response
      */
     public function indexAction($_type = '')
     {
-        $function = 'getList' . ucfirst($_type);
-
-        if (method_exists($this, $function)) {
-            $result = $this->$function();
-        } else {
-            $result = new Response('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
+        switch ($_type) {
+            case'commands':
+                $result = $this->getListCommands();
+                break;
+            case'executions':
+                $result = $this->getListExecutions();
+                break;
+            case 'rights':
+                $result = $this->getListRights();
+                break;
+            default:
+                $result = new Response('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         return $result;

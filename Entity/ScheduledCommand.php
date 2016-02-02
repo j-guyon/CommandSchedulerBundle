@@ -527,11 +527,14 @@ class ScheduledCommand
         $excludedUser = $this->rights->getUserExcluded();
         $excludedHost = $this->rights->getHostExcluded();
 
+        $user = getenv('USERNAME') ?: getenv('USER');
+        $host = gethostname();
+
         // check user requirements
         if($requiredUser) {
             $result = (
                 $result && // not yet invalidated
-                preg_match("{" . $requiredUser . "}", $_SERVER['USER']) // requirement does match executing user
+                preg_match("{" . $requiredUser . "}", $user) // requirement does match executing user
             );
         }
 
@@ -539,7 +542,7 @@ class ScheduledCommand
         if($excludedUser) {
             $result = (
                 $result && // not yet invalidated
-                !preg_match("{" . $excludedUser . "}", $_SERVER['USER']) // requirement must not match executing user
+                !preg_match("{" . $excludedUser . "}", $user) // requirement must not match executing user
             );
         }
 
@@ -547,7 +550,7 @@ class ScheduledCommand
         if($requiredHost) {
             $result = (
                 $result && // not yet invalidated
-                preg_match("{" . $requiredHost . "}", gethostname()) // requirement does match hostname
+                preg_match("{" . $requiredHost . "}", $host) // requirement does match hostname
             );
         }
 
@@ -555,7 +558,7 @@ class ScheduledCommand
         if($excludedHost) {
             $result = (
                 $result && // not yet invalidated
-                !preg_match("{" . $excludedHost . "}", gethostname()) // requirement must not match hostname
+                !preg_match("{" . $excludedHost . "}", $host) // requirement must not match hostname
             );
         }
 

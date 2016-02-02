@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
  * Class LogRotateCommand : This class rotates (deletes) old Executionlogs
@@ -119,11 +120,13 @@ class LogRotateCommand extends SchedulerBaseCommand
             is_numeric($this->limit)
         ) {
             $this->action = 'number';
-        } else if (
-            ($this->input->getOption('truncate') == 'true') &&
-            ($this->input->getOption('verify') == 'true')
-        ) {
-            $this->action = 'truncate';
+        } else if ($this->input->getOption('truncate') == 'true') {
+            if (
+                ($this->input->getOption('verify') == 'true') ||
+                $this->confirmCommand('Really truncate all executions?', '')
+            ) {
+                $this->action = 'truncate';
+            }
         }
     }
 
@@ -135,17 +138,27 @@ class LogRotateCommand extends SchedulerBaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Start: Logrotate</info>');
+        $message = '';
 
         if ($this->action) {
             $output->writeln('<info>' . $this->action . ' is configured</info>');
-            $action = ($this->action . 'Action');
 
-            $this->$action();
-
-            $this->endExecution();
+            switch ($this->action) {
+                case 'date':
+                    $this->dateAction();
+                    break;
+                case 'number':
+                    $this->numberAction();
+                    break;
+                case 'truncate':
+                    $this->truncateAction();
+                    break;
+            }
         } else {
-            $this->endExecution('no action configured');
+            $message = 'no action configured';
         }
+
+        $this->endExecution($message);
     }
 
     /**
@@ -197,35 +210,18 @@ class LogRotateCommand extends SchedulerBaseCommand
     }
 
     /**
-     * delete given executions
+     * check if a command should really be executed, if check fails command is terminated with status E_USER_ERROR
      *
-     * @param array $delete array of Executions
+     * @param string $question question to be confirmed
+     * @param bool|false $default default value for confirmation
+     *
+     * @return boolean
      */
-    private function deleteExecutions($delete)
+    private function confirmCommand($question, $default = false)
     {
-        // now we have every execution log to be removed - let's rock
-        foreach ($delete as $item) {
-            $this->entityManager->remove($item);
-        }
-        $this->entityManager->flush();
-    }
-    
-    
-	/**
-	 * check if a command should really be executed, if check fails command is terminated with status E_USER_ERROR
-	 *
-	 * @param string     $question   question to be confirmed
-	 * @param string     $endMessage message if confirmation fails
-	 *
-	 * @param bool|false $default    default value for confirmation
-	 */
-	private function confirmCommand($question, $endMessage, $default = false) {
-		$helper = $this->getHelper('question');
-		$question = new ConfirmationQuestion($question, $default);
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion($question, $default);
 
-		if (!$helper->ask($this->input, $this->output, $question)) {
-			$this->logMessage($endMessage, 'error', true);
-			exit(E_USER_ERROR);
-		}
-	}
+        return !$helper->ask($this->input, $this->output, $question);
+    }
 }
