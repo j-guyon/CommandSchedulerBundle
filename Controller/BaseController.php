@@ -2,10 +2,10 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use \Doctrine\ORM\EntityRepository;
-use \Doctrine\ORM\EntityManager;
 
 /**
  * Class BaseController - contains basic functions and members used for all controller

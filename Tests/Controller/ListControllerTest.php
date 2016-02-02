@@ -3,7 +3,6 @@
 namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
 use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Class ListControllerTest

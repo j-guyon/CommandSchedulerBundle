@@ -4,7 +4,6 @@ namespace JMose\CommandSchedulerBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use JMose\CommandSchedulerBundle\Entity\UserHost;
 
 /**
  * Class ScheduledCommandRepository

@@ -2,8 +2,8 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**

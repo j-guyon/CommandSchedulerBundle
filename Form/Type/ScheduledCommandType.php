@@ -2,10 +2,10 @@
 
 namespace JMose\CommandSchedulerBundle\Form\Type;
 
+use JMose\CommandSchedulerBundle\Entity\UserHost;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use JMose\CommandSchedulerBundle\Entity\UserHost;
 
 /**
  * Class ScheduledCommandType

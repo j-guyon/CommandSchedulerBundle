@@ -3,7 +3,6 @@
 namespace JMose\CommandSchedulerBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use JMose\CommandSchedulerBundle\Entity\UserHost;
 
 /**
  * UserHostRepository

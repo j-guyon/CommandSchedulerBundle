@@ -3,14 +3,14 @@
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Cron\CronExpression;
+use JMose\CommandSchedulerBundle\Entity\Execution;
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use JMose\CommandSchedulerBundle\Entity\Execution;
 
 /**
  * Class ExecuteCommand : This class is the entry point to execute all scheduled command

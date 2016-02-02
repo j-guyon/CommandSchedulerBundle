@@ -4,7 +4,6 @@ namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use JMose\CommandSchedulerBundle\Command\MonitorCommand;
 use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Class MonitorCommandTest

@@ -11,7 +11,7 @@ namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
 use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
-use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class MonitorControllerTest extends CommandSchedulerBaseTest {
 

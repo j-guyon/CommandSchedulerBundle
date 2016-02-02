@@ -2,12 +2,11 @@
 
 namespace JMose\CommandSchedulerBundle\Command;
 
+use JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository;
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
  * Class LogRotateCommand : This class rotates (deletes) old Executionlogs

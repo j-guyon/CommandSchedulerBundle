@@ -6,11 +6,11 @@
 namespace JMose\CommandSchedulerBundle\Tests;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerDebugCommand;
 use Symfony\Bundle\FrameworkBundle\Command\RouterDebugCommand;
-use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Tester\CommandTester;
 
 define('NUMBER_COMMANDS_TOTAL', 13);
 define('NUMBER_COMMANDS_RIGHTS', 7);

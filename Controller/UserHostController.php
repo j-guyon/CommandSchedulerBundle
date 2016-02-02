@@ -2,11 +2,9 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use JMose\CommandSchedulerBundle\Entity\UserHost;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use JMose\CommandSchedulerBundle\Entity\UserHost;
-use JMose\CommandSchedulerBundle\Form\Type\UserHostType;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -1,9 +1,9 @@
 <?php
 namespace JMose\CommandSchedulerBundle\Service;
 
-use Symfony\Component\HttpKernel\Kernel;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMose\CommandSchedulerBundle\Entity\Repository\UserHostRepository;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Class RightsParser

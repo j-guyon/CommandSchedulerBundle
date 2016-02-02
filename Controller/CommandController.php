@@ -2,10 +2,9 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use JMose\CommandSchedulerBundle\Form\Type\ScheduledCommandType;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

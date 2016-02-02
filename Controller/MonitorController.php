@@ -2,10 +2,9 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
+use JMose\CommandSchedulerBundle\Service\MonitorService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use JMose\CommandSchedulerBundle\Service\MonitorService;
 
 /**
  * Class MonitorController handle monitoring requests
