@@ -120,22 +120,22 @@ class LogRotateCommand extends SchedulerBaseCommand
             is_numeric($this->limit)
         ) {
             $this->action = 'number';
-        } else if ($this->input->getOption('truncate') == 'true') {
-            if (
-                ($this->input->getOption('verify') == 'true') ||
-                $this->confirmCommand('Really truncate all executions?', '')
-            ) {
-                $this->action = 'truncate';
-            }
+        } else if (
+            ($this->input->getOption('truncate') == 'true') &&
+            ($this->input->getOption('verify') == 'true')
+        ) {
+            $this->action = 'truncate';
         }
     }
+
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected
+    function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Start: Logrotate</info>');
         $message = '';
@@ -164,7 +164,8 @@ class LogRotateCommand extends SchedulerBaseCommand
     /**
      * remove logs older than specified date but keep at least one
      */
-    private function dateAction()
+    private
+    function dateAction()
     {
         $this->executionRepo->deleteExecutionsForCommandsDateLimit($this->limit);
     }
@@ -172,7 +173,8 @@ class LogRotateCommand extends SchedulerBaseCommand
     /**
      * remove ALL execution logs
      */
-    private function truncateAction()
+    private
+    function truncateAction()
     {
         $this->executionRepo->truncateExecutions();
     }
@@ -180,7 +182,8 @@ class LogRotateCommand extends SchedulerBaseCommand
     /**
      * remove all execution logs for every command except specified number. if there are less entries none will be removed. At least one entry is kept all the times
      */
-    private function numberAction()
+    private
+    function numberAction()
     {
         // keep at least one entry
         if ($this->limit < 1) {
@@ -197,7 +200,8 @@ class LogRotateCommand extends SchedulerBaseCommand
      * @param string $message additional information
      * @param string $type type of output. can be 'info', 'comment' (default), 'error' and 'question'
      */
-    private function endExecution($message = "", $type = 'comment')
+    private
+    function endExecution($message = "", $type = 'comment')
     {
         if ($message) {
             $this->output->writeln(sprintf("<%s>%s</%s>",
@@ -217,7 +221,8 @@ class LogRotateCommand extends SchedulerBaseCommand
      *
      * @return boolean
      */
-    private function confirmCommand($question, $default = false)
+    private
+    function confirmCommand($question, $default = false)
     {
         $helper = $this->getHelper('question');
         $question = new ConfirmationQuestion($question, $default);
