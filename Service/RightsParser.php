@@ -1,9 +1,6 @@
 <?php
 namespace JMose\CommandSchedulerBundle\Service;
 
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\HttpKernel\Kernel;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMose\CommandSchedulerBundle\Entity\Repository\UserHostRepository;
@@ -16,22 +13,6 @@ use JMose\CommandSchedulerBundle\Entity\Repository\UserHostRepository;
  */
 class RightsParser
 {
-
-    /**
-     * @var Kernel
-     */
-    private $kernel;
-
-    /**
-     * @var string name of doctrine manager
-     */
-    private $managerName;
-
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
-     */
-    private $doctrineManager;
-
     /** @var Registry */
     private $doctrine;
 
@@ -43,13 +24,9 @@ class RightsParser
      * @param Registry $doctrine doctrine itself
      * @param string $managerName Name of doctrine manager, default 'default'
      */
-    public function __construct(Kernel $kernel, $doctrine, $managerName = 'default')
+    public function __construct($doctrine)
     {
-        $this->kernel = $kernel;
         $this->doctrine = $doctrine;
-        $this->managerName = $managerName;
-
-        $this->doctrineManager = $this->doctrine->getManager($managerName);
     }
 
     /**

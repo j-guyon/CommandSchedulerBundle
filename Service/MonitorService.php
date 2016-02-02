@@ -44,7 +44,7 @@ class MonitorService
         /** @var ScheduledCommand $command */
         foreach ($scheduledCommands as $command) {
             // command was never executed -> ignore
-            if ($command->getLastExecution() == null) {
+            if ($command->getLastExecution() === null) {
                 continue;
             }
 
@@ -72,7 +72,7 @@ class MonitorService
         /** @var ScheduledCommand $command */
         foreach ($scheduledCommands as $command) {
             // command was never executed -> ignore
-            if ($command->getLastExecution() == null) {
+            if ($command->getLastExecution() === null) {
                 continue;
             }
 
@@ -92,7 +92,7 @@ class MonitorService
      * @param ScheduledCommand $command command to be handled
      * @return array
      */
-    private function getFailedJSONEntry($command)
+    private function getFailedJSONEntry(ScheduledCommand $command)
     {
         return array(
             'ID_SCHEDULED_COMMAND' => $command->getId(),
@@ -108,7 +108,7 @@ class MonitorService
      * @param ScheduledCommand $command command to be handled
      * @return array
      */
-    private function getFailedHTMLEntry($command)
+    private function getFailedHTMLEntry(ScheduledCommand $command)
     {
         return array(
             'id' => $command->getId(),
@@ -126,7 +126,7 @@ class MonitorService
      *
      * @return bool
      */
-    protected function checkCommandFailed($command)
+    protected function checkCommandFailed(ScheduledCommand $command)
     {
         $executionTime = $command->getLastExecution();
 

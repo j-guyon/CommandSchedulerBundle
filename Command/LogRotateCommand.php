@@ -6,10 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use JMose\CommandSchedulerBundle\Entity\Execution;
 use JMose\CommandSchedulerBundle\Entity\Repository\ExecutionRepository;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class LogRotateCommand : This class rotates (deletes) old Executionlogs

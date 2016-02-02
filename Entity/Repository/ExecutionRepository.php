@@ -113,7 +113,7 @@ class ExecutionRepository extends EntityRepository
             ->execute();
 
         // exchange Execution objects with command id
-        $commands = array_map(function ($e) {
+        $commands = array_map(function (Execution $e) {
             /** @var Execution $e */
             return $e->getCommand();
         }, $commands);
