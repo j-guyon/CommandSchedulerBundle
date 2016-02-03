@@ -5,6 +5,7 @@ namespace JMose\CommandSchedulerBundle\Command;
 use Cron\CronExpression;
 use JMose\CommandSchedulerBundle\Entity\Execution;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
+use JMose\CommandSchedulerBundle\Component\CommandOutput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -139,21 +140,31 @@ class ExecuteCommand extends SchedulerBaseCommand
 
         // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
         if (
-            false === $this->logPath &&
-            "" != $scheduledCommand->getLogFile()
+            (false === $this->logPath) ||
+            ("" == $scheduledCommand->getLogFile()) ||
+            ('null' == $scheduledCommand->getLogFile()) ||
+            false
         ) {
             $logOutput = new NullOutput();
         } else {
-            $logOutput = new StreamOutput(fopen(
-                $this->logPath . $scheduledCommand->getLogFile(), 'a', false
-            ), $this->commandsVerbosity);
+            $logOutput = new StreamOutput(
+                fopen(
+                    $this->logPath . $scheduledCommand->getLogFile(),
+                    'a',
+                    false
+                ),
+                $this->commandsVerbosity
+            );
         }
+
+        $commandOutput = new CommandOutput();
+        $commandOutput->setDefaultOutput($logOutput);
 
         // Execute command and get return code
         try {
             $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand()
                 . ' ' . $scheduledCommand->getArguments() . '</comment>');
-            $result = $command->run($input, $logOutput);
+            $result = $command->run($input, $commandOutput);
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());
             $logOutput->writeln($e->getTraceAsString());
@@ -174,6 +185,7 @@ class ExecuteCommand extends SchedulerBaseCommand
             /** @var Execution $log */
             $log = $scheduledCommand->getCurrentLog();
             $log->setReturnCode($result);
+            $log->setOutput($commandOutput->getBuffer('string'));
 
             // calculate runtime in seconds
             $now = new \DateTime();

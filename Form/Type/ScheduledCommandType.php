@@ -69,7 +69,7 @@ class ScheduledCommandType extends AbstractType
             'Symfony\Component\Form\Extension\Core\Type\TextType',
             array(
                 'label' => 'detail.logFile',
-                'required' => true
+                'required' => false
             )
         );
 

@@ -35,6 +35,11 @@ class Execution
     private $command;
 
     /**
+     * @var string
+     */
+    private $output;
+
+    /**
      * Get id
      *
      * @return integer
@@ -144,6 +149,26 @@ class Execution
     public function getReturnCode()
     {
         return $this->returnCode;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    /**
+     * @param string $output
+     *
+     * @return Execution
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output;
+        return $this;
     }
 
     /**
