@@ -1,0 +1,3 @@
+rules:
+  symfony.controller.non_action_public_method_in_controller_class:
+    enabled: true
