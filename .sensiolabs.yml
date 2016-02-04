@@ -1,5 +1,5 @@
 rules:
   symfony.controller.non_action_public_method_in_controller_class:
-    enabled: true
+    enabled: false
   symfony.dependency_injection.no_container_as_parameter:
-    enabled: true
+    enabled: false
