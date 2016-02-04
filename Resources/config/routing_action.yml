@@ -24,3 +24,8 @@ jmose_command_scheduler_action_command_unlock:
 jmose_command_scheduler_action_right_remove:
     path:  /remove/right/{id}
     defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:removeRight }
+
+# executions
+jmose_command_scheduler_execution_output:
+    path: /output/execution/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Execution:getOutput }

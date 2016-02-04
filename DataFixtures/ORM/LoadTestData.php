@@ -240,7 +240,8 @@ class LoadTestData implements FixtureInterface
             ->setExecutionDate($executionDate)
             ->setRuntime($runtime)
             ->setReturnCode($returnCode)
-            ->setCommand($command);
+            ->setCommand($command)
+            ->setOutput("foo\nbar\n");
 
         $this->manager->persist($execution);
         $this->manager->flush();

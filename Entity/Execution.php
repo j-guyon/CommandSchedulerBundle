@@ -73,10 +73,13 @@ class Execution
 
     /**
      * @param ScheduledCommand $command
+     *
+     * @return Execution
      */
     public function setCommand($command)
     {
         $this->command = $command;
+        return $this;
     }
 
     /**

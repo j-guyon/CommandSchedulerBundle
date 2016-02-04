@@ -13,15 +13,24 @@
                 <th>{{ "execution.run"|trans }}</th>
                 <th>{{ "execution.runtime"|trans }}</th>
                 <th>{{ "execution.returnCode"|trans }}</th>
+                <th>{{ "execution.output"|trans }}</th>
             </tr>
             </thead>
 
             <tbody>
             {% for execution in executions %}
-                <tr class="execution">
+                <tr class="execution" data-id="{{ execution.id }}">
                     <td>{{ execution.executionDate|date( "dateFormat"|trans ) }}</td>
                     <td>{{ execution.runtime }}</td>
                     <td>{{ execution.returnCode }}</td>
+                    <td>
+                        {% if execution.output is defined and execution.output %}
+                            <a href="{{ path('jmose_command_scheduler_execution_output', { 'id': execution.id }) }}"
+                               data-id="{{ execution.id }}" class="openOutput">
+                                {{ "execution.showOutput"|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -46,6 +55,9 @@
         </script>
     {% endif %}
 
-    <a href="{{ path('jmose_command_scheduler_list_details', {'_type':'commands'}) }}" class="btn btn-primary btn-lg pull-right"
+    <div id="outputModal"></div>
+
+    <a href="{{ path('jmose_command_scheduler_list_details', {'_type':'commands'}) }}"
+       class="btn btn-primary btn-lg pull-right"
        role="button">{{ "action.backList"|trans }} »</a>
 {% endblock content %}

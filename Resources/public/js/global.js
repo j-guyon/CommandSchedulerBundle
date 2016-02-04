@@ -19,6 +19,7 @@ $(document).ready(function () {
     if (document.getElementById('runtimeGraph')) {
         google.charts.load('current', {packages: ['corechart']});
         google.charts.setOnLoadCallback(Graph.initGraphs);
+        Execution.initOutputLinks();
     }
 
     if (document.getElementById('dataTable')) {

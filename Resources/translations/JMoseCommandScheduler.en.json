@@ -73,7 +73,8 @@
   "execution": {
     "run": "Run",
     "returnCode": "Return code",
-    "runtime": "Runtime (seconds)"
+    "runtime": "Runtime (seconds)",
+    "output": "Output"
   },
   "rights": {
     "pageTitle": "User Host Requirement",

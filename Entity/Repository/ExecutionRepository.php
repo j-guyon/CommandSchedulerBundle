@@ -34,9 +34,11 @@ class ExecutionRepository extends EntityRepository
         /** @var Execution $log */
         foreach ($logs as $log) {
             array_push($result, array(
+                'id' => $log->getId(),
                 'executionDate' => $log->getExecutionDate(),
                 'runtime' => $log->getRuntime(),
-                'returnCode' => $log->getReturnCode()
+                'returnCode' => $log->getReturnCode(),
+                'output' => $log->getOutput()
             ));
         }
 
