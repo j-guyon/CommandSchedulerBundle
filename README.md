@@ -12,7 +12,7 @@ This bundle will allow you to easily manage scheduling for Symfony's console com
 
 **Version**: 1.1.0  
 **Compatibility**:  
- - Symfony 2.3 to 2.8
+ - Symfony 2.8 to 3.0
  - PHP 5.3 >= 7.0
  - Doctrine ORM
 
