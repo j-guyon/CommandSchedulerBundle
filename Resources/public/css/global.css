@@ -25,6 +25,11 @@ td a:hover {
     display: none;
 }
 
+.modal .output {
+    max-height: 55vh;
+    overflow-y: scroll;
+}
+
 table.commands th {
     min-width: 8em;
 }

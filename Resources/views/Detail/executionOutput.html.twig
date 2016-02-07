@@ -1,3 +1,5 @@
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
 <div class="modal fade" id="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -5,15 +7,15 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">{{ commandName }}</h4>
-                {{ test }}
-                {{ "dateFormat"|trans }}
                 {{ executionDate | date( "dateFormat"|trans ) }}
             </div>
             <div class="modal-body">
-                {{ output | raw }}
+                <div class="output">
+                    {{ output | raw }}
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ "action.close"|trans }}</button>
             </div>
         </div>
     </div>

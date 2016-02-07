@@ -1,15 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: daniel
- * Date: 27.12.15
- * Time: 12:32
+ * Test Execution controller
  */
 
 namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
-
 use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
+use \Symfony\Component\HttpFoundation\Response;
 
 class ExecutionControllerTest extends CommandSchedulerBaseTest
 {
@@ -54,6 +51,30 @@ class ExecutionControllerTest extends CommandSchedulerBaseTest
 
         $this->assertEquals(NUMBER_EXECUTIONS, $executions);
         $this->assertEquals(2, $graphs);
+    }
+
+    /**
+     * Test ajax call to show the output for a given execution id
+     */
+    public function testCommandOutput() {
+        $this->loadDataFixtures();
+
+        $crawler = $this->loadPage();
+        $this->assertTrue($crawler->filter('.openOutput')->count() == $crawler->filter('tr.execution')->count());
+
+        /**
+         * @var Response $response
+         */
+        $response = $this->callUrl(
+            'GET',
+            'command-scheduler/action/output/execution/1',
+            'response'
+        );
+
+        $response = $response->getContent();
+
+        $this->assertRegExp('/foo<br.*>/', $response);
+        $this->assertRegExp('/bar<br.*>/', $response);
     }
 
     /**

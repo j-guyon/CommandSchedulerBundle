@@ -25,8 +25,7 @@ JMose\CommandSchedulerBundle\Entity\Execution:
             nullable: true
             column: RETURN_CODE
         output:
-            type: string
-            length: 8096
+            type: text
             nullable: true
             column: OUTPUT
     manyToOne:
