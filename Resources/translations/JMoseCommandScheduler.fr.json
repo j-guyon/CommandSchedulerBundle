@@ -1,0 +1,152 @@
+{
+  "name": "Symfony's scheduler",
+  "dateFormat": "d/m/Y H:i",
+  "menu": {
+    "commands": {
+      "title": "Scheduled commands",
+      "new": "New",
+      "overview": "Overview"
+    },
+    "rights": {
+      "title": "User/Host requirements",
+      "new": "New",
+      "overview": "Overview"
+    },
+    "tools": {
+      "title": "Tools",
+      "executions": "Executions",
+      "monitor": "Monitor"
+    }
+  },
+  "list": {
+    "title": "Taches planifiées",
+    "rightstitle": "User and Host requirements",
+    "executionstitle": "Previous executions",
+    "commands": "Show list of commands",
+    "rights": "Show list of user and host requirements",
+    "executions": "Show list of all previous executions",
+    "previousExecutions": "Previous executions",
+    "monitor": "Open monitoring",
+    "monitorNotice": "Machine readable output only",
+    "monitortitle": "Monitoring"
+  },
+  "action": {
+    "delete": "Supprimer",
+    "execute": "Executer",
+    "edit": "Modifier",
+    "newScheduling": "Nouvelle planification",
+    "unlock": "Dévérouiller la planification",
+    "newUserHost": "New Requirement",
+    "backList": "Back to list",
+    "backOverview": "Back to overview",
+    "save": "Enregistrer",
+    "close": "Close",
+    "filterCommands": "Filter by command",
+    "filterDate": "Filter by date",
+    "filterAll": "all"
+  },
+  "confirm": {
+    "deleteScheduling": "Supprimer définitivement cette planification?",
+    "deleteRequirement": "Permanently delete this requirement?",
+    "execute": "Forcer une exécution de cette commande?",
+    "unlock": "Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le dévérouiller?"
+  },
+  "detail": {
+    "title": "Tache planifiée",
+    "name": "Nom",
+    "command": "Commande",
+    "arguments": "Arguments",
+    "cronExpression": "Expression cron",
+    "logFile": "Nom du fichier de log",
+    "expectedRuntime": "Expected runtime",
+    "priority": "Priorité",
+    "executeImmediately": "Executer maintenant",
+    "disabled": "Désactiver",
+    "lastExecution": "Dernière exécution",
+    "lastReturnCode": "Dernier code retour",
+    "actions": "Actions",
+    "logExecutions": "Log Executions",
+    "openHelper": "open Cron Expression Helper",
+    "rights": "User/Host Requirements",
+    "timeout":"Timeout"
+  },
+  "execution": {
+    "run": "Run",
+    "returnCode": "Return code",
+    "runtime": "Runtime (seconds)",
+    "output": "Output"
+  },
+  "rights": {
+    "pageTitle": "User Host Requirement",
+    "title": "Short name",
+    "user": "Required user",
+    "host": "Required host",
+    "userExcluded": "User excluded from execution",
+    "hostExcluded": "Host excluded from execution",
+    "info": "Description"
+  },
+  "flash": {
+    "save": "sauver succès",
+    "deleted": "supprimer succès",
+    "execute": "Le traitement sera exécutée lors de la prochaine vérification (\"scheduler:execute\").",
+    "unlocked": "Traitement dévérouillée avec succès."
+  },
+  "tooltip": {
+    "toggleCommand": "Click to enable/disable command",
+    "toggleLogging": "Click to toggle log executions",
+    "executions": "show logged executions",
+    "editCommand": "edit command",
+    "deleteCommand": "delete command",
+    "executeCommand": "execute command immediately",
+    "userFormat":"Username who executes the script is matched against the expression. Please don't use delimiters if you enter a Regexp.",
+    "hostFormat":"Hostname on which the script is executed is matched against the expression. Please don't use delimiters if you enter a Regexp."
+  },
+  "cronhelper": {
+    "title": "Cron Expression Generator",
+    "saveExpression": "Save Cron expression",
+    "m": "Minute",
+    "h": "Hour",
+    "dom": "Day of month",
+    "mon": "Month",
+    "dow": "Day of week",
+    "every": "Every nth...",
+    "minutely": "minutely",
+    "hourly": "hourly",
+    "daily": "daily",
+    "monthly": "monthly",
+    "last":"last",
+    "month": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    },
+    "day": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
+  },
+  "graph": {
+    "title_return": "Distribution of return codes",
+    "number": "Number of occurrences",
+    "return_code": "Return code",
+    "title_runtime": "Runtime overview",
+    "execution_date": "Execution date",
+    "runtime": "Runtime",
+    "avg_runtime": "average runtime",
+    "exp_runtime": "expected runtime"
+  }
+}

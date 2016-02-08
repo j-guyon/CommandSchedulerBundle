@@ -2,12 +2,29 @@ services:
     jmose_command_scheduler.command_parser:
         class: JMose\CommandSchedulerBundle\Service\CommandParser
         arguments:
-            - @kernel
-            - %jmose_command_scheduler.excluded_command_namespaces%
+            - '@kernel'
+            - '%jmose_command_scheduler.excluded_command_namespaces%'
+
+    jmose_command_scheduler.rights_parser:
+        class: JMose\CommandSchedulerBundle\Service\RightsParser
+        arguments:
+            - '@doctrine'
 
     jmose_command_scheduler.form.type.command_choice:
         class: JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType
         arguments:
-            - @jmose_command_scheduler.command_parser
+            - '@jmose_command_scheduler.command_parser'
         tags:
             - { name: form.type, alias: command_choice }
+
+    jmose_command_scheduler.form.type.rights_choice:
+        class: JMose\CommandSchedulerBundle\Form\Type\UserHostChoiceType
+        arguments:
+            - '@jmose_command_scheduler.rights_parser'
+        tags:
+            - { name: form.type, alias: rights_choice }
+
+    jmose_command_scheduler.monitorService:
+        class: JMose\CommandSchedulerBundle\Service\MonitorService
+        arguments:
+          - '%jmose_command_scheduler.lock_timeout%'

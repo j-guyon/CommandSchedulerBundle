@@ -1,14 +1,20 @@
+# This is only a development fork. Please refer to [original Bundle](https://github.com/J-Mose/CommandSchedulerBundle) if you want to use this bundle.
+
+
 CommandSchedulerBundle
 ======================
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5/mini.png)](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5)
-[![Build Status](https://travis-ci.org/J-Mose/CommandSchedulerBundle.svg)](https://travis-ci.org/J-Mose/CommandSchedulerBundle)
-[![Coverage Status](https://coveralls.io/repos/J-Mose/CommandSchedulerBundle/badge.svg)](https://coveralls.io/r/J-Mose/CommandSchedulerBundle)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f0991948-dd04-4f4d-a6a4-1a348d1ceb57/mini.png)](https://insight.sensiolabs.com/projects/f0991948-dd04-4f4d-a6a4-1a348d1ceb57)
+[![Build Status](https://travis-ci.org/homerjsimpson000/CommandSchedulerBundle.svg)](https://travis-ci.org/homerjsimpson000/CommandSchedulerBundle)
+[![Coverage Status](https://coveralls.io/repos/homerjsimpson000/CommandSchedulerBundle/badge.svg?branch=master&service=github)](https://coveralls.io/github/homerjsimpson000/CommandSchedulerBundle?branch=master)
 
 This bundle will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 
-**Version**: 1.0-dev
-**Compatibility**: Symfony >= 2.3 to 2.7, Doctrine ORM
+**Version**: 1.1.0  
+**Compatibility**:  
+ - Symfony 2.8 to 3.0
+ - PHP 5.3 >= 7.0
+ - Doctrine ORM
 
 ## Features
 
@@ -22,6 +28,7 @@ This bundle will allow you to easily manage scheduling for Symfony's console com
 - A new console command `scheduler:execute [--dump] [--no-output]` which will be the single entry point to all commands
 - Management of queuing and prioritization between tasks 
 - Locking system, to stop scheduling a command that has returned an error
+- Monitoring with timeout or failed commands (Json URL and command with mailing)
 - Translated in french and english
 
 ## Screenshots

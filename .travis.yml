@@ -2,9 +2,9 @@ language: php
 
 php:
     - 5.3
-    - 5.4
     - 5.5
     - 5.6
+    - 7.0
     - nightly
     - hhvm
 
@@ -15,18 +15,23 @@ branches:
 
 matrix:
     include:
+        - php: 5.3
+          env: SYMFONY_VERSION='2.8.*'
         - php: 5.5
-          env: SYMFONY_VERSION=2.3.*
-        - php: 5.5
-          env: SYMFONY_VERSION=2.4.*
-        - php: 5.5
-          env: SYMFONY_VERSION=2.6.*
-        - php: 5.5
-          env: SYMFONY_VERSION='2.7.*@dev'
+          env: SYMFONY_VERSION='2.8.*'
+        - php: 5.6
+          env: SYMFONY_VERSION='2.8.*'
+        - php: 5.6
+          env: SYMFONY_VERSION='3.0'
+        - php: 7.0
+          env: SYMFONY_VERSION='2.8.*'
+        - php: 7.0
+          env: SYMFONY_VERSION='3.0'
     allow_failures:
         - php: nightly
 
 before_script:
+    - mkdir -p ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d && echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - composer self-update
     - sh -c 'if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/symfony=$SYMFONY_VERSION; fi;'
     - composer update --prefer-dist
@@ -40,4 +45,4 @@ after_success: |
  sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" -a "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;'
 
 notifications:
-    email: julienguyon@hotmail.com
+    email: homerj.simpson000@gmail.com

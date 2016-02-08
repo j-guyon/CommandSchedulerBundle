@@ -3,15 +3,15 @@
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Cron\CronExpression;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use JMose\CommandSchedulerBundle\Entity\Execution;
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
+use JMose\CommandSchedulerBundle\Component\CommandOutput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
-use Symfony\Component\Validator\Constraints\Null;
 
 /**
  * Class ExecuteCommand : This class is the entry point to execute all scheduled command
@@ -19,29 +19,8 @@ use Symfony\Component\Validator\Constraints\Null;
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @package JMose\CommandSchedulerBundle\Command
  */
-class ExecuteCommand extends ContainerAwareCommand
+class ExecuteCommand extends SchedulerBaseCommand
 {
-
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $em;
-
-    /**
-     * @var string
-     */
-    private $logPath;
-
-    /**
-     * @var boolean
-     */
-    private $dumpMode;
-
-    /**
-     * @var integer
-     */
-    private $commandsVerbosity;
-
     /**
      * @inheritdoc
      */
@@ -56,37 +35,7 @@ class ExecuteCommand extends ContainerAwareCommand
     }
 
     /**
-     * Initialize parameters and services used in execute function
-     *
      * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
-        $this->dumpMode = $input->getOption('dump');
-        $this->logPath = rtrim($this->getContainer()->getParameter('jmose_command_scheduler.log_path'), '/\\');
-
-	    // set logpath to false if specified in parameters to suppress logging
-	    if("false" == $this->logPath) {
-		    $this->logPath = false;
-	    } else {
-		    $this->logPath .= DIRECTORY_SEPARATOR;
-	    }
-
-        // store the original verbosity before apply the quiet parameter
-        $this->commandsVerbosity = $output->getVerbosity();
-
-        if( true === $input->getOption('no-output')){
-            $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
-        }
-
-        $this->em = $this->getContainer()->get('doctrine')->getManager(
-            $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
-        );
-    }
-
-    /**
-     * @param InputInterface  $input
      * @param OutputInterface $output
      * @return int|null|void
      */
@@ -95,29 +44,38 @@ class ExecuteCommand extends ContainerAwareCommand
         $output->writeln('<info>Start : ' . ($this->dumpMode ? 'Dump' : 'Execute') . ' all scheduled command</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
-        if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
+        if (
+            false !== $this->logPath &&
+            strpos($this->logPath, 'gaufrette:') !== 0 &&
+            false === is_writable($this->logPath)
+        ) {
             $output->writeln(
-                '<error>'.$this->logPath.
-                ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
+                '<error>' . $this->logPath .
+                ' not found or not writable. You should override `log_path` in your config.yml' . '</error>'
             );
 
             return;
         }
 
-        $commands = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
+        $commands = $this->getRepository('ScheduledCommand')->findEnabledCommand();
 
         $noneExecution = true;
         foreach ($commands as $command) {
 
             /** @var ScheduledCommand $command */
-            $cron        = CronExpression::factory($command->getCronExpression());
+            // check if the command's rights (user and host) allow execution of the command at all.
+            if (!$command->checkRights()) {
+                continue;
+            }
+
+            $cron = CronExpression::factory($command->getCronExpression());
             $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
-            $now         = new \DateTime();
+            $now = new \DateTime();
 
             if ($command->isExecuteImmediately()) {
                 $noneExecution = false;
                 $output->writeln(
-                    'Immediately execution asked for : <comment>' . $command->getCommand() . '</comment>'
+                    'Immediately execution asked for : <comment>' . $command->getCommand() . ' ' . $command->getArguments() . '</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
@@ -126,9 +84,9 @@ class ExecuteCommand extends ContainerAwareCommand
             } elseif ($nextRunDate < $now) {
                 $noneExecution = false;
                 $output->writeln(
-                    'Command <comment>'.$command->getCommand().
-                    '</comment> should be executed - last execution : <comment>'.
-                    $command->getLastExecution()->format('d/m/Y H:i:s').'.</comment>'
+                    'Command <comment>' . $command->getCommand() .
+                    '</comment> should be executed - last execution : <comment>' .
+                    $command->getLastExecution()->format('d/m/Y H:i:s') . '.</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
@@ -147,10 +105,21 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
-        $scheduledCommand = $this->em->merge($scheduledCommand);
-        $scheduledCommand->setLastExecution(new \DateTime());
+        $now = new \DateTime();
+        /** @var ScheduledCommand $scheduledCommand */
+        $scheduledCommand = $this->entityManager->merge($scheduledCommand);
+        $scheduledCommand->setLastExecution($now);
         $scheduledCommand->setLocked(true);
-        $this->em->flush();
+
+        if ($scheduledCommand->logExecutions()) {
+            $log = new Execution();
+            $log->setCommand($scheduledCommand);
+            $log->setExecutionDate($now);
+            $this->entityManager->persist($log);
+            $scheduledCommand->addLog($log);
+        }
+
+        $this->entityManager->flush();
 
         try {
             $command = $this->getApplication()->find($scheduledCommand->getCommand());
@@ -164,57 +133,73 @@ class ExecuteCommand extends ContainerAwareCommand
         $input = new ArrayInput(array_merge(
             array(
                 'command' => $scheduledCommand->getCommand(),
-                '--env'   => $input->getOption('env')
+                '--env' => $input->getOption('env')
             ),
             $scheduledCommand->getArguments(true)
         ));
 
-        // Use a StreamOutput to redirect write() and writeln() in a log file
-        $path = $this->logPath;
-        $file =  $scheduledCommand->getLogFile();
-        if(($path !== false) && ("null" != strtolower($file))) {
-            // append directory separator if there is none
-            if(substr($path, -1) !== DIRECTORY_SEPARATOR) {
-                $path = $path . DIRECTORY_SEPARATOR;
-            }
-            //
-            $path = $path . $file;
-
-	        // initialize streamoutput with specified target and verbosity
-	        $logOutput = new StreamOutput(fopen(
-	            $path, 'a', false
-	        ), $this->commandsVerbosity);
-        } else { // initialize nulloutput to disable output
+        // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
+        if (
+            (false === $this->logPath) ||
+            ("" == $scheduledCommand->getLogFile()) ||
+            ('null' == $scheduledCommand->getLogFile()) ||
+            false
+        ) {
             $logOutput = new NullOutput();
+        } else {
+            $logOutput = new StreamOutput(
+                fopen(
+                    $this->logPath . $scheduledCommand->getLogFile(),
+                    'a',
+                    false
+                ),
+                $this->commandsVerbosity
+            );
         }
+
+        $commandOutput = new CommandOutput();
+        $commandOutput->setDefaultOutput($logOutput);
 
         // Execute command and get return code
         try {
             $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand()
-                . ' ' .$scheduledCommand->getArguments() . '</comment>');
-            $result = $command->run($input, $logOutput);
+                . ' ' . $scheduledCommand->getArguments() . '</comment>');
+            $result = $command->run($input, $commandOutput);
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());
             $logOutput->writeln($e->getTraceAsString());
             $result = -1;
         }
 
-        if (false === $this->em->isOpen()) {
+        if (false === $this->entityManager->isOpen()) {
             $output->writeln('<comment>Entity manager closed by the last command.</comment>');
-            $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
+            $this->entityManager = $this->entityManager->create($this->entityManager->getConnection(), $this->entityManager->getConfiguration());
         }
 
-        $scheduledCommand = $this->em->merge($scheduledCommand);
+        $scheduledCommand = $this->entityManager->merge($scheduledCommand);
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);
         $scheduledCommand->setExecuteImmediately(false);
-        $this->em->flush();
+
+        if ($scheduledCommand->logExecutions()) {
+            /** @var Execution $log */
+            $log = $scheduledCommand->getCurrentLog();
+            $log->setReturnCode($result);
+            $log->setOutput($commandOutput->getBuffer('string'));
+
+            // calculate runtime in seconds
+            $now = new \DateTime();
+            $runtime = $now->getTimestamp() - $log->getExecutionDate()->getTimestamp();
+            $log->setRuntime($runtime);
+        }
+
+        $this->entityManager->flush();
 
         /*
          * This clear() is necessary to avoid conflict between commands and to be sure that none entity are managed
          * before entering in a new command
          */
-        $this->em->clear();
+        $this->entityManager->clear();
 
         unset($command);
         gc_collect_cycles();

@@ -2,107 +2,87 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use JMose\CommandSchedulerBundle\Tests\CommandSchedulerBaseTest;
 
 /**
  * Class ListControllerTest
  * @package JMose\CommandSchedulerBundle\Tests\Controller
  */
-class ListControllerTest extends WebTestCase
+class ListControllerTest extends CommandSchedulerBaseTest
 {
 
     /**
-     * Test list display
+     * Test list commands without data
      */
-    public function testIndex()
+    public function testIndexCommandsEmpty()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-        ));
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/commands');
 
-        $client = parent::createClient();
-        $crawler = $client->request('GET', '/command-scheduler/list');
-        $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
+        $result = $crawler->filter('span.fa-info-circle')->count();
+        $this->assertEquals(0, $result);
     }
 
     /**
-     * Test permanent deletion on command
+     * Test list commands
      */
-    public function testRemove()
+    public function testIndexCommands()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-        ));
+        $this->loadDataFixtures();
 
-        $client = parent::createClient();
-        $client->followRedirects(true);
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/commands');
 
-        //toggle off
-        $crawler = $client->request('GET', '/command-scheduler/action/remove/1');
-        $this->assertEquals(3, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
+        $result = $crawler->filter('tr.command')->count();
+        $this->assertEquals(NUMBER_COMMANDS_TOTAL, $result);
+
+        $result = $crawler->filter('span.fa-info-circle')->count();
+        $this->assertEquals(NUMBER_COMMANDS_RIGHTS, $result);
     }
 
     /**
-     * Test On/Off toggle on list
+     * Test list UserHost without data
      */
-    public function testToggle()
+    public function testIndexUserHostsEmpty()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-        ));
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/rights');
 
-        $client = parent::createClient();
-        $client->followRedirects(true);
-
-        //toggle off
-        $crawler = $client->request('GET', '/command-scheduler/action/toggle/1');
-        $this->assertEquals(1, $crawler->filter('a[href="/command-scheduler/action/toggle/1"] > span[class="text-danger glyphicon glyphicon-off"]')->count());
-
-        //toggle on
-        $crawler = $client->request('GET', '/command-scheduler/action/toggle/1');
-        $this->assertEquals(0, $crawler->filter('a[href="/command-scheduler/action/toggle/1"] > span[class="text-danger glyphicon glyphicon-off"]')->count());
+        $result = $crawler->filter('tr.userHost')->count();
+        $this->assertEquals(0, $result);
     }
 
     /**
-     * Test Execute now button on list
+     * Test list UserHost
      */
-    public function testExecute()
+    public function testIndexUserHosts()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-        ));
+        $this->loadDataFixtures();
 
-        $client = parent::createClient();
-        $client->followRedirects(true);
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/rights');
 
-        //call execute now button
-        $crawler = $client->request('GET', '/command-scheduler/action/execute/1');
-        $this->assertEquals(1, $crawler->filter('a[data-href="/command-scheduler/action/execute/1"] > span[class="text-muted glyphicon glyphicon-play"]')->count());
+        $result = $crawler->filter('tr.userHost')->count();
+        $this->assertEquals(NUMBER_RIGHTS_TOTAL, $result);
     }
 
     /**
-     * Test unlock button on list
+     * Test list Executions without data
      */
-    public function testUnlock()
+    public function testIndexExecutionsEmpty()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-        ));
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/executions');
 
-        $client = parent::createClient();
-        $client->followRedirects(true);
-
-        // One command is locked in fixture (2)
-        $crawler = $client->request('GET', '/command-scheduler/list');
-        $this->assertEquals(1, $crawler->filter('a[data-href="/command-scheduler/action/unlock/2"]')->count());
-
-        $crawler = $client->request('GET', '/command-scheduler/action/unlock/2');
-        $this->assertEquals(0, $crawler->filter('a[data-href="/command-scheduler/action/unlock/2"]')->count());
+        $result = $crawler->filter('tr.execution')->count();
+        $this->assertEquals(0, $result);
     }
 
+    /**
+     * Test list Executions
+     */
+    public function testIndexExecutions()
+    {
+        $this->loadDataFixtures();
+
+        $crawler = $this->callUrl('GET', '/command-scheduler/list/executions');
+
+        $result = $crawler->filter('tr.execution')->count();
+        $this->assertEquals(NUMBER_EXECUTIONS_TOTAL, $result);
+    }
 }

@@ -1,6 +1,7 @@
 JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
     type: entity
     table: SCHEDULED_COMMAND
+    engine: myISAM
     repositoryClass: JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository
     fields:
         id:
@@ -42,7 +43,7 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             type: datetime
             length: null
             unique: false
-            nullable: false
+            nullable: true
             column: DH_LAST_EXECUTION
         lastReturnCode:
             type: integer
@@ -80,3 +81,31 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             unique: false
             nullable: false
             column: B_LOCKED
+        expectedRuntime:
+            type: integer
+            length: null
+            nullable: true
+            unique: false
+            column: EXP_RUNTIME
+        logExecutions:
+            type: boolean
+            length: null
+            unique: false
+            nullable: true
+            column: B_LOG_EXECUTIONS
+    manyToOne:
+      rights:
+        targetEntity: UserHost
+        column: REQUIRED_RIGHTS
+        fetch: EAGER
+        joinColumn:
+          name: rights
+          referencedColumnName: ID_USER_HOST
+          nullable: true
+          fetch: EAGER
+    oneToMany:
+      executions:
+        targetEntity: Execution
+        mappedBy: command
+        nullable: true
+        fetch: EAGER

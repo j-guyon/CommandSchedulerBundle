@@ -1,0 +1,63 @@
+{% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+{% block title %}
+    {{ command.name }} - {{ 'list.previousExecutions'|trans }}
+{% endblock title %}
+
+{% block content %}
+    <div class="table-responsive table-stripped">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ "execution.run"|trans }}</th>
+                <th>{{ "execution.runtime"|trans }}</th>
+                <th>{{ "execution.returnCode"|trans }}</th>
+                <th>{{ "execution.output"|trans }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for execution in executions %}
+                <tr class="execution" data-id="{{ execution.id }}">
+                    <td>{{ execution.executionDate|date( "dateFormat"|trans ) }}</td>
+                    <td>{{ execution.runtime }}</td>
+                    <td>{{ execution.returnCode }}</td>
+                    <td>
+                        {% if execution.output is defined and execution.output %}
+                            <a href="{{ path('jmose_command_scheduler_execution_output', { 'id': execution.id }) }}"
+                               data-id="{{ execution.id }}" class="openOutput">
+                                {{ "execution.showOutput"|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if executions is iterable and executions|length > 0 %}
+        <div class="graphs row">
+            <div id="returnGraph" class="col-xs-10 col-xs-offset-1 graphHolder"></div>
+        </div>
+        <div class="graphs row">
+            <div id="runtimeGraph" class="col-xs-10 col-xs-offset-1 graphHolder"></div>
+        </div>
+
+        <script type="text/javascript">
+            var executionData = {{ executions|json_encode|raw }},
+                expectedRuntime = {{ command.expectedRuntime|default(0) }};
+        </script>
+    {% else %}
+        <script type="text/javascript">
+            var executionData = false;
+        </script>
+    {% endif %}
+
+    <div id="outputModal"></div>
+
+    <a href="{{ path('jmose_command_scheduler_list_details', {'_type':'commands'}) }}"
+       class="btn btn-primary btn-lg pull-right"
+       role="button">{{ "action.backList"|trans }} »</a>
+{% endblock content %}

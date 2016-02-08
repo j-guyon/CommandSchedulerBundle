@@ -2,7 +2,9 @@ parameters:
     database_path: %kernel.root_dir%/../../build/test.db
 
 framework:
+    assets:          ~
     translator:      ~
+    #assets:
     secret:          secret
     test:            ~
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -35,8 +37,10 @@ security:
 
 jmose_command_scheduler:
     log_path: %kernel.root_dir%/logs/
+    lock_timeout: 300
     excluded_command_namespaces:
         - scheduler
 
 liip_functional_test:
     cache_sqlite_db: true
+    #command_decoration: false

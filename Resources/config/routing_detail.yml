@@ -1,0 +1,29 @@
+# detail actions
+jmose_command_scheduler_detail_command_edit:
+    path:  /commands/edit/{scheduledCommandId}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:initEditScheduledCommand }
+
+jmose_command_scheduler_detail_command_new:
+    path:  /commands/new
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:initNewScheduledCommand }
+
+jmose_command_scheduler_detail_command_save:
+    path:  /commands/save
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:saveCommand }
+
+jmose_command_scheduler_detail_command_executions:
+    path:  /commands/executions/{commandId}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Execution:showCommandExecutions }
+
+# user/host requirements
+jmose_command_scheduler_detail_right_edit:
+    path:  /rights/edit/{rightId}
+    defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:initEditRight }
+
+jmose_command_scheduler_detail_right_new:
+    path:  /rights/new
+    defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:initNewUserHost }
+
+jmose_command_scheduler_detail_right_save:
+    path:  /rights/save
+    defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:saveRight }

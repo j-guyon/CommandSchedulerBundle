@@ -2,10 +2,10 @@
 
 namespace JMose\CommandSchedulerBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -20,7 +20,6 @@ class JMoseCommandSchedulerExtension extends Extension
     {
         $BCBreakParams = array(
             'jmose_command_scheduler.log_path' => 'log_path',
-            'jmose_command_scheduler.log_timeout' => false,
             'jmose_command_scheduler.command_choice_list.excluded_namespaces' => 'excluded_command_namespaces',
             'jmose_command_scheduler.doctrine_manager' => 'doctrine_manager',
         );

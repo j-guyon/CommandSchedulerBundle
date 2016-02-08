@@ -1,0 +1,44 @@
+{% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+{% block title %}
+    {{ 'list.monitortitle'|trans }}
+{% endblock title %}
+
+{% block content %}
+    <div class="table-responsive table-stripped">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ "detail.name"|trans }}</th>
+                <th>{{ "detail.lastReturnCode"|trans }}</th>
+                <th>{{ "detail.lastExecution"|trans }}</th>
+                <th>{{ "detail.timeout"|trans }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for elem in failed %}
+                <tr class="status">
+                    <td>
+                        {{ elem.name }}
+                    </td>
+                    <td>
+                        {{ elem.returncode }}
+                    </td>
+                    <td>
+                        {{ elem.execution|date( "dateFormat"|trans ) }}
+                    </td>
+                    <td>
+                        {% if elem.timeout is defined and elem.timeout%}
+                            <span class="fa fa-check-square-o"></span>
+                        {% else %}
+                            <span class="fa fa-square-o"></span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

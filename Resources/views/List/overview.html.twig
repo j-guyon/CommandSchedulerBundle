@@ -1,0 +1,16 @@
+{% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+{% block title %}
+    {{ 'list.title'|trans }}
+{% endblock title %}
+
+{% block content %}
+    <h2>{{ 'lists'|trans }}</h2>
+    <a href="{{ path('jmose_command_scheduler_list_details', {'_type' :'commands'}) }}">{{ "list.commands"|trans }} »</a><br>
+    <a href="{{ path('jmose_command_scheduler_list_details', {'_type':'rights'}) }}">{{ "list.rights"|trans }} »</a><br>
+    <a href="{{ path('jmose_command_scheduler_list_details', {'_type':'executions'}) }}">{{ "list.executions"|trans }} »</a><br>
+    <h2>{{ 'new'|trans }}</h2>
+    <a href="{{ path('jmose_command_scheduler_detail_command_new') }}">{{ "action.newScheduling"|trans }} »</a><br>
+    <a href="{{ path('jmose_command_scheduler_detail_right_new') }}">{{ "action.newUserHost"|trans }} »</a><br>
+{% endblock content %}

@@ -1,0 +1,45 @@
+JMose\CommandSchedulerBundle\Entity\UserHost:
+    type: entity
+    table: EXECUTION_RIGHTS
+    engine: myISAM
+    repositoryClass: JMose\CommandSchedulerBundle\Entity\Repository\UserHostRepository
+    fields:
+        id:
+            type: integer
+            length: null
+            unique: false
+            nullable: false
+            id: true
+            column: ID_USER_HOST
+            generator:
+                strategy: IDENTITY
+        title:
+            type: string
+            length: '127'
+            column: TITLE
+        user:
+            type: string
+            length: '127'
+            nullable: true
+            column: USER
+        host:
+            type: string
+            length: '127'
+            nullable: true
+            column: HOST
+        user_excluded:
+            type: string
+            length: '127'
+            nullable: true
+            column: USER_EXCLUDED
+        host_excluded:
+            type: string
+            length: '127'
+            nullable: true
+            column: HOST_EXCLUDED
+        info:
+            type: string
+            length: 255
+            nullable: true
+            column: INFO
+    lifecycleCallbacks: {  }

@@ -1,0 +1,143 @@
+{% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+{% block title %}
+    {{ 'list.title'|trans }}
+{% endblock title %}
+
+{% block content %}
+    <div class="table-responsive table-stripped">
+        <table class="table commands">
+            <thead>
+            <tr>
+                <th rowspan="2" class="toggle">&nbsp;</th>
+                <th rowspan="2" class="name">{{ "detail.name"|trans }}</th>
+                <th class="command">{{ "detail.command"|trans }}</th>
+                <th class="cron">{{ "detail.cronExpression"|trans }}</th>
+                <th>{{ "detail.logFile"|trans }}</th>
+                <th>{{ "detail.priority"|trans }}</th>
+            </tr>
+            <tr>
+                <th>{{ "detail.rights"|trans }}</th>
+                <th>{{ "detail.lastExecution"|trans }}</th>
+                <th>{{ "detail.lastReturnCode"|trans }}</th>
+                <th>{{ "detail.actions"|trans }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for command in scheduledCommands %}
+                {% set className = 'command' %}
+                {% if command.disabled == true %}
+                    {% set className = className ~ " text-muted" %}
+                {% endif %}
+
+                <tr class="{{ className }}" data-dbid="{{ command.id }}">
+                    <td rowspan="2">
+                        <a href="{{ path('jmose_command_scheduler_action_command_toggle', {'id': command.id}) }}"
+                           class="hasTooltip toggleCommand"
+                           title="{{ "tooltip.toggleCommand" | trans }}">
+                            {% if command.disabled == true %}
+                                <span class="text-danger fa fa-power-off"></span>
+                                <span class="sr-only">&nbsp;</span>
+                            {% else %}
+                                <span class="text-success fa fa-power-off"></span>
+                                <span class="sr-only">&nbsp;</span>
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td rowspan="2">
+                        {{ command.name }}
+                    </td>
+                    <td>
+                        {{ command.command }} {{ command.arguments }}
+                    </td>
+                    <td>
+                        {{ command.cronExpression }}
+                    </td>
+                    <td>
+                        {{ command.logFile }}
+                    </td>
+                    <td>
+                        {{ command.priority }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {% if command.rights is defined and command.rights.title is defined %}
+                            <span>{{ command.rights.title }}</span>
+                            <span class="fa fa-info-circle hasTooltip" title="{{ command.rights.info }}"></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ command.lastExecution|date( "dateFormat"|trans ) }}
+                    </td>
+                    <td>
+                        {{ command.lastReturnCode }}
+                    </td>
+                    <td style="min-width: 90px;">
+                        {% if command.locked == true %}
+                            <a href="#"
+                               data-href="{{ path('jmose_command_scheduler_action_command_unlock', {'id': command.id}) }}"
+                               data-toggle="confirmation"
+                               data-btnOkLabel="{{ "action.unlock"|trans }}"
+                               data-title="{{ "confirm.unlock"|trans }}"
+                               class="unlockCommand">
+                            <span class="text-muted fa fa-lock hasTooltip"
+                                  title="{{ "action.unlock"|trans }}"></span>
+                                <span class="sr-only">{{ "action.unlock"|trans }}</span>
+                            </a>
+                        {% endif %}
+                        <a href="{{ path('jmose_command_scheduler_action_command_toggle_logging', {'id': command.id}) }}"
+                           class="hasTooltip toggleLogging"
+                           title="{{ "tooltip.toggleLogging"|trans }}">
+                            {% if command.logExecutions == true %}
+                                <span class="text-success fa fa-check-square-o"></span>
+                            {% else %}
+                                <span class="text-danger fa fa-square-o"></span>
+                            {% endif %}
+                        </a>
+                        <a href="{{ path('jmose_command_scheduler_detail_command_executions', {'commandId':command.id}) }}"
+                           class="hasTooltip showExecutions"
+                           title="{{ "tooltip.executions"|trans }}">
+                            <span class="fa fa-archive text-info"></span>
+                        </a>
+                        <a href="{{ path('jmose_command_scheduler_detail_command_edit', {'scheduledCommandId': command.id}) }}"
+                                class="editCommand">
+                            <span class="text-info fa fa-pencil hasTooltip"
+                              title="{{ "tooltip.editCommand"|trans }}"></span>
+                            <span class="sr-only">{{ "action.edit"|trans }}</span>
+                        </a>
+                        <a href="#"
+                           data-href="{{ path('jmose_command_scheduler_action_command_remove', {'id': command.id}) }}"
+                           data-toggle="confirmation"
+                           data-btnOkLabel="{{ "action.delete"|trans }}"
+                           data-title="{{ "confirm.deleteScheduling"|trans }}"
+                           class="removeCommand">
+                        <span class="text-danger fa fa-trash hasTooltip"
+                              title="{{ "tooltip.deleteCommand"|trans }}"></span>
+                            <span class="sr-only">{{ "action.delete"|trans }}</span>
+                        </a>
+                        <a href="#"
+                           data-href="{{ path('jmose_command_scheduler_action_command_execute', {'id': command.id}) }}"
+                           data-toggle="confirmation"
+                           data-btnOkLabel="{{ "action.execute"|trans }}"
+                           data-title="{{ "confirm.execute"|trans }}"
+                           class="executeNow">
+                        <span class="text-{% if command.executeImmediately %}muted{% else %}success{% endif %} fa fa-play hasTooltip"
+                              title="{{ "tooltip.executeCommand"|trans }}"></span>
+                            <span class="sr-only">{{ "action.execute"|trans }}</span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('jmose_command_scheduler_detail_command_new') }}"
+       class="btn btn-primary btn-lg pull-right"
+       role="button">
+        {{ "action.newScheduling"|trans }} »
+    </a>
+{% endblock content %}

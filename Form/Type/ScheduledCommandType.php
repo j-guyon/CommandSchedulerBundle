@@ -2,110 +2,176 @@
 
 namespace JMose\CommandSchedulerBundle\Form\Type;
 
+use JMose\CommandSchedulerBundle\Entity\UserHost;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ScheduledCommandType
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
+ * @author  Daniel Fischer <dfischer000@gmail.com>
+ * 
  * @package JMose\CommandSchedulerBundle\Form\Type
  */
 class ScheduledCommandType extends AbstractType
 {
     /**
+     * {@inheritdoc}
+     *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
+        $builder->add('id', 'Symfony\Component\Form\Extension\Core\Type\HiddenType');
 
         $builder->add(
-            'name', 'text', array(
-                'label'    => 'detail.name',
+            'name',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
+                'label' => 'detail.name',
                 'required' => true
             )
         );
 
         $builder->add(
-            'command', 'command_choice', array(
-                'label'       => 'detail.command',
-                'required'    => true
+            'command',
+            'JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType',
+            array(
+                'label' => 'detail.command',
+                'required' => true,
+                'choices_as_values' => true
             )
         );
 
         $builder->add(
-            'arguments', 'text', array(
-                'label'    => 'detail.arguments',
+            'arguments',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
+                'label' => 'detail.arguments',
                 'required' => false
             )
         );
 
         $builder->add(
-            'cronExpression', 'text', array(
-                'label'    => 'detail.cronExpression',
+            'cronExpression',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
+                'label' => 'detail.cronExpression',
                 'required' => true
             )
         );
 
         $builder->add(
-            'logFile', 'text', array(
-                'label'    => 'detail.logFile',
-                'required' => true
+            'logFile',
+            'Symfony\Component\Form\Extension\Core\Type\TextType',
+            array(
+                'label' => 'detail.logFile',
+                'required' => false
             )
         );
 
         $builder->add(
-            'priority', 'integer', array(
-                'label'      => 'detail.priority',
+            'rights',
+            'JMose\CommandSchedulerBundle\Form\Type\UserHostChoiceType',
+            array(
+                // use object as value
+                'choices_as_values' => true,
+                // anonymous function to build labels from object
+                'choice_label' => function (UserHost $right, $key, $index) {
+                    /** @var UserHost $right */
+                    $user = (($user = $right->getUser()) ? $user : '*');
+                    $host = (($host = $right->getHost()) ? $host : '*');
+
+                    $val = $right->getTitle();
+
+                    // if user or host are set append to title
+                    // output similar to mysql syntax
+                    if(($user != '*') || ($host != '*')){
+                        $val = sprintf("%s (%s@%s)",
+                            $right->getTitle(),
+                            $user,
+                            $host
+                        );
+                    }
+
+                    return $val;
+                },
+                'label' => 'detail.rights',
+                'required' => false
+            )
+        );
+
+        $builder->add(
+            'priority',
+            'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            array(
+                'label' => 'detail.priority',
                 'empty_data' => 0,
-                'required'   => false
-            )
-        );
-
-        $builder->add(
-            'executeImmediately', 'checkbox', array(
-                'label'    => 'detail.executeImmediately',
                 'required' => false
             )
         );
 
         $builder->add(
-            'disabled', 'checkbox', array(
-                'label'    => 'detail.disabled',
+            'expectedRuntime',
+            'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+            array(
+                'label' => 'detail.expectedRuntime',
                 'required' => false
             )
         );
 
         $builder->add(
-            'save', 'submit', array(
-                'label' => 'detail.save',
+            'executeImmediately',
+            'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+            array(
+                'label' => 'detail.executeImmediately',
+                'required' => false
             )
         );
 
+        $builder->add(
+            'disabled',
+            'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+            array(
+                'label' => 'detail.disabled',
+                'required' => false
+            )
+        );
+
+        $builder->add(
+            'logExecutions',
+            'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+            array(
+                'label' => 'detail.logExecutions',
+                'required' => false
+            )
+        );
+
+        $builder->add(
+            'save',
+            'Symfony\Component\Form\Extension\Core\Type\SubmitType',
+            array(
+                'label' => 'action.save',
+            )
+        );
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
+     *
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'data_class'         => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
-                'wrapper_attr'       => 'default_wrapper',
+                'data_class' => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
+                'wrapper_attr' => 'default_wrapper',
                 'translation_domain' => 'JMoseCommandScheduler'
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'command_scheduler_detail';
     }
 }

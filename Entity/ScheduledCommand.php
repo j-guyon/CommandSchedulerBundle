@@ -2,10 +2,13 @@
 
 namespace JMose\CommandSchedulerBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Entity ScheduledCommand
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
+ * @author  Daniel Fischer <dfischer000@gmail.com>
  * @package JMose\CommandSchedulerBundle\Entity
  */
 class ScheduledCommand
@@ -77,12 +80,36 @@ class ScheduledCommand
     private $locked;
 
     /**
+     * @var integer
+     */
+    private $expectedRuntime = 0;
+
+    /**
+     * @var ArrayCollection Execution every time a command is executed an execution is created
+     */
+    private $executions;
+
+    /**
+     * @var boolean should executions be logged in database
+     */
+    private $logExecutions = false;
+
+
+    /**
+     * @var UserHost $rights requirements for executing user and host
+     */
+    private $rights = null;
+
+    /**
      * Init new ScheduledCommand
      */
     public function __construct()
     {
         $this->setLastExecution(new \DateTime());
         $this->setLocked(false);
+
+        $this->executions = new ArrayCollection();
+        $this->rights = new ArrayCollection();
     }
 
     /**
@@ -410,4 +437,173 @@ class ScheduledCommand
         return $this;
     }
 
+
+    /**
+     * get expected runtime in seconds
+     *
+     * @return int
+     */
+    public function getExpectedRuntime()
+    {
+        return $this->expectedRuntime;
+    }
+
+    /**
+     * set expected runtime
+     *
+     * @param int $expectedRuntime
+     *
+     * @return $this
+     */
+    public function setExpectedRuntime($expectedRuntime)
+    {
+        $this->expectedRuntime = $expectedRuntime;
+
+        return $this;
+    }
+
+    /**
+     * get array with all executions since last rotation
+     *
+     * @return ArrayCollection
+     */
+    public function getExecutions()
+    {
+        return $this->executions;
+    }
+
+    /**
+     * @param ArrayCollection $executions
+     *
+     * @return $this to allow chaining
+     */
+    public function setExecutions(ArrayCollection $executions)
+    {
+        $this->executions = $executions;
+
+        return $this;
+    }
+
+    /**
+     * get right constraints for execution of command
+     *
+     * @return UserHost
+     */
+    public function getRights()
+    {
+        return $this->rights;
+    }
+
+    /**
+     * set user and host constraints
+     *
+     * @param UserHost $rights
+     *
+     * @return $this to allow chaining
+     */
+    public function setRights($rights)
+    {
+        $this->rights = $rights;
+
+        return $this;
+    }
+
+    /**
+     * check if command it to be executed under given "circumstances" (user and host matching)
+     * @return boolean
+     */
+    public function checkRights()
+    {
+        // no requirements assigned -> execute always
+        if (!$this->rights) {
+            return true;
+        }
+
+        $result = true;
+
+        $requiredUser = $this->rights->getUser();
+        $requiredHost = $this->rights->getHost();
+
+        $excludedUser = $this->rights->getUserExcluded();
+        $excludedHost = $this->rights->getHostExcluded();
+
+        $user = getenv('USERNAME') ?: getenv('USER');
+        $host = gethostname();
+
+        // check user requirements
+        if($requiredUser) {
+            $result = (
+                $result && // not yet invalidated
+                preg_match("{" . $requiredUser . "}", $user) // requirement does match executing user
+            );
+        }
+
+        // check excluded user requirements
+        if($excludedUser) {
+            $result = (
+                $result && // not yet invalidated
+                !preg_match("{" . $excludedUser . "}", $user) // requirement must not match executing user
+            );
+        }
+
+        // check host requirements
+        if($requiredHost) {
+            $result = (
+                $result && // not yet invalidated
+                preg_match("{" . $requiredHost . "}", $host) // requirement does match hostname
+            );
+        }
+
+        // check excluded host requirements
+        if($excludedHost) {
+            $result = (
+                $result && // not yet invalidated
+                !preg_match("{" . $excludedHost . "}", $host) // requirement must not match hostname
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function logExecutions()
+    {
+        return $this->logExecutions;
+    }
+
+    /**
+     * @param boolean $logExecutions
+     *
+     * @return $this to allow chaining
+     */
+    public function setLogExecutions($logExecutions)
+    {
+        $this->logExecutions = $logExecutions;
+
+        return $this;
+    }
+
+    /**
+     * add new Execution to collection
+     *
+     * @param Execution $log
+     *
+     * @return $this to allow chaining
+     */
+    public function addLog($log)
+    {
+        $this->executions->add($log);
+
+        return $this;
+    }
+
+    /**
+     * @return Execution
+     */
+    public function getCurrentLog()
+    {
+        return $this->executions->last();
+    }
 }
