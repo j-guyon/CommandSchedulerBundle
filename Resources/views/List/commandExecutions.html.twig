@@ -27,7 +27,7 @@
                         {% if execution.output is defined and execution.output %}
                             <a href="{{ path('jmose_command_scheduler_execution_output', { 'id': execution.id }) }}"
                                data-id="{{ execution.id }}" class="openOutput">
-                                {{ "execution.showOutput"|trans }}
+                                {{ "execution.output"|trans }}
                             </a>
                         {% endif %}
                     </td>
