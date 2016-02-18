@@ -527,7 +527,7 @@ class ScheduledCommand
         $excludedUser = $this->rights->getUserExcluded();
         $excludedHost = $this->rights->getHostExcluded();
 
-        $user = getenv('USERNAME') ?: getenv('USER');
+        $user = getenv('USER') ?: getenv('USERNAME');
         $host = gethostname();
 
         // check user requirements
