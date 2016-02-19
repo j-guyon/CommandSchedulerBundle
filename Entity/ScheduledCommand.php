@@ -528,18 +528,23 @@ class ScheduledCommand
         $excludedHost = $this->rights->getHostExcluded();
 
         $user = getenv('USER') ?: getenv('USERNAME');
+        // we still don't have a username, let's try LOGNAME
+        if(!$user) {
+            $user = getenv('LOGNAME');
+        }
+        
         $host = gethostname();
 
-        // check user requirements
-        if($requiredUser) {
+        // check user requirements if there is a username
+        if($requiredUser && $user) {
             $result = (
                 $result && // not yet invalidated
                 preg_match("{" . $requiredUser . "}", $user) // requirement does match executing user
             );
         }
 
-        // check excluded user requirements
-        if($excludedUser) {
+        // check excluded user requirements if there is a username
+        if($excludedUser && $user) {
             $result = (
                 $result && // not yet invalidated
                 !preg_match("{" . $excludedUser . "}", $user) // requirement must not match executing user
