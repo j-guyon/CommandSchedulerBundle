@@ -27,6 +27,7 @@ var Table = Table || {
 
             Table.buildTableFilter(dataTable, 'commandfilter', 0);
             Table.buildTableFilter(dataTable, 'datefilter', 1);
+            Table.cleanDateFilter();
         },
 
         /**
@@ -41,18 +42,16 @@ var Table = Table || {
             var $select = $('#' + selector)
                 .on('change', function () {
                     var col = dataTable.column(colIdx),
-                        searchVal = $(this).val(),
-                        regexp = false;
+                        searchVal = $(this).val();
 
                     // multiple selections
                     if (typeof searchVal == 'object') {
                         searchVal = searchVal.join('|');
-                        regexp = true;
                     }
 
                     // filter column
                     col
-                        .search(searchVal, regexp, false) // regexp optional, no smart search
+                        .search(searchVal, true, false) // regexp optional, no smart search
                         .draw(); // refresh table
                 });
 
@@ -65,5 +64,33 @@ var Table = Table || {
                 .each(function (d) {
                     $select.append($('<option value="' + d + '">' + d + '</option>'));
                 });
+        },
+
+        /**
+         * filter for dates only (remove time from select field)
+         */
+        cleanDateFilter: function () {
+            var $select = $('#datefilter'),
+                $options = $('option', $select),
+                dates = [];
+
+            $options.each(function (idx, elem) {
+                // skip first entry
+                if(!idx) {
+                    return;
+                }
+
+                var $this = $(elem),
+                    date = $this.val().replace(/([^\s]+).*/, "$1"); // remove time
+
+                if (dates.indexOf(date) != -1) {
+                    $this.remove(); // remove entry, date already existing
+                } else {
+                    $this
+                        .val(date + '.*') // make regexp
+                        .html(date); // change label
+                    dates.push(date); // make sure each date only exists once
+                }
+            });
         }
     };
