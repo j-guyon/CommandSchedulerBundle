@@ -8,6 +8,7 @@ jmose_command_scheduler_list_details:
     path:  /command-scheduler/list/{_type}
     defaults:
       _controller: JMoseCommandSchedulerBundle:List:index
+      _type: "commands"
     requirements:
       _type: "commands|rights|executions"
 
