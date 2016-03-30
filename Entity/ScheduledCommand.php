@@ -171,7 +171,7 @@ class ScheduledCommand
         if (null !== $this->arguments || '' != $this->arguments) {
             $flatArgsArray = explode(' ', preg_replace('/\s+/', ' ', $this->arguments));
             foreach ($flatArgsArray as $argument) {
-                $tmpArray = explode('=', $argument, 1);
+                $tmpArray = explode('=', $argument, 2);
                 if (count($tmpArray) == 1) {
                     $argsArray[$tmpArray[0]] = true;
                 } else {
