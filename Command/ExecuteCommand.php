@@ -167,7 +167,7 @@ class ExecuteCommand extends ContainerAwareCommand
         ));
 
         // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
-        if (false === $this->logPath && "" != $scheduledCommand->getLogFile()) {
+        if (false === $this->logPath || empty($scheduledCommand->getLogFile())) {
             $logOutput = new NullOutput();
         }else{
             $logOutput = new StreamOutput(fopen(
