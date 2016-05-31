@@ -166,6 +166,11 @@ class ExecuteCommand extends ContainerAwareCommand
             $scheduledCommand->getArguments(true)
         ));
 
+        // Disable interactive mode if the current command has no-interaction flag
+        if (true === $input->hasParameterOption(array('--no-interaction', '-n'))) {
+            $input->setInteractive(false);
+        }
+
         // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
         if (false === $this->logPath || empty($scheduledCommand->getLogFile())) {
             $logOutput = new NullOutput();
