@@ -21,6 +21,9 @@ class ListController extends BaseController
      */
     public function indexAction($_type = '')
     {
+        // if there are more commands there might be a memory issue
+        ini_set('memory_limit', '1G');
+        
         switch ($_type) {
             case'commands':
                 $result = $this->getListCommands();
