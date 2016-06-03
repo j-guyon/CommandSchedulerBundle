@@ -108,4 +108,4 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
         targetEntity: Execution
         mappedBy: command
         nullable: true
-        fetch: EAGER
+        # fetch: EAGER
