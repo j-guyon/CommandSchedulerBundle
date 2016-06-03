@@ -39,7 +39,7 @@ class ScheduledCommandRepository extends EntityRepository
     {
         return $this->findBy(
             array(), // criteria
-            array('priority' => 'DESC') // ordering
+            array('id' => 'ASC') // ordering
         );
     }
 
