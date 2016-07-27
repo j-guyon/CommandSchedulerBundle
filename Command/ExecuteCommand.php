@@ -158,7 +158,6 @@ class ExecuteCommand extends ContainerAwareCommand
             }
 
             $scheduledCommand = $notLockedCommand;
-            sleep(20);
             $scheduledCommand->setLastExecution(new \DateTime());
             $scheduledCommand->setLocked(true);
             $scheduledCommand = $this->em->merge($scheduledCommand);
