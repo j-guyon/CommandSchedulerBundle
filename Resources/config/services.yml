@@ -3,7 +3,7 @@ services:
         class: JMose\CommandSchedulerBundle\Service\CommandParser
         arguments:
             - "@kernel"
-            - %jmose_command_scheduler.excluded_command_namespaces%
+            - "%jmose_command_scheduler.excluded_command_namespaces%"
 
     jmose_command_scheduler.form.type.command_choice:
         class: JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType
