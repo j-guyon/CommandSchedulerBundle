@@ -10,20 +10,7 @@
     <link href="{{ asset('bundles/jmosecommandscheduler/css/bootstrap-theme.min.css') }}" rel="stylesheet">
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">{{ 'name'|trans }}</a>
-        </div>
-    </div>
-</div>
-
+{% include 'JMoseCommandSchedulerBundle:Navbar:navbar.html.twig' %}
 <div class="jumbotron">
     <div class="container">
         <!-- Example row of columns -->
@@ -57,21 +44,21 @@
     </div>
 </div><!-- /container -->
 
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/jquery-1.11.1.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/bootstrap.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/bootstrap-tooltip.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/bootstrap-confirmation.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/jquery-1.11.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/bootstrap-tooltip.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/jmosecommandscheduler/js/bootstrap-confirmation.js') }}"></script>
 
-    <script type="text/javascript" >
-        // Enable bootstrap-confirmation
-        $(document).ready(function () {
-            //$('[data-toggle="confirmation"]').confirmation();
-            $('[data-toggle="confirmation"]').confirmation({
-                singleton:true,
-                popout: true,
-                placement: 'left'
-            });
+<script type="text/javascript">
+    // Enable bootstrap-confirmation
+    $(document).ready(function () {
+        //$('[data-toggle="confirmation"]').confirmation();
+        $('[data-toggle="confirmation"]').confirmation({
+            singleton: true,
+            popout: true,
+            placement: 'left'
         });
-    </script>
+    });
+</script>
 </body>
 </html>
