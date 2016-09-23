@@ -81,7 +81,7 @@ In case you're using another doctrine manager
 $ php bin/console doctrine:schema:update --em=[manager_name] --force
 ```
 
-Now, you can use the bundle and manage your scheduling here : **http://{you-app-root}/command-scheduler/list** and execute them with this new command
+Now, you can use the bundle and manage your scheduling here : **http://{your-app-root}/command-scheduler/list** and execute them with this new command
 ``` bash
 $ php bin/console scheduler:execute --dump
 ```
@@ -124,13 +124,19 @@ jmose_command_scheduler:
 
 Feel free to override it (especially `log_path`) in your `config.yml` file.
 
+### 5 - Override the navigation bar
+
+If you'd like to alter the navigation bar shown on `http://{your-app-root}/command-scheduler/list` you'll want to override the navbar template.
+This can easily be done by using standard overrides in Symfony, as described [here](http://symfony.com/doc/current/templating/overriding.html).
+
+In your project, you'll want to copy the `Navbar:navbar:html.twig` template into `app/Resources/JMoseCommandSchedulerBundle/views/Navbar/navbar.html.twig`.  Any changes to the file in this location will take precedence over the bundle's template file.
 
 Usage
 ============
 
 After a successful installation, you can access to this URL:
 
-`http://{you-app-root}/command-scheduler/list`.
+`http://{your-app-root}/command-scheduler/list`.
 
 From this screen, you can do following actions :
   - Create a new scheduling
@@ -175,7 +181,7 @@ To enable (external) checks if the jobs are running correctly there is a URL whi
 
 To run the check simply call
 
-`http://{you-app-root}/command-scheduler/monitor`
+`http://{your-app-root}/command-scheduler/monitor`
 
 The call returns a JSON object with either HTTP 200 and an empty array (everything ok) or HTTP 417 (Expectation failed) and an object containing all the (failed) jobs with name, last execution time, locked state and return code.
 
