@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <!-- Bundle -->
+            <trans-unit id="1">
+                <source>name</source>
+                <target>Symfony's Aufgaben-Planer</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>dateFormat</source>
+                <target>d.m.Y H:i</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>list.title</source>
+                <target>Geplante Aufgaben</target>
+            </trans-unit>
+
+            <!-- Actions -->
+            <trans-unit id="100">
+                <source>action.delete</source>
+                <target>Löschen</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>action.execute</source>
+                <target>Ausführen</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>action.edit</source>
+                <target>Bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>action.new</source>
+                <target>Neue Aufgabe</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>confirm.delete</source>
+                <target>Diese Aufgabe unwiderruflich löschen?</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>confirm.execute</source>
+                <target>Die Ausführung dieser Aufgabe erzwingen?</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>action.unlock</source>
+                <target>Aufgabe entsperren</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>confirm.unlock</source>
+                <target>Die Aufgabe könnte gerade ausgeführt werden. Möchtest du sie wirklich entsperren?</target>
+            </trans-unit>
+
+            <!-- Detail  -->
+            <trans-unit id="201">
+                <source>detail.title</source>
+                <target>Geplante Aufgabe</target>
+            </trans-unit>
+
+            <trans-unit id="202">
+                <source>detail.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>detail.command</source>
+                <target>Kommando</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>detail.arguments</source>
+                <target>Argumente</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>detail.cronExpression</source>
+                <target>Cron-Ausdruck</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>detail.logFile</source>
+                <target>Ausgabedatei</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>detail.priority</source>
+                <target>Priorität</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>detail.executeImmediately</source>
+                <target>Jetzt ausführen</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>detail.disabled</source>
+                <target>Deaktivieren</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>detail.save</source>
+                <target>Speichern</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>detail.lastExecution</source>
+                <target>Letzte Ausführung</target>
+            </trans-unit>
+            <trans-unit id="212">
+                <source>detail.lastReturnCode</source>
+                <target>Letzter Status-Code</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>detail.actions</source>
+                <target>Aktionen</target>
+            </trans-unit>
+
+            <!-- Flashs messages -->
+            <trans-unit id="300">
+                <source>flash.success</source>
+                <target>Aufgabe erfolgreich gespeichert.</target>
+            </trans-unit>
+            <trans-unit id="301">
+                <source>flash.deleted</source>
+                <target>Aufgabe erfolgreich gelöscht.</target>
+            </trans-unit>
+            <trans-unit id="302">
+                <source>flash.execute</source>
+                <target>Aufgabe wird beim nächsten "scheduler:execute" ausgeführt.</target>
+            </trans-unit>
+            <trans-unit id="303">
+                <source>flash.unlocked</source>
+                <target>Aufgabe erfolgreich entsperrt.</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>
