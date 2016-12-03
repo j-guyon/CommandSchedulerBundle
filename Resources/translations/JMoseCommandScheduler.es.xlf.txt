@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <!-- Bundle -->
+            <trans-unit id="1">
+                <source>name</source>
+                <target>Planificador de tareas de Symfony</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>dateFormat</source>
+                <target>d-m-Y H:i</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>list.title</source>
+                <target>Tareas programadas</target>
+            </trans-unit>
+
+            <!-- Actions -->
+            <trans-unit id="100">
+                <source>action.delete</source>
+                <target>Eliminar</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>action.execute</source>
+                <target>Ejecutar</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>action.edit</source>
+                <target>Editar</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>action.new</source>
+                <target>Nueva tarea</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>confirm.delete</source>
+                <target>¿Borrar permanentemente esta tarea?</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>confirm.execute</source>
+                <target>¿Forzar la ejecución de esta tarea?</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>action.unlock</source>
+                <target>Desbloquear tarea</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>confirm.unlock</source>
+                <target>La tarea puede estar corriendo ¿Está seguro que desea desbloquearla?</target>
+            </trans-unit>
+
+            <!-- Detail  -->
+            <trans-unit id="201">
+                <source>detail.title</source>
+                <target>Tarea programada</target>
+            </trans-unit>
+
+            <trans-unit id="202">
+                <source>detail.name</source>
+                <target>Nombre</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>detail.command</source>
+                <target>Comando</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>detail.arguments</source>
+                <target>Parametros</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>detail.cronExpression</source>
+                <target>Definición del cron</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>detail.logFile</source>
+                <target>Archivo de log</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>detail.priority</source>
+                <target>Prioridad</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>detail.executeImmediately</source>
+                <target>Ejecutar ahora</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>detail.disabled</source>
+                <target>Deshabilitar</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>detail.save</source>
+                <target>Guardar</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>detail.lastExecution</source>
+                <target>Última ejecución</target>
+            </trans-unit>
+            <trans-unit id="212">
+                <source>detail.lastReturnCode</source>
+                <target>Ultimo código retorno</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>detail.actions</source>
+                <target>Acciones</target>
+            </trans-unit>
+
+            <!-- Flashs messages -->
+            <trans-unit id="300">
+                <source>flash.success</source>
+                <target>Tarea guardada exitosamente.</target>
+            </trans-unit>
+            <trans-unit id="301">
+                <source>flash.deleted</source>
+                <target>Tarea eliminada exitosamente</target>
+            </trans-unit>
+            <trans-unit id="302">
+                <source>flash.execute</source>
+                <target>El comando será ejecutado en el siguiente "scheduler:execute".</target>
+            </trans-unit>
+            <trans-unit id="303">
+                <source>flash.unlocked</source>
+                <target>Tarea desbloqueada exitosamente.</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>
