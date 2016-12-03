@@ -83,7 +83,7 @@ $ php bin/console doctrine:schema:update --em=[manager_name] --force
 
 Now, you can use the bundle and manage your scheduling here : **http://{your-app-root}/command-scheduler/list** and execute them with this new command
 ``` bash
-$ php bin/console scheduler:execute --dump
+$ php bin/console scheduler:execute
 ```
 
 See the [Usage](#usage) section to have more information
