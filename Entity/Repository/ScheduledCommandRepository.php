@@ -90,7 +90,6 @@ class ScheduledCommandRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('command')
             ->where('command.locked = false')
-            ->andWhere('command.lastReturnCode = 0')
             ->andWhere('command.id = :id')
             ->setParameter('id', $command->getId())
             ->getQuery();
