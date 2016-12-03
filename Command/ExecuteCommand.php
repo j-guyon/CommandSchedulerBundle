@@ -144,11 +144,36 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
-        $scheduledCommand = $this->em->merge($scheduledCommand);
-        $scheduledCommand->setLastExecution(new \DateTime());
-        $scheduledCommand->setLocked(true);
-        $this->em->flush();
 
+        //reload command from database before every execution to avoid parallel execution
+        $this->em->getConnection()->beginTransaction();
+        try {
+            $notLockedCommand = $this
+                ->em
+                ->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+                ->getNotLockedCommand($scheduledCommand);
+            //$notLockedCommand will be locked for avoiding parallel calls: http://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
+            if ($notLockedCommand === null) {
+                throw new \Exception();
+            }
+
+            $scheduledCommand = $notLockedCommand;
+            $scheduledCommand->setLastExecution(new \DateTime());
+            $scheduledCommand->setLocked(true);
+            $scheduledCommand = $this->em->merge($scheduledCommand);
+            $this->em->flush();
+            $this->em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $this->em->getConnection()->rollBack();
+            $output->writeln(
+                sprintf(
+                    '<error>Command %s is locked %s</error>',
+                    $scheduledCommand->getCommand(),
+                    (!empty($e->getMessage()) ? sprintf('(%s)', $e->getMessage()) : '')
+                )
+            );
+            return;
+        }
         try {
             $command = $this->getApplication()->find($scheduledCommand->getCommand());
         } catch (\InvalidArgumentException $e) {

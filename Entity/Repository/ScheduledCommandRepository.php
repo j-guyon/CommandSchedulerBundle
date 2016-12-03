@@ -2,6 +2,7 @@
 
 namespace JMose\CommandSchedulerBundle\Entity\Repository;
 
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityRepository;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 
@@ -79,5 +80,22 @@ class ScheduledCommandRepository extends EntityRepository
         }
 
         return $failedCommands;
+    }
+
+    /**
+     * @param ScheduledCommand $command
+     * @return ScheduledCommand|null
+     */
+    public function getNotLockedCommand(ScheduledCommand $command)
+    {
+        $query = $this->createQueryBuilder('command')
+            ->where('command.locked = false')
+            ->andWhere('command.lastReturnCode = 0')
+            ->andWhere('command.id = :id')
+            ->setParameter('id', $command->getId())
+            ->getQuery();
+
+        $query->setLockMode(LockMode::PESSIMISTIC_WRITE);
+        return $query->getOneOrNullResult();
     }
 }
