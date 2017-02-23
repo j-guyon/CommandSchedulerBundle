@@ -146,9 +146,12 @@ From this screen, you can do following actions :
   - Unlock a task (if the lock is due to an unrecoverable error for example)
   
 When creating a new scheduling, you can provide your commands arguments and options as follows:
-  - Arguments: `argument-name="my value"` (you can use single quotes, or ignore quotes when there is no white spaces in the value)
-  - Options: `--option-name="my value"` (you can use single quotes, or ignore quotes when there is no white spaces in the value)
-  - Flags (options): `--my-flag` (this will result in setting the the 'my-flag' option to `true`)
+  - **Arguments:** `argument-name="my value"`
+        You can use single quotes, or ignore quotes when there is no white spaces in the value. This differs the way a command is called directly from the console (here you HAVE to specify the argument's name)
+  - **Options:** `--option-name="my value"` 
+        You can use single quotes, or ignore quotes when there is no white spaces in the value.
+  - **Flags (options):** `--my-flag` 
+        This will result in setting the 'my-flag' option to `true`.
 
 After that, you have to set (every few minutes, it depends of your needs) the following command in your system :
 ``` bash
