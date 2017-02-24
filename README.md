@@ -6,6 +6,8 @@ CommandSchedulerBundle
 [![Coverage Status](https://coveralls.io/repos/J-Mose/CommandSchedulerBundle/badge.svg)](https://coveralls.io/r/J-Mose/CommandSchedulerBundle)
 [![Latest Stable Version](https://poser.pugx.org/jmose/command-scheduler-bundle/v/stable)](https://packagist.org/packages/jmose/command-scheduler-bundle)
 
+TEST
+
 This bundle will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 
 **Version**: 1.2.3
