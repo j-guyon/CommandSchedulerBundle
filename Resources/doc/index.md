@@ -145,13 +145,7 @@ From this screen, you can do following actions :
   - Manually execute a command (It will be launched during the next `scheduler:execute`, regardless of the cron expression)
   - Unlock a task (if the lock is due to an unrecoverable error for example)
   
-When creating a new scheduling, you can provide your commands arguments and options as follows:
-  - **Arguments:** `argument-name="my value"`
-        You can use single quotes, or ignore quotes when there is no white spaces in the value. This differs the way a command is called directly from the console (here you HAVE to specify the argument's name)
-  - **Options:** `--option-name="my value"` 
-        You can use single quotes, or ignore quotes when there is no white spaces in the value.
-  - **Flags (options):** `--my-flag` 
-        This will result in setting the 'my-flag' option to `true`.
+When creating a new scheduling, you can provide your commands arguments and options exactly as you wold do from the console. Remember to use quotes when using arguments and options that includes white spaces.
 
 After that, you have to set (every few minutes, it depends of your needs) the following command in your system :
 ``` bash
