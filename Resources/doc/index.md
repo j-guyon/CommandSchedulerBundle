@@ -176,7 +176,6 @@ The `scheduler:execute` command will do following actions :
 This system avoid to have simultaneous process for the same command.
 Thus, if an non-catchable error occurs, the command won't be executed again unless the problem is solved and the task is unlocked manually.
 
-For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
 
 Monitoring
 =============
@@ -195,3 +194,6 @@ The call returns a JSON object with either HTTP 200 and an empty array (everythi
 
 For "internal" monitoring of jobs there is also a command "scheduler:monitor" which does the same check as the monitor call before except it sends emails to an arbitrary number of receivers (if the server allows sending mails with the "mail" command).
 As some kind of "self-monitoring" job the monitor command can be configured to send emails to all receivers if everything's ok - if there is no mail at all a problem occured.
+
+
+For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
