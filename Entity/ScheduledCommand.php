@@ -172,15 +172,22 @@ class ScheduledCommand
             preg_match_all('/((?:[^ "\']|"[^"]*"|\'[^\']*\')+)/', $this->arguments, $flatArgsArray);
 
             foreach ($flatArgsArray[0] as $argument) {
-                if (preg_match_all('/(.*?)=(?:["\'](.*)["\']|(.*))/', $argument, $tmpArray) === 0) {
-                    $argsArray[$argument] = true;
-                } else if($tmpArray[2][0]) {
-                    $argsArray[$tmpArray[1][0]] = $tmpArray[2][0];
-                } else if($tmpArray[3][0]) {
-                    $argsArray[$tmpArray[1][0]] = $tmpArray[3][0];
-                } else {
-                    $argsArray[$tmpArray[1][0]] = "";
+	        if (preg_match_all('/(.*?)=(?:"(.*)"|\'(.*)\'|(.*))/', $argument, $tmpArray) === 0) {
+		    $argsArray[$argument] = true;
+		    continue;
                 }
+				
+		$argument_name = $tmpArray[1][0];
+		$argument_value = max($tmpArray[2][0], $tmpArray[3][0], $tmpArray[4][0]);
+
+		if(array_key_exists($argument_name, $argsArray)) {
+		   if(!is_array($argsArray[$argument_name])) {
+			$argsArray[$argument_name] = array($argsArray[$argument_name]);
+		    }
+		    $argsArray[$argument_name][] = $argument_value;
+		} else {
+		    $argsArray[$argument_name] = $argument_value;
+		}
             }
         }
         return $argsArray;
