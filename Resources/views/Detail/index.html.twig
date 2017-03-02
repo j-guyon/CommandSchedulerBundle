@@ -21,11 +21,15 @@
         {{ form_row( scheduledCommandForm.priority, {'attr': styleConfiguration } ) }}
         <div>
             {{ form_widget( scheduledCommandForm.executeImmediately ) }}
-            {{ form_label( scheduledCommandForm.executeImmediately ) }}
+            {% if not scheduledCommandForm.executeImmediately.rendered %}
+                {{ form_label( scheduledCommandForm.executeImmediately ) }}
+            {% endif %}
         </div>
         <div>
             {{ form_widget( scheduledCommandForm.disabled ) }}
-            {{ form_label( scheduledCommandForm.disabled ) }}
+            {% if not scheduledCommandForm.scheduledCommandForm.rendered %}
+                {{ form_label( scheduledCommandForm.disabled ) }}
+            {% endif %}
         </div>
 
         {# Form's actions #}
