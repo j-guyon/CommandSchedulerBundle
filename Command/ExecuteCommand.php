@@ -4,7 +4,7 @@ namespace JMose\CommandSchedulerBundle\Command;
 
 use Cron\CronExpression;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\NullOutput;
@@ -144,7 +144,6 @@ class ExecuteCommand extends ContainerAwareCommand
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
-
         //reload command from database before every execution to avoid parallel execution
         $this->em->getConnection()->beginTransaction();
         try {
@@ -183,14 +182,10 @@ class ExecuteCommand extends ContainerAwareCommand
             return;
         }
 
-        $input = new ArrayInput(array_merge(
-            array(
-                'command' => $scheduledCommand->getCommand(),
-                '--env'   => $input->getOption('env')
-            ),
-            $scheduledCommand->getArguments(true)
-        ));
-
+        $input = new StringInput($scheduledCommand->getCommand().' '. $scheduledCommand->getArguments().' --env='.$input->getOption('env'));
+        $command->mergeApplicationDefinition();
+        $input->bind($command->getDefinition());
+        
         // Disable interactive mode if the current command has no-interaction flag
         if (true === $input->hasParameterOption(array('--no-interaction', '-n'))) {
             $input->setInteractive(false);
