@@ -139,12 +139,7 @@ class ExecuteCommand extends SchedulerBaseCommand
         ));
 
         // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
-        if (
-            (false === $this->logPath) ||
-            ("" == $scheduledCommand->getLogFile()) ||
-            ('null' == $scheduledCommand->getLogFile()) ||
-            false
-        ) {
+        if (false === $this->logPath || '' != $scheduledCommand->getLogFile() ) {
             $logOutput = new NullOutput();
         } else {
             $logOutput = new StreamOutput(
