@@ -160,6 +160,7 @@ class ExecuteCommand extends SchedulerBaseCommand
             $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand()
                 . ' ' . $scheduledCommand->getArguments() . '</comment>');
             $result = $command->run($input, $commandOutput);
+            sleep(3);
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());
             $logOutput->writeln($e->getTraceAsString());
