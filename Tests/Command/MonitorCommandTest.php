@@ -2,6 +2,7 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
+use JMose\CommandSchedulerBundle\Command\MonitorCommand;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
@@ -80,6 +81,48 @@ class MonitorCommandTest extends WebTestCase
         );
 
         $this->assertStringStartsWith('No errors found.', $output);
+    }
+
+    /**
+     * @group unit
+     */
+    public function testSendErrorMails()
+    {
+        $templatingMock = $this->getMockBuilder(Symfony\Bundle\TwigBundle\TwigEngine::class)->disableOriginalConstructor()->setMethods(['render'])->getMock();
+        $templatingMock->expects($this->once())->method('render')->willReturn("The Email Body");
+
+        $containerMock = $this->getMockBuilder(ContainerInterface::class)->disableOriginalConstructor()->setMethods(['get'])->getMock();
+        $containerMock->expects($this->once())->method('get')->willReturn($templatingMock);
+
+        $monitorCommandMock = $this->getMockBuilder(MonitorCommand::class)->disableOriginalConstructor()->setMethods(['getContainer'])->getMock();
+        $monitorCommandMock->expects($this->once())->method('getContainer')->willReturn($containerMock);
+
+        $swiftMailerMock = $this->getMockBuilder(\Swift_Mailer::class)->disableOriginalConstructor()->setMethods([])->getMock();
+        $swiftMailerMock->expects($this->once())->method('send');
+
+        $monitorCommandMock->setMailer($swiftMailerMock);
+        $monitorCommandMock->sendErrorMails(array());
+    }
+
+    /**
+     * @group unit
+     */
+    public function testSendNoErrorMails()
+    {
+        $templatingMock = $this->getMockBuilder(Symfony\Bundle\TwigBundle\TwigEngine::class)->disableOriginalConstructor()->setMethods(['render'])->getMock();
+        $templatingMock->expects($this->once())->method('render')->willReturn("The Email Body");
+
+        $containerMock = $this->getMockBuilder(ContainerInterface::class)->disableOriginalConstructor()->setMethods(['get'])->getMock();
+        $containerMock->expects($this->once())->method('get')->willReturn($templatingMock);
+
+        $monitorCommandMock = $this->getMockBuilder(MonitorCommand::class)->disableOriginalConstructor()->setMethods(['getContainer'])->getMock();
+        $monitorCommandMock->expects($this->once())->method('getContainer')->willReturn($containerMock);
+
+        $swiftMailerMock = $this->getMockBuilder(\Swift_Mailer::class)->disableOriginalConstructor()->setMethods([])->getMock();
+        $swiftMailerMock->expects($this->once())->method('send');
+
+        $monitorCommandMock->setMailer($swiftMailerMock);
+        $monitorCommandMock->sendNoErrorMails();
     }
 
 }

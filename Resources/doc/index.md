@@ -131,6 +131,10 @@ This can easily be done by using standard overrides in Symfony, as described [he
 
 In your project, you'll want to copy the `Navbar:navbar:html.twig` template into `app/Resources/JMoseCommandSchedulerBundle/views/Navbar/navbar.html.twig`.  Any changes to the file in this location will take precedence over the bundle's template file.
 
+### 6 - Override the notification emails
+
+You can override the notification email template by providing your own version of `error.html.twig` and `noerror.html.twig` in `app/Resources/JMoseCommandSchedulerBundle/views/Emails/`.
+
 Usage
 ============
 

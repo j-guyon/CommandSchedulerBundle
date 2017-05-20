@@ -39,7 +39,11 @@ jmose_command_scheduler:
     lock_timeout: 300
     excluded_command_namespaces:
         - scheduler
+    monitor_mail: ['test@test.com']
 
 liip_functional_test:
     cache_sqlite_db: true
     command_decoration: false
+
+swiftmailer:
+    disable_delivery: true

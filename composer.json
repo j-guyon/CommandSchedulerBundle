@@ -18,7 +18,9 @@
         "twig/twig": "~1.15",
         "doctrine/orm": "~2.2,>=2.2.3,<2.6",
         "doctrine/doctrine-bundle": "~1.0",
-        "mtdowling/cron-expression": "~1.0"
+        "mtdowling/cron-expression": "~1.0",
+        "symfony/swiftmailer-bundle": "^2.3.10",
+        "swiftmailer/swiftmailer": "~5.4"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.4",

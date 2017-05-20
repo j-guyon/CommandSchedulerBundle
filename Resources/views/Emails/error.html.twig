@@ -1,0 +1,4 @@
+{% for monitorMessage in messages %}
+    {# @var monitorMessage \Jmose\CommandSchedulerBundle\Domain\MonitorMessage #}
+    {{ monitorMessage.getCommandName }}: {{ monitorMessage.getCommandLastReturnCode }}, locked: {{ monitorMessage.isCommandLocked }}, last execution: {{ monitorMessage.getCommandLastExecuted|date }}</br>
+{% endfor %}
