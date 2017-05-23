@@ -21,9 +21,8 @@ branches:
 
 matrix:
     allow_failures:
-        - php:
-            - nightly
-            - hhvm
+        - php: nightly
+        - php: hhvm
 
 before_script:
     - mkdir -p ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d && echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
