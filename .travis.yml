@@ -19,10 +19,12 @@ branches:
         - master
         - /^\d+\.\d+$/
 
+#symfony 3.0 is no longer supported by symfony, allow it to fail
 matrix:
     allow_failures:
         - php: nightly
         - php: hhvm
+        - env: SYMFONY_VERSION=3.0.*
 
 before_script:
     - mkdir -p ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d && echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
