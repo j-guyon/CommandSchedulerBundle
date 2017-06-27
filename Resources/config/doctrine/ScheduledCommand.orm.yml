@@ -62,6 +62,12 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             unique: false
             nullable: false
             column: PRIORITY
+        executionMode:
+            type: string
+            length: 50
+            unique: false
+            nullable: false
+            column: B_EXECUTION_MODE
         executeImmediately:
             type: boolean
             length: null

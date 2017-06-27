@@ -106,10 +106,15 @@ class ExecuteCommand extends ContainerAwareCommand
         $noneExecution = true;
         foreach ($commands as $command) {
 
-            /** @var ScheduledCommand $command */
-            $cron        = CronExpression::factory($command->getCronExpression());
-            $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
-            $now         = new \DateTime();
+            if ( $command->getExecutionMode() == ScheduledCommand::MODE_AUTO ) {                
+                /** @var ScheduledCommand $command */
+                $cron        = CronExpression::factory($command->getCronExpression());
+                $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
+                $now         = new \DateTime();
+            } else {
+                $nextRunDate = false;
+                $now = false;
+            }
 
             if ($command->isExecuteImmediately()) {
                 $noneExecution = false;
@@ -120,7 +125,7 @@ class ExecuteCommand extends ContainerAwareCommand
                 if (!$input->getOption('dump')) {
                     $this->executeCommand($command, $output, $input);
                 }
-            } elseif ($nextRunDate < $now) {
+            } elseif ($command->getExecutionMode() == ScheduledCommand::MODE_AUTO && $nextRunDate < $now) {
                 $noneExecution = false;
                 $output->writeln(
                     'Command <comment>'.$command->getCommand().

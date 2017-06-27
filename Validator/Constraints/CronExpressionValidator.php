@@ -24,10 +24,14 @@ class CronExpressionValidator extends ConstraintValidator
     {
         $value = (string)$value;
 
-        if (null === $value || '' === $value) {
-            return;
+        if ( $this->context->getObject()->getExecutionMode() == \JMose\CommandSchedulerBundle\Entity\ScheduledCommand::MODE_ONDEMAND ){
+            return ;
         }
-
+        
+        if (null === $value || '' === $value) {
+            $this->context->addViolation($constraint->message, array(), $value);
+        }
+        
         try {
             CronExpressionLib::factory($value);
         } catch (\InvalidArgumentException $e) {
