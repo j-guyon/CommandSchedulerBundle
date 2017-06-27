@@ -107,6 +107,18 @@
                 <source>detail.actions</source>
                 <target>Actions</target>
             </trans-unit>
+            <trans-unit id="214">
+                <source>detail.executionMode</source>
+                <target>Execution Mode</target>
+            </trans-unit>
+            <trans-unit id="215">
+                <source>detail.executionMode.auto</source>
+                <target>Cron Expression (Auto)</target>
+            </trans-unit>
+            <trans-unit id="216">
+                <source>detail.executionMode.ondemand</source>
+                <target>ON-Demand (Forced)</target>
+            </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">

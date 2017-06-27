@@ -4,7 +4,6 @@ namespaces:
 JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
     properties:
         cronExpression:
-            - NotBlank: ~
             - CommandSchedulerConstraints:CronExpression: { message: "commandScheduler.validation.cron" }
         name:
             - NotBlank: ~
