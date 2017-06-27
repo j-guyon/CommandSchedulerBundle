@@ -42,6 +42,7 @@ class DetailControllerTest extends WebTestCase
         $fixtureSet = array(
             'command_scheduler_detail[id]' => "1",
             'command_scheduler_detail[name]' => "one",
+            'command_scheduler_detail[executionMode]' => "auto",
             'command_scheduler_detail[command]' => "debug:container",
             'command_scheduler_detail[arguments]' => "--help",
             'command_scheduler_detail[cronExpression]' => "@daily",
@@ -67,6 +68,7 @@ class DetailControllerTest extends WebTestCase
 
         $form->setValues(array(
             'command_scheduler_detail[name]' => "wtc",
+            'command_scheduler_detail[executionMode]' => "auto",
             'command_scheduler_detail[command]' => "translation:update",
             'command_scheduler_detail[arguments]' => "--help",
             'command_scheduler_detail[cronExpression]' => "@daily",

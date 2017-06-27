@@ -59,6 +59,13 @@ class ScheduledCommand
      */
     private $priority;
 
+    const MODE_AUTO = 'auto';
+    const MODE_ONDEMAND = 'ondemand';
+    /**
+     * @var string
+     */
+    private $executionMode;
+    
     /**
      * If true, command will be execute next time regardless cron expression
      *
@@ -388,6 +395,16 @@ class ScheduledCommand
     {
         $this->locked = $locked;
 
+        return $this;
+    }
+    
+    public function getExecutionMode(){
+        return $this->executionMode;
+    }
+    
+    public function setExecutionMode($executionMode){
+        $this->executionMode = $executionMode;
+        
         return $this;
     }
 
