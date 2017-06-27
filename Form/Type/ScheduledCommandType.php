@@ -3,6 +3,7 @@
 namespace JMose\CommandSchedulerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -51,7 +52,7 @@ class ScheduledCommandType extends AbstractType
         $builder->add(
             'cronExpression', TextType::class, array(
                 'label' => 'detail.cronExpression',
-                'required' => true
+                'required' => false
             )
         );
 
@@ -70,6 +71,16 @@ class ScheduledCommandType extends AbstractType
             )
         );
 
+        $builder->add(
+            'executionMode', ChoiceType::class, array(
+                'label' => 'detail.executionMode',
+                'choices' => [
+                    'detail.executionMode.auto' => \JMose\CommandSchedulerBundle\Entity\ScheduledCommand::MODE_AUTO,
+                    'detail.executionMode.ondemand' => \JMose\CommandSchedulerBundle\Entity\ScheduledCommand::MODE_ONDEMAND
+                ]
+            )
+        );
+        
         $builder->add(
             'executeImmediately', CheckboxType::class, array(
                 'label' => 'detail.executeImmediately',
