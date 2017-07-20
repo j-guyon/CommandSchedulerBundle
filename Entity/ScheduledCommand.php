@@ -90,6 +90,7 @@ class ScheduledCommand
     {
         $this->setLastExecution(new \DateTime());
         $this->setLocked(false);
+        $this->setExecutionMode(self::MODE_AUTO);
     }
 
     /**

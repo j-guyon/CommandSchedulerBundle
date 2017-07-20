@@ -91,7 +91,7 @@ class SchedulerService {
      * @return ScheduledCommand
      * @throws \ErrorException
      */
-    private function getCommand ( ) : ScheduledCommand {
+    private function getCommand ( ) {
         if ( $this->command) {
             return $this->command;
         }
