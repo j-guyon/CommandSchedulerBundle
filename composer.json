@@ -1,6 +1,6 @@
 {
     "name": "jmose/command-scheduler-bundle",
-    "description": "This Symfony2 bundle will allow you to schedule all your commands just like UNIX crontab",
+    "description": "This Symfony bundle will allow you to schedule all your commands just like UNIX crontab",
     "keywords": ["Symfony", "scheduler", "cron", "command", "task"],
     "homepage": "https://github.com/J-Mose/CommandSchedulerBundle",
     "type": "symfony-bundle",
@@ -13,18 +13,18 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "symfony/symfony": "~2.7|~3.0",
-        "sensio/framework-extra-bundle": "~2.3|~3.0",
+        "symfony/symfony": "~2.8|~3.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
         "twig/twig": "~1.15|~2.0",
-        "doctrine/orm": "~2.2,>=2.2.3,<2.6",
-        "doctrine/doctrine-bundle": "~1.0",
-        "mtdowling/cron-expression": "~1.0"
+        "doctrine/orm": "^2.4.8|^2.5",
+        "doctrine/doctrine-bundle": "^1.4|^1.6",
+        "mtdowling/cron-expression": "^1.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.4",
-        "satooshi/php-coveralls": "~0.6",
-        "doctrine/doctrine-fixtures-bundle": "~2.2",
-        "liip/functional-test-bundle": "1.2.2|~1.3"
+        "phpunit/phpunit": "~4.8",
+        "satooshi/php-coveralls": "~1.0",
+        "doctrine/doctrine-fixtures-bundle": "~2.4",
+        "liip/functional-test-bundle": "^1.6"
     },
     "autoload": {
         "psr-4": {
