@@ -36,10 +36,20 @@ class SchedulerService {
     public function __construct(\Doctrine\Bundle\DoctrineBundle\Registry $doctrine) { $this->doctrine = $doctrine; }
     
     /** Aliases */
+    /**
+     * @param $commandName
+     * @return SchedulerService
+     */
     public function command( $commandName) { return $this->cmd($commandName); }
+
+    /**
+     * @param $commandName
+     * @return SchedulerService
+     */
     public function get( $commandName) { return $this->cmd($commandName); }
 
     /**
+     * Set command to handle
      * 
      * @param string $commandName
      * @return SchedulerService
@@ -49,7 +59,12 @@ class SchedulerService {
         
         return $this;
     }
-    
+
+    /**
+     * Check if command exists
+     *
+     * @return bool
+     */
     public function exists()
     {
         try {            
@@ -86,8 +101,7 @@ class SchedulerService {
     public function istAuto    () { return $this->commandStatus( ScheduledCommand::MODE_AUTO); }
     
     /**
-     * 
-     * @param string $commandName
+     *
      * @return ScheduledCommand
      * @throws \ErrorException
      */
@@ -114,8 +128,9 @@ class SchedulerService {
 
     /**
      * Schedule command to be executed in the next execution cycle
-     * 
+     *
      * @param string $action
+     * @return bool
      */
     private function commandAction ( string $action ){
         try {            
@@ -143,7 +158,11 @@ class SchedulerService {
             return false;
         }
     }
-    
+
+    /**
+     * @param string $status
+     * @return bool
+     */
     private function commandStatus ( string $status ){
         try {            
             $cmd = $this->getCommand();

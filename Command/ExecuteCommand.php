@@ -77,8 +77,13 @@ class ExecuteCommand extends ContainerAwareCommand
             $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
         }
 
-        $this->em = $this->getContainer()->get('doctrine')->getManager(
+        // Create a new Manager to Avoid Entity Manager is Closed Error
+        $manager = $this->getContainer()->get('doctrine')->getManager(
             $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
+        );
+        $this->em = $manager->create(
+            $manager->getConnection(),
+            $manager->getConfiguration()
         );
     }
 
@@ -210,7 +215,7 @@ class ExecuteCommand extends ContainerAwareCommand
             $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand()
                 . ' ' .$scheduledCommand->getArguments() . '</comment>');
             $result = $command->run($input, $logOutput);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) { //Throwable instead of Exception to be able to catch "semicolon" errors.
             $logOutput->writeln($e->getMessage());
             $logOutput->writeln($e->getTraceAsString());
             $result = -1;
