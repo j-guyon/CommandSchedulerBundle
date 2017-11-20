@@ -126,13 +126,19 @@ class MonitorCommand extends ContainerAwareCommand
     private function sendMails($message)
     {
         // prepare email constants
+        /* @var $mailer \Swift_Mailer */
+        $mailer = $this->getContainer()->get('mailer');
         $hostname = gethostname();
-        $subject = "cronjob monitoring " . $hostname . ", " . date('Y-m-d H:i:s');
-        $headers = 'From: cron-monitor@' . $hostname . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+        $mailSubject = "cronjob monitoring " . $hostname . ", " . date('Y-m-d H:i:s');
+        $mailFrom = 'cron-monitor@' . $hostname;
 
         foreach ($this->receiver as $rcv) {
-            mail(trim($rcv), $subject, $message, $headers);
+            $message = \Swift_Message::newInstance()
+                ->setSubject($mailSubject)
+                ->setFrom($mailFrom)
+                ->setTo(trim($rcv))
+                ->setBody($message);
+            $mailer->send($message);
         }
     }
 }
