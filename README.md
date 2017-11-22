@@ -8,7 +8,7 @@ CommandSchedulerBundle
 
 This bundle will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 
-**Version**: 1.2.5  
+**Version**: 1.2.6  
 
 **Compatibility**:
  - **Symfony 2.8** and **3.0**
