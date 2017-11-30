@@ -1,6 +1,6 @@
 JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
     type: entity
-    table: SCHEDULED_COMMAND
+    table: scheduled_command
     repositoryClass: JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository
     fields:
         id:
@@ -9,7 +9,7 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             unique: false
             nullable: false
             id: true
-            column: ID_SCHEDULED_COMMAND
+            column: id_scheduled_command
             generator:
                 strategy: IDENTITY
         name:
@@ -17,19 +17,19 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             length: 100
             unique: false
             nullable: false
-            column: NAME
+            column: name
         command:
             type: string
             length: 100
             unique: false
             nullable: false
-            column: COMMAND
+            column: command
         arguments:
             type: string
             length: 250
             unique: false
             nullable: true
-            column: ARGUMENTS
+            column: arguments
         cronExpression:
             type: string
             scale: 0
@@ -37,46 +37,46 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             unique: false
             nullable: true
             precision: 0
-            column: CRON_EXPRESSION
+            column: cron_expression
         lastExecution:
             type: datetime
             length: null
             unique: false
             nullable: false
-            column: DH_LAST_EXECUTION
+            column: dh_last_execution
         lastReturnCode:
             type: integer
             length: null
             unique: false
             nullable: true
-            column: LAST_RETURN_CODE
+            column: last_return_code
         logFile:
             type: string
             length: 100
             unique: false
             nullable: true
-            column: LOG_FILE
+            column: log_file
         priority:
             type: integer
             length: null
             unique: false
             nullable: false
-            column: PRIORITY
+            column: priority
         executeImmediately:
             type: boolean
             length: null
             unique: false
             nullable: false
-            column: B_EXECUTE_IMMEDIATELY
+            column: b_execute_immediately
         disabled:
             type: boolean
             length: null
             unique: false
             nullable: false
-            column: B_DISABLED
+            column: b_disabled
         locked:
             type: boolean
             length: null
             unique: false
             nullable: false
-            column: B_LOCKED
+            column: b_locked
