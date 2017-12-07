@@ -24,7 +24,7 @@ class ListController extends Controller
         $scheduledCommands = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findAll();
 
         return $this->render(
-            'JMoseCommandSchedulerBundle:List:index.html.twig',
+            '@JMoseCommandScheduler/List/index.html.twig',
             array('scheduledCommands' => $scheduledCommands)
         );
     }
