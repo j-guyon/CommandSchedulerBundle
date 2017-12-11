@@ -104,6 +104,8 @@ jmose_command_scheduler:
     lock_timeout: false
     # receivers for reporting mails
     monitor_mail: []
+    # set a custom subject for monitor mails (first placeholder will be replaced by the hostname, second by the date)
+    monitor_mail_subject: cronjob monitoring %s, %s
     # to send "everything's all right" emails to receivers for reporting mails set this value to "true" (see monitoring)
     send_ok: false
 

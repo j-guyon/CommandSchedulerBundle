@@ -37,6 +37,11 @@ class MonitorCommand extends ContainerAwareCommand
     private $receiver;
 
     /**
+     * @var string mailSubject subject to be used when sending a mail
+     */
+    private $mailSubject;
+
+    /**
      * @var boolean if true, current command will send mail even if all is ok.
      */
     private $sendMailIfNoError;
@@ -64,6 +69,7 @@ class MonitorCommand extends ContainerAwareCommand
         $this->lockTimeout = $this->getContainer()->getParameter('jmose_command_scheduler.lock_timeout');
         $this->dumpMode = $input->getOption('dump');
         $this->receiver = $this->getContainer()->getParameter('jmose_command_scheduler.monitor_mail');
+		$this->mailSubject = $this->getContainer()->getParameter('jmose_command_scheduler.monitor_mail_subject');
         $this->sendMailIfNoError = $this->getContainer()->getParameter('jmose_command_scheduler.send_ok');
 
         $this->em = $this->getContainer()->get('doctrine')->getManager(
@@ -127,7 +133,7 @@ class MonitorCommand extends ContainerAwareCommand
     {
         // prepare email constants
         $hostname = gethostname();
-        $subject = "cronjob monitoring " . $hostname . ", " . date('Y-m-d H:i:s');
+        $subject = $this->getMailSubject();
         $headers = 'From: cron-monitor@' . $hostname . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
 
@@ -135,4 +141,16 @@ class MonitorCommand extends ContainerAwareCommand
             mail(trim($rcv), $subject, $message, $headers);
         }
     }
+
+    /**
+     * get the subject for monitor mails
+     *
+     * @return string subject
+     */
+    private function getMailSubject()
+    {
+        $hostname = gethostname();
+        return sprintf($this->mailSubject, $hostname, date('Y-m-d H:i:s'));
+    }
+
 }
