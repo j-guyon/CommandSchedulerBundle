@@ -1,6 +1,6 @@
 JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
     type: entity
-    table: SCHEDULED_COMMAND
+    table: scheduled_command
     repositoryClass: JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository
     fields:
         id:
