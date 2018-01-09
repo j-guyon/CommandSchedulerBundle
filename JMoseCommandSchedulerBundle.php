@@ -11,7 +11,8 @@ class JMoseCommandSchedulerBundle extends Bundle
      * {@inheritdoc}
      * @return JMoseCommandSchedulerExtension
      */
-    public function getContainerExtension() {
+    public function getContainerExtension()
+    {
         $class = $this->getContainerExtensionClass();
         return new $class;
     }
@@ -21,6 +22,6 @@ class JMoseCommandSchedulerBundle extends Bundle
      */
     protected function getContainerExtensionClass()
     {
-        return 'JMose\CommandSchedulerBundle\DependencyInjection\JMoseCommandSchedulerExtension';
+        return JMoseCommandSchedulerExtension::class;
     }
 }
