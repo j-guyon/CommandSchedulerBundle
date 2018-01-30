@@ -1,5 +1,5 @@
 parameters:
-    database_path: %kernel.root_dir%/../../build/test.db
+    database_path: "%kernel.root_dir%/../../build/test.db"
 
 framework:
     translator:      ~
@@ -20,7 +20,7 @@ doctrine:
         dbname:   jmose_command_scheduler_test
         user:     root
         charset:  UTF8
-        path:     %database_path%
+        path:     "%database_path%"
     orm:
         auto_generate_proxy_classes: true
         auto_mapping: true
@@ -35,7 +35,7 @@ security:
              memory: ~
 
 jmose_command_scheduler:
-    log_path: %kernel.root_dir%/logs/
+    log_path: "%kernel.root_dir%/logs/"
     lock_timeout: 300
     excluded_command_namespaces:
         - scheduler
