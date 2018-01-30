@@ -12,6 +12,7 @@ env:
 branches:
     only:
         - master
+        - update-to-3-4
         - /^\d+\.\d+$/
 
 #symfony 3.0 is no longer supported by symfony, allow it to fail
