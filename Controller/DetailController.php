@@ -33,7 +33,7 @@ class DetailController extends Controller
         }
 
         return $this->render(
-            'JMoseCommandSchedulerBundle:Detail:index.html.twig', array(
+            '@JMoseCommandScheduler/Detail/index.html.twig', array(
                 'scheduledCommandForm' => $scheduledCommandForm->createView()
             )
         );
