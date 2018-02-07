@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0.8",
+        "php": "^5.6|>=7.0.8",
         "symfony/framework-bundle": "^3.4|^4.0",
         "symfony/console": "^3.4|^4.0",
         "sensio/framework-extra-bundle": "^5.1.0",
