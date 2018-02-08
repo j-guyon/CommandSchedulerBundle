@@ -1,25 +1,19 @@
 services:
-    jmose_command_scheduler.command_parser:
-        class: JMose\CommandSchedulerBundle\Service\CommandParser
+    JMose\CommandSchedulerBundle\Service\CommandParser:
         arguments:
             - "@kernel"
             - "%jmose_command_scheduler.excluded_command_namespaces%"
 
-    jmose_command_scheduler.form.type.command_choice:
-        class: JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType
-        arguments:
-            - "@jmose_command_scheduler.command_parser"
+    JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType:
+        autowire: true
         tags:
             - { name: form.type, alias: command_choice }
 
-    jmose_command_scheduler.execute_command:
-        class: JMose\CommandSchedulerBundle\Command\ExecuteCommand
+    JMose\CommandSchedulerBundle\Command\ExecuteCommand:
         tags: [console.command]
 
-    jmose_command_scheduler.monitor_command:
-        class: JMose\CommandSchedulerBundle\Command\MonitorCommand
+    JMose\CommandSchedulerBundle\Command\MonitorCommand:
         tags: [console.command]
         
     JMose\CommandSchedulerBundle\Command\UnlockCommand:
-        tags:
-            - { name: 'console.command' }
+        tags: [console.command]
