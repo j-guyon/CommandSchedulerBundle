@@ -1,6 +1,5 @@
 language: php
 
-#symfony 3.0 is no longer supported by symfony, allow it to fail
 matrix:
     include:
         - php: 5.6
@@ -14,6 +13,8 @@ matrix:
         - php: 7.2
           env: SYMFONY_VERSION=3.4.*
         - php: 7.2
+          env: SYMFONY_VERSION=4.0.*
+        - php: nightly
           env: SYMFONY_VERSION=4.0.*
 
     allow_failures:
@@ -34,9 +35,9 @@ script:
     - mkdir -p build/logs
     - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
-# Run coveralls ONLY if under php native, and NOT hhvm
-after_success: |
- sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" -a "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;'
+# Run coveralls
+after_success:
+    - php vendor/bin/php-coveralls -v
 
 notifications:
     email: julienguyon@hotmail.com
