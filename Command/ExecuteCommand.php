@@ -65,16 +65,16 @@ class ExecuteCommand extends ContainerAwareCommand
         $this->dumpMode = $input->getOption('dump');
         $this->logPath = $this->getContainer()->getParameter('jmose_command_scheduler.log_path');
 
-	    // If logpath is not set to false, append the directory separator to it
-	    if(false !== $this->logPath) {
-            $this->logPath = rtrim($this->logPath, '/\\') . DIRECTORY_SEPARATOR ;
-	    }
+        // If logpath is not set to false, append the directory separator to it
+        if (false !== $this->logPath) {
+            $this->logPath = rtrim($this->logPath, '/\\').DIRECTORY_SEPARATOR;
+        }
 
         // Store the original verbosity before apply the quiet parameter
         $this->commandsVerbosity = $output->getVerbosity();
 
-        if( true === $input->getOption('no-output')){
-            $output->setVerbosity( OutputInterface::VERBOSITY_QUIET );
+        if (true === $input->getOption('no-output')) {
+            $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         }
 
         $this->em = $this->getContainer()->get('doctrine')->getManager(
@@ -83,16 +83,18 @@ class ExecuteCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Start : ' . ($this->dumpMode ? 'Dump' : 'Execute') . ' all scheduled command</info>');
+        $output->writeln('<info>Start : '.($this->dumpMode ? 'Dump' : 'Execute').' all scheduled command</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
-        if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable($this->logPath)) {
+        if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable(
+                $this->logPath
+            )) {
             $output->writeln(
                 '<error>'.$this->logPath.
                 ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
@@ -101,20 +103,20 @@ class ExecuteCommand extends ContainerAwareCommand
             return;
         }
 
-        $commands = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->findEnabledCommand();
+        $commands = $this->em->getRepository(ScheduledCommand::class)->findEnabledCommand();
 
         $noneExecution = true;
         foreach ($commands as $command) {
 
             /** @var ScheduledCommand $command */
-            $cron        = CronExpression::factory($command->getCronExpression());
+            $cron = CronExpression::factory($command->getCronExpression());
             $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
-            $now         = new \DateTime();
+            $now = new \DateTime();
 
             if ($command->isExecuteImmediately()) {
                 $noneExecution = false;
                 $output->writeln(
-                    'Immediately execution asked for : <comment>' . $command->getCommand() . '</comment>'
+                    'Immediately execution asked for : <comment>'.$command->getCommand().'</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
@@ -134,7 +136,9 @@ class ExecuteCommand extends ContainerAwareCommand
             }
         }
 
-        if (true === $noneExecution) $output->writeln('Nothing to do.');
+        if (true === $noneExecution) {
+            $output->writeln('Nothing to do.');
+        }
     }
 
     /**
@@ -149,7 +153,7 @@ class ExecuteCommand extends ContainerAwareCommand
         try {
             $notLockedCommand = $this
                 ->em
-                ->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+                ->getRepository(ScheduledCommand::class)
                 ->getNotLockedCommand($scheduledCommand);
             //$notLockedCommand will be locked for avoiding parallel calls: http://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
             if ($notLockedCommand === null) {
@@ -171,39 +175,48 @@ class ExecuteCommand extends ContainerAwareCommand
                     (!empty($e->getMessage()) ? sprintf('(%s)', $e->getMessage()) : '')
                 )
             );
+
             return;
         }
         try {
             $command = $this->getApplication()->find($scheduledCommand->getCommand());
         } catch (\InvalidArgumentException $e) {
             $scheduledCommand->setLastReturnCode(-1);
-            $output->writeln('<error>Cannot find ' . $scheduledCommand->getCommand() . '</error>');
+            $output->writeln('<error>Cannot find '.$scheduledCommand->getCommand().'</error>');
 
             return;
         }
 
-        $input = new StringInput($scheduledCommand->getCommand().' '. $scheduledCommand->getArguments().' --env='.$input->getOption('env'));
+        $input = new StringInput(
+            $scheduledCommand->getCommand().' '.$scheduledCommand->getArguments().' --env='.$input->getOption('env')
+        );
         $command->mergeApplicationDefinition();
         $input->bind($command->getDefinition());
-        
+
         // Disable interactive mode if the current command has no-interaction flag
-        if (true === $input->hasParameterOption(array('--no-interaction', '-n'))) {
+        if (true === $input->hasParameterOption(['--no-interaction', '-n'])) {
             $input->setInteractive(false);
         }
 
         // Use a StreamOutput or NullOutput to redirect write() and writeln() in a log file
         if (false === $this->logPath || empty($scheduledCommand->getLogFile())) {
             $logOutput = new NullOutput();
-        }else{
-            $logOutput = new StreamOutput(fopen(
-                $this->logPath . $scheduledCommand->getLogFile(), 'a', false
-            ),$this->commandsVerbosity );
+        } else {
+            $logOutput = new StreamOutput(
+                fopen(
+                    $this->logPath.$scheduledCommand->getLogFile(),
+                    'a',
+                    false
+                ), $this->commandsVerbosity
+            );
         }
 
         // Execute command and get return code
         try {
-            $output->writeln('<info>Execute</info> : <comment>' . $scheduledCommand->getCommand()
-                . ' ' .$scheduledCommand->getArguments() . '</comment>');
+            $output->writeln(
+                '<info>Execute</info> : <comment>'.$scheduledCommand->getCommand()
+                .' '.$scheduledCommand->getArguments().'</comment>'
+            );
             $result = $command->run($input, $logOutput);
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());

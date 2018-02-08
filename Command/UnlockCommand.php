@@ -15,7 +15,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @author  Marcel Pfeiffer <m.pfeiffer@strucnamics.de>
  * @package JMose\CommandSchedulerBundle\Command
  */
-class UnlockCommand extends ContainerAwareCommand {
+class UnlockCommand extends ContainerAwareCommand
+{
 
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -40,14 +41,19 @@ class UnlockCommand extends ContainerAwareCommand {
     /**
      * @inheritdoc
      */
-    protected function configure() {
+    protected function configure()
+    {
         $this
-                ->setName('scheduler:unlock')
-                ->setDescription('Unlock one or all scheduled commands that have surpassed the lock timeout.')
-                ->addArgument('name', InputArgument::OPTIONAL, 'Name of the command to unlock')
-                ->addOption('all', 'A', InputOption::VALUE_NONE, 'Unlock all scheduled commands')
-                ->addOption('lock-timeout', null, InputOption::VALUE_REQUIRED, 'Use this lock timeout value instead of the configured one (in seconds, optional)')
-        ;
+            ->setName('scheduler:unlock')
+            ->setDescription('Unlock one or all scheduled commands that have surpassed the lock timeout.')
+            ->addArgument('name', InputArgument::OPTIONAL, 'Name of the command to unlock')
+            ->addOption('all', 'A', InputOption::VALUE_NONE, 'Unlock all scheduled commands')
+            ->addOption(
+                'lock-timeout',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Use this lock timeout value instead of the configured one (in seconds, optional)'
+            );
     }
 
     /**
@@ -56,19 +62,22 @@ class UnlockCommand extends ContainerAwareCommand {
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    protected function initialize(InputInterface $input, OutputInterface $output) {
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
         $this->unlockAll = $input->getOption('all');
         $this->scheduledCommandName = $input->getArgument('name');
 
         $this->lockTimeout = $input->getOption('lock-timeout', null);
         if ($this->lockTimeout === null) {
             $this->lockTimeout = $this->getContainer()->getParameter('jmose_command_scheduler.lock_timeout');
-        } else if ($this->lockTimeout === 'false') {
-            $this->lockTimeout = false;
+        } else {
+            if ($this->lockTimeout === 'false') {
+                $this->lockTimeout = false;
+            }
         }
 
         $this->em = $this->getContainer()->get('doctrine')->getManager(
-                $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
+            $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
         );
     }
 
@@ -77,9 +86,11 @@ class UnlockCommand extends ContainerAwareCommand {
      * @param OutputInterface $output
      * @return int|null|void
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         if ($this->unlockAll === false && $this->scheduledCommandName === '') {
             $output->writeln('Either the name of a scheduled command or the --all option must be set.');
+
             return 1;
         }
 
@@ -93,7 +104,13 @@ class UnlockCommand extends ContainerAwareCommand {
         } else {
             $scheduledCommand = $repository->findOneBy(['name' => $this->scheduledCommandName, 'disabled' => false]);
             if ($scheduledCommand === null) {
-                $output->writeln(sprintf('Error: Scheduled Command with name "%s" not found or is disabled.', $this->scheduledCommandName));
+                $output->writeln(
+                    sprintf(
+                        'Error: Scheduled Command with name "%s" not found or is disabled.',
+                        $this->scheduledCommandName
+                    )
+                );
+
                 return 1;
             }
             $this->unlock($scheduledCommand, $output);
@@ -108,20 +125,28 @@ class UnlockCommand extends ContainerAwareCommand {
      * @param ScheduledCommand $command command to be unlocked
      * @return bool true if unlock happened
      */
-    protected function unlock(ScheduledCommand $command, OutputInterface $output) {
+    protected function unlock(ScheduledCommand $command, OutputInterface $output)
+    {
         if ($command->isLocked() === false) {
             $output->writeln(sprintf('Skipping: Scheduled Command "%s" is not locked.', $command->getName()));
+
             return false;
         }
 
         if ($this->lockTimeout !== false &&
-                $command->getLastExecution() !== null &&
-                $command->getLastExecution() >= (new \DateTime())->sub(new \DateInterval(sprintf('PT%dS', $this->lockTimeout)))) {
-            $output->writeln(sprintf('Skipping: Timout for scheduled Command "%s" has not run out.', $command->getName()));
+            $command->getLastExecution() !== null &&
+            $command->getLastExecution() >= (new \DateTime())->sub(
+                new \DateInterval(sprintf('PT%dS', $this->lockTimeout))
+            )) {
+            $output->writeln(
+                sprintf('Skipping: Timout for scheduled Command "%s" has not run out.', $command->getName())
+            );
+
             return false;
         }
         $command->setLocked(false);
         $output->writeln(sprintf('Scheduled Command "%s" has been unlocked.', $command->getName()));
+
         return true;
     }
 

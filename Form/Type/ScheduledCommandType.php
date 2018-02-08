@@ -2,6 +2,7 @@
 
 namespace JMose\CommandSchedulerBundle\Form\Type;
 
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -28,66 +29,84 @@ class ScheduledCommandType extends AbstractType
         $builder->add('id', HiddenType::class);
 
         $builder->add(
-            'name', TextType::class, array(
+            'name',
+            TextType::class,
+            [
                 'label' => 'detail.name',
-                'required' => true
-            )
+                'required' => true,
+            ]
         );
 
         $builder->add(
-            'command', CommandChoiceType::class, array(
+            'command',
+            CommandChoiceType::class,
+            [
                 'label' => 'detail.command',
-                'required' => true
-            )
+                'required' => true,
+            ]
         );
 
         $builder->add(
-            'arguments', TextType::class, array(
+            'arguments',
+            TextType::class,
+            [
                 'label' => 'detail.arguments',
-                'required' => false
-            )
+                'required' => false,
+            ]
         );
 
         $builder->add(
-            'cronExpression', TextType::class, array(
+            'cronExpression',
+            TextType::class,
+            [
                 'label' => 'detail.cronExpression',
-                'required' => true
-            )
+                'required' => true,
+            ]
         );
 
         $builder->add(
-            'logFile', TextType::class, array(
+            'logFile',
+            TextType::class,
+            [
                 'label' => 'detail.logFile',
-                'required' => false
-            )
+                'required' => false,
+            ]
         );
 
         $builder->add(
-            'priority', IntegerType::class, array(
+            'priority',
+            IntegerType::class,
+            [
                 'label' => 'detail.priority',
                 'empty_data' => 0,
-                'required' => false
-            )
+                'required' => false,
+            ]
         );
 
         $builder->add(
-            'executeImmediately', CheckboxType::class, array(
+            'executeImmediately',
+            CheckboxType::class,
+            [
                 'label' => 'detail.executeImmediately',
-                'required' => false
-            )
+                'required' => false,
+            ]
         );
 
         $builder->add(
-            'disabled', CheckboxType::class, array(
+            'disabled',
+            CheckboxType::class,
+            [
                 'label' => 'detail.disabled',
-                'required' => false
-            )
+                'required' => false,
+            ]
         );
 
         $builder->add(
-            'save', SubmitType::class, array(
+            'save',
+            SubmitType::class,
+            [
                 'label' => 'detail.save',
-            )
+            ]
         );
 
     }
@@ -98,11 +117,11 @@ class ScheduledCommandType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'data_class' => 'JMose\CommandSchedulerBundle\Entity\ScheduledCommand',
+            [
+                'data_class' => ScheduledCommand::class,
                 'wrapper_attr' => 'default_wrapper',
-                'translation_domain' => 'JMoseCommandScheduler'
-            )
+                'translation_domain' => 'JMoseCommandScheduler',
+            ]
         );
     }
 

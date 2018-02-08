@@ -84,7 +84,9 @@ class ScheduledCommandRepository extends EntityRepository
 
     /**
      * @param ScheduledCommand $command
-     * @return ScheduledCommand|null
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\TransactionRequiredException
      */
     public function getNotLockedCommand(ScheduledCommand $command)
     {
@@ -95,6 +97,7 @@ class ScheduledCommandRepository extends EntityRepository
             ->getQuery();
 
         $query->setLockMode(LockMode::PESSIMISTIC_WRITE);
+
         return $query->getOneOrNullResult();
     }
 }
