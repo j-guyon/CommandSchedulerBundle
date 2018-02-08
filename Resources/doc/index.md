@@ -99,7 +99,7 @@ jmose_command_scheduler:
     # Default directory where scheduler will write output files
     #  This default value assume that php bin/console is launched from project's root and that the directory is writable
     # if log_path is set to false, logging to files is disabled at all 
-    log_path: var\logs\
+    log_path: "%kernel.logs_dir%"
     # This default value disables timeout checking (see monitoring), set to a numeric value (seconds) to enable it
     lock_timeout: false
     # receivers for reporting mails

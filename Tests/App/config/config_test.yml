@@ -35,7 +35,6 @@ security:
              memory: ~
 
 jmose_command_scheduler:
-    log_path: "%kernel.root_dir%/logs/"
     lock_timeout: 300
     excluded_command_namespaces:
         - scheduler
