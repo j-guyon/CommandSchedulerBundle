@@ -1,17 +1,5 @@
 language: php
 
-php:
-    - 5.6	
-    - 7.0
-    - 7.1
-    - 7.2
-    - nightly
-
-branches:
-    only:
-        - master
-        - /^\d+\.\d+$/
-
 #symfony 3.0 is no longer supported by symfony, allow it to fail
 matrix:
     include:
@@ -30,6 +18,11 @@ matrix:
 
     allow_failures:
         - php: nightly
+
+branches:
+    only:
+        - master
+        - /^\d+\.\d+$/
 
 before_script:
     - mkdir -p ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d && echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini

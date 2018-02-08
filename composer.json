@@ -28,7 +28,7 @@
         "symfony/validator": "^3.4|^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.5",
+        "phpunit/phpunit": "^5.7",
         "satooshi/php-coveralls": "^2.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0.0",
         "liip/functional-test-bundle": "^1.9"
