@@ -33,7 +33,7 @@ before_script:
 
 script:
     - mkdir -p build/logs
-    - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - vendor/bin/phpunit
 
 # Run coveralls
 after_success:
