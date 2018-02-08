@@ -7,18 +7,27 @@ php:
     - 7.2
     - nightly
 
-env:
- - SYMFONY_VERSION=3.4.*
- - SYMFONY_VERSION=4.0.*
-
 branches:
     only:
         - master
-        - update-to-3-4
         - /^\d+\.\d+$/
 
 #symfony 3.0 is no longer supported by symfony, allow it to fail
 matrix:
+    include:
+        - php: 5.6
+          env: SYMFONY_VERSION=3.4.*
+        - php: 7.0
+          env: SYMFONY_VERSION=3.4.*
+        - php: 7.1
+          env: SYMFONY_VERSION=3.4.*
+        - php: 7.1
+          env: SYMFONY_VERSION=4.0.*
+        - php: 7.2
+          env: SYMFONY_VERSION=3.4.*
+        - php: 7.2
+          env: SYMFONY_VERSION=4.0.*
+
     allow_failures:
         - php: nightly
 
@@ -36,5 +45,5 @@ script:
 after_success: |
  sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" -a "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;'
 
-#notifications:
-#    email: julienguyon@hotmail.com
+notifications:
+    email: julienguyon@hotmail.com
