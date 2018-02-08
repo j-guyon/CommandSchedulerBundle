@@ -19,3 +19,7 @@ services:
     jmose_command_scheduler.monitor_command:
         class: JMose\CommandSchedulerBundle\Command\MonitorCommand
         tags: [console.command]
+        
+    JMose\CommandSchedulerBundle\Command\UnlockCommand:
+        tags:
+            - { name: 'console.command' }
