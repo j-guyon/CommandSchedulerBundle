@@ -8,22 +8,22 @@ CommandSchedulerBundle
 
 This bundle will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 
-**Version**: 2.0
+**Version**: 2.0.0
 
 **Compatibility**:
  - **Symfony 3.4** and **4.0**
- - Tested with PHP 5.5, 5.6, 7.0, 7.1
+ - Tested with PHP 5.6, 7.0, 7.1, 7.2
  - Doctrine ORM
 
 ## Features
 
 - An admin interface to add, edit, enable/disable or delete scheduled commands.
 - For each command, you define : 
- - name
- - symfony console command (choice based on native `list` command)
- - cron expression (see [Cron format](http://en.wikipedia.org/wiki/Cron#Format) for informations)
- - output file 
- - priority
+  - name
+  - symfony console command (choice based on native `list` command)
+  - cron expression (see [Cron format](http://en.wikipedia.org/wiki/Cron#Format) for informations)
+  - output file (for `$output->write`)
+  - priority
 - A new console command `scheduler:execute [--dump] [--no-output]` which will be the single entry point to all commands
 - Management of queuing and prioritization between tasks 
 - Locking system, to stop scheduling a command that has returned an error

@@ -149,7 +149,7 @@ From this screen, you can do following actions :
   
 When creating a new scheduling, you can provide your commands arguments and options exactly as you wold do from the console. Remember to use quotes when using arguments and options that includes white spaces.
 
-After that, you have to set (every few minutes, it depends of your needs) the following command in your system :
+After that, you have to set (every few minutes, it depends of your needs) the following command in your system crontab :
 ``` bash
 $ php bin/console scheduler:execute --env=env -vvv [--dump] [--no-output]
 ```
@@ -166,6 +166,9 @@ The `scheduler:execute` command will do following actions :
   - Sort them by priority (desc)
   - Check if the command has to be executed at current time, based on its cron expression and on its last execution time
   - Execute eligible commands (without `exec` php function)
+
+The `scheduler:unlock` command is capable of unlock all or a single scheduled command with a `lock-timeout` parameter.
+It can be usefull if you don't have a full control about server restarting, which can a command in a lock state.
 
 
 **Note** : Each command is locked just before his execution (and unlocked after).
