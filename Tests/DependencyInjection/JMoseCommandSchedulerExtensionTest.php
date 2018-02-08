@@ -3,10 +3,11 @@
 namespace JMose\CommandSchedulerBundle\DependencyInjection\Tests;
 
 use JMose\CommandSchedulerBundle\DependencyInjection\JMoseCommandSchedulerExtension;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
 
-class JMoseCommandSchedulerExtensionTest extends \PHPUnit_Framework_TestCase
+class JMoseCommandSchedulerExtensionTest extends TestCase
 {
 
     /**

@@ -14,6 +14,7 @@ class JMoseCommandSchedulerBundle extends Bundle
     public function getContainerExtension()
     {
         $class = $this->getContainerExtensionClass();
+
         return new $class;
     }
 

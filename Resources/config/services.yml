@@ -12,6 +12,14 @@ services:
         tags:
             - { name: form.type, alias: command_choice }
 
+    jmose_command_scheduler.execute_command:
+        class: JMose\CommandSchedulerBundle\Command\ExecuteCommand
+        tags: [console.command]
+
+    jmose_command_scheduler.monitor_command:
+        class: JMose\CommandSchedulerBundle\Command\MonitorCommand
+        tags: [console.command]
+        
     JMose\CommandSchedulerBundle\Command\UnlockCommand:
         tags:
             - { name: 'console.command' }
