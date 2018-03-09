@@ -1,21 +1,30 @@
 Installation
 ============
 
+## With Symfony Flex
+
+Allow Flex to use contrib recipes and require the bundle :  
+``` bash
+$ composer config extra.symfony.allow-contrib true
+$ composer require jmose/command-scheduler-bundle
+```
+
+The recipe will enable the bundle and its routes, so you can go directly to the [configuration section](#2---set-up-configuration)
+
+## Without Symfony Flex
+
 ### 1 - Install the bundle
-We will be using the standard Symfony method here (composer).
 
 Add the bundle and dependencies in  your `composer.json` : 
 ``` bash
-$ php composer.phar require jmose/command-scheduler-bundle
+$ composer require jmose/command-scheduler-bundle
 ```
 
 If you don't have composer yet, please refer to [the official Composer website](http://getcomposer.org/).
 
-Composer will install the bundle to your project's `vendor` directory.
 
 *Note : use the last release, dev-master is not stable*
 
-### 2 - Enable the bundle
 
 Enable the bundle in the kernel:
 
@@ -32,9 +41,7 @@ public function registerBundles()
 }
 ```
 
-### 3 - Set up configuration
-
-First, you have to register the routes provided by the bundle :  
+Now, you have to register the routes provided by the bundle :  
 ```yaml
 # app/config/routing.yml
 
@@ -42,6 +49,8 @@ jmose_command_scheduler:
     resource: "@JMoseCommandSchedulerBundle/Resources/config/routing.yml"
     prefix:   /
 ```
+
+### 2 - Set up configuration
 
 If you do not have auto_mapping set to true or you are using multiple entity managers, then set the bundle in the proper entity manager:
 ```yaml
@@ -71,7 +80,7 @@ Install bundle's assets :
 $ php bin/console assets:install
 ```
 
-Update your database 
+### 3 - Update the database 
 ``` bash
 $ php bin/console doctrine:schema:update --force
 ```

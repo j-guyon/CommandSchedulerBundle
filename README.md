@@ -8,12 +8,18 @@ CommandSchedulerBundle
 
 This bundle will allow you to easily manage scheduling for Symfony's console commands (native or not) with cron expression.
 
-**Version**: 2.0.0
+## Versions & Dependencies
 
-**Compatibility**:
- - **Symfony 3.4** and **4.0**
- - Tested with PHP 5.6, 7.0, 7.1, 7.2
- - Doctrine ORM
+The following table shows the compatibilities of different versions of the bundle :
+
+| Version                                                                                 | Symfony     | PHP    |
+| --------------------------------------------------------------------------------------- |  ---------- | ------ |
+| [2.x](https://github.com/J-Mose/CommandSchedulerBundle/tree/master)                     | ^3.4\|^4    | >=5.6  |
+| [1.2.x](https://github.com/J-Mose/CommandSchedulerBundle/tree/1.2) (unmaintained)       | ^2.8\|^3.0  | >=5.5  |
+| [1.1.x](https://github.com/J-Mose/CommandSchedulerBundle/tree/1.1) (unmaintained)       | ^2.3        | >=5.3  |
+
+When using Symfony Flex there is an [installation recipe](https://github.com/symfony/recipes-contrib/tree/master/jmose/command-scheduler-bundle/2.0).  
+To use it, you have to enable contrib recipes on your project : `composer config extra.symfony.allow-contrib true`
 
 ## Features
 
