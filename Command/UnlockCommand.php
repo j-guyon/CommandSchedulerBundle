@@ -88,7 +88,7 @@ class UnlockCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->unlockAll === false && $this->scheduledCommandName === '') {
+        if ($this->unlockAll === false && $this->scheduledCommandName === NULL) {
             $output->writeln('Either the name of a scheduled command or the --all option must be set.');
 
             return 1;
