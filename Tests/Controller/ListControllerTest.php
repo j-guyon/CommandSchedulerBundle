@@ -34,14 +34,14 @@ class ListControllerTest extends WebTestCase
      */
     public function testIndex()
     {
-        //DataFixtures create 4 records
+        //DataFixtures create 5 records
         $this->loadFixtures(array(
             'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
         ));
 
         $client = parent::createClient();
         $crawler = $client->request('GET', '/command-scheduler/list');
-        $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
+        $this->assertEquals(5, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
     }
 
     /**
@@ -49,7 +49,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testRemove()
     {
-        //DataFixtures create 4 records
+        //DataFixtures create 5 records
         $this->loadFixtures(array(
             'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
         ));
@@ -59,7 +59,7 @@ class ListControllerTest extends WebTestCase
 
         //toggle off
         $crawler = $client->request('GET', '/command-scheduler/action/remove/1');
-        $this->assertEquals(3, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
+        $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
     }
 
     /**
@@ -67,7 +67,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testToggle()
     {
-        //DataFixtures create 4 records
+        //DataFixtures create 5 records
         $this->loadFixtures(array(
             'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
         ));
@@ -89,7 +89,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testExecute()
     {
-        //DataFixtures create 4 records
+        //DataFixtures create 5 records
         $this->loadFixtures(array(
             'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
         ));
@@ -107,7 +107,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testUnlock()
     {
-        //DataFixtures create 4 records
+        //DataFixtures create 5 records
         $this->loadFixtures(array(
             'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
         ));

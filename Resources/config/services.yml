@@ -9,9 +9,9 @@ services:
         tags:
             - { name: form.type, alias: command_choice }
 
-    jmose_command_scheduler.scheduler:
-        class: JMose\CommandSchedulerBundle\Service\SchedulerService
+    JMose\CommandSchedulerBundle\Service\SchedulerService:
         shared: false
+        public: true
         arguments:
             - "@doctrine"
 

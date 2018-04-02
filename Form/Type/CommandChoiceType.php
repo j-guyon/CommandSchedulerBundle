@@ -31,6 +31,7 @@ class CommandChoiceType extends AbstractType
 
     /**
      * @param OptionsResolver $resolver
+     * @throws \Exception
      */
     public function configureOptions(OptionsResolver $resolver)
     {

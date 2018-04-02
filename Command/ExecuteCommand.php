@@ -67,7 +67,7 @@ class ExecuteCommand extends ContainerAwareCommand
 
         // If logpath is not set to false, append the directory separator to it
         if (false !== $this->logPath) {
-            $this->logPath = rtrim($this->logPath, '/\\').DIRECTORY_SEPARATOR;
+            $this->logPath = rtrim($this->logPath, '/\\') . DIRECTORY_SEPARATOR;
         }
 
         // Store the original verbosity before apply the quiet parameter
@@ -91,18 +91,21 @@ class ExecuteCommand extends ContainerAwareCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Start : '.($this->dumpMode ? 'Dump' : 'Execute').' all scheduled command</info>');
+        $output->writeln('<info>Start : ' . ($this->dumpMode ? 'Dump' : 'Execute') . ' all scheduled command</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
         if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable(
                 $this->logPath
             )) {
             $output->writeln(
-                '<error>'.$this->logPath.
-                ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
+                '<error>' . $this->logPath .
+                ' not found or not writable. You should override `log_path` in your config.yml' . '</error>'
             );
 
             return;
@@ -113,11 +116,11 @@ class ExecuteCommand extends ContainerAwareCommand
         $noneExecution = true;
         foreach ($commands as $command) {
 
-            if ( $command->getExecutionMode() == ScheduledCommand::MODE_AUTO ) {
+            if ($command->getExecutionMode() == ScheduledCommand::MODE_AUTO) {
                 /** @var ScheduledCommand $command */
-                $cron        = CronExpression::factory($command->getCronExpression());
+                $cron = CronExpression::factory($command->getCronExpression());
                 $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
-                $now         = new \DateTime();
+                $now = new \DateTime();
             } else {
                 $nextRunDate = false;
                 $now = false;
@@ -126,7 +129,7 @@ class ExecuteCommand extends ContainerAwareCommand
             if ($command->isExecuteImmediately()) {
                 $noneExecution = false;
                 $output->writeln(
-                    'Immediately execution asked for : <comment>'.$command->getCommand().'</comment>'
+                    'Immediately execution asked for : <comment>' . $command->getCommand() . '</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
@@ -135,9 +138,9 @@ class ExecuteCommand extends ContainerAwareCommand
             } elseif ($command->getExecutionMode() == ScheduledCommand::MODE_AUTO && $nextRunDate < $now) {
                 $noneExecution = false;
                 $output->writeln(
-                    'Command <comment>'.$command->getCommand().
-                    '</comment> should be executed - last execution : <comment>'.
-                    $command->getLastExecution()->format('d/m/Y H:i:s').'.</comment>'
+                    'Command <comment>' . $command->getCommand() .
+                    '</comment> should be executed - last execution : <comment>' .
+                    $command->getLastExecution()->format('d/m/Y H:i:s') . '.</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
@@ -155,6 +158,10 @@ class ExecuteCommand extends ContainerAwareCommand
      * @param ScheduledCommand $scheduledCommand
      * @param OutputInterface $output
      * @param InputInterface $input
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\Common\Persistence\Mapping\MappingException
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
@@ -192,13 +199,13 @@ class ExecuteCommand extends ContainerAwareCommand
             $command = $this->getApplication()->find($scheduledCommand->getCommand());
         } catch (\InvalidArgumentException $e) {
             $scheduledCommand->setLastReturnCode(-1);
-            $output->writeln('<error>Cannot find '.$scheduledCommand->getCommand().'</error>');
+            $output->writeln('<error>Cannot find ' . $scheduledCommand->getCommand() . '</error>');
 
             return;
         }
 
         $input = new StringInput(
-            $scheduledCommand->getCommand().' '.$scheduledCommand->getArguments().' --env='.$input->getOption('env')
+            $scheduledCommand->getCommand() . ' ' . $scheduledCommand->getArguments() . ' --env=' . $input->getOption('env')
         );
         $command->mergeApplicationDefinition();
         $input->bind($command->getDefinition());
@@ -214,7 +221,7 @@ class ExecuteCommand extends ContainerAwareCommand
         } else {
             $logOutput = new StreamOutput(
                 fopen(
-                    $this->logPath.$scheduledCommand->getLogFile(),
+                    $this->logPath . $scheduledCommand->getLogFile(),
                     'a',
                     false
                 ), $this->commandsVerbosity
@@ -224,8 +231,8 @@ class ExecuteCommand extends ContainerAwareCommand
         // Execute command and get return code
         try {
             $output->writeln(
-                '<info>Execute</info> : <comment>'.$scheduledCommand->getCommand()
-                .' '.$scheduledCommand->getArguments().'</comment>'
+                '<info>Execute</info> : <comment>' . $scheduledCommand->getCommand()
+                . ' ' . $scheduledCommand->getArguments() . '</comment>'
             );
             $result = $command->run($input, $logOutput);
         } catch (\Throwable $e) { //Throwable instead of Exception to be able to catch "semicolon" errors.

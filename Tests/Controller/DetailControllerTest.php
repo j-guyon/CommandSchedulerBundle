@@ -73,7 +73,8 @@ class DetailControllerTest extends WebTestCase
             'command_scheduler_detail[arguments]' => "--help",
             'command_scheduler_detail[cronExpression]' => "@daily",
             'command_scheduler_detail[logFile]' => "wtc.log",
-            'command_scheduler_detail[priority]' => "5"
+            'command_scheduler_detail[priority]' => "5",
+            'command_scheduler_detail[executionMode]' => "auto",
         ));
         $crawler = $client->submit($form);
 
@@ -100,7 +101,7 @@ class DetailControllerTest extends WebTestCase
         $form->get('command_scheduler_detail[name]')->setValue('edited one');
         $crawler = $client->submit($form);
 
-        $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
+        $this->assertEquals(5, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
         $this->assertEquals("edited one", trim($crawler->filter('td')->eq(1)->text()));
     }
 

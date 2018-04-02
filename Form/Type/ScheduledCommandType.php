@@ -5,6 +5,7 @@ namespace JMose\CommandSchedulerBundle\Form\Type;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -86,10 +87,9 @@ class ScheduledCommandType extends AbstractType
         $builder->add(
             'executionMode', ChoiceType::class, array(
                 'label' => 'detail.executionMode',
-                'choices_as_values' => true, //This activates the "new" choice type API, which was introduced in Symfony 2.7 and it is the default in Symfony 3.x
                 'choices' => [
-                    'detail.executionMode.auto' => \JMose\CommandSchedulerBundle\Entity\ScheduledCommand::MODE_AUTO,
-                    'detail.executionMode.ondemand' => \JMose\CommandSchedulerBundle\Entity\ScheduledCommand::MODE_ONDEMAND
+                    'detail.executionMode.auto' => ScheduledCommand::MODE_AUTO,
+                    'detail.executionMode.ondemand' => ScheduledCommand::MODE_ONDEMAND
                 ]
             )
         );

@@ -39,6 +39,7 @@ class CommandParser
      * Execute the console command "list" with XML output to have all available command
      *
      * @return array
+     * @throws \Exception
      */
     public function getCommands()
     {
