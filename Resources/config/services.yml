@@ -9,11 +9,17 @@ services:
         tags:
             - { name: form.type, alias: command_choice }
 
+    jmose_command_scheduler.scheduler:
+        class: JMose\CommandSchedulerBundle\Service\SchedulerService
+        shared: false
+        arguments:
+            - "@doctrine"
+
     JMose\CommandSchedulerBundle\Command\ExecuteCommand:
         tags: [console.command]
 
     JMose\CommandSchedulerBundle\Command\MonitorCommand:
         tags: [console.command]
-        
+
     JMose\CommandSchedulerBundle\Command\UnlockCommand:
         tags: [console.command]

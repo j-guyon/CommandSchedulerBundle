@@ -77,8 +77,13 @@ class ExecuteCommand extends ContainerAwareCommand
             $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         }
 
-        $this->em = $this->getContainer()->get('doctrine')->getManager(
+        // Create a new Manager to Avoid Entity Manager is Closed Error
+        $manager = $this->getContainer()->get('doctrine')->getManager(
             $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
+        );
+        $this->em = $manager->create(
+            $manager->getConnection(),
+            $manager->getConfiguration()
         );
     }
 
@@ -108,10 +113,15 @@ class ExecuteCommand extends ContainerAwareCommand
         $noneExecution = true;
         foreach ($commands as $command) {
 
-            /** @var ScheduledCommand $command */
-            $cron = CronExpression::factory($command->getCronExpression());
-            $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
-            $now = new \DateTime();
+            if ( $command->getExecutionMode() == ScheduledCommand::MODE_AUTO ) {
+                /** @var ScheduledCommand $command */
+                $cron        = CronExpression::factory($command->getCronExpression());
+                $nextRunDate = $cron->getNextRunDate($command->getLastExecution());
+                $now         = new \DateTime();
+            } else {
+                $nextRunDate = false;
+                $now = false;
+            }
 
             if ($command->isExecuteImmediately()) {
                 $noneExecution = false;
@@ -122,7 +132,7 @@ class ExecuteCommand extends ContainerAwareCommand
                 if (!$input->getOption('dump')) {
                     $this->executeCommand($command, $output, $input);
                 }
-            } elseif ($nextRunDate < $now) {
+            } elseif ($command->getExecutionMode() == ScheduledCommand::MODE_AUTO && $nextRunDate < $now) {
                 $noneExecution = false;
                 $output->writeln(
                     'Command <comment>'.$command->getCommand().
@@ -218,7 +228,7 @@ class ExecuteCommand extends ContainerAwareCommand
                 .' '.$scheduledCommand->getArguments().'</comment>'
             );
             $result = $command->run($input, $logOutput);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) { //Throwable instead of Exception to be able to catch "semicolon" errors.
             $logOutput->writeln($e->getMessage());
             $logOutput->writeln($e->getTraceAsString());
             $result = -1;

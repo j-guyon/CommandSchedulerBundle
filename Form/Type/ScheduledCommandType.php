@@ -60,7 +60,7 @@ class ScheduledCommandType extends AbstractType
             TextType::class,
             [
                 'label' => 'detail.cronExpression',
-                'required' => true,
+                'required' => false,
             ]
         );
 
@@ -81,6 +81,17 @@ class ScheduledCommandType extends AbstractType
                 'empty_data' => 0,
                 'required' => false,
             ]
+        );
+
+        $builder->add(
+            'executionMode', ChoiceType::class, array(
+                'label' => 'detail.executionMode',
+                'choices_as_values' => true, //This activates the "new" choice type API, which was introduced in Symfony 2.7 and it is the default in Symfony 3.x
+                'choices' => [
+                    'detail.executionMode.auto' => \JMose\CommandSchedulerBundle\Entity\ScheduledCommand::MODE_AUTO,
+                    'detail.executionMode.ondemand' => \JMose\CommandSchedulerBundle\Entity\ScheduledCommand::MODE_ONDEMAND
+                ]
+            )
         );
 
         $builder->add(
