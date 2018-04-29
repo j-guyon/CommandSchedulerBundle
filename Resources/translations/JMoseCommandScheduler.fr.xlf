@@ -44,11 +44,11 @@
             </trans-unit>
             <trans-unit id="106">
                 <source>action.unlock</source>
-                <target>Dévérouiller la planification</target>
+                <target>Déverrouiller la planification</target>
             </trans-unit>
             <trans-unit id="107">
                 <source>confirm.unlock</source>
-                <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le dévérouiller ?</target>
+                <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le déverrouiller ?</target>
             </trans-unit>
 
             <!-- Detail  -->
@@ -82,7 +82,7 @@
             </trans-unit>
             <trans-unit id="208">
                 <source>detail.executeImmediately</source>
-                <target>Executer maintenant</target>
+                <target>Exécuter maintenant</target>
             </trans-unit>
             <trans-unit id="209">
                 <source>detail.disabled</source>
@@ -116,11 +116,11 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>Le traitement sera exécutée lors de la prochaine vérification (scheduler:execute).</target>
+                <target>Le traitement sera exécuté lors de la prochaine vérification (scheduler:execute).</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>
-                <target>Traitement dévérouillée avec succès.</target>
+                <target>Traitement déverrouillé avec succès.</target>
             </trans-unit>
 
         </body>
