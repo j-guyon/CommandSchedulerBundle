@@ -97,7 +97,7 @@ class DetailController extends BaseController
         $scheduledCommandForm = $this->createForm(ScheduledCommandType::class, $scheduledCommand);
         $scheduledCommandForm->handleRequest($request);
 
-        if ($scheduledCommandForm->isValid()) {
+        if ($scheduledCommandForm->isSubmitted() && $scheduledCommandForm->isValid()) {
 
             // Handle save to the database
             if (null === $scheduledCommand->getId()) {
@@ -111,15 +111,15 @@ class DetailController extends BaseController
 
             return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
 
-        } else {
-            // Redirect to indexAction with the form object that has validation errors
-            return $this->forward(
-                'JMoseCommandSchedulerBundle:Detail:index',
-                [
-                    'scheduledCommand' => $scheduledCommand,
-                    'scheduledCommandForm' => $scheduledCommandForm,
-                ]
-            );
         }
+        
+        // Redirect to indexAction with the form object that has validation errors
+        return $this->forward(
+            'JMoseCommandSchedulerBundle:Detail:index',
+            [
+                'scheduledCommand' => $scheduledCommand,
+                'scheduledCommandForm' => $scheduledCommandForm,
+            ]
+        );
     }
 }
