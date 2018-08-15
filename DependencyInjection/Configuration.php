@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array())
                     ->prototype('scalar')->end()
                 ->end()
-                ->scalarNode('monitor_mail_subject')->defaultValue('cronjob monitoring %s, %s')->end()
+                ->scalarNode('monitor_mail_subject')->defaultValue('cronjob monitoring %%s, %%s')->end()
                 ->booleanNode('send_ok')->defaultValue(false)->end()
                 ->variableNode('excluded_command_namespaces')
                     ->defaultValue(array(
