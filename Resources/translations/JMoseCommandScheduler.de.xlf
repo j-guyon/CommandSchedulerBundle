@@ -8,15 +8,17 @@
                 <source>name</source>
                 <target>Symfony's Aufgaben-Planer</target>
             </trans-unit>
-
             <trans-unit id="2">
                 <source>dateFormat</source>
                 <target>d.m.Y H:i</target>
             </trans-unit>
-
             <trans-unit id="3">
                 <source>list.title</source>
                 <target>Geplante Aufgaben</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>list.description</source>
+                <target>Tasks descripion</target>
             </trans-unit>
 
             <!-- Actions -->
@@ -52,13 +54,16 @@
                 <source>confirm.unlock</source>
                 <target>Die Aufgabe könnte gerade ausgeführt werden. Möchtest du sie wirklich entsperren?</target>
             </trans-unit>
+            <trans-unit id="108">
+                <source>action.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
-                <source>detail.title</source>
-                <target>Geplante Aufgabe</target>
+                <source>detail.title.new</source>
+                <target>New scheduled command</target>
             </trans-unit>
-
             <trans-unit id="202">
                 <source>detail.name</source>
                 <target>Name</target>
@@ -106,6 +111,10 @@
             <trans-unit id="213">
                 <source>detail.actions</source>
                 <target>Aktionen</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>detail.title.edit</source>
+                <target>Edit scheduled command</target>
             </trans-unit>
 
             <!-- Flashs messages -->

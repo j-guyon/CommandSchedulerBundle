@@ -3,6 +3,7 @@
 namespace JMose\CommandSchedulerBundle\Controller;
 
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
+use JMose\CommandSchedulerBundle\Service\CommandParser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ListController extends BaseController
 {
-
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -126,5 +126,27 @@ class ListController extends BaseController
         $response->setStatusCode(count($jsonArray) > 0 ? Response::HTTP_EXPECTATION_FAILED : Response::HTTP_OK);
 
         return $response;
+    }
+
+    private $commandParser;
+
+    public function __construct(CommandParser $commandParser) {
+        $this->commandParser = $commandParser;
+    }
+
+    /**
+     * Page Liste des crons avec leurs descriptions
+     *
+     * @param CommandParser $commandParser Gestionnaire des commandes du projet
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function listDescriptionAction(CommandParser $commandParser)
+    {
+        return $this->render(
+            '@JMoseCommandScheduler/List/description.html.twig',
+            ['commands' => $commandParser->getAllCommands()]
+        );
     }
 }

@@ -8,15 +8,17 @@
                 <source>name</source>
                 <target>Planificador de tareas de Symfony</target>
             </trans-unit>
-
             <trans-unit id="2">
                 <source>dateFormat</source>
                 <target>d-m-Y H:i</target>
             </trans-unit>
-
             <trans-unit id="3">
                 <source>list.title</source>
                 <target>Tareas programadas</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>list.description</source>
+                <target>Descripion de tareas</target>
             </trans-unit>
 
             <!-- Actions -->
@@ -52,13 +54,16 @@
                 <source>confirm.unlock</source>
                 <target>La tarea puede estar corriendo ¿Está seguro que desea desbloquearla?</target>
             </trans-unit>
+            <trans-unit id="108">
+                <source>action.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
-                <source>detail.title</source>
-                <target>Tarea programada</target>
+                <source>detail.title.new</source>
+                <target>Nueva planification de Tarea</target>
             </trans-unit>
-
             <trans-unit id="202">
                 <source>detail.name</source>
                 <target>Nombre</target>
@@ -106,6 +111,10 @@
             <trans-unit id="213">
                 <source>detail.actions</source>
                 <target>Acciones</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>detail.title.edit</source>
+                <target>Edition de planification de Tarea</target>
             </trans-unit>
 
             <!-- Flashs messages -->

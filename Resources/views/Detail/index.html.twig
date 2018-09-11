@@ -2,12 +2,16 @@
 {% trans_default_domain 'JMoseCommandScheduler' %}
 
 {% block title %}
-    {{ 'detail.title'|trans }}
+    {% if scheduledCommandForm.vars.value.id is not empty %}
+        {{ 'detail.title.edit'|trans }}
+    {% else %}
+        {{ 'detail.title.new'|trans }}
+    {% endif %}
 {% endblock title %}
 
 {% block content %}
-
     {% set styleConfiguration = {'class': 'form-control'} %}
+
     <div class="col-lg-6 col-sm-12">
         {{ form_start( scheduledCommandForm, {'action': path('jmose_command_scheduler_detail_save')} ) }}
 
@@ -30,7 +34,7 @@
 
         {# Form's actions #}
         <div class="row">
-            <a href="{{ path('jmose_command_scheduler_list') }}" class="btn btn-default btn-lg" role="button">Cancel</a>
+            <a href="{{ path('jmose_command_scheduler_list') }}" class="btn btn-default btn-lg" role="button">{{ 'action.cancel'|trans }}</a>
             {{ form_widget( scheduledCommandForm.save, {'attr': {'class': 'btn btn-success btn-lg pull-right'} } ) }}
         </div>
         {{ form_end( scheduledCommandForm ) }}

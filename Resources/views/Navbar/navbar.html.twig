@@ -1,6 +1,8 @@
 {% trans_default_domain 'JMoseCommandScheduler' %}
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+{% set currentPath = app.request.attributes.get('_route') %}
+
+<nav class="navbar-default" role="navigation">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -9,6 +11,23 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">{{ 'name'|trans }}</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li {% if currentPath == 'jmose_command_scheduler_list' %}class="active"{% endif %}>
+                    <a href="{{ path('jmose_command_scheduler_list') }}">
+                        <span class="glyphicon glyphicon-list-alt"></span>
+                        {{ 'list.title'|trans }}
+                    </a>
+                </li>
+                <li {% if currentPath == 'jmose_command_scheduler_list_description' %}class="active"{% endif %}>
+                    <a href="{{ path('jmose_command_scheduler_list_description') }}">
+                        <span class="glyphicon glyphicon-qrcode"></span>
+                        {{ "list.description"|trans }}
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

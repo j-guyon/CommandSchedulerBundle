@@ -2,7 +2,13 @@ services:
     JMose\CommandSchedulerBundle\Service\CommandParser:
         arguments:
             - "@kernel"
+            - "@doctrine.orm.entity_manager"
             - "%jmose_command_scheduler.excluded_command_namespaces%"
+
+    JMose\CommandSchedulerBundle\Controller\ListController:
+        autowire: true
+        tags:
+            - { name: controller.service_arguments }
 
     JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType:
         autowire: true

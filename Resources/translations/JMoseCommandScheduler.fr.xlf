@@ -16,6 +16,10 @@
                 <source>list.title</source>
                 <target>Taches planifiées</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>list.description</source>
+                <target>Descripif des tâches</target>
+            </trans-unit>
 
             <!-- Actions -->
             <trans-unit id="100">
@@ -44,17 +48,21 @@
             </trans-unit>
             <trans-unit id="106">
                 <source>action.unlock</source>
-                <target>Déverrouiller la planification</target>
+                <target>Déverouiller la planification</target>
             </trans-unit>
             <trans-unit id="107">
                 <source>confirm.unlock</source>
-                <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le déverrouiller ?</target>
+                <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le dévérouiller ?</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>action.cancel</source>
+                <target>Annuler</target>
             </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
-                <source>detail.title</source>
-                <target>Tache planifiée</target>
+                <source>detail.title.new</source>
+                <target>Nouvelle planification de tâche</target>
             </trans-unit>
             <trans-unit id="202">
                 <source>detail.name</source>
@@ -82,7 +90,7 @@
             </trans-unit>
             <trans-unit id="208">
                 <source>detail.executeImmediately</source>
-                <target>Exécuter maintenant</target>
+                <target>Executer maintenant</target>
             </trans-unit>
             <trans-unit id="209">
                 <source>detail.disabled</source>
@@ -104,6 +112,10 @@
                 <source>detail.actions</source>
                 <target>Actions</target>
             </trans-unit>
+            <trans-unit id="214">
+                <source>detail.title.edit</source>
+                <target>Edition d'une planification de tâche</target>
+            </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">
@@ -120,7 +132,7 @@
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>
-                <target>Traitement déverrouillé avec succès.</target>
+                <target>Traitement déverouillé avec succès.</target>
             </trans-unit>
 
         </body>

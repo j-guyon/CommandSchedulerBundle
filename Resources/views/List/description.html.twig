@@ -1,0 +1,38 @@
+{% extends "@JMoseCommandScheduler/layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+{% block title %}
+    {{ 'list.title'|trans }}
+{% endblock title %}
+
+{% block content %}
+    <div id="accordion" class="panel-group">
+        {% for key, domain in commands %}
+            <h2>{{ key }}</h2>
+            {% for cmd in domain %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion"
+                            href="#collapse-{{ key ~ '-' ~ loop.index }}"
+                        >
+                            {{ cmd.id }}
+
+                            {% if cmd.status is defined and cmd.status %}
+                                <span class="pull-right btn btn-success btn-xs">Activé</span>
+                            {% elseif cmd.status is not defined %}
+                                <span class="pull-right btn btn-danger btn-xs">Non utilisé</span>
+                            {% else %}
+                                <span class="pull-right btn btn-warning btn-xs">Inactif</span>
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div id="collapse-{{ key ~ '-' ~  loop.index }}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>{{ cmd.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock content %}

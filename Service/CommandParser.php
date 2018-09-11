@@ -1,10 +1,13 @@
 <?php
+
 namespace JMose\CommandSchedulerBundle\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Class CommandChoiceList
@@ -14,24 +17,40 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class CommandParser
 {
-
     /**
-     * @var Kernel
+     * KernelInterface
+     * @var KernelInterface $kernel
      */
     private $kernel;
 
     /**
-     * @var array
+     * Array with namespaces to exclude
+     *
+     * @var array $excludedNamespaces
      */
     private $excludedNamespaces;
 
     /**
-     * @param Kernel $kernel
-     * @param array $excludedNamespaces
+     * EntityManagerInterface
+     *
+     * @var EntityManagerInterface $em
      */
-    public function __construct(Kernel $kernel, array $excludedNamespaces = array())
-    {
+    private $em;
+
+    /**
+     * CommandParser constructor.
+     *
+     * @param KernelInterface        $kernel             The kernel
+     * @param EntityManagerInterface $em                 The entity manager
+     * @param array                  $excludedNamespaces Array with namespaces to exclude
+     */
+    public function __construct(
+        KernelInterface $kernel,
+        EntityManagerInterface $em,
+        array $excludedNamespaces = array()
+    ) {
         $this->kernel = $kernel;
+        $this->em = $em;
         $this->excludedNamespaces = $excludedNamespaces;
     }
 
@@ -39,6 +58,7 @@ class CommandParser
      * Execute the console command "list" with XML output to have all available command
      *
      * @return array
+     * @throws \Exception
      */
     public function getCommands()
     {
@@ -60,9 +80,39 @@ class CommandParser
     }
 
     /**
+     * Execute the console command "list" with XML output to have all available command
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllCommands()
+    {
+        $application = new Application($this->kernel);
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput(
+            array(
+                'command' => 'list',
+                '--format' => 'xml'
+            )
+        );
+
+        $output = new StreamOutput(fopen('php://memory', 'w+'));
+        $application->run($input, $output);
+        rewind($output->getStream());
+
+
+        return $this->extractCommandsFromXmlWithDescription(
+            stream_get_contents($output->getStream()),
+            $this->getCommandsUsed()
+        );
+    }
+
+    /**
      * Extract an array of available Symfony command from the XML output
      *
      * @param $xml
+     *
      * @return array
      */
     private function extractCommandsFromXML($xml)
@@ -73,6 +123,7 @@ class CommandParser
 
         $node = new \SimpleXMLElement($xml);
         $commandsList = array();
+
 
         foreach ($node->namespaces->namespace as $namespace) {
             $namespaceId = (string)$namespace->attributes()->id;
@@ -87,4 +138,59 @@ class CommandParser
         return $commandsList;
     }
 
+    /**
+     * List of commands used
+     *
+     * @return array
+     */
+    public function getCommandsUsed()
+    {
+        $return = [];
+        $commands = $this->em->getRepository(ScheduledCommand::class)->findAll();
+
+        foreach ($commands as $command) {
+            $return[$command->getCommand()] = ['status' => !$command->isDisabled()];
+        }
+
+        return $return;
+    }
+
+    /**
+     * Extract an array of available Symfony command from the XML output
+     *
+     * @param       $xml
+     * @param array $commandUsed
+     *
+     * @return array
+     */
+    private function extractCommandsFromXmlWithDescription($xml, array $commandUsed)
+    {
+        if ($xml == '') {
+            return array();
+        }
+
+        $node = new \SimpleXMLElement($xml);
+        $commandsList = array();
+
+        $this->excludedNamespaces[] = 'about';
+        $this->excludedNamespaces[] = 'help';
+        $this->excludedNamespaces[] = 'list';
+
+        foreach ($node->commands->command as $namespace) {
+            $namespaceId = (string)$namespace->attributes()->id;
+            $desc = (string)$namespace->description;
+
+            if (!in_array(explode(':', $namespaceId)[0], $this->excludedNamespaces)) {
+                $return = ['id' => $namespaceId, 'description' => $desc];
+
+                if (isset($commandUsed[$namespaceId])) {
+                    $return += $commandUsed[$namespaceId];
+                }
+
+                $commandsList[explode(':', $namespaceId)[0]][] = $return;
+            }
+        }
+
+        return $commandsList;
+    }
 }
