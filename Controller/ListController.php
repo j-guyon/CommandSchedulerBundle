@@ -128,12 +128,6 @@ class ListController extends BaseController
         return $response;
     }
 
-    private $commandParser;
-
-    public function __construct(CommandParser $commandParser) {
-        $this->commandParser = $commandParser;
-    }
-
     /**
      * Page Liste des crons avec leurs descriptions
      *
