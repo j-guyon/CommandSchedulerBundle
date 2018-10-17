@@ -1,0 +1,37 @@
+# This config can be used to manage CommandScheduler via the EasyAdminBundle
+# To include this file put the following in the imports of your config.yml
+# - { resource: "@JMose/CommandSchedulerBundle/Resource/config/easyadmin.yml" }
+easy_admin:
+  entities:
+    Cron:
+      label: 'Command Scheduler'
+      class: JMose\CommandSchedulerBundle\Entity\ScheduledCommand
+      list:
+        title: "Command CRON Scheduler"
+        fields:
+          - id
+          - name
+          - command
+          - arguments
+          - lastExecution
+          - { property: 'lastReturncode', label: 'Last Returncode' }
+          - { property: 'locked', label: 'Locked', type: 'boolean' }
+          - priority
+          - disabled
+        form_filters:
+          - disabled
+          - locked
+      form:
+        fields:
+          - { type: 'section', label: 'Command Details' }
+          - name
+          - { property: 'command', type: 'JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType' }
+          - arguments
+          - cronExpression
+          - priority
+          - disabled
+          - { type: 'section', label: 'Miscellaneous Settings' }
+          - logFile
+      new:
+        fields:
+         - executeImmediately
