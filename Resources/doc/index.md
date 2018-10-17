@@ -203,5 +203,16 @@ The call returns a JSON object with either HTTP 200 and an empty array (everythi
 For "internal" monitoring of jobs there is also a command "scheduler:monitor" which does the same check as the monitor call before except it sends emails to an arbitrary number of receivers (if the server allows sending mails with the "mail" command).
 As some kind of "self-monitoring" job the monitor command can be configured to send emails to all receivers if everything's ok - if there is no mail at all a problem occured.
 
+Integrate in EasyAdmin
+===============
+
+If you want to manage your scheduled commands via [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle) you can easily include it by importing our EasyAdmin config in your config.yml.
+
+```yaml
+# app/config/config.yml
+imports:
+ # ....
+  - { resource: "@JMose/CommandSchedulerBundle/Resource/config/easyadmin.yml" }
+```
 
 For any comments, questions, or bug report, use the  [Github issue tracker](https://github.com/J-Mose/CommandSchedulerBundle/issues).
