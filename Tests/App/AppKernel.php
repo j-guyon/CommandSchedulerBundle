@@ -4,7 +4,6 @@ namespace App\Tests\App;
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Debug\ErrorHandler;
 
 class AppKernel extends Kernel
 {
@@ -15,7 +14,6 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new \Liip\FunctionalTestBundle\LiipFunctionalTestBundle(),
             new \JMose\CommandSchedulerBundle\JMoseCommandSchedulerBundle(),
