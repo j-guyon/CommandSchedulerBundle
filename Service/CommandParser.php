@@ -4,7 +4,7 @@ namespace JMose\CommandSchedulerBundle\Service;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Class CommandChoiceList
@@ -16,7 +16,7 @@ class CommandParser
 {
 
     /**
-     * @var Kernel
+     * @var KernelInterface
      */
     private $kernel;
 
@@ -26,10 +26,11 @@ class CommandParser
     private $excludedNamespaces;
 
     /**
-     * @param Kernel $kernel
+     * CommandParser constructor.
+     * @param KernelInterface $kernel
      * @param array $excludedNamespaces
      */
-    public function __construct(Kernel $kernel, array $excludedNamespaces = array())
+    public function __construct(KernelInterface $kernel, array $excludedNamespaces = array())
     {
         $this->kernel = $kernel;
         $this->excludedNamespaces = $excludedNamespaces;
