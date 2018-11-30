@@ -1,0 +1,180 @@
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+<div class="modal fade" tabindex="-1" role="dialog" id="cronhelper">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{ "cronhelper.title"|trans }}</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="cron_minute">{{ "cronhelper.m"|trans }}</label>
+                            <select multiple
+                                    class="form-control cron_minute cron_expression cron_toggle"
+                                    name="cron_minute"
+                                    id="cron_minute"
+                                    data-class="cron_minute"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.minutely"|trans }}</option>
+                                <option value="-">{{ "cronhelper.every"|trans }}</option>
+                                {% for i in 0..59 %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="form-control cron_minute cron_expression cron_toggle hide"
+                                    name="cron_minute_modulo"
+                                    id="cron_minute_modulo"
+                                    data-class="cron_minute"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.minutely"|trans }}</option>
+                                <option value="-">{{ "cronhelper.minutely"|trans }}</option>
+                                {% for i in [2, 3, 4, 5, 6, 10, 12, 15, 20, 30] %}
+                                    <option value="*/{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cron_hour">{{ "cronhelper.h"|trans }}</label>
+                            <select multiple
+                                    class="form-control cron_hour cron_expression cron_toggle"
+                                    name="cron_hour"
+                                    id="cron_hour"
+                                    data-class="cron_hour"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.hourly"|trans }}</option>
+                                <option value="-">{{ "cronhelper.every"|trans }}</option>
+                                {% for i in 0..24 %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="form-control cron_hour cron_expression cron_toggle hide"
+                                    name="cron_hour_modulo"
+                                    id="cron_hour_modulo"
+                                    data-class="cron_hour"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.hourly"|trans }}</option>
+                                <option value="-">{{ "cronhelper.hourly"|trans }}</option>
+                                {% for i in [2, 3, 4, 6, 8, 12] %}
+                                    <option value="*/{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cron_day">{{ "cronhelper.dom"|trans }}</label>
+                            <select multiple
+                                    class="form-control cron_day cron_expression cron_toggle"
+                                    name="cron_day"
+                                    id="cron_day"
+                                    data-class="cron_day"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.daily"|trans }}</option>
+                                <option value="-">{{ "cronhelper.every"|trans }}</option>
+                                {% for i in 1..31 %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                                <option value="L">{{ "cronhelper.last"|trans }}</option>
+                            </select>
+                            <select class="form-control cron_day cron_expression cron_toggle hide"
+                                    name="cron_day_modulo"
+                                    id="cron_day_modulo"
+                                    data-class="cron_day"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.daily"|trans }}</option>
+                                <option value="-">{{ "cronhelper.daily"|trans }}</option>
+                                {% for i in [2, 3, 5, 7, 10] %}
+                                    <option value="*/{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="cron_month">{{ "cronhelper.mon"|trans }}</label>
+                            <select multiple
+                                    class="form-control cron_month cron_expression cron_toggle"
+                                    name="cron_month"
+                                    id="cron_month"
+                                    data-class="cron_month"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.monthly"|trans }}</option>
+                                <option value="-">{{ "cronhelper.every"|trans }}</option>
+                                <option value="1">{{ "cronhelper.month.january"|trans }}</option>
+                                <option value="2">{{ "cronhelper.month.february"|trans }}</option>
+                                <option value="3">{{ "cronhelper.month.march"|trans }}</option>
+                                <option value="4">{{ "cronhelper.month.april"|trans }}</option>
+                                <option value="5">{{ "cronhelper.month.may"|trans }}</option>
+                                <option value="6">{{ "cronhelper.month.june"|trans }}</option>
+                                <option value="7">{{ "cronhelper.month.july"|trans }}</option>
+                                <option value="8">{{ "cronhelper.month.august"|trans }}</option>
+                                <option value="9">{{ "cronhelper.month.sepember"|trans }}</option>
+                                <option value="10">{{ "cronhelper.month.october"|trans }}</option>
+                                <option value="11">{{ "cronhelper.month.november"|trans }}</option>
+                                <option value="12">{{ "cronhelper.month.december"|trans }}</option>
+                            </select>
+                            <select class="form-control cron_month cron_expression cron_toggle hide"
+                                    name="cron_month_modulo"
+                                    id="cron_month_modulo"
+                                    data-class="cron_month"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.monthly"|trans }}</option>
+                                <option value="-">{{ "cronhelper.monthly"|trans }}</option>
+                                <option value="-">{{ "cronhelper.monthly"|trans }}</option>
+                                {% for i in [2, 3, 4, 6] %}
+                                    <option value="*/{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cron_week">{{ "cronhelper.dow"|trans }}</label>
+                            <select multiple
+                                    class="form-control cron_expression cron_week"
+                                    name="cron_week"
+                                    id="cron_week"
+                                    autocomplete="off">
+                                <option value="*" selected>{{ "cronhelper.daily"|trans }}</option>
+                                <option value="1">{{ "cronhelper.day.monday"|trans }}</option>
+                                <option value="2">{{ "cronhelper.day.tuesday"|trans }}</option>
+                                <option value="3">{{ "cronhelper.day.wednesday"|trans }}</option>
+                                <option value="4">{{ "cronhelper.day.thursday"|trans }}</option>
+                                <option value="5">{{ "cronhelper.day.friday"|trans }}</option>
+                                <option value="6">{{ "cronhelper.day.saturday"|trans }}</option>
+                                <option value="7">{{ "cronhelper.day.sunday"|trans }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cron_epression">
+                                {{ "detail.cronExpression"|trans }}
+                            </label>
+                            <input type="text"
+                                   value="* * * * *"
+                                   placeholder="* * * * *"
+                                   class="form-control"
+                                   disabled="disabled"
+                                   id="cron_expression">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal">
+                        {{ "action.close"|trans }}
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary"
+                            id="cronhelper_save"
+                            data-btnOkLabel="{{ "action.save"|trans }}"
+                            data-btnOkIcon="fa fa-save"
+                            data-title="{{ "cronhelper.saveExpression"|trans }}">
+                        {{ "action.save"|trans }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

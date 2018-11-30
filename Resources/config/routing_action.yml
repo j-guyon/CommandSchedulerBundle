@@ -1,0 +1,31 @@
+# list actions
+# commands
+jmose_command_scheduler_action_command_toggle:
+    path:  /toggle/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:toggleCommand }
+
+jmose_command_scheduler_action_command_toggle_logging:
+    path:  /toggleLogging/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:toggleLogging }
+
+jmose_command_scheduler_action_command_remove:
+    path:  /remove/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:removeCommand }
+
+jmose_command_scheduler_action_command_execute:
+    path:  /execute/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:executeCommand }
+
+jmose_command_scheduler_action_command_unlock:
+    path:  /unlock/command/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Command:unlockCommand }
+
+# rights
+jmose_command_scheduler_action_right_remove:
+    path:  /remove/right/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:UserHost:removeRight }
+
+# executions
+jmose_command_scheduler_execution_output:
+    path: /output/execution/{id}
+    defaults: { _controller: JMoseCommandSchedulerBundle:Execution:getOutput }

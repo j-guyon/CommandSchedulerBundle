@@ -1,0 +1,54 @@
+{% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+{% block title %}
+    {{ 'detail.title'|trans }}
+{% endblock title %}
+
+{% block content %}
+
+    {% set styleConfiguration = {'class': 'form-control'} %}
+    <div class="col-lg-6 col-sm-12">
+        {{ form_start( scheduledCommandForm, {'action': path('jmose_command_scheduler_detail_command_save')} ) }}
+
+        {# Form's fields #}
+        {{ form_row( scheduledCommandForm.id ) }}
+        {{ form_row( scheduledCommandForm.name, {'attr': styleConfiguration|merge({'placeholder': 'name'}) } ) }}
+        {{ form_row( scheduledCommandForm.command, {'attr': styleConfiguration } ) }}
+        {{ form_row( scheduledCommandForm.arguments, {'attr': styleConfiguration|merge({'placeholder': '--argument1=foo --bar'}) } ) }}
+        {{ form_row( scheduledCommandForm.cronExpression, {'attr': styleConfiguration|merge({'placeholder': '*/10 * * * *'}) } ) }}
+        <div>
+            <a href="#" id="cronHelperLink">
+                <i class="fa fa-question-circle"></i>
+                {{ "detail.openHelper"|trans }}
+            </a>
+        </div>
+        {{ form_row( scheduledCommandForm.logFile, {'attr': styleConfiguration|merge({'placeholder': 'myFile.log'}) } ) }}
+        {{ form_row( scheduledCommandForm.rights, {'attr': styleConfiguration } ) }}
+        {{ form_row( scheduledCommandForm.priority, {'attr': styleConfiguration } ) }}
+        {{ form_row( scheduledCommandForm.expectedRuntime, {'attr': styleConfiguration } ) }}
+        <div>
+            {{ form_widget( scheduledCommandForm.executeImmediately ) }}
+            {{ form_label( scheduledCommandForm.executeImmediately ) }}
+        </div>
+        <div>
+            {{ form_widget( scheduledCommandForm.disabled ) }}
+            {{ form_label( scheduledCommandForm.disabled ) }}
+        </div>
+        <div>
+            {{ form_widget( scheduledCommandForm.logExecutions ) }}
+            {{ form_label( scheduledCommandForm.logExecutions ) }}
+        </div>
+
+        {# Form's actions #}
+        <div class="row marginTop1">
+            <a href="{{ path('jmose_command_scheduler_list_details', {'_type':'commands'}) }}" class="btn btn-default btn-lg" role="button">Cancel</a>
+            {{ form_widget( scheduledCommandForm.save, {'attr': {'class': 'btn btn-success btn-lg pull-right'} } ) }}
+        </div>
+        {{ form_end( scheduledCommandForm ) }}
+    </div>
+
+    {% include 'JMoseCommandSchedulerBundle:Detail:cronhelper.html.twig' with
+        { 'expression': scheduledCommandForm.cronExpression }
+    %}
+{% endblock content %}

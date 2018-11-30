@@ -1,0 +1,53 @@
+td a:hover {
+    text-decoration: none;
+}
+
+.marginTop1{
+    margin-top: 1em;
+}
+
+.marginBottom2{
+    margin-bottom: 2em;
+}
+
+.graphHolder {
+    height: 15em;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.filterholder label {
+    vertical-align: top;
+    padding-top: 5px;
+}
+
+.dataTables_filter {
+    display: none;
+}
+
+.modal .output {
+    max-height: 55vh;
+    overflow-y: scroll;
+}
+
+table.commands th {
+    min-width: 8em;
+}
+
+table.commands th.toggle {
+    width: 1em;
+    min-width: 1em;
+}
+
+table.commands th.name {
+    width: 10em;
+}
+
+table.commands th.command {
+    width: 35em;
+}
+
+table.commands th.cron {
+    width: 10em;
+}
+

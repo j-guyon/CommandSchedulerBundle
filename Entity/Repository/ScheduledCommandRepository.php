@@ -21,7 +21,13 @@ class ScheduledCommandRepository extends EntityRepository
      */
     public function findEnabledCommand()
     {
-        return $this->findBy(array('disabled' => false, 'locked' => false), array('priority' => 'DESC'));
+        return $this->findBy(
+            array( // criteria
+                'disabled' => false,
+                'locked' => false
+            ),
+            array('priority' => 'DESC') // ordering
+        );
     }
 
     /**
@@ -31,7 +37,20 @@ class ScheduledCommandRepository extends EntityRepository
      */
     public function findAll()
     {
-        return $this->findBy(array(), array('priority' => 'DESC'));
+        return $this->findBy(
+            array(), // criteria
+            array('id' => 'ASC') // ordering
+        );
+    }
+
+    /**
+     * find a command by id
+     *
+     * @return ScheduledCommand
+     */
+    public function findById($id)
+    {
+        return $this->findBy(array('id' => $id));
     }
 
     /**
@@ -41,7 +60,13 @@ class ScheduledCommandRepository extends EntityRepository
      */
     public function findLockedCommand()
     {
-        return $this->findBy(array('disabled' => false, 'locked' => true), array('priority' => 'DESC'));
+        return $this->findBy(
+            array(
+                'disabled' => false,
+                'locked' => true
+            ),
+            array('priority' => 'DESC')
+        );
     }
 
     /**
@@ -70,8 +95,9 @@ class ScheduledCommandRepository extends EntityRepository
         // Then, si a timeout value is set, get locked commands and check timeout
         if (false !== $lockTimeout) {
             $lockedCommands = $this->findLockedCommand();
+            $now = time();
+
             foreach ($lockedCommands as $lockedCommand) {
-                $now = time();
                 if ($lockedCommand->getLastExecution()->getTimestamp() + $lockTimeout < $now) {
                     $failedCommands[] = $lockedCommand;
                 }

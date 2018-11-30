@@ -1,0 +1,50 @@
+{% extends "JMoseCommandSchedulerBundle::layout.html.twig" %}
+{% trans_default_domain 'JMoseCommandScheduler' %}
+
+{% block title %}
+    {{ 'rights.pageTitle'|trans }}
+{% endblock title %}
+
+{% block content %}
+
+    {% set styleConfiguration = {'class': 'form-control'} %}
+    <div class="col-lg-6 col-sm-12">
+        {{ form_start( userHostForm, {'action': path('jmose_command_scheduler_detail_right_save')} ) }}
+
+        {# Form's fields #}
+        {{ form_row( userHostForm.id ) }}
+
+        {{ form_row( userHostForm.title, {'attr': styleConfiguration } ) }}
+        {{ form_row( userHostForm.user, {'attr': styleConfiguration } ) }}
+        <div>
+            <span class="fa fa-info-circle"></span>
+            <span>{{ "tooltip.userFormat"|trans }}</span>
+        </div>
+        {{ form_row( userHostForm.host, {'attr': styleConfiguration } ) }}
+        <div class="marginBottom2">
+            <span class="fa fa-info-circle"></span>
+            <span>{{ "tooltip.hostFormat"|trans }}</span>
+        </div>
+
+        {{ form_row( userHostForm.user_excluded, {'attr': styleConfiguration } ) }}
+        <div>
+            <span class="fa fa-info-circle"></span>
+            <span>{{ "tooltip.userFormat"|trans }}</span>
+        </div>
+        {{ form_row( userHostForm.host_excluded, {'attr': styleConfiguration } ) }}
+        <div class="marginBottom2">
+            <span class="fa fa-info-circle"></span>
+            <span>{{ "tooltip.hostFormat"|trans }}</span>
+        </div>
+
+        {{ form_row( userHostForm.info, {'attr': styleConfiguration } ) }}
+
+        {# Form's actions #}
+        <div class="row marginTop1">
+            <a href="{{ path('jmose_command_scheduler_list_details', {'_type':'rights'}) }}" class="btn btn-default btn-lg" role="button">Cancel</a>
+            {{ form_widget( userHostForm.save, {'attr': {'class': 'btn btn-success btn-lg pull-right'} } ) }}
+        </div>
+
+        {{ form_end( userHostForm ) }}
+    </div>
+{% endblock content %}

@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 $file = __DIR__ . '/../vendor/autoload.php';
 if (!file_exists($file)) {
