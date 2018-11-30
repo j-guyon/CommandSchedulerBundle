@@ -1,3 +1,5 @@
+# This bundle is no longer under development. feel free to fork/clone/iimprove the code, but we've stopped development due to changes in our it architecture
+
 # This is only a development fork. Please refer to [original Bundle](https://github.com/J-Mose/CommandSchedulerBundle) if you want to use this bundle.
 
 
