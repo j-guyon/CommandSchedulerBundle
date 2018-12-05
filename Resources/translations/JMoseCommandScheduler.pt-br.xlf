@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="fr" datatype="plaintext" original="file.ext">
+    <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
 
             <!-- Bundle -->
@@ -8,119 +8,122 @@
                 <source>name</source>
                 <target>Symfony's scheduler</target>
             </trans-unit>
+
             <trans-unit id="2">
                 <source>dateFormat</source>
-                <target>d/m/Y H:i</target>
+                <target>Y-m-d H:i</target>
             </trans-unit>
+
             <trans-unit id="3">
                 <source>list.title</source>
-                <target>Taches planifiées</target>
+                <target>Agendar comandos</target>
             </trans-unit>
 
             <!-- Actions -->
             <trans-unit id="100">
                 <source>action.delete</source>
-                <target>Supprimer</target>
+                <target>Remover</target>
             </trans-unit>
             <trans-unit id="101">
                 <source>action.execute</source>
-                <target>Executer</target>
+                <target>Executar</target>
             </trans-unit>
             <trans-unit id="102">
                 <source>action.edit</source>
-                <target>Modifier</target>
+                <target>Editar</target>
             </trans-unit>
             <trans-unit id="103">
                 <source>action.new</source>
-                <target>Nouvelle planification</target>
+                <target>Novo agendamento</target>
             </trans-unit>
             <trans-unit id="104">
                 <source>confirm.delete</source>
-                <target>Supprimer définitivement cette planification ?</target>
+                <target>Deletar permanentemente esta tarefa ?</target>
             </trans-unit>
             <trans-unit id="105">
                 <source>confirm.execute</source>
-                <target>Forcer une exécution de cette commande ?</target>
+                <target>Forçar uma execução para esta tarefa ?</target>
             </trans-unit>
             <trans-unit id="106">
                 <source>action.unlock</source>
-                <target>Déverrouiller la planification</target>
+                <target>Desbloquear tarefa</target>
             </trans-unit>
             <trans-unit id="107">
                 <source>confirm.unlock</source>
-                <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le déverrouiller ?</target>
+                <target>Esta tarefa pode estar em execução. Tem certeza que deseja desbloqueá-la ?</target>
             </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
                 <source>detail.title</source>
-                <target>Tache planifiée</target>
+                <target>Agendar comando</target>
             </trans-unit>
+
             <trans-unit id="202">
                 <source>detail.name</source>
-                <target>Nom</target>
+                <target>Nome</target>
             </trans-unit>
             <trans-unit id="203">
                 <source>detail.command</source>
-                <target>Commande</target>
+                <target>Comando</target>
             </trans-unit>
             <trans-unit id="204">
                 <source>detail.arguments</source>
-                <target>Arguments</target>
+                <target>Argumentos</target>
             </trans-unit>
             <trans-unit id="205">
                 <source>detail.cronExpression</source>
-                <target>Expression cron</target>
+                <target>Expressão Cron</target>
             </trans-unit>
             <trans-unit id="206">
                 <source>detail.logFile</source>
-                <target>Nom du fichier de log</target>
+                <target>Arquivo de saída</target>
             </trans-unit>
             <trans-unit id="207">
                 <source>detail.priority</source>
-                <target>Priorité</target>
+                <target>Prioridade</target>
             </trans-unit>
             <trans-unit id="208">
                 <source>detail.executeImmediately</source>
-                <target>Exécuter maintenant</target>
+                <target>Execute agora</target>
             </trans-unit>
             <trans-unit id="209">
                 <source>detail.disabled</source>
-                <target>Désactiver</target>
+                <target>Desabilitar</target>
             </trans-unit>
             <trans-unit id="210">
                 <source>detail.save</source>
-                <target>Enregistrer</target>
+                <target>Salvar</target>
             </trans-unit>
             <trans-unit id="211">
                 <source>detail.lastExecution</source>
-                <target>Dernière exécution</target>
+                <target>Última execução</target>
             </trans-unit>
             <trans-unit id="212">
                 <source>detail.lastReturnCode</source>
-                <target>Dernier code retour</target>
+                <target>Último código de saída</target>
             </trans-unit>
             <trans-unit id="213">
                 <source>detail.actions</source>
-                <target>Actions</target>
+                <target>Ações</target>
             </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">
                 <source>flash.success</source>
-                <target>Planification sauvegardée avec succés.</target>
+                <target>Agendamento salvo com sucesso.</target>
             </trans-unit>
             <trans-unit id="301">
                 <source>flash.deleted</source>
-                <target>Planification supprimée avec succés.</target>
+                <target>Agendamento deletado com sucesso.</target>
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>Le traitement sera exécuté lors de la prochaine vérification (scheduler:execute).</target>
+                <target>Comando será executado no próximo "scheduler:execute".</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>
-                <target>Traitement déverrouillé avec succès.</target>
+                <target>Agendamento desbloqueado com sucesso.</target>
             </trans-unit>
 
         </body>
