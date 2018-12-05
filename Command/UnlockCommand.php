@@ -88,7 +88,7 @@ class UnlockCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->unlockAll === false && $this->scheduledCommandName === NULL) {
+        if ($this->unlockAll === false && $this->scheduledCommandName === null) {
             $output->writeln('Either the name of a scheduled command or the --all option must be set.');
 
             return 1;
@@ -137,7 +137,8 @@ class UnlockCommand extends ContainerAwareCommand
             $command->getLastExecution() !== null &&
             $command->getLastExecution() >= (new \DateTime())->sub(
                 new \DateInterval(sprintf('PT%dS', $this->lockTimeout))
-            )) {
+            )
+        ) {
             $output->writeln(
                 sprintf('Skipping: Timout for scheduled Command "%s" has not run out.', $command->getName())
             );

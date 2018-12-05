@@ -1,4 +1,5 @@
 <?php
+
 namespace JMose\CommandSchedulerBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
