@@ -10,10 +10,25 @@ services:
             - { name: form.type, alias: command_choice }
 
     JMose\CommandSchedulerBundle\Command\ExecuteCommand:
+        arguments:
+            - "@doctrine"
+            - "%jmose_command_scheduler.doctrine_manager%"
+            - "%jmose_command_scheduler.log_path%"
         tags: [console.command]
 
     JMose\CommandSchedulerBundle\Command\MonitorCommand:
+        arguments:
+            - "@doctrine"
+            - "%jmose_command_scheduler.doctrine_manager%"
+            - "%jmose_command_scheduler.lock_timeout%"
+            - "%jmose_command_scheduler.monitor_mail%"
+            - "%jmose_command_scheduler.monitor_mail_subject%"
+            - "%jmose_command_scheduler.send_ok%"
         tags: [console.command]
         
     JMose\CommandSchedulerBundle\Command\UnlockCommand:
+        arguments:
+            - "@doctrine"
+            - "%jmose_command_scheduler.doctrine_manager%"
+            - "%jmose_command_scheduler.lock_timeout%"
         tags: [console.command]

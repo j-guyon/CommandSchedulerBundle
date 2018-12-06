@@ -3,7 +3,8 @@
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Cron\CronExpression;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,7 +19,7 @@ use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @package JMose\CommandSchedulerBundle\Command
  */
-class ExecuteCommand extends ContainerAwareCommand
+class ExecuteCommand extends Command
 {
 
     /**
@@ -42,6 +43,25 @@ class ExecuteCommand extends ContainerAwareCommand
     private $commandsVerbosity;
 
     /**
+     * ExecuteCommand constructor.
+     * @param ManagerRegistry $managerRegistry
+     * @param $managerName
+     * @param $logPath
+     */
+    public function __construct(ManagerRegistry $managerRegistry, $managerName, $logPath)
+    {
+        $this->em = $managerRegistry->getManager($managerName);
+        $this->logPath = $logPath;
+
+        // If logpath is not set to false, append the directory separator to it
+        if (false !== $this->logPath) {
+            $this->logPath = rtrim($this->logPath, '/\\').DIRECTORY_SEPARATOR;
+        }
+
+        parent::__construct();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function configure()
@@ -63,12 +83,6 @@ class ExecuteCommand extends ContainerAwareCommand
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->dumpMode = $input->getOption('dump');
-        $this->logPath = $this->getContainer()->getParameter('jmose_command_scheduler.log_path');
-
-        // If logpath is not set to false, append the directory separator to it
-        if (false !== $this->logPath) {
-            $this->logPath = rtrim($this->logPath, '/\\').DIRECTORY_SEPARATOR;
-        }
 
         // Store the original verbosity before apply the quiet parameter
         $this->commandsVerbosity = $output->getVerbosity();
@@ -76,10 +90,6 @@ class ExecuteCommand extends ContainerAwareCommand
         if (true === $input->getOption('no-output')) {
             $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
         }
-
-        $this->em = $this->getContainer()->get('doctrine')->getManager(
-            $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
-        );
     }
 
     /**
@@ -94,7 +104,8 @@ class ExecuteCommand extends ContainerAwareCommand
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
         if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable(
                 $this->logPath
-            )) {
+            )
+        ) {
             $output->writeln(
                 '<error>'.$this->logPath.
                 ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
