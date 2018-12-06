@@ -2,7 +2,8 @@
 
 namespace JMose\CommandSchedulerBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @author  Daniel Fischer <dfischer000@gmail.com>
  * @package JMose\CommandSchedulerBundle\Command
  */
-class MonitorCommand extends ContainerAwareCommand
+class MonitorCommand extends Command
 {
 
     /**
@@ -47,6 +48,32 @@ class MonitorCommand extends ContainerAwareCommand
     private $sendMailIfNoError;
 
     /**
+     * MonitorCommand constructor.
+     * @param ManagerRegistry $managerRegistry
+     * @param $managerName
+     * @param $lockTimeout
+     * @param $receiver
+     * @param $mailSubject
+     * @param $sendMailIfNoError
+     */
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        $managerName,
+        $lockTimeout,
+        $receiver,
+        $mailSubject,
+        $sendMailIfNoError
+    ) {
+        $this->em = $managerRegistry->getManager($managerName);
+        $this->lockTimeout = $lockTimeout;
+        $this->receiver = $receiver;
+        $this->mailSubject = $mailSubject;
+        $this->sendMailIfNoError = $sendMailIfNoError;
+
+        parent::__construct();
+    }
+
+    /**
      * @inheritdoc
      */
     protected function configure()
@@ -59,25 +86,6 @@ class MonitorCommand extends ContainerAwareCommand
     }
 
     /**
-     * Initialize parameters and services used in execute function
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
-        $this->lockTimeout = $this->getContainer()->getParameter('jmose_command_scheduler.lock_timeout');
-        $this->dumpMode = $input->getOption('dump');
-        $this->receiver = $this->getContainer()->getParameter('jmose_command_scheduler.monitor_mail');
-		$this->mailSubject = $this->getContainer()->getParameter('jmose_command_scheduler.monitor_mail_subject');
-        $this->sendMailIfNoError = $this->getContainer()->getParameter('jmose_command_scheduler.send_ok');
-
-        $this->em = $this->getContainer()->get('doctrine')->getManager(
-            $this->getContainer()->getParameter('jmose_command_scheduler.doctrine_manager')
-        );
-    }
-
-    /**
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
@@ -85,6 +93,7 @@ class MonitorCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // If not in dump mode and none receiver is set, exit.
+        $this->dumpMode = $input->getOption('dump');
         if (!$this->dumpMode && count($this->receiver) === 0) {
             $output->writeln('Please add receiver in configuration');
 
@@ -100,7 +109,8 @@ class MonitorCommand extends ContainerAwareCommand
             $message = "";
 
             foreach ($failedCommands as $command) {
-                $message .= sprintf("%s: returncode %s, locked: %s, last execution: %s\n",
+                $message .= sprintf(
+                    "%s: returncode %s, locked: %s, last execution: %s\n",
                     $command->getName(),
                     $command->getLastReturnCode(),
                     $command->getLocked(),
@@ -134,8 +144,8 @@ class MonitorCommand extends ContainerAwareCommand
         // prepare email constants
         $hostname = gethostname();
         $subject = $this->getMailSubject();
-        $headers = 'From: cron-monitor@' . $hostname . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+        $headers = 'From: cron-monitor@'.$hostname."\r\n".
+            'X-Mailer: PHP/'.phpversion();
 
         foreach ($this->receiver as $rcv) {
             mail(trim($rcv), $subject, $message, $headers);
@@ -150,6 +160,7 @@ class MonitorCommand extends ContainerAwareCommand
     private function getMailSubject()
     {
         $hostname = gethostname();
+
         return sprintf($this->mailSubject, $hostname, date('Y-m-d H:i:s'));
     }
 
