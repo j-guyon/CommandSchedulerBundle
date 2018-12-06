@@ -2,7 +2,7 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class BaseController
@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @package JMose\CommandSchedulerBundle\Controller
  */
-abstract class BaseController extends Controller
+abstract class BaseController extends AbstractController
 {
     /**
      * @return \Doctrine\Common\Persistence\ObjectManager|object
