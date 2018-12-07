@@ -14,6 +14,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ListController extends BaseController
 {
+    /**
+     * @var string
+     */
+    private $lockTimeout;
+
+    /**
+     * @param $lockTimeout string
+     */
+    public function setLockTimeout($lockTimeout)
+    {
+        $this->lockTimeout = $lockTimeout;
+    }
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
@@ -44,7 +56,7 @@ class ListController extends BaseController
 
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()
-            ->add('success', $this->get('translator')->trans('flash.deleted', [], 'JMoseCommandScheduler'));
+            ->add('success', $this->translator->trans('flash.deleted', [], 'JMoseCommandScheduler'));
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
@@ -76,7 +88,7 @@ class ListController extends BaseController
 
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()
-            ->add('success', $this->get('translator')->trans('flash.execute', [], 'JMoseCommandScheduler'));
+            ->add('success', $this->translator->trans('flash.execute', [], 'JMoseCommandScheduler'));
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
@@ -94,7 +106,7 @@ class ListController extends BaseController
 
         // Add a flash message and do a redirect to the list
         $this->get('session')->getFlashBag()
-            ->add('success', $this->get('translator')->trans('flash.unlocked', [], 'JMoseCommandScheduler'));
+            ->add('success', $this->translator->trans('flash.unlocked', [], 'JMoseCommandScheduler'));
 
         return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
     }
@@ -110,7 +122,7 @@ class ListController extends BaseController
     {
         $failedCommands = $this->getDoctrineManager()
             ->getRepository(ScheduledCommand::class)
-            ->findFailedAndTimeoutCommands($this->container->getParameter('jmose_command_scheduler.lock_timeout'));
+            ->findFailedAndTimeoutCommands($this->lockTimeout);
 
         $jsonArray = [];
         foreach ($failedCommands as $command) {

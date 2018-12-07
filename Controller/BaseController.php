@@ -3,6 +3,7 @@
 namespace JMose\CommandSchedulerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class BaseController
@@ -13,14 +14,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 abstract class BaseController extends AbstractController
 {
     /**
-     * @return \Doctrine\Common\Persistence\ObjectManager|object
+     * @var string
+     */
+    private $managerName;
+
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @param $managerName string
+     */
+    public function setManagerName($managerName)
+    {
+        $this->managerName = $managerName;
+    }
+
+    /**
+     * @param TranslatorInterface $translator
+     */
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectManager
      */
     protected function getDoctrineManager()
     {
-        $manager = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager'))
-            ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager')
-            : 'default';
-
-        return $this->getDoctrine()->getManager($manager);
+        return $this->getDoctrine()->getManager($this->managerName);
     }
 }

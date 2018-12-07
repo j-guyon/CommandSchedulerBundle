@@ -1,4 +1,21 @@
 services:
+    JMose\CommandSchedulerBundle\Controller\DetailController:
+        public: true
+        autowire: true
+        calls:
+            - [setManagerName, ["%jmose_command_scheduler.doctrine_manager%"]]
+            - [setTranslator, ["@translator"]]
+        tags: [container.service_subscriber]
+
+    JMose\CommandSchedulerBundle\Controller\ListController:
+        public: true
+        autowire: true
+        calls:
+            - [setManagerName, ["%jmose_command_scheduler.doctrine_manager%"]]
+            - [setTranslator, ["@translator"]]
+            - [setLockTimeout, ["%jmose_command_scheduler.lock_timeout%"]]
+        tags: [container.service_subscriber]
+
     JMose\CommandSchedulerBundle\Service\CommandParser:
         arguments:
             - "@kernel"
