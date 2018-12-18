@@ -52,13 +52,24 @@
                 <source>confirm.unlock</source>
                 <target>The task may be running. Are you sure you want to unlock it ?</target>
             </trans-unit>
+            <trans-unit id="108">
+                <source>action.search</source>
+                <target>Search</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>action.list</source>
+                <target>Back to list</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>action.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
                 <source>detail.title</source>
                 <target>Scheduled command</target>
             </trans-unit>
-
             <trans-unit id="202">
                 <source>detail.name</source>
                 <target>Name</target>
@@ -89,10 +100,10 @@
             </trans-unit>
             <trans-unit id="209">
                 <source>detail.disabled</source>
-                <target>Disable</target>
+                <target>Disabled</target>
             </trans-unit>
             <trans-unit id="210">
-                <source>detail.save</source>
+                <source>action.save</source>
                 <target>Save</target>
             </trans-unit>
             <trans-unit id="211">
@@ -106,6 +117,10 @@
             <trans-unit id="213">
                 <source>detail.actions</source>
                 <target>Actions</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>detail.locked</source>
+                <target>Locked</target>
             </trans-unit>
 
             <!-- Flashs messages -->
@@ -126,6 +141,19 @@
                 <target>Scheduling successfully unlocked.</target>
             </trans-unit>
 
+            <!-- admin label -->
+            <trans-unit id="400">
+                <source>label.null</source>
+                <target>Null</target>
+            </trans-unit>
+            <trans-unit id="401">
+                <source>label.true</source>
+                <target>True</target>
+            </trans-unit>
+            <trans-unit id="402">
+                <source>label.false</source>
+                <target>False</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -52,6 +52,18 @@
                 <source>confirm.unlock</source>
                 <target>Esta tarefa pode estar em execução. Tem certeza que deseja desbloqueá-la ?</target>
             </trans-unit>
+            <trans-unit id="108">
+                <source>action.search</source>
+                <target>Procurar</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>action.list</source>
+                <target>De volta à lista</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>action.cancel</source>
+                <target>Cancelar</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
@@ -92,7 +104,7 @@
                 <target>Desabilitar</target>
             </trans-unit>
             <trans-unit id="210">
-                <source>detail.save</source>
+                <source>action.save</source>
                 <target>Salvar</target>
             </trans-unit>
             <trans-unit id="211">
@@ -106,6 +118,10 @@
             <trans-unit id="213">
                 <source>detail.actions</source>
                 <target>Ações</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>detail.locked</source>
+                <target>Bloqueado</target>
             </trans-unit>
 
             <!-- Flashs messages -->
@@ -126,6 +142,19 @@
                 <target>Agendamento desbloqueado com sucesso.</target>
             </trans-unit>
 
+            <!-- admin label -->
+            <trans-unit id="400">
+                <source>label.null</source>
+                <target>Null</target>
+            </trans-unit>
+            <trans-unit id="401">
+                <source>label.true</source>
+                <target>True</target>
+            </trans-unit>
+            <trans-unit id="402">
+                <source>label.false</source>
+                <target>False</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

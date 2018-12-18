@@ -50,6 +50,18 @@
                 <source>confirm.unlock</source>
                 <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le déverrouiller ?</target>
             </trans-unit>
+            <trans-unit id="108">
+                <source>action.search</source>
+                <target>Rechercher</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>action.list</source>
+                <target>Retour à la liste</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>action.cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
@@ -89,7 +101,7 @@
                 <target>Désactiver</target>
             </trans-unit>
             <trans-unit id="210">
-                <source>detail.save</source>
+                <source>action.save</source>
                 <target>Enregistrer</target>
             </trans-unit>
             <trans-unit id="211">
@@ -103,6 +115,10 @@
             <trans-unit id="213">
                 <source>detail.actions</source>
                 <target>Actions</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>detail.locked</source>
+                <target>Verrouillé</target>
             </trans-unit>
 
             <!-- Flashs messages -->
@@ -123,6 +139,19 @@
                 <target>Traitement déverrouillé avec succès.</target>
             </trans-unit>
 
+            <!-- admin label -->
+            <trans-unit id="400">
+                <source>label.null</source>
+                <target>Aucun</target>
+            </trans-unit>
+            <trans-unit id="401">
+                <source>label.true</source>
+                <target>Oui</target>
+            </trans-unit>
+            <trans-unit id="402">
+                <source>label.false</source>
+                <target>Non</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
