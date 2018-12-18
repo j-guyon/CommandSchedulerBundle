@@ -105,7 +105,7 @@ class ScheduledCommandType extends AbstractType
             'save',
             SubmitType::class,
             [
-                'label' => 'detail.save',
+                'label' => 'action.save',
             ]
         );
 
