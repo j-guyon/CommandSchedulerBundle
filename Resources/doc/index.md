@@ -165,9 +165,6 @@ easy_admin:
           - { property: 'locked', label: 'detail.locked', type: boolean}
           - { property: 'priority', label: 'detail.priority' }
           - { property: 'disabled', label: 'detail.disabled' }
-        form_filters:
-          - disabled
-          - locked
         actions:
           - { name: 'jmose_command_scheduler_action_execute', type: 'route', label: 'action.execute' }
           - { name: 'jmose_command_scheduler_action_unlock', type: 'route', label: 'action.unlock' }
