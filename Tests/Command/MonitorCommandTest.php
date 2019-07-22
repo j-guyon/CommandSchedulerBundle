@@ -3,6 +3,7 @@
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Class MonitorCommandTest
@@ -46,7 +47,9 @@ class MonitorCommandTest extends WebTestCase
                 '--dump' => true
             )
         );
-
+        if ($output instanceof CommandTester) {
+            $output = $output->getDisplay();
+        }
         $this->assertRegExp('/two:/', $output);
         $this->assertRegExp('/four:/', $output);
     }
@@ -78,7 +81,9 @@ class MonitorCommandTest extends WebTestCase
                 '--dump' => true
             )
         );
-
+        if ($output instanceof CommandTester) {
+            $output = $output->getDisplay();
+        }
         $this->assertStringStartsWith('No errors found.', $output);
     }
 

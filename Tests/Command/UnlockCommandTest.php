@@ -4,6 +4,7 @@ namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Class UnlockCommandTest
@@ -40,7 +41,9 @@ class UnlockCommandTest extends WebTestCase {
         $output = $this->runCommand(
                 'scheduler:unlock', ['--all' => true]
         );
-
+        if ($output instanceof CommandTester) {
+            $output = $output->getDisplay();
+        }
         $this->assertRegExp('/"two"/', $output);
         $this->assertNotRegExp('/"one"/', $output);
         $this->assertNotRegExp('/"three"/', $output);
@@ -64,7 +67,9 @@ class UnlockCommandTest extends WebTestCase {
         $output = $this->runCommand(
                 'scheduler:unlock', ['name' => 'two']
         );
-
+        if ($output instanceof CommandTester) {
+            $output = $output->getDisplay();
+        }
         $this->assertRegExp('/"two"/', $output);
 
         $this->em->clear();
@@ -86,7 +91,9 @@ class UnlockCommandTest extends WebTestCase {
         $output = $this->runCommand(
                 'scheduler:unlock', ['name' => 'two', '--lock-timeout' =>  3 * 24 * 60 * 60 ]
         );
-
+        if ($output instanceof CommandTester) {
+            $output = $output->getDisplay();
+        }
         $this->assertRegExp('/Skipping/', $output);
         $this->assertRegExp('/"two"/', $output);
 

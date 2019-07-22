@@ -40,5 +40,13 @@ jmose_command_scheduler:
         - scheduler
 
 liip_functional_test:
-    cache_sqlite_db: true
+#    cache_sqlite_db: true
     command_decoration: false
+
+services:
+    JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData:
+        class: JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData
+        tags:
+            -   doctrine.fixture.orm
+
+
