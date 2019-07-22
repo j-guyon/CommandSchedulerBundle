@@ -29,7 +29,7 @@
         "phpunit/phpunit": "^5.7",
         "php-coveralls/php-coveralls": "^2.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0.0",
-        "liip/functional-test-bundle": "^1.9",
+        "liip/functional-test-bundle": "^1.9|^2.0.0-alpha17",
         "symfony/css-selector": "^3.4|^4.0",
         "symfony/security-bundle": "^3.4|^4.0"
     },
