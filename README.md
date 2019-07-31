@@ -2,7 +2,7 @@ CommandSchedulerBundle
 ======================
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5/mini.png)](https://insight.sensiolabs.com/projects/8d984140-0e19-4c4f-8b05-605025eebeb5)
-[![Build Status](https://travis-ci.org/J-Mose/CommandSchedulerBundle.svg)](https://travis-ci.org/J-Mose/CommandSchedulerBundle)
+[![Build Status](https://travis-ci.org/j-guyon/CommandSchedulerBundle.svg)](https://travis-ci.org/J-Mose/CommandSchedulerBundle)
 [![Coverage Status](https://coveralls.io/repos/J-Mose/CommandSchedulerBundle/badge.svg)](https://coveralls.io/r/J-Mose/CommandSchedulerBundle)
 [![Latest Stable Version](https://poser.pugx.org/jmose/command-scheduler-bundle/v/stable)](https://packagist.org/packages/jmose/command-scheduler-bundle)
 
