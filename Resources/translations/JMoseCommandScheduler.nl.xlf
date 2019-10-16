@@ -6,7 +6,7 @@
             <!-- Bundle -->
             <trans-unit id="1">
                 <source>name</source>
-                <target>Symfony's scheduler</target>
+                <target>Symfony's planner</target>
             </trans-unit>
 
             <trans-unit id="2">
@@ -16,143 +16,143 @@
 
             <trans-unit id="3">
                 <source>list.title</source>
-                <target>Scheduled commands</target>
+                <target>Geplande commando's</target>
             </trans-unit>
 
             <!-- Actions -->
             <trans-unit id="100">
                 <source>action.delete</source>
-                <target>Remove</target>
+                <target>verwijderen</target>
             </trans-unit>
             <trans-unit id="101">
                 <source>action.execute</source>
-                <target>Execute</target>
+                <target>Uitvoeren</target>
             </trans-unit>
             <trans-unit id="102">
                 <source>action.edit</source>
-                <target>Edit</target>
+                <target>Wijzigen</target>
             </trans-unit>
             <trans-unit id="103">
                 <source>action.new</source>
-                <target>New scheduling</target>
+                <target>Niewe planning</target>
             </trans-unit>
             <trans-unit id="104">
                 <source>confirm.delete</source>
-                <target>Permanently delete this task ?</target>
+                <target>Deze taak permanent verwijderen ?</target>
             </trans-unit>
             <trans-unit id="105">
                 <source>confirm.execute</source>
-                <target>Force an execution for this task ?</target>
+                <target>Een executie forceren voor deze taak?</target>
             </trans-unit>
             <trans-unit id="106">
                 <source>action.unlock</source>
-                <target>Unlock task</target>
+                <target>Taak ontgrendelen</target>
             </trans-unit>
             <trans-unit id="107">
                 <source>confirm.unlock</source>
-                <target>The task may be running. Are you sure you want to unlock it ?</target>
+                <target>De taak kan aan de gang zijn. Weet u zeker dat u het wilt ontgrendelen ?</target>
             </trans-unit>
             <trans-unit id="108">
                 <source>action.search</source>
-                <target>Search</target>
+                <target>Zoeken</target>
             </trans-unit>
             <trans-unit id="109">
                 <source>action.list</source>
-                <target>Back to list</target>
+                <target>Terug naar lijst</target>
             </trans-unit>
             <trans-unit id="110">
                 <source>action.cancel</source>
-                <target>Cancel</target>
+                <target>Annuleren</target>
             </trans-unit>
 
             <!-- Detail  -->
             <trans-unit id="201">
                 <source>detail.title</source>
-                <target>Scheduled command</target>
+                <target>Gepland commando</target>
             </trans-unit>
             <trans-unit id="202">
                 <source>detail.name</source>
-                <target>Name</target>
+                <target>Naam</target>
             </trans-unit>
             <trans-unit id="203">
                 <source>detail.command</source>
-                <target>Command</target>
+                <target>Commando</target>
             </trans-unit>
             <trans-unit id="204">
                 <source>detail.arguments</source>
-                <target>Arguments</target>
+                <target>Argumenten</target>
             </trans-unit>
             <trans-unit id="205">
                 <source>detail.cronExpression</source>
-                <target>Cron expression</target>
+                <target>Cron expressie</target>
             </trans-unit>
             <trans-unit id="206">
                 <source>detail.logFile</source>
-                <target>Output file</target>
+                <target>Uitvoerbestand</target>
             </trans-unit>
             <trans-unit id="207">
                 <source>detail.priority</source>
-                <target>Priority</target>
+                <target>Prioriteit</target>
             </trans-unit>
             <trans-unit id="208">
                 <source>detail.executeImmediately</source>
-                <target>Execute now</target>
+                <target>Voer nu uit</target>
             </trans-unit>
             <trans-unit id="209">
                 <source>detail.disabled</source>
-                <target>Disabled</target>
+                <target>Uitgeschakeld</target>
             </trans-unit>
             <trans-unit id="210">
                 <source>action.save</source>
-                <target>Save</target>
+                <target>Opslaan</target>
             </trans-unit>
             <trans-unit id="211">
                 <source>detail.lastExecution</source>
-                <target>Last run</target>
+                <target>Laatste reeks</target>
             </trans-unit>
             <trans-unit id="212">
                 <source>detail.lastReturnCode</source>
-                <target>Last return code</target>
+                <target>Laatste retournummer</target>
             </trans-unit>
             <trans-unit id="213">
                 <source>detail.actions</source>
-                <target>Actions</target>
+                <target>Acties</target>
             </trans-unit>
             <trans-unit id="214">
                 <source>detail.locked</source>
-                <target>Locked</target>
+                <target>Vergrendeld</target>
             </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">
                 <source>flash.success</source>
-                <target>Scheduling successfully saved.</target>
+                <target>Planning succesvol opgeslagen.</target>
             </trans-unit>
             <trans-unit id="301">
                 <source>flash.deleted</source>
-                <target>Scheduling successfully deleted.</target>
+                <target>Planning succesvol verwijderd.</target>
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>Command will be executed during the next "scheduler:execute".</target>
+                <target>Het commando zal worden uitgevoerd tijdens de volgende "scheduler:execute".</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>
-                <target>Scheduling successfully unlocked.</target>
+                <target>Planning succesvol ontgrendeld.</target>
             </trans-unit>
 
             <!-- admin label -->
             <trans-unit id="400">
                 <source>label.null</source>
-                <target>Null</target>
+                <target>Niet van kracht</target>
             </trans-unit>
             <trans-unit id="401">
                 <source>label.true</source>
-                <target>True</target>
+                <target>Juist</target>
             </trans-unit>
             <trans-unit id="402">
                 <source>label.false</source>
-                <target>False</target>
+                <target>Onjuist</target>
             </trans-unit>
         </body>
     </file>
