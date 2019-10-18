@@ -3,6 +3,7 @@
 namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ListControllerTest extends WebTestCase
 {
+    use FixturesTrait;
 
     /**
      * @var \Doctrine\ORM\EntityManager
