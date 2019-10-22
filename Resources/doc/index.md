@@ -121,14 +121,9 @@ jmose_command_scheduler:
 
     # Namespaces listed here won't be listed in the list
     excluded_command_namespaces:
-        - _global
-        - scheduler
-        - server
-        - container
-        - config
-        - generate
-        - init
-        - router
+
+    # Only namespaces listed here will be listed in the list. Not compatible together with excluded_command_namespaces.
+    included_command_namespaces:
 
     # Doctrine manager
     doctrine_manager: default
