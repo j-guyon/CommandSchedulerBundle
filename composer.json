@@ -26,6 +26,7 @@
         "symfony/validator": "^3.4|^4.0"
     },
     "require-dev": {
+        "ext-pcntl": "*",
         "phpunit/phpunit": "^5.7",
         "php-coveralls/php-coveralls": "^2.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0.0",
@@ -33,6 +34,9 @@
         "symfony/css-selector": "^3.4|^4.0",
         "symfony/security-bundle": "^3.4|^4.0",
         "liip/test-fixtures-bundle": "^1.0.0"
+    },
+    "suggest": {
+        "ext-pcntl": "For using the scheduler daemon"
     },
     "autoload": {
         "psr-4": {

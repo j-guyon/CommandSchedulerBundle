@@ -50,3 +50,9 @@ services:
             - "%jmose_command_scheduler.doctrine_manager%"
             - "%jmose_command_scheduler.lock_timeout%"
         tags: [console.command]
+
+    JMose\CommandSchedulerBundle\Command\StartSchedulerCommand:
+        tags: [console.command]
+
+    JMose\CommandSchedulerBundle\Command\StopSchedulerCommand:
+        tags: [console.command]
