@@ -4,10 +4,15 @@ namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use JMose\CommandSchedulerBundle\Command\StartSchedulerCommand;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 
-
+/**
+ * Class StartStopSchedulerCommandTest
+ * @package JMose\CommandSchedulerBundle\Tests\Command
+ */
 class StartStopSchedulerCommandTest extends WebTestCase
 {
+    use FixturesTrait;
 
     /**
      * Test scheduler:start and scheduler:stop
