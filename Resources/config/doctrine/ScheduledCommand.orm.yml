@@ -21,8 +21,7 @@ JMose\CommandSchedulerBundle\Entity\ScheduledCommand:
             unique: false
             nullable: false
         arguments:
-            type: string
-            length: 250
+            type: text
             unique: false
             nullable: true
         cronExpression:
