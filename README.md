@@ -37,6 +37,7 @@ To use it, you have to enable contrib recipes on your project : `composer config
 - Monitoring with timeout or failed commands (Json URL and command with mailing)
 - Translated in french, english, german and spanish
 - An [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle) configuration template available [here](Resources/doc/index.md#6---easyadmin-integration)
+- **Beta** - Handle commands with a deamon (unix only) if you don't want to use a cronjob
 
 ## Screenshots
 ![list](Resources/doc/images/scheduled-list.png)
