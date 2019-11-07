@@ -27,14 +27,25 @@ class CommandParser
     private $excludedNamespaces;
 
     /**
+     * @var array
+     */
+    private $includedNamespaces;
+
+    /**
      * CommandParser constructor.
      * @param KernelInterface $kernel
      * @param array $excludedNamespaces
+     * @param array $includedNamespaces
      */
-    public function __construct(KernelInterface $kernel, array $excludedNamespaces = array())
+    public function __construct(KernelInterface $kernel, array $excludedNamespaces = array(), array $includedNamespaces = array())
     {
         $this->kernel = $kernel;
         $this->excludedNamespaces = $excludedNamespaces;
+        $this->includedNamespaces = $includedNamespaces;
+
+        if(count($this->excludedNamespaces) > 0 && count($this->includedNamespaces) > 0) {
+            throw new \InvalidArgumentException('Cannot combine excludedNamespaces with includedNamespaces');
+        }
     }
 
     /**
@@ -79,10 +90,16 @@ class CommandParser
         foreach ($node->namespaces->namespace as $namespace) {
             $namespaceId = (string)$namespace->attributes()->id;
 
-            if (!in_array($namespaceId, $this->excludedNamespaces)) {
-                foreach ($namespace->command as $command) {
-                    $commandsList[$namespaceId][(string)$command] = (string)$command;
-                }
+            if( 
+                (count($this->excludedNamespaces) > 0 && in_array($namespaceId, $this->excludedNamespaces))
+                ||
+                (count($this->includedNamespaces) > 0 && ! in_array($namespaceId, $this->includedNamespaces))
+            ) {
+                continue;
+            }
+
+            foreach ($namespace->command as $command) {
+                $commandsList[$namespaceId][(string)$command] = (string)$command;
             }
         }
 
