@@ -49,7 +49,7 @@ class DetailController extends BaseController
         $scheduledCommand = new ScheduledCommand();
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Detail:index',
+            self::class . '::indexAction',
             [
                 'scheduledCommand' => $scheduledCommand,
             ]
@@ -68,7 +68,7 @@ class DetailController extends BaseController
             ->find($scheduledCommandId);
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Detail:index',
+            self::class . '::indexAction',
             [
                 'scheduledCommand' => $scheduledCommand,
             ]
@@ -115,7 +115,7 @@ class DetailController extends BaseController
         
         // Redirect to indexAction with the form object that has validation errors
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Detail:index',
+            self::class . '::indexAction',
             [
                 'scheduledCommand' => $scheduledCommand,
                 'scheduledCommandForm' => $scheduledCommandForm,

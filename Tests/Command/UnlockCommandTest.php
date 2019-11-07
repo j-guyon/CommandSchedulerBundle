@@ -4,12 +4,15 @@ namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 /**
  * Class UnlockCommandTest
  * @package JMose\CommandSchedulerBundle\Tests\Command
  */
 class UnlockCommandTest extends WebTestCase {
+
+    use FixturesTrait;
 
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -39,7 +42,7 @@ class UnlockCommandTest extends WebTestCase {
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
         $output = $this->runCommand(
                 'scheduler:unlock', ['--all' => true]
-        );
+        )->getDisplay();
 
         $this->assertRegExp('/"two"/', $output);
         $this->assertNotRegExp('/"one"/', $output);
@@ -63,7 +66,7 @@ class UnlockCommandTest extends WebTestCase {
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
         $output = $this->runCommand(
                 'scheduler:unlock', ['name' => 'two']
-        );
+        )->getDisplay();
 
         $this->assertRegExp('/"two"/', $output);
 
@@ -85,7 +88,7 @@ class UnlockCommandTest extends WebTestCase {
         // One command is locked in fixture with last execution two days ago (2), another have a -1 return code as lastReturn (4)
         $output = $this->runCommand(
                 'scheduler:unlock', ['name' => 'two', '--lock-timeout' =>  3 * 24 * 60 * 60 ]
-        );
+        )->getDisplay();
 
         $this->assertRegExp('/Skipping/', $output);
         $this->assertRegExp('/"two"/', $output);

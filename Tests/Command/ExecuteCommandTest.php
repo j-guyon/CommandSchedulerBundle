@@ -3,6 +3,7 @@
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 /**
  * Class ExecuteCommandTest
@@ -10,6 +11,7 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
  */
 class ExecuteCommandTest extends WebTestCase
 {
+    use FixturesTrait;
 
     /**
      * Test scheduler:execute without option
@@ -23,7 +25,7 @@ class ExecuteCommandTest extends WebTestCase
             )
         );
 
-        $output = $this->runCommand('scheduler:execute');
+        $output = $this->runCommand('scheduler:execute')->getDisplay();
 
         $this->assertStringStartsWith('Start : Execute all scheduled command', $output);
         $this->assertRegExp('/debug:container should be executed/', $output);
@@ -31,7 +33,7 @@ class ExecuteCommandTest extends WebTestCase
         $this->assertRegExp('/Immediately execution asked for : debug:router/', $output);
         $this->assertRegExp('/Execute : debug:router/', $output);
 
-        $output = $this->runCommand('scheduler:execute');
+        $output = $this->runCommand('scheduler:execute')->getDisplay();
         $this->assertRegExp('/Nothing to do/', $output);
     }
 
@@ -52,11 +54,11 @@ class ExecuteCommandTest extends WebTestCase
             array(
                 '--no-output' => true
             )
-        );
+        )->getDisplay();
 
         $this->assertEquals('', $output);
 
-        $output = $this->runCommand('scheduler:execute');
+        $output = $this->runCommand('scheduler:execute')->getDisplay();
         $this->assertRegExp('/Nothing to do/', $output);
     }
 
@@ -77,7 +79,7 @@ class ExecuteCommandTest extends WebTestCase
             array(
                 '--dump' => true
             )
-        );
+        )->getDisplay();
 
         $this->assertStringStartsWith('Start : Dump all scheduled command', $output);
         $this->assertRegExp('/Command debug:container should be executed/', $output);
