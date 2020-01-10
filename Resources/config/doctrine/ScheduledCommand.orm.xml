@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="JMose\CommandSchedulerBundle\Entity\ScheduledCommand">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY" />
+        </id>
+        <field name="name" column="name" type="string" length="100" nullable="false" unique="false" />
+        <field name="command" column="command" type="string" length="100" nullable="false" unique="false" />
+        <field name="arguments" column="arguments" type="text" nullable="true" unique="false" />
+        <field name="cronExpression" column="cron_expression" type="string" length="100" nullable="true" unique="false" />
+        <field name="lastExecution" column="last_execution" type="datetime" nullable="false" unique="false" />
+        <field name="lastReturnCode" column="last_return_code" type="integer" nullable="true" unique="false" />
+        <field name="logFile" column="log_file" type="string" length="100" nullable="true" unique="false" />
+        <field name="priority" column="priority" type="integer" nullable="false" unique="false" />
+        <field name="executeImmediately" column="execute_immediately" type="boolean" nullable="false" unique="false" />
+        <field name="disabled" column="disabled" type="boolean" nullable="false" unique="false" />
+        <field name="locked" column="locked" type="boolean" nullable="false" unique="false" />
+    </entity>
+</doctrine-mapping>
