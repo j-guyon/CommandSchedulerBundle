@@ -3,7 +3,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="JMose\CommandSchedulerBundle\Entity\ScheduledCommand" table="scheduled_command">
+    <entity name="JMose\CommandSchedulerBundle\Entity\ScheduledCommand" table="scheduled_command" repository-class="JMose\CommandSchedulerBundle\Entity\Repository\ScheduledCommandRepository">
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY" />
         </id>
