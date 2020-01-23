@@ -97,7 +97,7 @@ class MonitorCommand extends Command
         if (!$this->dumpMode && count($this->receiver) === 0) {
             $output->writeln('Please add receiver in configuration');
 
-            return;
+            return 1;
         }
 
         // Fist, get all failed or potential timeout
@@ -132,6 +132,8 @@ class MonitorCommand extends Command
                 $this->sendMails('No errors found.');
             }
         }
+
+        return 0;
     }
 
     /**
