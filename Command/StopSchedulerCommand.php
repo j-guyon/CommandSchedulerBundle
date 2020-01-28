@@ -44,5 +44,7 @@ class StopSchedulerCommand extends Command
         }
         unlink($pidFile);
         $output->writeln(sprintf('<info>%s</info>', 'Command scheduler is stopped.'));
+
+        return 0;
     }
 }

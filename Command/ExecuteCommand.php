@@ -95,7 +95,7 @@ class ExecuteCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -111,7 +111,7 @@ class ExecuteCommand extends Command
                 ' not found or not writable. You should override `log_path` in your config.yml'.'</error>'
             );
 
-            return;
+            return 1;
         }
 
         $commands = $this->em->getRepository(ScheduledCommand::class)->findEnabledCommand();
@@ -155,6 +155,8 @@ class ExecuteCommand extends Command
         if (true === $noneExecution) {
             $output->writeln('Nothing to do.');
         }
+
+        return 0;
     }
 
     /**

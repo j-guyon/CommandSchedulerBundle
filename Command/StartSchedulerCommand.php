@@ -65,6 +65,8 @@ class StartSchedulerCommand extends Command
         }
 
         $this->scheduler(new NullOutput(), $pidFile);
+
+        return 0;
     }
 
     private function scheduler(OutputInterface $output, $pidFile)
