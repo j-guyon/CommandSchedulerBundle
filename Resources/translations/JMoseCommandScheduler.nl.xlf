@@ -22,7 +22,7 @@
             <!-- Actions -->
             <trans-unit id="100">
                 <source>action.delete</source>
-                <target>verwijderen</target>
+                <target>Verwijderen</target>
             </trans-unit>
             <trans-unit id="101">
                 <source>action.execute</source>
@@ -34,11 +34,11 @@
             </trans-unit>
             <trans-unit id="103">
                 <source>action.new</source>
-                <target>Niewe planning</target>
+                <target>Nieuwe planning</target>
             </trans-unit>
             <trans-unit id="104">
                 <source>confirm.delete</source>
-                <target>Deze taak permanent verwijderen ?</target>
+                <target>Deze taak permanent verwijderen?</target>
             </trans-unit>
             <trans-unit id="105">
                 <source>confirm.execute</source>
@@ -50,7 +50,7 @@
             </trans-unit>
             <trans-unit id="107">
                 <source>confirm.unlock</source>
-                <target>De taak kan aan de gang zijn. Weet u zeker dat u het wilt ontgrendelen ?</target>
+                <target>De taak kan aan de gang zijn. Weet u zeker dat u het wilt ontgrendelen?</target>
             </trans-unit>
             <trans-unit id="108">
                 <source>action.search</source>
