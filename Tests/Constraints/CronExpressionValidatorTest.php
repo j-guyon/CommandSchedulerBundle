@@ -30,7 +30,7 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
     public function getValidValues()
     {
         return array(
-            array('* * * * * *'),
+            array('* * * * *'),
             array('@daily'),
             array('@yearly'),
             array('*/10 * * * *'),
