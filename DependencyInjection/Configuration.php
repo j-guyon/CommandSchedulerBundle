@@ -37,16 +37,18 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('monitor_mail_subject')->defaultValue('cronjob monitoring %%s, %%s')->end()
                 ->booleanNode('send_ok')->defaultValue(false)->end()
                 ->variableNode('excluded_command_namespaces')
-                    ->defaultValue(array(
-                        '_global',
-                        'scheduler',
-                        'server',
-                        'container',
-                        'config',
-                        'generate',
-                        'init',
-                        'router',
-                    ))
+                    ->defaultValue(array())
+                    ->validate()
+                        ->always(function($value) {
+                            if (is_string($value)) {
+                                return explode(',', $value);
+                            }
+                            return $value;
+                        })
+                    ->end()
+                ->end()
+                ->variableNode('included_command_namespaces')
+                    ->defaultValue(array())
                     ->validate()
                         ->always(function($value) {
                             if (is_string($value)) {

@@ -121,14 +121,9 @@ jmose_command_scheduler:
 
     # Namespaces listed here won't be listed in the list
     excluded_command_namespaces:
-        - _global
-        - scheduler
-        - server
-        - container
-        - config
-        - generate
-        - init
-        - router
+
+    # Only namespaces listed here will be listed in the list. Not compatible together with excluded_command_namespaces.
+    included_command_namespaces:
 
     # Doctrine manager
     doctrine_manager: default
@@ -199,7 +194,7 @@ From this screen, you can do following actions :
   
 When creating a new scheduling, you can provide your commands arguments and options exactly as you wold do from the console. Remember to use quotes when using arguments and options that includes white spaces.
 
-After that, you have to set (every few minutes, it depends of your needs) the following command in your system crontab :
+After that, **you have to set (every few minutes, it depends of your needs) the following command in your system crontab** :
 ``` bash
 $ php bin/console scheduler:execute --env=env -vvv [--dump] [--no-output]
 ```
@@ -220,6 +215,9 @@ The `scheduler:execute` command will do following actions :
 The `scheduler:unlock` command is capable of unlock all or a single scheduled command with a `lock-timeout` parameter.
 It can be usefull if you don't have a full control about server restarting, which can a command in a lock state.
 
+**Deamon (Beta)** : If you don't want to set up a cron job, you can use  `scheduler:start` and `scheduler:stop` commands.  
+This commands manage a deamon process that will call `scheduler:execute` every minute. It require the `pcntl`php extension.  
+Note that with this mode, if a command with an error, it will stop all the scheduler.
 
 **Note** : Each command is locked just before his execution (and unlocked after).
 This system avoid to have simultaneous process for the same command.

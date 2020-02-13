@@ -20,6 +20,7 @@ services:
         arguments:
             - "@kernel"
             - "%jmose_command_scheduler.excluded_command_namespaces%"
+            - "%jmose_command_scheduler.included_command_namespaces%"
 
     JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType:
         autowire: true
@@ -48,4 +49,10 @@ services:
             - "@doctrine"
             - "%jmose_command_scheduler.doctrine_manager%"
             - "%jmose_command_scheduler.lock_timeout%"
+        tags: [console.command]
+
+    JMose\CommandSchedulerBundle\Command\StartSchedulerCommand:
+        tags: [console.command]
+
+    JMose\CommandSchedulerBundle\Command\StopSchedulerCommand:
         tags: [console.command]
