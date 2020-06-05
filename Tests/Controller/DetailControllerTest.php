@@ -3,6 +3,7 @@
 namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 /**
  * Class DetailControllerTest
@@ -10,6 +11,7 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
  */
 class DetailControllerTest extends WebTestCase
 {
+    use FixturesTrait;
 
     /**
      * Test "Create a new command" button.

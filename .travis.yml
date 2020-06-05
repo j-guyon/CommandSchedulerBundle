@@ -1,29 +1,32 @@
 language: php
 
-php:
-    - 7.1
-    - nightly
-    - hhvm
+matrix:
+    include:
+        - php: 7.1
+          env: SYMFONY_VERSION=3.4.*
+        - php: 7.2
+          env: SYMFONY_VERSION=3.4.*
+        - php: 7.3
+          env: SYMFONY_VERSION=3.4.*
+        - php: 7.1
+          env: SYMFONY_VERSION=4.4.*
+        - php: 7.2
+          env: SYMFONY_VERSION=4.4.*
+        - php: 7.3
+          env: SYMFONY_VERSION=4.4.*
+        - php: 7.4snapshot
+          env: SYMFONY_VERSION=4.4.*
+        - php: nightly
+          env: SYMFONY_VERSION=4.4.*
 
-env:
- - SYMFONY_VERSION=2.8.*
- - SYMFONY_VERSION=3.0.*
- - SYMFONY_VERSION=3.1.*
- - SYMFONY_VERSION=3.2.*
- - SYMFONY_VERSION=3.3.*
- - SYMFONY_VERSION=3.4.*
+    allow_failures:
+        - php: 7.4snapshot
+        - php: nightly
 
 branches:
     only:
         - master
         - /^\d+\.\d+$/
-
-#symfony 3.0 is no longer supported by symfony, allow it to fail
-matrix:
-    allow_failures:
-        - php: nightly
-        - php: hhvm
-        - env: SYMFONY_VERSION=3.0.*
 
 before_script:
     - mkdir -p ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d && echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
@@ -33,11 +36,11 @@ before_script:
 
 script:
     - mkdir -p build/logs
-    - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - vendor/bin/phpunit
 
-# Run coveralls ONLY if under php native, and NOT hhvm
-after_success: |
- sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" -a "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;'
+# Run coveralls
+after_success:
+    - php vendor/bin/php-coveralls -v
 
 notifications:
     email: julienguyon@hotmail.com

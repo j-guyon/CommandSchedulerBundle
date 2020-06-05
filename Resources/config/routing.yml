@@ -1,39 +1,39 @@
 jmose_command_scheduler_list:
     path:  /command-scheduler/list
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:index }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\ListController::indexAction }
 
 jmose_command_scheduler_monitor:
     path:  /command-scheduler/monitor
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:monitor }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\ListController::monitorAction }
 
 jmose_command_scheduler_action_toggle:
     path:  /command-scheduler/action/toggle/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:toggle }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\ListController::toggleAction }
 
 jmose_command_scheduler_action_remove:
     path:  /command-scheduler/action/remove/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:remove }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\ListController::removeAction }
 
 jmose_command_scheduler_action_execute:
     path:  /command-scheduler/action/execute/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:execute }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\ListController::executeAction }
 
 jmose_command_scheduler_action_unlock:
     path:  /command-scheduler/action/unlock/{id}
-    defaults: { _controller: JMoseCommandSchedulerBundle:List:unlock }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\ListController::unlockAction }
 
 jmose_command_scheduler_detail_index:
     path:  /command-scheduler/detail/view/
-    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:index }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\DetailController::indexAction }
 
 jmose_command_scheduler_detail_edit:
     path:  /command-scheduler/detail/edit/{scheduledCommandId}
-    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:initEditScheduledCommand }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\DetailController::initEditScheduledCommandAction }
 
 jmose_command_scheduler_detail_new:
     path:  /command-scheduler/detail/new
-    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:initNewScheduledCommand }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\DetailController::initNewScheduledCommandAction }
 
 jmose_command_scheduler_detail_save:
     path:  /command-scheduler/detail/save
-    defaults: { _controller: JMoseCommandSchedulerBundle:Detail:save }
+    defaults: { _controller: JMose\CommandSchedulerBundle\Controller\DetailController::saveAction }

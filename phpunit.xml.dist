@@ -18,15 +18,12 @@
         </testsuite>
     </testsuites>
 
-    <!--
     <logging>
-        <log type="coverage-html" target="build/log/report" lowUpperBound="35" highLowerBound="70" />
-        <log type="coverage-clover" target="build/log/coverage.xml" />
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false" />
+        <log type="coverage-clover" target="build/logs/clover.xml" />
     </logging>
-    -->
 
     <php>
+        <server name="KERNEL_CLASS" value="App\Tests\App\AppKernel" />
         <server name="KERNEL_DIR" value="./Tests/App" />
         <ini name="zend.enable_gc" value="0" />
         <!-- disable E_USER_DEPRECATED -->

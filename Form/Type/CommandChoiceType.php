@@ -35,9 +35,9 @@ class CommandChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'choices' => $this->commandParser->getCommands()
-            )
+            [
+                'choices' => $this->commandParser->getCommands(),
+            ]
         );
     }
 

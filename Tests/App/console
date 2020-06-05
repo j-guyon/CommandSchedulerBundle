@@ -18,6 +18,6 @@ use Symfony\Component\Debug\Debug;
 $input = new ArgvInput();
 Debug::enable();
 
-$kernel = new AppKernel('test', true);
+$kernel = new \App\Tests\App\AppKernel('test', true);
 $application = new Application($kernel);
 $application->run($input);

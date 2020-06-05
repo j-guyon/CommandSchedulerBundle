@@ -3,6 +3,7 @@
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 /**
  * Class MonitorCommandTest
@@ -10,6 +11,8 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
  */
 class MonitorCommandTest extends WebTestCase
 {
+    use FixturesTrait;
+
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -45,7 +48,7 @@ class MonitorCommandTest extends WebTestCase
             array(
                 '--dump' => true
             )
-        );
+        )->getDisplay();
 
         $this->assertRegExp('/two:/', $output);
         $this->assertRegExp('/four:/', $output);
@@ -77,7 +80,7 @@ class MonitorCommandTest extends WebTestCase
             array(
                 '--dump' => true
             )
-        );
+        )->getDisplay();
 
         $this->assertStringStartsWith('No errors found.', $output);
     }

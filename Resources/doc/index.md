@@ -1,21 +1,30 @@
 Installation
 ============
 
+## With Symfony Flex
+
+Allow Flex to use contrib recipes and require the bundle :  
+``` bash
+$ composer config extra.symfony.allow-contrib true
+$ composer require jmose/command-scheduler-bundle
+```
+
+The recipe will enable the bundle and its routes, so you can go directly to the [configuration section](#2---set-up-configuration)
+
+## Without Symfony Flex
+
 ### 1 - Install the bundle
-We will be using the standard Symfony method here (composer).
 
 Add the bundle and dependencies in  your `composer.json` : 
 ``` bash
-$ php composer.phar require jmose/command-scheduler-bundle
+$ composer require jmose/command-scheduler-bundle
 ```
 
 If you don't have composer yet, please refer to [the official Composer website](http://getcomposer.org/).
 
-Composer will install the bundle to your project's `vendor` directory.
 
 *Note : use the last release, dev-master is not stable*
 
-### 2 - Enable the bundle
 
 Enable the bundle in the kernel:
 
@@ -32,9 +41,7 @@ public function registerBundles()
 }
 ```
 
-### 3 - Set up configuration
-
-First, you have to register the routes provided by the bundle :  
+Now, you have to register the routes provided by the bundle :  
 ```yaml
 # app/config/routing.yml
 
@@ -42,6 +49,8 @@ jmose_command_scheduler:
     resource: "@JMoseCommandSchedulerBundle/Resources/config/routing.yml"
     prefix:   /
 ```
+
+### 2 - Set up configuration
 
 If you do not have auto_mapping set to true or you are using multiple entity managers, then set the bundle in the proper entity manager:
 ```yaml
@@ -71,7 +80,7 @@ Install bundle's assets :
 $ php bin/console assets:install
 ```
 
-Update your database 
+### 3 - Update the database 
 ``` bash
 $ php bin/console doctrine:schema:update --force
 ```
@@ -99,24 +108,22 @@ jmose_command_scheduler:
     # Default directory where scheduler will write output files
     #  This default value assume that php bin/console is launched from project's root and that the directory is writable
     # if log_path is set to false, logging to files is disabled at all 
-    log_path: var\logs\
+    log_path: "%kernel.logs_dir%"
     # This default value disables timeout checking (see monitoring), set to a numeric value (seconds) to enable it
     lock_timeout: false
     # receivers for reporting mails
     monitor_mail: []
+    # set a custom subject for monitor mails (first placeholder will be replaced by the hostname, second by the date)
+    # double percentage is used to escape the percentage so they stay parameters
+    monitor_mail_subject: cronjob monitoring %%s, %%s
     # to send "everything's all right" emails to receivers for reporting mails set this value to "true" (see monitoring)
     send_ok: false
 
     # Namespaces listed here won't be listed in the list
     excluded_command_namespaces:
-        - _global
-        - scheduler
-        - server
-        - container
-        - config
-        - generate
-        - init
-        - router
+
+    # Only namespaces listed here will be listed in the list. Not compatible together with excluded_command_namespaces.
+    included_command_namespaces:
 
     # Doctrine manager
     doctrine_manager: default
@@ -130,6 +137,46 @@ If you'd like to alter the navigation bar shown on `http://{your-app-root}/comma
 This can easily be done by using standard overrides in Symfony, as described [here](http://symfony.com/doc/current/templating/overriding.html).
 
 In your project, you'll want to copy the `Navbar:navbar:html.twig` template into `app/Resources/JMoseCommandSchedulerBundle/views/Navbar/navbar.html.twig`.  Any changes to the file in this location will take precedence over the bundle's template file.
+
+### 6 - EasyAdmin integration
+
+If you want to manage your scheduled commands via [EasyAdmin](https://github.com/EasyCorp/EasyAdminBundle) here is a configuration template that you can copy/paste and change to your needs.
+ 
+```yaml
+easy_admin:
+  entities:
+    Cron:
+      translation_domain: 'JMoseCommandScheduler'
+      label: 'list.title'
+      class: JMose\CommandSchedulerBundle\Entity\ScheduledCommand
+      list:
+        title: "list.title"
+        fields:
+          - { property: 'id', label: 'ID' }
+          - { property: 'name', label: 'detail.name' }
+          - { property: 'command', label: 'detail.command' }
+          - { property: 'arguments', label: 'detail.arguments' }
+          - { property: 'lastExecution', label: 'detail.lastExecution' }
+          - { property: 'lastReturncode', label: 'detail.lastReturnCode' }
+          - { property: 'locked', label: 'detail.locked', type: boolean}
+          - { property: 'priority', label: 'detail.priority' }
+          - { property: 'disabled', label: 'detail.disabled' }
+        actions:
+          - { name: 'jmose_command_scheduler_action_execute', type: 'route', label: 'action.execute' }
+          - { name: 'jmose_command_scheduler_action_unlock', type: 'route', label: 'action.unlock' }
+      form:
+        fields:
+          - { property: 'name', label: 'detail.name' }
+          - { property: 'command', label: 'detail.command', type: 'JMose\CommandSchedulerBundle\Form\Type\CommandChoiceType' }
+          - { property: 'arguments', label: 'detail.arguments' }
+          - { property: 'cronExpression', label: 'detail.cronExpression' }
+          - { property: 'priority', label: 'detail.priority' }
+          - { property: 'disabled', label: 'detail.disabled' }
+          - { property: 'logFile', label: 'detail.logFile' }
+      new:
+        fields:
+          - { property: 'executeImmediately', label: 'detail.executeImmediately' }
+```
 
 Usage
 ============
@@ -147,7 +194,7 @@ From this screen, you can do following actions :
   
 When creating a new scheduling, you can provide your commands arguments and options exactly as you wold do from the console. Remember to use quotes when using arguments and options that includes white spaces.
 
-After that, you have to set (every few minutes, it depends of your needs) the following command in your system :
+After that, **you have to set (every few minutes, it depends of your needs) the following command in your system crontab** :
 ``` bash
 $ php bin/console scheduler:execute --env=env -vvv [--dump] [--no-output]
 ```
@@ -165,6 +212,12 @@ The `scheduler:execute` command will do following actions :
   - Check if the command has to be executed at current time, based on its cron expression and on its last execution time
   - Execute eligible commands (without `exec` php function)
 
+The `scheduler:unlock` command is capable of unlock all or a single scheduled command with a `lock-timeout` parameter.
+It can be usefull if you don't have a full control about server restarting, which can a command in a lock state.
+
+**Deamon (Beta)** : If you don't want to set up a cron job, you can use  `scheduler:start` and `scheduler:stop` commands.  
+This commands manage a deamon process that will call `scheduler:execute` every minute. It require the `pcntl`php extension.  
+Note that with this mode, if a command with an error, it will stop all the scheduler.
 
 **Note** : Each command is locked just before his execution (and unlocked after).
 This system avoid to have simultaneous process for the same command.

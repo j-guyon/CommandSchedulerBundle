@@ -2,7 +2,6 @@
 
 namespace JMose\CommandSchedulerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author  Julien Guyon <julienguyon@hotmail.com>
  * @package JMose\CommandSchedulerBundle\Controller
  */
-class DetailController extends Controller
+class DetailController extends BaseController
 {
 
     /**
@@ -23,7 +22,7 @@ class DetailController extends Controller
      * This action should not be invoke directly
      *
      * @param ScheduledCommand $scheduledCommand
-     * @param Form             $scheduledCommandForm
+     * @param Form $scheduledCommandForm
      * @return Response
      */
     public function indexAction(ScheduledCommand $scheduledCommand, Form $scheduledCommandForm = null)
@@ -33,9 +32,10 @@ class DetailController extends Controller
         }
 
         return $this->render(
-            '@JMoseCommandSchedulerBundle/Detail/index.html.twig', array(
-                'scheduledCommandForm' => $scheduledCommandForm->createView()
-            )
+            '@JMoseCommandScheduler/Detail/index.html.twig',
+            [
+                'scheduledCommandForm' => $scheduledCommandForm->createView(),
+            ]
         );
     }
 
@@ -49,9 +49,10 @@ class DetailController extends Controller
         $scheduledCommand = new ScheduledCommand();
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Detail:index', array(
-                'scheduledCommand' => $scheduledCommand
-            )
+            self::class . '::indexAction',
+            [
+                'scheduledCommand' => $scheduledCommand,
+            ]
         );
     }
 
@@ -63,14 +64,14 @@ class DetailController extends Controller
      */
     public function initEditScheduledCommandAction($scheduledCommandId)
     {
-        $manager          = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $scheduledCommand = $this->getDoctrine()->getManager($manager)->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+        $scheduledCommand = $this->getDoctrineManager()->getRepository(ScheduledCommand::class)
             ->find($scheduledCommandId);
 
         return $this->forward(
-            'JMoseCommandSchedulerBundle:Detail:index', array(
-                'scheduledCommand' => $scheduledCommand
-            )
+            self::class . '::indexAction',
+            [
+                'scheduledCommand' => $scheduledCommand,
+            ]
         );
     }
 
@@ -82,13 +83,12 @@ class DetailController extends Controller
      */
     public function saveAction(Request $request)
     {
-        $manager       = ($this->container->hasParameter('jmose_command_scheduler.doctrine_manager')) ? $this->container->getParameter('jmose_command_scheduler.doctrine_manager') : 'default';
-        $entityManager = $this->getDoctrine()->getManager($manager);
+        $entityManager = $this->getDoctrineManager();
 
         // Init and populate form object
         $commandDetail = $request->request->get('command_scheduler_detail');
         if ($commandDetail['id'] != '') {
-            $scheduledCommand = $entityManager->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')
+            $scheduledCommand = $entityManager->getRepository(ScheduledCommand::class)
                 ->find($commandDetail['id']);
         } else {
             $scheduledCommand = new ScheduledCommand();
@@ -97,7 +97,7 @@ class DetailController extends Controller
         $scheduledCommandForm = $this->createForm(ScheduledCommandType::class, $scheduledCommand);
         $scheduledCommandForm->handleRequest($request);
 
-        if ($scheduledCommandForm->isValid()) {
+        if ($scheduledCommandForm->isSubmitted() && $scheduledCommandForm->isValid()) {
 
             // Handle save to the database
             if (null === $scheduledCommand->getId()) {
@@ -106,18 +106,20 @@ class DetailController extends Controller
             $entityManager->flush();
 
             // Add a flash message and do a redirect to the list
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('flash.success', array(), 'JMoseCommandScheduler'));
+            $this->get('session')->getFlashBag()
+                ->add('success', $this->translator->trans('flash.success', [], 'JMoseCommandScheduler'));
 
             return $this->redirect($this->generateUrl('jmose_command_scheduler_list'));
 
-        } else {
-            // Redirect to indexAction with the form object that has validation errors
-            return $this->forward(
-                'JMoseCommandSchedulerBundle:Detail:index', array(
-                    'scheduledCommand'     => $scheduledCommand,
-                    'scheduledCommandForm' => $scheduledCommandForm
-                )
-            );
         }
+        
+        // Redirect to indexAction with the form object that has validation errors
+        return $this->forward(
+            self::class . '::indexAction',
+            [
+                'scheduledCommand' => $scheduledCommand,
+                'scheduledCommandForm' => $scheduledCommandForm,
+            ]
+        );
     }
 }

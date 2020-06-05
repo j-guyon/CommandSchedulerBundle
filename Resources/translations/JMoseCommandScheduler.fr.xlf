@@ -44,11 +44,23 @@
             </trans-unit>
             <trans-unit id="106">
                 <source>action.unlock</source>
-                <target>Dévérouiller la planification</target>
+                <target>Déverrouiller la planification</target>
             </trans-unit>
             <trans-unit id="107">
                 <source>confirm.unlock</source>
-                <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le dévérouiller ?</target>
+                <target>Le traitement est peut-être en cours d'exécution. Etes-vous sur de vouloir le déverrouiller ?</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>action.search</source>
+                <target>Rechercher</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>action.list</source>
+                <target>Retour à la liste</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>action.cancel</source>
+                <target>Annuler</target>
             </trans-unit>
 
             <!-- Detail  -->
@@ -82,14 +94,14 @@
             </trans-unit>
             <trans-unit id="208">
                 <source>detail.executeImmediately</source>
-                <target>Executer maintenant</target>
+                <target>Exécuter maintenant</target>
             </trans-unit>
             <trans-unit id="209">
                 <source>detail.disabled</source>
                 <target>Désactiver</target>
             </trans-unit>
             <trans-unit id="210">
-                <source>detail.save</source>
+                <source>action.save</source>
                 <target>Enregistrer</target>
             </trans-unit>
             <trans-unit id="211">
@@ -104,6 +116,10 @@
                 <source>detail.actions</source>
                 <target>Actions</target>
             </trans-unit>
+            <trans-unit id="214">
+                <source>detail.locked</source>
+                <target>Verrouillé</target>
+            </trans-unit>
 
             <!-- Flashs messages -->
             <trans-unit id="300">
@@ -116,13 +132,26 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>Le traitement sera exécutée lors de la prochaine vérification (scheduler:execute).</target>
+                <target>Le traitement sera exécuté lors de la prochaine vérification (scheduler:execute).</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>
-                <target>Traitement dévérouillée avec succès.</target>
+                <target>Traitement déverrouillé avec succès.</target>
             </trans-unit>
 
+            <!-- admin label -->
+            <trans-unit id="400">
+                <source>label.null</source>
+                <target>Aucun</target>
+            </trans-unit>
+            <trans-unit id="401">
+                <source>label.true</source>
+                <target>Oui</target>
+            </trans-unit>
+            <trans-unit id="402">
+                <source>label.false</source>
+                <target>Non</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

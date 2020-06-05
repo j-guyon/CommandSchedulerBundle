@@ -6,27 +6,27 @@
             <!-- Bundle -->
             <trans-unit id="1">
                 <source>name</source>
-                <target>Planificador de tareas de Symfony</target>
+                <target>Symfony's scheduler</target>
             </trans-unit>
 
             <trans-unit id="2">
                 <source>dateFormat</source>
-                <target>d-m-Y H:i</target>
+                <target>Y-m-d H:i</target>
             </trans-unit>
 
             <trans-unit id="3">
                 <source>list.title</source>
-                <target>Tareas programadas</target>
+                <target>Agendar comandos</target>
             </trans-unit>
 
             <!-- Actions -->
             <trans-unit id="100">
                 <source>action.delete</source>
-                <target>Eliminar</target>
+                <target>Remover</target>
             </trans-unit>
             <trans-unit id="101">
                 <source>action.execute</source>
-                <target>Ejecutar</target>
+                <target>Executar</target>
             </trans-unit>
             <trans-unit id="102">
                 <source>action.edit</source>
@@ -34,31 +34,31 @@
             </trans-unit>
             <trans-unit id="103">
                 <source>action.new</source>
-                <target>Nueva tarea</target>
+                <target>Novo agendamento</target>
             </trans-unit>
             <trans-unit id="104">
                 <source>confirm.delete</source>
-                <target>¿Borrar permanentemente esta tarea?</target>
+                <target>Deletar permanentemente esta tarefa ?</target>
             </trans-unit>
             <trans-unit id="105">
                 <source>confirm.execute</source>
-                <target>¿Forzar la ejecución de esta tarea?</target>
+                <target>Forçar uma execução para esta tarefa ?</target>
             </trans-unit>
             <trans-unit id="106">
                 <source>action.unlock</source>
-                <target>Desbloquear tarea</target>
+                <target>Desbloquear tarefa</target>
             </trans-unit>
             <trans-unit id="107">
                 <source>confirm.unlock</source>
-                <target>La tarea puede estar corriendo ¿Está seguro que desea desbloquearla?</target>
+                <target>Esta tarefa pode estar em execução. Tem certeza que deseja desbloqueá-la ?</target>
             </trans-unit>
             <trans-unit id="108">
                 <source>action.search</source>
-                <target>Buscar</target>
+                <target>Procurar</target>
             </trans-unit>
             <trans-unit id="109">
                 <source>action.list</source>
-                <target>Volver a la lista</target>
+                <target>De volta à lista</target>
             </trans-unit>
             <trans-unit id="110">
                 <source>action.cancel</source>
@@ -68,12 +68,12 @@
             <!-- Detail  -->
             <trans-unit id="201">
                 <source>detail.title</source>
-                <target>Tarea programada</target>
+                <target>Agendar comando</target>
             </trans-unit>
 
             <trans-unit id="202">
                 <source>detail.name</source>
-                <target>Nombre</target>
+                <target>Nome</target>
             </trans-unit>
             <trans-unit id="203">
                 <source>detail.command</source>
@@ -81,43 +81,43 @@
             </trans-unit>
             <trans-unit id="204">
                 <source>detail.arguments</source>
-                <target>Parametros</target>
+                <target>Argumentos</target>
             </trans-unit>
             <trans-unit id="205">
                 <source>detail.cronExpression</source>
-                <target>Definición del cron</target>
+                <target>Expressão Cron</target>
             </trans-unit>
             <trans-unit id="206">
                 <source>detail.logFile</source>
-                <target>Archivo de log</target>
+                <target>Arquivo de saída</target>
             </trans-unit>
             <trans-unit id="207">
                 <source>detail.priority</source>
-                <target>Prioridad</target>
+                <target>Prioridade</target>
             </trans-unit>
             <trans-unit id="208">
                 <source>detail.executeImmediately</source>
-                <target>Ejecutar ahora</target>
+                <target>Execute agora</target>
             </trans-unit>
             <trans-unit id="209">
                 <source>detail.disabled</source>
-                <target>Deshabilitar</target>
+                <target>Desabilitar</target>
             </trans-unit>
             <trans-unit id="210">
                 <source>action.save</source>
-                <target>Guardar</target>
+                <target>Salvar</target>
             </trans-unit>
             <trans-unit id="211">
                 <source>detail.lastExecution</source>
-                <target>Última ejecución</target>
+                <target>Última execução</target>
             </trans-unit>
             <trans-unit id="212">
                 <source>detail.lastReturnCode</source>
-                <target>Ultimo código retorno</target>
+                <target>Último código de saída</target>
             </trans-unit>
             <trans-unit id="213">
                 <source>detail.actions</source>
-                <target>Acciones</target>
+                <target>Ações</target>
             </trans-unit>
             <trans-unit id="214">
                 <source>detail.locked</source>
@@ -127,19 +127,19 @@
             <!-- Flashs messages -->
             <trans-unit id="300">
                 <source>flash.success</source>
-                <target>Tarea guardada exitosamente.</target>
+                <target>Agendamento salvo com sucesso.</target>
             </trans-unit>
             <trans-unit id="301">
                 <source>flash.deleted</source>
-                <target>Tarea eliminada exitosamente</target>
+                <target>Agendamento deletado com sucesso.</target>
             </trans-unit>
             <trans-unit id="302">
                 <source>flash.execute</source>
-                <target>El comando será ejecutado en el siguiente "scheduler:execute".</target>
+                <target>Comando será executado no próximo "scheduler:execute".</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>flash.unlocked</source>
-                <target>Tarea desbloqueada exitosamente.</target>
+                <target>Agendamento desbloqueado com sucesso.</target>
             </trans-unit>
 
             <!-- admin label -->
