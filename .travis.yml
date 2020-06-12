@@ -21,10 +21,10 @@ matrix:
     allow_failures:
         - php: nightly
 
-#branches:
-#    only:
-#        - master
-#        - /^\d+\.\d+$/
+branches:
+    only:
+        - master
+        - /^\d+\.\d+$/
 
 before_script:
     - mkdir -p ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d && echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
