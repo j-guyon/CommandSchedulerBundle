@@ -4,6 +4,7 @@ namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
+use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 
 /**
  * Class DetailControllerTest
@@ -18,9 +19,9 @@ class DetailControllerTest extends WebTestCase
      */
     public function testInitNewScheduledCommand()
     {
+        $client = parent::createClient();
         $this->loadFixtures(array());
 
-        $client = parent::createClient();
         $crawler = $client->request('GET', '/command-scheduler/detail/new');
         $this->assertEquals(1, $crawler->filter('button[id="command_scheduler_detail_save"]')->count());
     }
@@ -30,12 +31,10 @@ class DetailControllerTest extends WebTestCase
      */
     public function testInitEditScheduledCommand()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-        ));
-
         $client = parent::createClient();
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(LoadScheduledCommandData::class));
+
         $crawler = $client->request('GET', '/command-scheduler/detail/edit/1');
         $this->assertEquals(1, $crawler->filter('button[id="command_scheduler_detail_save"]')->count());
 
@@ -48,10 +47,11 @@ class DetailControllerTest extends WebTestCase
             'command_scheduler_detail[arguments]' => "--help",
             'command_scheduler_detail[cronExpression]' => "@daily",
             'command_scheduler_detail[logFile]' => "one.log",
-            'command_scheduler_detail[priority]' => "100"
+            'command_scheduler_detail[priority]' => "100",
+            'command_scheduler_detail[save]' => '',
         );
 
-        $this->assertArraySubset($fixtureSet, $form->getValues());
+        $this->assertEquals($fixtureSet, $form->getValues());
     }
 
     /**
@@ -59,9 +59,10 @@ class DetailControllerTest extends WebTestCase
      */
     public function testNewSave()
     {
+        $client = parent::createClient();
+
         $this->loadFixtures(array());
 
-        $client = parent::createClient();
         $client->followRedirects(true);
         $crawler = $client->request('GET', '/command-scheduler/detail/new');
         $buttonCrawlerNode = $crawler->selectButton('Save');
@@ -86,12 +87,11 @@ class DetailControllerTest extends WebTestCase
      */
     public function testEditSave()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(
-            'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-        ));
-
         $client = parent::createClient();
+
+        //DataFixtures create 4 records
+        $this->loadFixtures(array(LoadScheduledCommandData::class));
+
         $client->followRedirects(true);
         $crawler = $client->request('GET', '/command-scheduler/detail/edit/1');
         $buttonCrawlerNode = $crawler->selectButton('Save');

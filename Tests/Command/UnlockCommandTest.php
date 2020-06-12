@@ -5,6 +5,7 @@ namespace JMose\CommandSchedulerBundle\Tests\Command;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
+use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 
 /**
  * Class UnlockCommandTest
@@ -22,7 +23,7 @@ class UnlockCommandTest extends WebTestCase {
     /**
      * {@inheritDoc}
      */
-    public function setUp() {
+    public function setUp(): void {
         self::bootKernel();
 
         $this->em = static::$kernel->getContainer()
@@ -35,14 +36,10 @@ class UnlockCommandTest extends WebTestCase {
      */
     public function testUnlockAll() {
         //DataFixtures create 4 records
-        $this->loadFixtures(
-                ['JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData']
-        );
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
-        $output = $this->runCommand(
-                'scheduler:unlock', ['--all' => true]
-        )->getDisplay();
+        $output = $this->runCommand('scheduler:unlock', ['--all' => true], true)->getDisplay();
 
         $this->assertRegExp('/"two"/', $output);
         $this->assertNotRegExp('/"one"/', $output);
@@ -59,14 +56,10 @@ class UnlockCommandTest extends WebTestCase {
      */
     public function testUnlockByName() {
         //DataFixtures create 4 records
-        $this->loadFixtures(
-                ['JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData']
-        );
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
-        $output = $this->runCommand(
-                'scheduler:unlock', ['name' => 'two']
-        )->getDisplay();
+        $output = $this->runCommand('scheduler:unlock', ['name' => 'two'], true)->getDisplay();
 
         $this->assertRegExp('/"two"/', $output);
 
@@ -81,13 +74,13 @@ class UnlockCommandTest extends WebTestCase {
      */
     public function testUnlockByNameWithTimout() {
         //DataFixtures create 4 records
-        $this->loadFixtures(
-                ['JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData']
-        );
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture with last execution two days ago (2), another have a -1 return code as lastReturn (4)
         $output = $this->runCommand(
-                'scheduler:unlock', ['name' => 'two', '--lock-timeout' =>  3 * 24 * 60 * 60 ]
+            'scheduler:unlock',
+            ['name' => 'two', '--lock-timeout' => 3 * 24 * 60 * 60],
+            true
         )->getDisplay();
 
         $this->assertRegExp('/Skipping/', $output);

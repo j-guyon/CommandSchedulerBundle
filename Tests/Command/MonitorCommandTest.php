@@ -4,6 +4,7 @@ namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
+use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 
 /**
  * Class MonitorCommandTest
@@ -21,7 +22,7 @@ class MonitorCommandTest extends WebTestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         self::bootKernel();
 
@@ -36,19 +37,10 @@ class MonitorCommandTest extends WebTestCase
     public function testExecuteWithError()
     {
         //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        $this->loadFixtures(array(LoadScheduledCommandData::class));
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
-        $output = $this->runCommand(
-            'scheduler:monitor',
-            array(
-                '--dump' => true
-            )
-        )->getDisplay();
+        $output = $this->runCommand('scheduler:monitor', ['--dump' => true], true)->getDisplay();
 
         $this->assertRegExp('/two:/', $output);
         $this->assertRegExp('/four:/', $output);
@@ -60,11 +52,7 @@ class MonitorCommandTest extends WebTestCase
     public function testExecuteWithoutError()
     {
         //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        $this->loadFixtures(array(LoadScheduledCommandData::class));
 
         $two = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(2);
         $four = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(4);
@@ -79,7 +67,8 @@ class MonitorCommandTest extends WebTestCase
             'scheduler:monitor',
             array(
                 '--dump' => true
-            )
+            ),
+            true
         )->getDisplay();
 
         $this->assertStringStartsWith('No errors found.', $output);

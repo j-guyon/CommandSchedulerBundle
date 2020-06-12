@@ -1,16 +1,15 @@
 parameters:
-    database_path: "%kernel.root_dir%/../../build/test.db"
+    database_path: "%kernel.project_dir%/build/test.db"
 
 framework:
     translator:      ~
     assets:
     secret:          secret
     test:            ~
-    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    router:          { resource: "%kernel.project_dir%/Tests/App/config/routing.yml" }
     form:            true
     csrf_protection: false
     validation:      { enable_annotations: true }
-    templating:      { engines: ['twig'] }
     session:
         storage_id: session.storage.filesystem
 

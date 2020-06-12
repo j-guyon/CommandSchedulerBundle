@@ -5,6 +5,7 @@ namespace JMose\CommandSchedulerBundle\Tests\Command;
 use JMose\CommandSchedulerBundle\Command\StartSchedulerCommand;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
+use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 
 /**
  * Class StartStopSchedulerCommandTest
@@ -20,16 +21,12 @@ class StartStopSchedulerCommandTest extends WebTestCase
     public function testStartAndStopScheduler()
     {
         //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $pidFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.StartSchedulerCommand::PID_FILE;
 
 
-        $output = $this->runCommand('scheduler:start')->getDisplay();
+        $output = $this->runCommand('scheduler:start', [], true)->getDisplay();
         $this->assertStringStartsWith('Command scheduler started in non-blocking mode...', $output);
         $this->assertFileExists($pidFile);
 
