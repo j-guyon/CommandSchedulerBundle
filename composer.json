@@ -23,8 +23,7 @@
         "symfony/form": "^3.4|^4.3|^5.0",
         "symfony/asset": "^3.4|^4.3|^5.0",
         "symfony/templating": "^3.4|^4.3|^5.0",
-        "symfony/validator": "^3.4|^4.3|^5.0",
-        "symfony/symfony": "3.4"
+        "symfony/validator": "^3.4|^4.3|^5.0"
     },
     "require-dev": {
         "ext-pcntl": "*",
