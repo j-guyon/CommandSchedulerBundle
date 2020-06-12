@@ -3,7 +3,8 @@
 namespace JMose\CommandSchedulerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as ComponentTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface as ContractsTranslatorInterface;
 
 /**
  * Class BaseController
@@ -19,7 +20,7 @@ abstract class BaseController extends AbstractController
     private $managerName;
 
     /**
-     * @var TranslatorInterface
+     * @var ContractsTranslatorInterface|ComponentTranslatorInterface
      */
     protected $translator;
 
@@ -32,9 +33,9 @@ abstract class BaseController extends AbstractController
     }
 
     /**
-     * @param TranslatorInterface $translator
+     * @param ContractsTranslatorInterface|ComponentTranslatorInterface $translator
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator($translator)
     {
         $this->translator = $translator;
     }
