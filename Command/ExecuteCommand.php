@@ -119,7 +119,7 @@ class ExecuteCommand extends Command
         $noneExecution = true;
         foreach ($commands as $command) {
 
-            $this->em->refresh($this->em->merge($command));
+            $this->em->refresh($this->em->find(ScheduledCommand::class, $command));
             if ($command->isDisabled() || $command->isLocked()) {
                 continue;
             }
@@ -181,7 +181,7 @@ class ExecuteCommand extends Command
             $scheduledCommand = $notLockedCommand;
             $scheduledCommand->setLastExecution(new \DateTime());
             $scheduledCommand->setLocked(true);
-            $scheduledCommand = $this->em->merge($scheduledCommand);
+            $this->em->persist($scheduledCommand);
             $this->em->flush();
             $this->em->getConnection()->commit();
         } catch (\Exception $e) {
@@ -196,6 +196,9 @@ class ExecuteCommand extends Command
 
             return;
         }
+
+        $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
+
         try {
             $command = $this->getApplication()->find($scheduledCommand->getCommand());
         } catch (\InvalidArgumentException $e) {
@@ -247,10 +250,10 @@ class ExecuteCommand extends Command
             $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
         }
 
-        $scheduledCommand = $this->em->merge($scheduledCommand);
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);
         $scheduledCommand->setExecuteImmediately(false);
+        $this->em->persist($scheduledCommand);
         $this->em->flush();
 
         /*
