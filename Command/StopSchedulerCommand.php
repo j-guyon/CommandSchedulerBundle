@@ -1,4 +1,5 @@
 <?php
+
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -8,10 +9,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Code originally taken from https://github.com/Cron/Symfony-Bundle/blob/2.1.0/Command/CronStopCommand.php
  * License: MIT (according to https://github.com/Cron/Symfony-Bundle/blob/2.1.0/LICENSE)
- * Original author: Alexander Lokhman <alex.lokhman@gmail.com>
+ * Original author: Alexander Lokhman <alex.lokhman@gmail.com>.
  *
  * Adaption to CommandSchedulerBundle by Christoph Singer <singer@webagentur72.de>
- *
  */
 class StopSchedulerCommand extends Command
 {
@@ -23,6 +23,7 @@ class StopSchedulerCommand extends Command
         $this->setName('scheduler:stop')
             ->setDescription('Stops command scheduler');
     }
+
     /**
      * {@inheritdoc}
      */
@@ -40,6 +41,7 @@ class StopSchedulerCommand extends Command
                 throw new \RuntimeException('Unable to stop scheduler.');
             }
             $output->writeln(sprintf('<comment>%s</comment>', 'Unable to kill command scheduler process. Scheduler will be stopped before the next run.'));
+
             return 0;
         }
         unlink($pidFile);

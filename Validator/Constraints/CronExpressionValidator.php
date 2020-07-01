@@ -7,15 +7,12 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Class CronExpressionValidator
- *
- * @package JMose\CommandSchedulerBundle\Validator\Constraints
+ * Class CronExpressionValidator.
  */
 class CronExpressionValidator extends ConstraintValidator
 {
-
     /**
-     * Validate method for CronExpression constraint
+     * Validate method for CronExpression constraint.
      *
      * @param mixed      $value
      * @param Constraint $constraint
@@ -40,7 +37,7 @@ class CronExpressionValidator extends ConstraintValidator
                 return;
             }
 
-            $this->context->addViolation($constraint->message, array(), $value);
+            $this->context->addViolation($constraint->message, [], $value);
         }
     }
 }

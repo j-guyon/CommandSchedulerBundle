@@ -1,9 +1,9 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
-$file = __DIR__ . '/../vendor/autoload.php';
+$file = __DIR__.'/../vendor/autoload.php';
 if (!file_exists($file)) {
     throw new RuntimeException('Install dependencies to run test suite.');
 }
@@ -11,8 +11,9 @@ if (!file_exists($file)) {
 $autoload = require_once $file;
 
 // Registers automatically all doctrine annotations when required
-AnnotationRegistry::registerLoader(function($class) use ($autoload) {
+AnnotationRegistry::registerLoader(function ($class) use ($autoload) {
     $autoload->loadClass($class);
+
     return class_exists($class, false);
 });
 

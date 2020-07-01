@@ -2,13 +2,12 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Constraints;
 
-use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 use JMose\CommandSchedulerBundle\Validator\Constraints\CronExpression;
 use JMose\CommandSchedulerBundle\Validator\Constraints\CronExpressionValidator;
+use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * Class CronExpressionValidatorTest
- * @package JMose\CommandSchedulerBundle\Tests\Constraints
+ * Class CronExpressionValidatorTest.
  */
 class CronExpressionValidatorTest extends ConstraintValidatorTestCase
 {
@@ -22,20 +21,20 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
      */
     public function testValidValues($value)
     {
-        $this->validator->validate($value, new CronExpression(array('message' => '')));
+        $this->validator->validate($value, new CronExpression(['message' => '']));
 
         $this->assertNoViolation();
     }
 
     public function getValidValues()
     {
-        return array(
-            array('* * * * *'),
-            array('@daily'),
-            array('@yearly'),
-            array('*/10 * * * *'),
-            array('* * * * * *'), // Remove this value from valid options at 3.0 release.
-        );
+        return [
+            ['* * * * *'],
+            ['@daily'],
+            ['@yearly'],
+            ['*/10 * * * *'],
+            ['* * * * * *'], // Remove this value from valid options at 3.0 release.
+        ];
     }
 
     /**
@@ -44,9 +43,9 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
     public function testInvalidValues($value)
     {
         $constraint = new CronExpression(
-            array(
+            [
                 'message' => 'myMessage',
-            )
+            ]
         );
 
         $this->validator->validate($value, $constraint);
@@ -57,15 +56,15 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
 
     public function getInvalidValues()
     {
-        return array(
-            array('*/10 * * *'),
-            array('*/5 * * * ?'),
-            array('sometimes'),
-            array('never'),
-            array('*****'),
+        return [
+            ['*/10 * * *'],
+            ['*/5 * * * ?'],
+            ['sometimes'],
+            ['never'],
+            ['*****'],
             // Uncomment following values at 3.0 release.
             // array('* * * * * * *'),
             // array('* * * * * *'),
-        );
+        ];
     }
 }
