@@ -19,7 +19,7 @@ class StartStopSchedulerCommandTest extends WebTestCase
      */
     public function testStartAndStopScheduler()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $pidFile = sys_get_temp_dir().DIRECTORY_SEPARATOR.StartSchedulerCommand::PID_FILE;

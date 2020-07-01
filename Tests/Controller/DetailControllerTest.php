@@ -31,7 +31,7 @@ class DetailControllerTest extends WebTestCase
     public function testInitEditScheduledCommand()
     {
         $client = parent::createClient();
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $crawler = $client->request('GET', '/command-scheduler/detail/edit/1');
@@ -88,7 +88,7 @@ class DetailControllerTest extends WebTestCase
     {
         $client = parent::createClient();
 
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $client->followRedirects(true);

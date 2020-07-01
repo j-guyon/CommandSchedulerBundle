@@ -35,7 +35,7 @@ class MonitorCommandTest extends WebTestCase
      */
     public function testExecuteWithError()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
@@ -50,7 +50,7 @@ class MonitorCommandTest extends WebTestCase
      */
     public function testExecuteWithoutError()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $two = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(2);

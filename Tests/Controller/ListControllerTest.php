@@ -40,7 +40,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testIndex()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $crawler = $this->client->request('GET', '/command-scheduler/list');
@@ -52,7 +52,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testRemove()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
@@ -67,7 +67,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testToggle()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
@@ -86,7 +86,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testExecute()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
@@ -101,7 +101,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testUnlock()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
@@ -119,7 +119,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testMonitorWithErrors()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
@@ -138,7 +138,7 @@ class ListControllerTest extends WebTestCase
      */
     public function testMonitorWithoutErrors()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $two = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(2);

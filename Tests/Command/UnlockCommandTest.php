@@ -36,7 +36,7 @@ class UnlockCommandTest extends WebTestCase
      */
     public function testUnlockAll()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
@@ -57,7 +57,7 @@ class UnlockCommandTest extends WebTestCase
      */
     public function testUnlockByName()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
@@ -76,7 +76,7 @@ class UnlockCommandTest extends WebTestCase
      */
     public function testUnlockByNameWithTimout()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture with last execution two days ago (2), another have a -1 return code as lastReturn (4)

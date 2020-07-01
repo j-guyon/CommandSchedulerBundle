@@ -18,7 +18,7 @@ class ExecuteCommandTest extends WebTestCase
      */
     public function testExecute()
     {
-        //DataFixtures create 4 records
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $output = $this->runCommand('scheduler:execute', [], true)->getDisplay();
@@ -38,12 +38,8 @@ class ExecuteCommandTest extends WebTestCase
      */
     public function testExecuteWithNoOutput()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            [
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData',
-            ]
-        );
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $output = $this->runCommand(
             'scheduler:execute',
@@ -64,12 +60,8 @@ class ExecuteCommandTest extends WebTestCase
      */
     public function testExecuteWithDump()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            [
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData',
-            ]
-        );
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $output = $this->runCommand(
             'scheduler:execute',
