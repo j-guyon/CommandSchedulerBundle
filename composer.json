@@ -33,7 +33,7 @@
         "liip/functional-test-bundle": "^4.2",
         "symfony/css-selector": "^3.4|^4.0|^5.0",
         "symfony/security-bundle": "^3.4|^4.0|^5.0",
-        "liip/test-fixtures-bundle": "^1.0.0"
+        "liip/test-fixtures-bundle": "^1.4.0"
     },
     "suggest": {
         "ext-pcntl": "For using the scheduler daemon"
