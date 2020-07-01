@@ -2,14 +2,13 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Controller;
 
+use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Component\HttpFoundation\Response;
-use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 
 /**
- * Class ListControllerTest
- * @package JMose\CommandSchedulerBundle\Tests\Controller
+ * Class ListControllerTest.
  */
 class ListControllerTest extends WebTestCase
 {
@@ -26,7 +25,7 @@ class ListControllerTest extends WebTestCase
     private $em;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setUp(): void
     {
@@ -37,24 +36,24 @@ class ListControllerTest extends WebTestCase
     }
 
     /**
-     * Test list display
+     * Test list display.
      */
     public function testIndex()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(LoadScheduledCommandData::class));
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $crawler = $this->client->request('GET', '/command-scheduler/list');
         $this->assertEquals(4, $crawler->filter('a[href^="/command-scheduler/action/toggle/"]')->count());
     }
 
     /**
-     * Test permanent deletion on command
+     * Test permanent deletion on command.
      */
     public function testRemove()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(LoadScheduledCommandData::class));
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
 
@@ -64,12 +63,12 @@ class ListControllerTest extends WebTestCase
     }
 
     /**
-     * Test On/Off toggle on list
+     * Test On/Off toggle on list.
      */
     public function testToggle()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(LoadScheduledCommandData::class));
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
 
@@ -83,12 +82,12 @@ class ListControllerTest extends WebTestCase
     }
 
     /**
-     * Test Execute now button on list
+     * Test Execute now button on list.
      */
     public function testExecute()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(LoadScheduledCommandData::class));
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
 
@@ -98,12 +97,12 @@ class ListControllerTest extends WebTestCase
     }
 
     /**
-     * Test unlock button on list
+     * Test unlock button on list.
      */
     public function testUnlock()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(LoadScheduledCommandData::class));
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
 
@@ -116,12 +115,12 @@ class ListControllerTest extends WebTestCase
     }
 
     /**
-     * Test monitoring URL with json
+     * Test monitoring URL with json.
      */
     public function testMonitorWithErrors()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(LoadScheduledCommandData::class));
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $this->client->followRedirects(true);
 
@@ -130,17 +129,17 @@ class ListControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_EXPECTATION_FAILED, $this->client->getResponse()->getStatusCode());
 
         $jsonResponse = $this->client->getResponse()->getContent();
-        $jsonArray = json_decode($jsonResponse,true);
+        $jsonArray = json_decode($jsonResponse, true);
         $this->assertEquals(2, count($jsonArray));
     }
 
     /**
-     * Test monitoring URL with json
+     * Test monitoring URL with json.
      */
     public function testMonitorWithoutErrors()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(array(LoadScheduledCommandData::class));
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $two = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(2);
         $four = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(4);
@@ -155,7 +154,7 @@ class ListControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
         $jsonResponse = $this->client->getResponse()->getContent();
-        $jsonArray = json_decode($jsonResponse,true);
+        $jsonArray = json_decode($jsonResponse, true);
         $this->assertEquals(0, count($jsonArray));
     }
 }

@@ -9,13 +9,14 @@ class JMoseCommandSchedulerBundle extends Bundle
 {
     /**
      * {@inheritdoc}
+     *
      * @return JMoseCommandSchedulerExtension
      */
     public function getContainerExtension()
     {
         $class = $this->getContainerExtensionClass();
 
-        return new $class;
+        return new $class();
     }
 
     /**

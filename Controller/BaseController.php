@@ -7,10 +7,9 @@ use Symfony\Component\Translation\TranslatorInterface as ComponentTranslatorInte
 use Symfony\Contracts\Translation\TranslatorInterface as ContractsTranslatorInterface;
 
 /**
- * Class BaseController
+ * Class BaseController.
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Controller
  */
 abstract class BaseController extends AbstractController
 {

@@ -1,4 +1,5 @@
 <?php
+
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -11,10 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Code originally taken from https://github.com/Cron/Symfony-Bundle/blob/2.1.0/Command/CronStartCommand.php
  * License: MIT (according to https://github.com/Cron/Symfony-Bundle/blob/2.1.0/LICENSE)
- * Original author: Alexander Lokhman <alex.lokhman@gmail.com>
+ * Original author: Alexander Lokhman <alex.lokhman@gmail.com>.
  *
  * Adaption to CommandSchedulerBundle by Christoph Singer <singer@webagentur72.de>
- *
  */
 class StartSchedulerCommand extends Command
 {

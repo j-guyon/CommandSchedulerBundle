@@ -3,16 +3,15 @@
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
+use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
-use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 
 /**
- * Class UnlockCommandTest
- * @package JMose\CommandSchedulerBundle\Tests\Command
+ * Class UnlockCommandTest.
  */
-class UnlockCommandTest extends WebTestCase {
-
+class UnlockCommandTest extends WebTestCase
+{
     use FixturesTrait;
 
     /**
@@ -21,9 +20,10 @@ class UnlockCommandTest extends WebTestCase {
     private $em;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function setUp(): void {
+    public function setUp(): void
+    {
         self::bootKernel();
 
         $this->em = static::$kernel->getContainer()
@@ -32,10 +32,11 @@ class UnlockCommandTest extends WebTestCase {
     }
 
     /**
-     * Test scheduler:unlock without --all option
+     * Test scheduler:unlock without --all option.
      */
-    public function testUnlockAll() {
-        //DataFixtures create 4 records
+    public function testUnlockAll()
+    {
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
@@ -52,10 +53,11 @@ class UnlockCommandTest extends WebTestCase {
     }
 
     /**
-     * Test scheduler:unlock with given command name
+     * Test scheduler:unlock with given command name.
      */
-    public function testUnlockByName() {
-        //DataFixtures create 4 records
+    public function testUnlockByName()
+    {
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
@@ -70,10 +72,11 @@ class UnlockCommandTest extends WebTestCase {
     }
 
     /**
-     * Test scheduler:unlock with given command name and timeout
+     * Test scheduler:unlock with given command name and timeout.
      */
-    public function testUnlockByNameWithTimout() {
-        //DataFixtures create 4 records
+    public function testUnlockByNameWithTimout()
+    {
+        // DataFixtures create 4 records
         $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture with last execution two days ago (2), another have a -1 return code as lastReturn (4)
@@ -91,5 +94,4 @@ class UnlockCommandTest extends WebTestCase {
 
         $this->assertTrue($two->isLocked());
     }
-
 }

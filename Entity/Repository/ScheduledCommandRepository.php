@@ -7,46 +7,44 @@ use Doctrine\ORM\EntityRepository;
 use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 
 /**
- * Class ScheduledCommandRepository
+ * Class ScheduledCommandRepository.
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Entity\Repository
  */
 class ScheduledCommandRepository extends EntityRepository
 {
-
     /**
-     * Find all enabled command ordered by priority
+     * Find all enabled command ordered by priority.
      *
      * @return ScheduledCommand[]
      */
     public function findEnabledCommand()
     {
-        return $this->findBy(array('disabled' => false, 'locked' => false), array('priority' => 'DESC'));
+        return $this->findBy(['disabled' => false, 'locked' => false], ['priority' => 'DESC']);
     }
 
     /**
-     * findAll override to implement the default orderBy clause
+     * findAll override to implement the default orderBy clause.
      *
      * @return ScheduledCommand[]
      */
     public function findAll()
     {
-        return $this->findBy(array(), array('priority' => 'DESC'));
+        return $this->findBy([], ['priority' => 'DESC']);
     }
 
     /**
-     * Find all locked commands
+     * Find all locked commands.
      *
      * @return ScheduledCommand[]
      */
     public function findLockedCommand()
     {
-        return $this->findBy(array('disabled' => false, 'locked' => true), array('priority' => 'DESC'));
+        return $this->findBy(['disabled' => false, 'locked' => true], ['priority' => 'DESC']);
     }
 
     /**
-     * Find all failed command
+     * Find all failed command.
      *
      * @return ScheduledCommand[]
      */
@@ -60,7 +58,8 @@ class ScheduledCommandRepository extends EntityRepository
     }
 
     /**
-     * @param integer|bool $lockTimeout
+     * @param int|bool $lockTimeout
+     *
      * @return array|\JMose\CommandSchedulerBundle\Entity\ScheduledCommand[]
      */
     public function findFailedAndTimeoutCommands($lockTimeout = false)
@@ -84,7 +83,9 @@ class ScheduledCommandRepository extends EntityRepository
 
     /**
      * @param ScheduledCommand $command
+     *
      * @return mixed
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */

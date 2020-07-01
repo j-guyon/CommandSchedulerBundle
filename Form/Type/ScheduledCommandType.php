@@ -13,16 +13,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ScheduledCommandType
+ * Class ScheduledCommandType.
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Form\Type
  */
 class ScheduledCommandType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -108,7 +107,6 @@ class ScheduledCommandType extends AbstractType
                 'label' => 'action.save',
             ]
         );
-
     }
 
     /**
@@ -126,7 +124,7 @@ class ScheduledCommandType extends AbstractType
     }
 
     /**
-     * Fields prefix
+     * Fields prefix.
      *
      * @return string
      */

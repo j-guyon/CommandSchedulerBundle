@@ -3,16 +3,14 @@
 namespace JMose\CommandSchedulerBundle\Entity;
 
 /**
- * Entity ScheduledCommand
+ * Entity ScheduledCommand.
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Entity
  */
 class ScheduledCommand
 {
-
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -33,6 +31,7 @@ class ScheduledCommand
 
     /**
      * @see http://www.abunchofutils.com/utils/developer/cron-expression-helper/
+     *
      * @var string
      */
     private $cronExpression;
@@ -43,41 +42,41 @@ class ScheduledCommand
     private $lastExecution;
 
     /**
-     * @var integer
+     * @var int
      */
     private $lastReturnCode;
 
     /**
-     * Log's file name (without path)
+     * Log's file name (without path).
      *
      * @var string
      */
     private $logFile;
 
     /**
-     * @var integer
+     * @var int
      */
     private $priority;
 
     /**
-     * If true, command will be execute next time regardless cron expression
+     * If true, command will be execute next time regardless cron expression.
      *
-     * @var boolean
+     * @var bool
      */
     private $executeImmediately;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $disabled;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $locked;
 
     /**
-     * Init new ScheduledCommand
+     * Init new ScheduledCommand.
      */
     public function __construct()
     {
@@ -86,9 +85,9 @@ class ScheduledCommand
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -96,9 +95,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param $id
+     *
      * @return $this
      */
     public function setId($id)
@@ -109,7 +109,7 @@ class ScheduledCommand
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -119,9 +119,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return ScheduledCommand
      */
     public function setName($name)
@@ -132,7 +133,7 @@ class ScheduledCommand
     }
 
     /**
-     * Get command
+     * Get command.
      *
      * @return string
      */
@@ -142,9 +143,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set command
+     * Set command.
      *
      * @param string $command
+     *
      * @return ScheduledCommand
      */
     public function setCommand($command)
@@ -155,7 +157,7 @@ class ScheduledCommand
     }
 
     /**
-     * Get arguments
+     * Get arguments.
      *
      * @return string
      */
@@ -165,9 +167,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set arguments
+     * Set arguments.
      *
      * @param string $arguments
+     *
      * @return ScheduledCommand
      */
     public function setArguments($arguments)
@@ -178,7 +181,7 @@ class ScheduledCommand
     }
 
     /**
-     * Get cronExpression
+     * Get cronExpression.
      *
      * @return string
      */
@@ -188,9 +191,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set cronExpression
+     * Set cronExpression.
      *
      * @param string $cronExpression
+     *
      * @return ScheduledCommand
      */
     public function setCronExpression($cronExpression)
@@ -201,7 +205,7 @@ class ScheduledCommand
     }
 
     /**
-     * Get lastExecution
+     * Get lastExecution.
      *
      * @return \DateTime
      */
@@ -211,9 +215,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set lastExecution
+     * Set lastExecution.
      *
      * @param \DateTime $lastExecution
+     *
      * @return ScheduledCommand
      */
     public function setLastExecution($lastExecution)
@@ -224,7 +229,7 @@ class ScheduledCommand
     }
 
     /**
-     * Get logFile
+     * Get logFile.
      *
      * @return string
      */
@@ -234,9 +239,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set logFile
+     * Set logFile.
      *
      * @param string $logFile
+     *
      * @return ScheduledCommand
      */
     public function setLogFile($logFile)
@@ -247,9 +253,9 @@ class ScheduledCommand
     }
 
     /**
-     * Get lastReturnCode
+     * Get lastReturnCode.
      *
-     * @return integer
+     * @return int
      */
     public function getLastReturnCode()
     {
@@ -257,9 +263,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set lastReturnCode
+     * Set lastReturnCode.
      *
-     * @param integer $lastReturnCode
+     * @param int $lastReturnCode
+     *
      * @return ScheduledCommand
      */
     public function setLastReturnCode($lastReturnCode)
@@ -270,9 +277,9 @@ class ScheduledCommand
     }
 
     /**
-     * Get priority
+     * Get priority.
      *
-     * @return integer
+     * @return int
      */
     public function getPriority()
     {
@@ -280,9 +287,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set priority
+     * Set priority.
      *
-     * @param integer $priority
+     * @param int $priority
+     *
      * @return ScheduledCommand
      */
     public function setPriority($priority)
@@ -293,7 +301,7 @@ class ScheduledCommand
     }
 
     /**
-     * Get executeImmediately
+     * Get executeImmediately.
      *
      * @return bool
      */
@@ -303,9 +311,9 @@ class ScheduledCommand
     }
 
     /**
-     * Get executeImmediately
+     * Get executeImmediately.
      *
-     * @return boolean
+     * @return bool
      */
     public function getExecuteImmediately()
     {
@@ -313,9 +321,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set executeImmediately
+     * Set executeImmediately.
      *
      * @param $executeImmediately
+     *
      * @return ScheduledCommand
      */
     public function setExecuteImmediately($executeImmediately)
@@ -326,9 +335,9 @@ class ScheduledCommand
     }
 
     /**
-     * Get disabled
+     * Get disabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDisabled()
     {
@@ -336,9 +345,9 @@ class ScheduledCommand
     }
 
     /**
-     * Get disabled
+     * Get disabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDisabled()
     {
@@ -346,9 +355,10 @@ class ScheduledCommand
     }
 
     /**
-     * Set disabled
+     * Set disabled.
      *
-     * @param boolean $disabled
+     * @param bool $disabled
+     *
      * @return ScheduledCommand
      */
     public function setDisabled($disabled)
@@ -359,9 +369,9 @@ class ScheduledCommand
     }
 
     /**
-     * Locked Getter
+     * Locked Getter.
      *
-     * @return boolean
+     * @return bool
      */
     public function isLocked()
     {
@@ -369,9 +379,9 @@ class ScheduledCommand
     }
 
     /**
-     * locked Getter
+     * locked Getter.
      *
-     * @return boolean
+     * @return bool
      */
     public function getLocked()
     {
@@ -379,9 +389,10 @@ class ScheduledCommand
     }
 
     /**
-     * locked Setter
+     * locked Setter.
      *
-     * @param boolean $locked
+     * @param bool $locked
+     *
      * @return $this
      */
     public function setLocked($locked)
@@ -390,5 +401,4 @@ class ScheduledCommand
 
         return $this;
     }
-
 }
