@@ -143,7 +143,7 @@ class ExecuteCommand extends Command
                 $output->writeln(
                     'Command <comment>'.$command->getCommand().
                     '</comment> should be executed - last execution : <comment>'.
-                    $command->getLastExecution()->format('d/m/Y H:i:s').'.</comment>'
+                    $command->getLastExecution()->format(\DateTimeInterface::ATOM).'.</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
