@@ -45,10 +45,5 @@
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>
-        <blacklist>
-            <directory>./vendor</directory>
-            <directory>./Tests</directory>
-            <directory>./build</directory>
-        </blacklist>
     </filter>
 </phpunit>

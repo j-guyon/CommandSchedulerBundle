@@ -4,6 +4,7 @@ namespace JMose\CommandSchedulerBundle\Tests\Command;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
+use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 
 /**
  * Class ExecuteCommandTest
@@ -19,13 +20,9 @@ class ExecuteCommandTest extends WebTestCase
     public function testExecute()
     {
         //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        $this->loadFixtures(array(LoadScheduledCommandData::class));
 
-        $output = $this->runCommand('scheduler:execute')->getDisplay();
+        $output = $this->runCommand('scheduler:execute', [], true)->getDisplay();
 
         $this->assertStringStartsWith('Start : Execute all scheduled command', $output);
         $this->assertRegExp('/debug:container should be executed/', $output);
@@ -53,7 +50,8 @@ class ExecuteCommandTest extends WebTestCase
             'scheduler:execute',
             array(
                 '--no-output' => true
-            )
+            ),
+            true
         )->getDisplay();
 
         $this->assertEquals('', $output);
@@ -78,7 +76,8 @@ class ExecuteCommandTest extends WebTestCase
             'scheduler:execute',
             array(
                 '--dump' => true
-            )
+            ),
+            true
         )->getDisplay();
 
         $this->assertStringStartsWith('Start : Dump all scheduled command', $output);
