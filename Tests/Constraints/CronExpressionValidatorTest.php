@@ -33,7 +33,6 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
             ['@daily'],
             ['@yearly'],
             ['*/10 * * * *'],
-            ['* * * * * *'], // Remove this value from valid options at 3.0 release.
         ];
     }
 
@@ -62,9 +61,8 @@ class CronExpressionValidatorTest extends ConstraintValidatorTestCase
             ['sometimes'],
             ['never'],
             ['*****'],
-            // Uncomment following values at 3.0 release.
-            // array('* * * * * * *'),
-            // array('* * * * * *'),
+            ['* * * * * * *'],
+            ['* * * * * *'],
         ];
     }
 }
