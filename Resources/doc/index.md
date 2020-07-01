@@ -100,7 +100,7 @@ See the [Usage](#usage) section to have more information
 
 ### 4 - Available configuration
 
-Here is the default bundle configuration.
+Here is the default bundle configuration. The flex recipe will create the scheduler.yaml file in your packages directory where you can change the base configuration.
 
 ```yaml
 jmose_command_scheduler:
