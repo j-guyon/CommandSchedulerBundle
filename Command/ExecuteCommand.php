@@ -183,7 +183,7 @@ class ExecuteCommand extends Command
             $this->em->persist($scheduledCommand);
             $this->em->flush();
             $this->em->getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->em->getConnection()->rollBack();
             $output->writeln(
                 sprintf(
@@ -238,7 +238,7 @@ class ExecuteCommand extends Command
                 .' '.$scheduledCommand->getArguments().'</comment>'
             );
             $result = $command->run($input, $logOutput);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $logOutput->writeln($e->getMessage());
             $logOutput->writeln($e->getTraceAsString());
             $result = -1;
