@@ -7,33 +7,28 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Class CronExpressionValidator
- *
- * @package JMose\CommandSchedulerBundle\Validator\Constraints
+ * Class CronExpressionValidator.
  */
 class CronExpressionValidator extends ConstraintValidator
 {
-
     /**
-     * Validate method for CronExpression constraint
+     * Validate method for CronExpression constraint.
      *
      * @param mixed      $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
     {
-        $value = (string)$value;
+        $value = (string) $value;
 
-        if (null === $value || '' === $value) {
+        if ('' === $value) {
             return;
         }
 
         try {
             CronExpressionLib::factory($value);
         } catch (\InvalidArgumentException $e) {
-            $this->context->addViolation($constraint->message, array(), $value);
+            $this->context->addViolation($constraint->message, [], $value);
         }
-
-        return;
     }
 }

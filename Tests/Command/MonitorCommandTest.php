@@ -2,12 +2,12 @@
 
 namespace JMose\CommandSchedulerBundle\Tests\Command;
 
+use JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 /**
- * Class MonitorCommandTest
- * @package JMose\CommandSchedulerBundle\Tests\Command
+ * Class MonitorCommandTest.
  */
 class MonitorCommandTest extends WebTestCase
 {
@@ -19,9 +19,9 @@ class MonitorCommandTest extends WebTestCase
     private $em;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         self::bootKernel();
 
@@ -31,40 +31,27 @@ class MonitorCommandTest extends WebTestCase
     }
 
     /**
-     * Test scheduler:execute without option
+     * Test scheduler:execute without option.
      */
     public function testExecuteWithError()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
-        $output = $this->runCommand(
-            'scheduler:monitor',
-            array(
-                '--dump' => true
-            )
-        )->getDisplay();
+        $output = $this->runCommand('scheduler:monitor', ['--dump' => true], true)->getDisplay();
 
         $this->assertRegExp('/two:/', $output);
         $this->assertRegExp('/four:/', $output);
     }
 
     /**
-     * Test scheduler:execute without option
+     * Test scheduler:execute without option.
      */
     public function testExecuteWithoutError()
     {
-        //DataFixtures create 4 records
-        $this->loadFixtures(
-            array(
-                'JMose\CommandSchedulerBundle\Fixtures\ORM\LoadScheduledCommandData'
-            )
-        );
+        // DataFixtures create 4 records
+        $this->loadFixtures([LoadScheduledCommandData::class]);
 
         $two = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(2);
         $four = $this->em->getRepository('JMoseCommandSchedulerBundle:ScheduledCommand')->find(4);
@@ -77,12 +64,12 @@ class MonitorCommandTest extends WebTestCase
         // One command is locked in fixture (2), another have a -1 return code as lastReturn (4)
         $output = $this->runCommand(
             'scheduler:monitor',
-            array(
-                '--dump' => true
-            )
+            [
+                '--dump' => true,
+            ],
+            true
         )->getDisplay();
 
         $this->assertStringStartsWith('No errors found.', $output);
     }
-
 }

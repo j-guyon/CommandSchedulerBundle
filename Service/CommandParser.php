@@ -8,14 +8,12 @@ use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
- * Class CommandChoiceList
+ * Class CommandChoiceList.
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Form
  */
 class CommandParser
 {
-
     /**
      * @var KernelInterface
      */
@@ -33,23 +31,24 @@ class CommandParser
 
     /**
      * CommandParser constructor.
+     *
      * @param KernelInterface $kernel
-     * @param array $excludedNamespaces
-     * @param array $includedNamespaces
+     * @param array           $excludedNamespaces
+     * @param array           $includedNamespaces
      */
-    public function __construct(KernelInterface $kernel, array $excludedNamespaces = array(), array $includedNamespaces = array())
+    public function __construct(KernelInterface $kernel, array $excludedNamespaces = [], array $includedNamespaces = [])
     {
         $this->kernel = $kernel;
         $this->excludedNamespaces = $excludedNamespaces;
         $this->includedNamespaces = $includedNamespaces;
 
-        if(count($this->excludedNamespaces) > 0 && count($this->includedNamespaces) > 0) {
+        if (count($this->excludedNamespaces) > 0 && count($this->includedNamespaces) > 0) {
             throw new \InvalidArgumentException('Cannot combine excludedNamespaces with includedNamespaces');
         }
     }
 
     /**
-     * Execute the console command "list" with XML output to have all available command
+     * Execute the console command "list" with XML output to have all available command.
      *
      * @return array
      */
@@ -59,10 +58,10 @@ class CommandParser
         $application->setAutoExit(false);
 
         $input = new ArrayInput(
-            array(
+            [
                 'command' => 'list',
-                '--format' => 'xml'
-            )
+                '--format' => 'xml',
+            ]
         );
 
         $output = new StreamOutput(fopen('php://memory', 'w+'));
@@ -73,37 +72,37 @@ class CommandParser
     }
 
     /**
-     * Extract an array of available Symfony command from the XML output
+     * Extract an array of available Symfony command from the XML output.
      *
      * @param $xml
+     *
      * @return array
      */
     private function extractCommandsFromXML($xml)
     {
-        if ($xml == '') {
-            return array();
+        if ('' == $xml) {
+            return [];
         }
 
         $node = new \SimpleXMLElement($xml);
-        $commandsList = array();
+        $commandsList = [];
 
         foreach ($node->namespaces->namespace as $namespace) {
-            $namespaceId = (string)$namespace->attributes()->id;
+            $namespaceId = (string) $namespace->attributes()->id;
 
-            if( 
+            if (
                 (count($this->excludedNamespaces) > 0 && in_array($namespaceId, $this->excludedNamespaces))
                 ||
-                (count($this->includedNamespaces) > 0 && ! in_array($namespaceId, $this->includedNamespaces))
+                (count($this->includedNamespaces) > 0 && !in_array($namespaceId, $this->includedNamespaces))
             ) {
                 continue;
             }
 
             foreach ($namespace->command as $command) {
-                $commandsList[$namespaceId][(string)$command] = (string)$command;
+                $commandsList[$namespaceId][(string) $command] = (string) $command;
             }
         }
 
         return $commandsList;
     }
-
 }

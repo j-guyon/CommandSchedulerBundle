@@ -8,10 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ListController
+ * Class ListController.
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Controller
  */
 class ListController extends BaseController
 {
@@ -45,6 +44,7 @@ class ListController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function removeAction($id)
@@ -64,6 +64,7 @@ class ListController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function toggleAction($id)
@@ -79,6 +80,7 @@ class ListController extends BaseController
     /**
      * @param $id
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function executeAction($id, Request $request)
@@ -102,6 +104,7 @@ class ListController extends BaseController
     /**
      * @param $id
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function unlockAction($id, Request $request)
@@ -125,7 +128,7 @@ class ListController extends BaseController
     /**
      * method checks if there are jobs which are enabled but did not return 0 on last execution or are locked.<br>
      * if a match is found, HTTP status 417 is sent along with an array which contains name, return code and locked-state.
-     * if no matches found, HTTP status 200 is sent with an empty array
+     * if no matches found, HTTP status 200 is sent with an empty array.
      *
      * @return JsonResponse
      */

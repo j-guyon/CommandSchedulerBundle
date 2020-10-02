@@ -8,14 +8,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class CommandChoiceType
+ * Class CommandChoiceType.
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Form\Type
  */
 class CommandChoiceType extends AbstractType
 {
-
     /**
      * @var CommandParser
      */
@@ -42,7 +40,7 @@ class CommandChoiceType extends AbstractType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getParent()
     {

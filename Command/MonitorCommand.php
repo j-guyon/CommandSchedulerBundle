@@ -9,26 +9,24 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class MonitorCommand : This class is used for monitoring scheduled commands if they run for too long or failed to execute
+ * Class MonitorCommand : This class is used for monitoring scheduled commands if they run for too long or failed to execute.
  *
  * @author  Daniel Fischer <dfischer000@gmail.com>
- * @package JMose\CommandSchedulerBundle\Command
  */
 class MonitorCommand extends Command
 {
-
     /**
      * @var \Doctrine\ORM\EntityManager
      */
     private $em;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $dumpMode;
 
     /**
-     * @var integer|boolean Number of seconds after a command is considered as timeout
+     * @var int|bool Number of seconds after a command is considered as timeout
      */
     private $lockTimeout;
 
@@ -43,12 +41,13 @@ class MonitorCommand extends Command
     private $mailSubject;
 
     /**
-     * @var boolean if true, current command will send mail even if all is ok.
+     * @var bool if true, current command will send mail even if all is ok.
      */
     private $sendMailIfNoError;
 
     /**
      * MonitorCommand constructor.
+     *
      * @param ManagerRegistry $managerRegistry
      * @param $managerName
      * @param $lockTimeout
@@ -74,7 +73,7 @@ class MonitorCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -86,15 +85,16 @@ class MonitorCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
-     * @return int|null|void
+     *
+     * @return int|void|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // If not in dump mode and none receiver is set, exit.
         $this->dumpMode = $input->getOption('dump');
-        if (!$this->dumpMode && count($this->receiver) === 0) {
+        if (!$this->dumpMode && 0 === count($this->receiver)) {
             $output->writeln('Please add receiver in configuration');
 
             return 1;
@@ -106,7 +106,7 @@ class MonitorCommand extends Command
 
         // Commands in error
         if (count($failedCommands) > 0) {
-            $message = "";
+            $message = '';
 
             foreach ($failedCommands as $command) {
                 $message .= sprintf(
@@ -114,7 +114,7 @@ class MonitorCommand extends Command
                     $command->getName(),
                     $command->getLastReturnCode(),
                     $command->getLocked(),
-                    $command->getLastExecution()->format('Y-m-d H:i')
+                    $command->getLastExecution()->format(\DateTimeInterface::ATOM)
                 );
             }
 
@@ -124,7 +124,6 @@ class MonitorCommand extends Command
             } else {
                 $this->sendMails($message);
             }
-
         } else {
             if ($this->dumpMode) {
                 $output->writeln('No errors found.');
@@ -137,7 +136,7 @@ class MonitorCommand extends Command
     }
 
     /**
-     * Send message to email receivers
+     * Send message to email receivers.
      *
      * @param string $message message to be sent
      */
@@ -155,7 +154,7 @@ class MonitorCommand extends Command
     }
 
     /**
-     * get the subject for monitor mails
+     * get the subject for monitor mails.
      *
      * @return string subject
      */
@@ -165,5 +164,4 @@ class MonitorCommand extends Command
 
         return sprintf($this->mailSubject, $hostname, date('Y-m-d H:i:s'));
     }
-
 }

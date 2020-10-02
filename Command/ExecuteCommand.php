@@ -3,25 +3,23 @@
 namespace JMose\CommandSchedulerBundle\Command;
 
 use Cron\CronExpression;
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 
 /**
- * Class ExecuteCommand : This class is the entry point to execute all scheduled command
+ * Class ExecuteCommand : This class is the entry point to execute all scheduled command.
  *
  * @author  Julien Guyon <julienguyon@hotmail.com>
- * @package JMose\CommandSchedulerBundle\Command
  */
 class ExecuteCommand extends Command
 {
-
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -33,17 +31,18 @@ class ExecuteCommand extends Command
     private $logPath;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $dumpMode;
 
     /**
-     * @var integer
+     * @var int
      */
     private $commandsVerbosity;
 
     /**
      * ExecuteCommand constructor.
+     *
      * @param ManagerRegistry $managerRegistry
      * @param $managerName
      * @param $logPath
@@ -62,7 +61,7 @@ class ExecuteCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -75,9 +74,9 @@ class ExecuteCommand extends Command
     }
 
     /**
-     * Initialize parameters and services used in execute function
+     * Initialize parameters and services used in execute function.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -93,8 +92,9 @@ class ExecuteCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -102,7 +102,7 @@ class ExecuteCommand extends Command
         $output->writeln('<info>Start : '.($this->dumpMode ? 'Dump' : 'Execute').' all scheduled command</info>');
 
         // Before continue, we check that the output file is valid and writable (except for gaufrette)
-        if (false !== $this->logPath && strpos($this->logPath, 'gaufrette:') !== 0 && false === is_writable(
+        if (false !== $this->logPath && 0 !== strpos($this->logPath, 'gaufrette:') && false === is_writable(
                 $this->logPath
             )
         ) {
@@ -118,8 +118,7 @@ class ExecuteCommand extends Command
 
         $noneExecution = true;
         foreach ($commands as $command) {
-
-            $this->em->refresh($this->em->merge($command));
+            $this->em->refresh($this->em->find(ScheduledCommand::class, $command));
             if ($command->isDisabled() || $command->isLocked()) {
                 continue;
             }
@@ -143,7 +142,7 @@ class ExecuteCommand extends Command
                 $output->writeln(
                     'Command <comment>'.$command->getCommand().
                     '</comment> should be executed - last execution : <comment>'.
-                    $command->getLastExecution()->format('d/m/Y H:i:s').'.</comment>'
+                    $command->getLastExecution()->format(\DateTimeInterface::ATOM).'.</comment>'
                 );
 
                 if (!$input->getOption('dump')) {
@@ -161,8 +160,8 @@ class ExecuteCommand extends Command
 
     /**
      * @param ScheduledCommand $scheduledCommand
-     * @param OutputInterface $output
-     * @param InputInterface $input
+     * @param OutputInterface  $output
+     * @param InputInterface   $input
      */
     private function executeCommand(ScheduledCommand $scheduledCommand, OutputInterface $output, InputInterface $input)
     {
@@ -174,14 +173,14 @@ class ExecuteCommand extends Command
                 ->getRepository(ScheduledCommand::class)
                 ->getNotLockedCommand($scheduledCommand);
             //$notLockedCommand will be locked for avoiding parallel calls: http://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html
-            if ($notLockedCommand === null) {
+            if (null === $notLockedCommand) {
                 throw new \Exception();
             }
 
             $scheduledCommand = $notLockedCommand;
             $scheduledCommand->setLastExecution(new \DateTime());
             $scheduledCommand->setLocked(true);
-            $scheduledCommand = $this->em->merge($scheduledCommand);
+            $this->em->persist($scheduledCommand);
             $this->em->flush();
             $this->em->getConnection()->commit();
         } catch (\Exception $e) {
@@ -196,6 +195,9 @@ class ExecuteCommand extends Command
 
             return;
         }
+
+        $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
+
         try {
             $command = $this->getApplication()->find($scheduledCommand->getCommand());
         } catch (\InvalidArgumentException $e) {
@@ -247,10 +249,10 @@ class ExecuteCommand extends Command
             $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
         }
 
-        $scheduledCommand = $this->em->merge($scheduledCommand);
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);
         $scheduledCommand->setExecuteImmediately(false);
+        $this->em->persist($scheduledCommand);
         $this->em->flush();
 
         /*
