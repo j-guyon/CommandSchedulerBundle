@@ -84,6 +84,7 @@ class CommandParser
             return [];
         }
 
+        $xml = substr($xml, strpos($xml, '<?xml'));
         $node = new \SimpleXMLElement($xml);
         $commandsList = [];
 
