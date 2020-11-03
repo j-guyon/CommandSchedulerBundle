@@ -249,6 +249,7 @@ class ExecuteCommand extends Command
             $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
         }
 
+        $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);
         $scheduledCommand->setExecuteImmediately(false);
