@@ -118,7 +118,7 @@ class ExecuteCommand extends Command
 
         $noneExecution = true;
         foreach ($commands as $command) {
-            $this->em->refresh($this->em->find(ScheduledCommand::class, $command));
+            $command = $this->em->find(ScheduledCommand::class, $command->getId());
             if ($command->isDisabled() || $command->isLocked()) {
                 continue;
             }
