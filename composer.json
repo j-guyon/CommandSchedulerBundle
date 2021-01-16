@@ -26,7 +26,9 @@
         "symfony/validator": "^3.4|^4.3|^5.0"
     },
     "require-dev": {
+        "ext-pdo_sqlite": "*",
         "ext-pcntl": "*",
+        "ext-json": "*",
         "phpunit/phpunit": "^8.5",
         "php-coveralls/php-coveralls": "^2.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0.0",

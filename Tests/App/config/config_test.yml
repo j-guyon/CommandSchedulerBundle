@@ -49,3 +49,7 @@ services:
     JMose\CommandSchedulerBundle\Fixtures\ORM\:
         resource: '../../../Fixtures/ORM/*'
         tags: ['doctrine.fixture.orm']
+
+    JMose\CommandSchedulerBundle\Tests\App\Command\:
+        resource: '../Command/*'
+        tags: [ 'console.command' ]

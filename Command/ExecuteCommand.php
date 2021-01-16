@@ -178,6 +178,7 @@ class ExecuteCommand extends Command
             }
 
             $scheduledCommand = $notLockedCommand;
+            $lastExecution = $scheduledCommand->getLastExecution();
             $scheduledCommand->setLastExecution(new \DateTime());
             $scheduledCommand->setLocked(true);
             $this->em->persist($scheduledCommand);
@@ -207,8 +208,17 @@ class ExecuteCommand extends Command
             return;
         }
 
+        $arguments = str_replace(
+            array('%last_execution%', '%log_file%', '%last_return_code%'),
+            array(
+                '"' . $lastExecution->format('Y-m-d H:i:s') . '"',
+                '"' . $scheduledCommand->getLogFile() . '"',
+                '"' . $scheduledCommand->getLastReturnCode() .'"'
+            ),
+            $scheduledCommand->getArguments()
+        );
         $input = new StringInput(
-            $scheduledCommand->getCommand().' '.$scheduledCommand->getArguments().' --env='.$input->getOption('env')
+            $scheduledCommand->getCommand().' '.$arguments.' --env='.$input->getOption('env')
         );
         $command->mergeApplicationDefinition();
         $input->bind($command->getDefinition());

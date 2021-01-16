@@ -212,6 +212,12 @@ The `scheduler:execute` command will do following actions :
   - Check if the command has to be executed at current time, based on its cron expression and on its last execution time
   - Execute eligible commands (without `exec` php function)
 
+Use dynamic parameters :
+
+- %last_execution% : last execution date (format : Y-m-d H:i:s). Available for arguments and options 
+- %log_file% : output file. Available for arguments and options
+- %last_return_code% : last return code. ONLY available for options (possible value -1 is not working for Argument)
+
 The `scheduler:unlock` command is capable of unlock all or a single scheduled command with a `lock-timeout` parameter.
 It can be usefull if you don't have a full control about server restarting, which can a command in a lock state.
 
@@ -222,7 +228,6 @@ Note that with this mode, if a command with an error, it will stop all the sched
 **Note** : Each command is locked just before his execution (and unlocked after).
 This system avoid to have simultaneous process for the same command.
 Thus, if an non-catchable error occurs, the command won't be executed again unless the problem is solved and the task is unlocked manually.
-
 
 Monitoring
 =============
