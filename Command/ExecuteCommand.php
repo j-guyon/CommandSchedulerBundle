@@ -238,6 +238,8 @@ class ExecuteCommand extends Command
                 .' '.$scheduledCommand->getArguments().'</comment>'
             );
             $result = $command->run($input, $logOutput);
+
+            $this->em->clear();
         } catch (\Exception $e) {
             $logOutput->writeln($e->getMessage());
             $logOutput->writeln($e->getTraceAsString());
@@ -248,6 +250,8 @@ class ExecuteCommand extends Command
             $output->writeln('<comment>Entity manager closed by the last command.</comment>');
             $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
         }
+
+        $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
 
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);
