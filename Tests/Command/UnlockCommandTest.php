@@ -22,7 +22,7 @@ class UnlockCommandTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         self::bootKernel();
 

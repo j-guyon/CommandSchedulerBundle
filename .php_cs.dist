@@ -8,8 +8,9 @@ return PhpCsFixer\Config::create()
     ->setRules(
         [
             '@Symfony' => true,
-            'no_superfluous_phpdoc_tags' => false,
             'array_syntax' => ['syntax' => 'short'],
+            'no_superfluous_phpdoc_tags' => false,
+            'php_unit_set_up_tear_down_visibility' => true,
         ]
     )
     ->setFinder($finder);

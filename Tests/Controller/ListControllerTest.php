@@ -27,7 +27,7 @@ class ListControllerTest extends WebTestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->client = self::createClient();
         $this->em = static::$kernel->getContainer()
