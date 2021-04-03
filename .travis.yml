@@ -2,19 +2,14 @@ language: php
 
 matrix:
     include:
-        - php: 7.2
-          env: DEPENDENCIES="symfony/lts:3"
         - php: 7.3
           env: DEPENDENCIES="symfony/lts:3"
         - php: 7.4
-          env: DEPENDENCIES="symfony/lts:3"
-        - php: 7.2
           env: DEPENDENCIES="symfony/lts:4.x-dev"
         - php: 7.3
           env: DEPENDENCIES="symfony/lts:4.x-dev"
         - php: 7.4
           env: DEPENDENCIES="symfony/lts:4.x-dev"
-        - php: 7.2
         - php: 7.3
         - php: 7.4
 
