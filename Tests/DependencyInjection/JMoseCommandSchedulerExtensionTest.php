@@ -1,6 +1,6 @@
 <?php
 
-namespace JMose\CommandSchedulerBundle\DependencyInjection\Tests;
+namespace JMose\CommandSchedulerBundle\Tests\DependencyInjection;
 
 use JMose\CommandSchedulerBundle\DependencyInjection\JMoseCommandSchedulerExtension;
 use PHPUnit\Framework\TestCase;
