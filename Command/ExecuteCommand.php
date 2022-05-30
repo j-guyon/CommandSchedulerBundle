@@ -249,6 +249,10 @@ class ExecuteCommand extends Command
             $this->em = $this->em->create($this->em->getConnection(), $this->em->getConfiguration());
         }
 
+        // Force re-attach entity with entity manager before updating it, in case $scheduledCommand has been detached
+        // https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/reference/working-with-objects.html#detaching-entities
+        $scheduledCommand = $this->em->find(ScheduledCommand::class, $scheduledCommand);
+
         $scheduledCommand->setLastReturnCode($result);
         $scheduledCommand->setLocked(false);
         $scheduledCommand->setExecuteImmediately(false);
