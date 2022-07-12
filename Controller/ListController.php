@@ -32,9 +32,7 @@ class ListController extends BaseController
      */
     public function indexAction()
     {
-        $scheduledCommands = $this->getDoctrineManager()->getRepository(
-            'JMoseCommandSchedulerBundle:ScheduledCommand'
-        )->findAll();
+        $scheduledCommands = $this->getDoctrineManager()->getRepository(ScheduledCommand::class)->findAll();
 
         return $this->render(
             '@JMoseCommandScheduler/List/index.html.twig',
